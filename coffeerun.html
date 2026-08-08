@@ -25,22 +25,61 @@
         }
         .btn-sandia-general:hover { background-color: #ff334b; transform: scale(1.03); box-shadow: 0 5px 15px rgba(230, 32, 53, 0.4); }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR E IDENTIDAD DEL LOGO (IGUAL A INDEX) --- */
         .navbar-sandia {
-            background-color: rgba(5, 10, 21, 0.95); 
-            padding: 15px 20px; display: flex;
-            justify-content: space-between; align-items: center;
+            background-color: rgba(5, 10, 21, 0.98); 
+            padding: 25px 20px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 1px solid rgba(230, 32, 53, 0.15);
-            position: fixed; top: 0; width: 100%; z-index: 1000;
+            position: fixed; 
+            top: 0; width: 100%; 
+            z-index: 1000;
             backdrop-filter: blur(5px); 
         }
-        .logo-wrapper { display: flex; align-items: center; }
-        .logo-nav { height: 70px; width: auto; }
-        .menu-hamburguesa { font-size: 30px; color: white; cursor: pointer; user-select: none; }
 
-        /* --- SECCIÓN HERO DE INSCRIPCIÓN --- */
+        .logo-wrapper { display: flex; align-items: center; order: 1; }
+        .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; order: 2; user-select: none; }
+
+        .logo-mobile { 
+            height: 140px; 
+            width: auto; 
+            display: block; 
+        }
+        .logo-desktop { display: none; }
+
+        /* --- PANEL LATERAL DEL MENÚ --- */
+        .side-menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .side-menu {
+            position: fixed; top: 0; right: -280px; width: 280px; height: 100vh;
+            background: #09101f;
+            border-left: 1px solid rgba(230, 32, 53, 0.2);
+            z-index: 2001;
+            padding: 25px 20px;
+            display: flex; flex-direction: column;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        }
+        .side-menu.active { right: 0; }
+
+        .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .close-menu { font-size: 24px; color: #aaa; cursor: pointer; }
+        .side-menu-links { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+        .side-menu-links a { color: white; text-decoration: none; font-size: 1.1em; font-weight: 600; transition: color 0.2s; }
+        .side-menu-links a:hover { color: #e62035; }
+
+        /* --- SECCIÓN DE INSCRIPCIÓN --- */
         .inscripcion-section {
-            padding: 120px 20px 60px;
+            padding: 200px 20px 60px; /* Compensación para la Navbar de 140px */
             min-height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
@@ -62,7 +101,6 @@
         .modal-header h2 { font-size: 1.8em; font-weight: 800; }
         .modal-header p { color: #ccc; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Estilos del Formulario */
         .form-group { margin-bottom: 18px; }
         .form-group label { display: block; color: #aaa; font-size: 0.9em; margin-bottom: 7px; font-weight: 600; }
         .form-control {
@@ -72,20 +110,17 @@
         }
         .form-control:focus { outline: none; border-color: #e62035; background: rgba(230, 32, 53, 0.08); }
         
-        /* Corrección para visibilidad de las opciones en los desplegables (Selects) */
         select.form-control { color: #ffffff; background-color: #09101f; }
         select.form-control option { background-color: #09101f; color: #ffffff; padding: 10px; }
 
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-        /* Bloque de Pago */
         .payment-box {
             background: rgba(230, 32, 53, 0.05); border: 1px solid rgba(230, 32, 53, 0.15);
             border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;
         }
         .payment-header { color: #e62035; font-weight: bold; text-transform: uppercase; font-size: 0.9em; margin-bottom: 15px; }
         
-        /* Tasa BCV */
         .amount-ves-box { margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
         .amount-main { font-size: 2.2em; font-weight: 800; color: #2ecc71; }
         .amount-currency { font-size: 0.5em; color: #2ecc71; margin-left: 5px;}
@@ -94,7 +129,6 @@
 
         .payment-method-header { color: white; font-size: 1.1em; font-weight: 700; margin-bottom: 10px; }
         
-        /* Copiar Datos de Pago Móvil */
         .copy-group {
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
@@ -124,6 +158,17 @@
             border-radius: 8px; padding: 15px; text-align: center; margin-top: 25px;
         }
         .capture-label { color: #e62035; font-weight: bold; font-size: 0.95em; margin-bottom: 10px; display: block; }
+
+        @media (min-width: 992px) {
+            .logo-mobile { display: none; }
+            .logo-desktop { 
+                display: block; 
+                height: 190px; 
+                width: auto; 
+            }
+            .navbar-sandia { padding: 15px 40px; }
+            .inscripcion-section { padding-top: 240px; }
+        }
     </style>
 </head>
 <body>
@@ -131,10 +176,27 @@
     <!-- NAVBAR -->
     <nav class="navbar-sandia">
         <div class="logo-wrapper">
-            <img src="img/Logo1.png" alt="Sandía Production" class="logo-nav">
+            <img src="img/Logo1.png" alt="Sandía Production" class="logo-mobile">
+            <img src="img/Logo1.png" alt="Sandía Production" class="logo-desktop">
         </div>
-        <div class="menu-hamburguesa">&#9776;</div>
+        <div class="menu-hamburguesa" id="open-menu-btn">&#9776;</div>
     </nav>
+
+    <!-- PANEL LATERAL DE NAVEGACIÓN -->
+    <div class="side-menu-overlay" id="menu-overlay"></div>
+    <div class="side-menu" id="side-menu">
+        <div class="side-menu-header">
+            <span style="color:#e62035; font-weight:bold;">MENÚ</span>
+            <span class="close-menu" id="close-menu-btn">&times;</span>
+        </div>
+        <ul class="side-menu-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="index.html#proximas-carreras">Calendario</a></li>
+            <li><a href="index.html#eventos-pasados">Resultados</a></li>
+            <li><a href="#" onclick="toggleMenu()">Nosotros</a></li>
+            <li><a href="#" onclick="toggleMenu()">Contacto</a></li>
+        </ul>
+    </div>
 
     <!-- SECCIÓN DE INSCRIPCIÓN -->
     <section class="inscripcion-section">
@@ -147,7 +209,6 @@
                 <div class="payment-box">
                     <div class="payment-header">PASO 1: REALIZA EL PAGO</div>
                     
-                    <!-- TASA BCV EN VIVO -->
                     <div class="amount-ves-box">
                         <div id="loading-rate">Consultando tasa BCV en vivo...</div>
                         <div id="rate-results" style="display:none;">
@@ -293,16 +354,28 @@
 
     <script>
         // --- 1. ENDPOINTS CONFIGURADOS ---
-        // API centralizada de extracción del BCV
         const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbwsoD8ahtAQUqfY0TQWf3-dDs29HL8kEJa2t-mjDR3PAo3exTTmtSwXqYuNB2ob5dFpgw/exec";
-        
-        // App Script para registrar filas en el Google Sheet
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyyWPqtX9y7KNGsIHkHPLX7FmqsBvUr1faG8qcbDKDWKVPrrDuvfj4oZPAVFrQ1ziTy/exec";
         
         const costoEuros = 5; 
-        let tasaEuroActual = 692.05; // Respaldo local inicial
+        let tasaEuroActual = 692.05;
 
-        // --- 2. CONSULTA EN VIVO A LA API BCV ---
+        // --- 2. LÓGICA DEL MENÚ LATERAL ---
+        const openMenuBtn = document.getElementById('open-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const sideMenu = document.getElementById('side-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            sideMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        }
+
+        openMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // --- 3. CONSULTA EN VIVO A LA API BCV ---
         async function calcularMontoBolivares() {
             const loadingBox = document.getElementById('loading-rate');
             const resultsBox = document.getElementById('rate-results');
@@ -334,7 +407,7 @@
             }
         }
 
-        // --- 3. COPIAR DATOS AL PORTAPAPELES ---
+        // --- 4. COPIAR DATOS AL PORTAPAPELES ---
         function copyText(elementId, event) {
             const textToCopy = document.getElementById(elementId).innerText;
             const btn = event.target;
@@ -352,7 +425,7 @@
             });
         }
 
-        // --- 4. FORMULARIO DINÁMICO ---
+        // --- 5. FORMULARIO DINÁMICO ---
         const selectMetodo = document.getElementById('select-metodo-pago');
         const pagoMovilBox = document.getElementById('pago-movil-datos-box');
         const referenciaBox = document.getElementById('referencia-box');
@@ -381,7 +454,7 @@
             }
         });
 
-        // --- 5. ENVÍO DEL FORMULARIO A GOOGLE SHEETS ---
+        // --- 6. ENVÍO DEL FORMULARIO A GOOGLE SHEETS ---
         const form = document.getElementById('registration-form');
         const registrationContent = document.getElementById('registration-content');
         const loader = document.getElementById('submit-loader');
