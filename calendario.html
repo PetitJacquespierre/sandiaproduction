@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Runner - Sandía Production</title>
+    <link rel="icon" href="img/Isotipo.png" type="image/png">
+    <style>
+        /* ==========================================================================
+           1. ESTILOS GENERALES Y NAVBAR (Mismo diseño base)
+           ========================================================================== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background-color: #050a15; color: white; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow-x: hidden; 
+        }
+
+        .btn-sandia-general {
+            background-color: #e62035; color: white; border: none; font-weight: bold; cursor: pointer; 
+            text-transform: uppercase; transition: all 0.3s; text-decoration: none; 
+            display: inline-flex; justify-content: center; align-items: center; border-radius: 8px; padding: 10px 20px;
+        }
+        .btn-sandia-general:hover { background-color: #ff334b; transform: scale(1.03); box-shadow: 0 5px 15px rgba(230, 32, 53, 0.4); }
+
+        .navbar-sandia {
+            background-color: rgba(5, 10, 21, 0.98); padding: 10px 20px; display: flex;
+            justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(230, 32, 53, 0.15);
+            position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(5px); 
+        }
+        .logo-wrapper { display: flex; align-items: center; order: 1; }
+        .menu-hamburguesa { font-size: 28px; color: white; cursor: pointer; order: 2; user-select: none; }
+        .logo-mobile { height: 50px; width: auto; display: block; }
+        .logo-desktop { display: none; }
+
+        /* ==========================================================================
+           2. CABECERA DEL DIRECTORIO Y FILTROS
+           ========================================================================== */
+        .calendario-header {
+            padding: 120px 20px 40px; text-align: center;
+            background: linear-gradient(to bottom, rgba(230, 32, 53, 0.05), transparent);
+        }
+        .calendario-header h1 { font-size: 2.5em; font-weight: 800; color: white; margin-bottom: 10px; text-transform: uppercase; }
+        .calendario-header p { color: #aaa; font-size: 1.1em; max-width: 600px; margin: 0 auto 30px; }
+
+        .filtros-directorio {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;
+        }
+        .btn-filtro {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #ccc;
+            padding: 10px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; 
+            transition: all 0.3s; font-size: 0.95em;
+        }
+        .btn-filtro:hover { background: rgba(255,255,255,0.1); color: white; }
+        .btn-filtro.active {
+            background: #e62035; color: white; border-color: #e62035;
+            box-shadow: 0 0 15px rgba(230, 32, 53, 0.5);
+        }
+
+        /* ==========================================================================
+           3. GRID DE EVENTOS (Estilo Retos Venezuela)
+           ========================================================================== */
+        .directorio-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 80px; }
+        
+        .grid-eventos {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;
+        }
+
+        .evento-card {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;
+            display: flex; flex-direction: column; position: relative;
+        }
+        .evento-card:hover {
+            transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            border-color: rgba(230, 32, 53, 0.3);
+        }
+
+        .flyer-box { position: relative; width: 100%; padding-top: 100%; /* Cuadrado perfecto */ background-color: #111; overflow: hidden; }
+        .flyer-box img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        
+        /* Etiqueta de fecha flotante sobre la imagen */
+        .fecha-badge {
+            position: absolute; top: 15px; left: 15px; background: rgba(5, 10, 21, 0.9);
+            border: 1px solid #e62035; border-radius: 10px; padding: 10px;
+            text-align: center; display: flex; flex-direction: column; min-width: 65px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .fecha-badge .dia { font-size: 1.8em; font-weight: 900; color: white; line-height: 1; }
+        .fecha-badge .mes { font-size: 0.8em; font-weight: bold; color: #e62035; text-transform: uppercase; }
+
+        .info-box { padding: 25px 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        
+        .etiquetas-container { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .etiqueta { font-size: 0.7em; padding: 5px 12px; border-radius: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .etiqueta-presencial { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3); }
+        .etiqueta-virtual { background: rgba(155, 89, 182, 0.15); color: #9b59b6; border: 1px solid rgba(155, 89, 182, 0.3); }
+        .etiqueta-nacional { background: rgba(52, 152, 219, 0.15); color: #3498db; border: 1px solid rgba(52, 152, 219, 0.3); }
+
+        .info-box h3 { font-size: 1.4em; color: white; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+        .info-box .ubicacion { color: #888; font-size: 0.95em; margin-bottom: 20px; display: flex; align-items: center; gap: 5px; }
+        .info-box .ubicacion::before { content: '📍'; }
+
+        .card-acciones { margin-top: auto; display: flex; gap: 10px; }
+        .btn-outline {
+            background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white;
+            padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s;
+            text-align: center; flex-grow: 1; text-decoration: none; text-transform: uppercase; font-size: 0.85em;
+        }
+        .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.05); }
+
+        /* Mensaje de no resultados */
+        .sin-resultados { text-align: center; color: #777; padding: 50px 20px; font-size: 1.2em; display: none; width: 100%; grid-column: 1 / -1; }
+
+        @media (min-width: 992px) {
+            .logo-mobile { display: none; }
+            .logo-desktop { display: block; height: 70px; width: auto; }
+            .navbar-sandia { padding: 15px 40px; }
+            .calendario-header { padding-top: 140px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar-sandia">
+        <div class="logo-wrapper">
+            <a href="index.html">
+                <img src="img/Logo1.png" alt="Sandía Production" class="logo-mobile">
+                <img src="img/Logo1.png" alt="Sandía Production" class="logo-desktop">
+            </a>
+        </div>
+        <div class="menu-hamburguesa" onclick="window.location.href='index.html'">Inicio 🏠</div>
+    </nav>
+
+    <!-- CABECERA DIRECTORIO -->
+    <header class="calendario-header">
+        <h1>Calendario Runner 2026</h1>
+        <p>Explora los retos virtuales y carreras presenciales disponibles. Encuentra tu próxima meta.</p>
+        
+        <!-- FILTROS -->
+        <div class="filtros-directorio">
+            <button class="btn-filtro active" data-filtro="todas">Todas</button>
+            <button class="btn-filtro" data-filtro="presencial">🏃‍♂️ Presenciales (Falcón)</button>
+            <button class="btn-filtro" data-filtro="nacional">🇻🇪 Nacionales</button>
+            <button class="btn-filtro" data-filtro="virtual">🌐 Retos Virtuales</button>
+        </div>
+    </header>
+
+    <!-- DIRECTORIO DE EVENTOS -->
+    <main class="directorio-container">
+        <div class="grid-eventos" id="grid-eventos">
+            
+            <!-- TARJETA 1: Presencial Falcón (Propia) -->
+            <div class="evento-card" data-categoria="presencial">
+                <div class="flyer-box">
+                    <img src="img/coffee_run.png" alt="Coffee Run 3K">
+                    <div class="fecha-badge">
+                        <span class="dia">24</span>
+                        <span class="mes">OCT</span>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="etiquetas-container">
+                        <span class="etiqueta etiqueta-presencial">Presencial</span>
+                    </div>
+                    <h3>Coffee Run Terraza Tinaja (3K Vol. 1)</h3>
+                    <div class="ubicacion">Santa Irene, Punto Fijo</div>
+                    <div class="card-acciones">
+                        <a href="coffeerun.html" class="btn-sandia-general" style="width: 100%;">Inscribirse</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TARJETA 2: Reto Virtual -->
+            <div class="evento-card" data-categoria="virtual">
+                <div class="flyer-box">
+                    <img src="img/fondo_carrera.jpg" alt="Reto Virtual 10K" style="filter: hue-rotate(90deg);">
+                    <div class="fecha-badge">
+                        <span class="dia">15</span>
+                        <span class="mes">NOV</span>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="etiquetas-container">
+                        <span class="etiqueta etiqueta-virtual">Reto Virtual</span>
+                    </div>
+                    <h3>Reto Virtual 10K - Edición Noviembre</h3>
+                    <div class="ubicacion">Online / Cualquier Lugar</div>
+                    <div class="card-acciones">
+                        <a href="#" class="btn-outline">Más Detalles</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TARJETA 3: Nacional -->
+            <div class="evento-card" data-categoria="nacional">
+                <div class="flyer-box">
+                    <img src="img/matea_run.png" alt="Caracas Rock" style="background:#111; object-fit: contain;">
+                    <div class="fecha-badge">
+                        <span class="dia">31</span>
+                        <span class="mes">OCT</span>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="etiquetas-container">
+                        <span class="etiqueta etiqueta-nacional">Nacional</span>
+                        <span class="etiqueta etiqueta-presencial">Presencial</span>
+                    </div>
+                    <h3>Gatorade Caracas Rock 10K</h3>
+                    <div class="ubicacion">Caracas, Miranda</div>
+                    <div class="card-acciones">
+                        <a href="#" class="btn-outline">Ver Plataforma</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TARJETA 4: Regional Extra -->
+            <div class="evento-card" data-categoria="presencial">
+                <div class="flyer-box">
+                    <img src="img/Isotipo.png" alt="Coro 21K" style="background:#1a1a1a; object-fit: contain; padding: 20px;">
+                    <div class="fecha-badge">
+                        <span class="dia">05</span>
+                        <span class="mes">DIC</span>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="etiquetas-container">
+                        <span class="etiqueta etiqueta-presencial">Presencial</span>
+                    </div>
+                    <h3>Media Maratón de Coro 21K</h3>
+                    <div class="ubicacion">Paseo Monseñor Iturriza, Coro</div>
+                    <div class="card-acciones">
+                        <a href="#" class="btn-outline">Información</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- Mensaje si no hay tarjetas -->
+        <div class="sin-resultados" id="sin-resultados">
+            No hay carreras registradas en esta categoría por el momento.
+        </div>
+    </main>
+
+    <!-- SCRIPT DE FILTROS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const botones = document.querySelectorAll('.btn-filtro');
+            const tarjetas = document.querySelectorAll('.evento-card');
+            const msjSinResultados = document.getElementById('sin-resultados');
+
+            botones.forEach(boton => {
+                boton.addEventListener('click', () => {
+                    // Actualizar estilos de los botones
+                    botones.forEach(b => b.classList.remove('active'));
+                    boton.classList.add('active');
+
+                    const filtro = boton.getAttribute('data-filtro');
+                    let visibles = 0;
+
+                    // Filtrar tarjetas
+                    tarjetas.forEach(tarjeta => {
+                        const categoria = tarjeta.getAttribute('data-categoria');
+                        if (filtro === 'todas' || filtro === categoria) {
+                            tarjeta.style.display = 'flex';
+                            visibles++;
+                        } else {
+                            tarjeta.style.display = 'none';
+                        }
+                    });
+
+                    // Mostrar mensaje si no hay resultados
+                    msjSinResultados.style.display = visibles === 0 ? 'block' : 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
