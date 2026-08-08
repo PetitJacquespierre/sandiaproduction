@@ -62,29 +62,30 @@
         .modal-header h2 { font-size: 1.8em; font-weight: 800; }
         .modal-header p { color: #ccc; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Estilos del Formulario v4 */
+        /* Estilos del Formulario */
         .form-group { margin-bottom: 18px; }
         .form-group label { display: block; color: #aaa; font-size: 0.9em; margin-bottom: 7px; font-weight: 600; }
         .form-control {
-            width: 100%; padding: 14px; background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+            width: 100%; padding: 14px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
             color: white; font-size: 1em; transition: all 0.2s;
         }
-        .form-control:focus { outline: none; border-color: #e62035; background: rgba(230, 32, 53, 0.05); }
+        .form-control:focus { outline: none; border-color: #e62035; background: rgba(230, 32, 53, 0.08); }
         
-        /* Ajuste para select en dark mode */
-        select.form-control option { background-color: #09101f; color: white; }
+        /* Corrección para visibilidad de las opciones en los desplegables (Selects) */
+        select.form-control { color: #ffffff; background-color: #09101f; }
+        select.form-control option { background-color: #09101f; color: #ffffff; padding: 10px; }
 
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-        /* Bloque de Pago v4 con Tasa y Copia */
+        /* Bloque de Pago */
         .payment-box {
             background: rgba(230, 32, 53, 0.05); border: 1px solid rgba(230, 32, 53, 0.15);
             border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;
         }
         .payment-header { color: #e62035; font-weight: bold; text-transform: uppercase; font-size: 0.9em; margin-bottom: 15px; }
         
-        /* Tasa BCV v4 */
+        /* Tasa BCV */
         .amount-ves-box { margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
         .amount-main { font-size: 2.2em; font-weight: 800; color: #2ecc71; }
         .amount-currency { font-size: 0.5em; color: #2ecc71; margin-left: 5px;}
@@ -93,7 +94,7 @@
 
         .payment-method-header { color: white; font-size: 1.1em; font-weight: 700; margin-bottom: 10px; }
         
-        /* Datos de Pago Movil con Copy */
+        /* Copiar Datos de Pago Móvil */
         .copy-group {
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
@@ -111,17 +112,13 @@
         .btn-copy.copied { background: #2ecc71; border-color: #2ecc71; color: white; }
 
         .payment-notes { color: #777; font-size: 0.8em; margin-top: 15px; font-style: italic; }
-
         .form-instructions { text-align: center; color: #ccc; font-size: 0.9em; margin-bottom: 20px; }
-
         .btn-submit-registration { width: 100%; padding: 16px; font-size: 1.1em; margin-top: 20px; }
 
-        /* Estados de envío */
         #submit-loader, #success-message { display: none; text-align: center; padding: 20px; }
         #success-message h3 { color: #2ecc71; font-size: 1.5em; margin-bottom: 10px; }
         #success-message p { color: #ccc; }
 
-        /* WhatsApp Instruction Box v4 */
         .capture-instruction-box {
             background: rgba(230, 32, 53, 0.03); border: 1px solid rgba(230, 32, 53, 0.15);
             border-radius: 8px; padding: 15px; text-align: center; margin-top: 25px;
@@ -142,49 +139,46 @@
     <!-- SECCIÓN DE INSCRIPCIÓN -->
     <section class="inscripcion-section">
         <div class="inscripcion-container">
-            <!-- FLYER Y DATOS DE PAGO v4 -->
+            
+            <!-- FLYER Y DATOS DE PAGO -->
             <div class="flyer-container">
                 <img src="img/coffee_run.png" alt="Coffee Run - Terraza Tinaja Flyer" class="flyer-img">
                 
-                <!-- BLOQUE DE PAGO CON TASA Y COPIA v4 -->
                 <div class="payment-box">
                     <div class="payment-header">PASO 1: REALIZA EL PAGO</div>
                     
-                    <!-- Tasa BCV v4 -->
+                    <!-- TASA BCV EN VIVO -->
                     <div class="amount-ves-box">
-                        <div id="loading-rate">Calculando monto en Bs...</div>
+                        <div id="loading-rate">Consultando tasa BCV en vivo...</div>
                         <div id="rate-results" style="display:none;">
                             <div class="amount-main" id="monto-final-ves">0,00<span class="amount-currency">Bs</span></div>
-                            <div class="rate-reference">Equivalente a 5€ (Tasa BCV: <span id="tasa-euro-bcv">0,00</span>)</div>
+                            <div class="rate-reference">Equivalente a 5€ (Tasa BCV Euro: <span id="tasa-euro-bcv">0,00</span> Bs)</div>
                         </div>
                         <div class="rate-reference" style="color:#e62035; margin-top:10px">O paga 5$ / 5€ en Efectivo.</div>
                     </div>
 
                     <div class="payment-method-header">PAGO MÓVIL</div>
                     
-                    <!-- Cédula -->
                     <div class="copy-group">
                         <div class="copy-data"><strong>Cédula:</strong> <span id="pago-cedula">18.698.675</span></div>
-                        <button class="btn-copy" onclick="copyText('pago-cedula')">Copiar</button>
+                        <button class="btn-copy" onclick="copyText('pago-cedula', event)">Copiar</button>
                     </div>
 
-                    <!-- Teléfono -->
                     <div class="copy-group">
                         <div class="copy-data"><strong>Teléfono:</strong> <span id="pago-tlf">0412-6574354</span></div>
-                        <button class="btn-copy" onclick="copyText('pago-tlf')">Copiar</button>
+                        <button class="btn-copy" onclick="copyText('pago-tlf', event)">Copiar</button>
                     </div>
 
-                    <!-- Banco -->
                     <div class="copy-group">
                         <div class="copy-data"><strong>Banco:</strong> <span id="pago-banco">PROVINCIAL</span></div>
-                        <button class="btn-copy" onclick="copyText('pago-banco')">Copiar</button>
+                        <button class="btn-copy" onclick="copyText('pago-banco', event)">Copiar</button>
                     </div>
 
                     <p class="payment-notes">**Realiza tu pago antes de completar el formulario**</p>
                 </div>
             </div>
 
-            <!-- FORMULARIO v4 -->
+            <!-- FORMULARIO -->
             <div class="form-container">
                 <div id="registration-content">
                     <div class="modal-header">
@@ -194,11 +188,10 @@
 
                     <p class="form-instructions">PASO 2: REPORTA TUS DATOS DE INSCRIPCIÓN</p>
 
-                    <!-- FORMULARIO HTML v4 -->
                     <form id="registration-form">
                         
                         <div class="form-group">
-                            <label>CEDULA DE IDENTIDAD o PASAPORTE</label>
+                            <label>CÉDULA DE IDENTIDAD o PASAPORTE</label>
                             <input type="text" name="cedula" class="form-control" placeholder="V-1234567" required>
                         </div>
 
@@ -209,16 +202,15 @@
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label>NUMERO DE CONTACTO</label>
+                                <label>NÚMERO DE CONTACTO</label>
                                 <input type="tel" name="telefono" class="form-control" placeholder="04141234567" required>
                             </div>
                             <div class="form-group">
-                                <label>CORREO ELECTRONICO</label>
+                                <label>CORREO ELECTRÓNICO</label>
                                 <input type="email" name="email" class="form-control" placeholder="juan@email.com" required>
                             </div>
                         </div>
 
-                        <!-- NUEVO CAMPO: Método de Pago v4 -->
                         <div class="form-group">
                             <label>MÉTODO DE PAGO UTILIZADO</label>
                             <select name="metodo_pago" id="select-metodo-pago" class="form-control" required>
@@ -231,13 +223,12 @@
 
                         <div class="form-group">
                             <label>MONTO EXACTO DE SU PAGO (VES)</label>
-                            <input type="text" name="monto_exacto" id="form-monto-ves" class="form-control" placeholder="Monto calculado..." readonly required>
+                            <input type="text" name="monto_exacto" id="form-monto-ves" class="form-control" placeholder="Cargando monto..." readonly required>
                         </div>
 
-                        <!-- BLOQUE CONDICIONAL: Pago Móvil Datos v4 -->
                         <div id="pago-movil-datos-box" style="display:none;">
                             <div class="form-group">
-                                <label>NUMERO DE TLF AFILIADO AL PAGO MOVIL (EMISOR)</label>
+                                <label>NÚMERO DE TLF AFILIADO AL PAGO MÓVIL (EMISOR)</label>
                                 <input type="tel" name="tlf_afiliado" class="form-control" placeholder="Teléfono que emitió el pago">
                             </div>
 
@@ -249,9 +240,9 @@
                                     <option value="Bancamiga">Bancamiga</option>
                                     <option value="Bancaribe">Bancaribe</option>
                                     <option value="Banco Activo">Banco Activo</option>
-                                    <option value="Banco Agricola de Venezuela">Banco Agrícola de Venezuela</option>
+                                    <option value="Banco Agrícola de Venezuela">Banco Agrícola de Venezuela</option>
                                     <option value="Banco BNC">Banco BNC</option>
-                                    <option value="Banco Caroni">Banco Caroní</option>
+                                    <option value="Banco Caroní">Banco Caroní</option>
                                     <option value="Banco de Venezuela">Banco de Venezuela</option>
                                     <option value="Banco del Tesoro">Banco del Tesoro</option>
                                     <option value="Banco Exterior">Banco Exterior</option>
@@ -259,7 +250,7 @@
                                     <option value="Banco Plaza">Banco Plaza</option>
                                     <option value="Banco Provincial">Banco Provincial</option>
                                     <option value="Banco Sofitasa">Banco Sofitasa</option>
-                                    <option value="Banco Venezolano de Credito">Banco Venezolano de Crédito</option>
+                                    <option value="Banco Venezolano de Crédito">Banco Venezolano de Crédito</option>
                                     <option value="Bancrecer">Bancrecer</option>
                                     <option value="Banesco">Banesco</option>
                                     <option value="Banfanb">Banfanb</option>
@@ -271,23 +262,20 @@
                             </div>
                         </div>
 
-                        <!-- Referencia Universal v4 -->
                         <div class="form-group" id="referencia-box">
-                            <label>ÚLTIMOS DIGITOS DE LA REFERENCIA DE PAGO (PAGO MOVIL / USDT)</label>
+                            <label>ÚLTIMOS DÍGITOS DE LA REFERENCIA DE PAGO (PAGO MÓVIL / USDT)</label>
                             <input type="text" name="referencia_ref" class="form-control" placeholder="Últimos 4 o 6 dígitos">
                         </div>
 
-                        <!-- CAPTURE DE PAGO INSTRUCCIÓN v4 -->
                         <div class="capture-instruction-box">
                             <label class="capture-label">PASO 3: ENVÍA EL CAPTURE</label>
-                            <p style="color:#ccc; font-size:0.9em">Recuerda enviar el capture de tu pago (Pago Móvil o USDT) por WhatsApp a nuestro contacto para validar tu cupo.</p>
+                            <p style="color:#ccc; font-size:0.9em">Recuerda enviar el capture de tu pago por WhatsApp a nuestro contacto para validar tu cupo.</p>
                         </div>
 
                         <button type="submit" class="btn-sandia-general btn-submit-registration">Finalizar Inscripción</button>
                     </form>
                 </div>
 
-                <!-- ESTADOS DE ENVÍO v4 -->
                 <div id="submit-loader">
                     <div style="color:#e62035; font-size:1.2em; font-weight:bold;">Procesando Inscripción...</div>
                     <p style="color:#aaa; margin-top:10px;">Por favor, no cierres esta página.</p>
@@ -303,17 +291,18 @@
         </div>
     </section>
 
-    <!-- SCRIPTS DE JAVASCRIPT v4 -->
     <script>
-        // --- 1. CONFIGURACIÓN ---
-        // *** TU URL DE APPS SCRIPT v4 ***
+        // --- 1. ENDPOINTS CONFIGURADOS ---
+        // API centralizada de extracción del BCV
+        const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbwsoD8ahtAQUqfY0TQWf3-dDs29HL8kEJa2t-mjDR3PAo3exTTmtSwXqYuNB2ob5dFpgw/exec";
+        
+        // App Script para registrar filas en el Google Sheet
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyyWPqtX9y7KNGsIHkHPLX7FmqsBvUr1faG8qcbDKDWKVPrrDuvfj4oZPAVFrQ1ziTy/exec";
         
-        const costoEuros = 5; // El costo base
-        let tasaEuroActual = 0;
-        let montoTotalVES = 0;
+        const costoEuros = 5; 
+        let tasaEuroActual = 692.05; // Respaldo local inicial
 
-        // --- 2. CÁLCULO DE LA TASA BCV v4 ---
+        // --- 2. CONSULTA EN VIVO A LA API BCV ---
         async function calcularMontoBolivares() {
             const loadingBox = document.getElementById('loading-rate');
             const resultsBox = document.getElementById('rate-results');
@@ -322,56 +311,48 @@
             const tasaBcvLabel = document.getElementById('tasa-euro-bcv');
 
             try {
-                // Consultamos tu Apps Script
-                const respuesta = await fetch(urlScriptGoogle + "?tasa=euro");
+                const respuesta = await fetch(urlApiDivisasBCV);
                 const datos = await respuesta.json();
                 
                 if (datos && datos.eur) {
                     tasaEuroActual = parseFloat(datos.eur);
-                    montoTotalVES = costoEuros * tasaEuroActual;
-                    const formandorMoneda = new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    
-                    const montoFormateado = formandorMoneda.format(montoTotalVES);
-
-                    // Actualizar Interfaz Principal (Flyer)
-                    montoVesLabel.innerHTML = montoFormateado + '<span class="amount-currency">Bs</span>';
-                    tasaBcvLabel.innerText = formandorMoneda.format(tasaEuroActual);
-                    
-                    // Actualizar Campo del Formulario (Solo lectura)
-                    formMontoVes.value = montoFormateado + " VES";
-
-                    loadingBox.style.display = 'none';
-                    resultsBox.style.display = 'block';
                 }
             } catch (error) {
-                console.error("Error al calcular tasa:", error);
-                loadingBox.innerText = "Error al conectar con BCV. Por favor calcula el monto manualmente (5€ x Tasa Euro BCV).";
-                formMontoVes.value = "Calcula manualmente (5€ x Tasa)";
+                console.error("Error consultando la API de divisas, utilizando tasa de respaldo local.", error);
+            } finally {
+                const montoTotalVES = costoEuros * tasaEuroActual;
+                const formateador = new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                
+                const montoFormateado = formateador.format(montoTotalVES);
+
+                montoVesLabel.innerHTML = montoFormateado + '<span class="amount-currency">Bs</span>';
+                tasaBcvLabel.innerText = formateador.format(tasaEuroActual);
+                formMontoVes.value = montoFormateado + " VES";
+
+                loadingBox.style.display = 'none';
+                resultsBox.style.display = 'block';
             }
         }
 
-        // --- 3. LÓGICA DE COPIA DE TEXTO v4 ---
-        function copyText(elementId) {
+        // --- 3. COPIAR DATOS AL PORTAPAPELES ---
+        function copyText(elementId, event) {
             const textToCopy = document.getElementById(elementId).innerText;
-            const btn = event.target; // Obtener el botón que hizo clic
+            const btn = event.target;
 
             navigator.clipboard.writeText(textToCopy).then(() => {
-                // Éxito: Cambiar estilo del botón temporalmente
                 btn.innerText = "¡Copiado!";
                 btn.classList.add('copied');
                 
-                // Revertir después de 2 segundos
                 setTimeout(() => {
                     btn.innerText = "Copiar";
                     btn.classList.remove('copied');
                 }, 2000);
             }).catch(err => {
                 console.error("Error al copiar:", err);
-                alert("No se pudo copiar automáticamente. Por favor cópialo manualmente.");
             });
         }
 
-        // --- 4. LÓGICA CONDICIONAL DEL FORMULARIO v4 ---
+        // --- 4. FORMULARIO DINÁMICO ---
         const selectMetodo = document.getElementById('select-metodo-pago');
         const pagoMovilBox = document.getElementById('pago-movil-datos-box');
         const referenciaBox = document.getElementById('referencia-box');
@@ -382,28 +363,25 @@
             if (metodo === "Pago Móvil") {
                 pagoMovilBox.style.display = 'block';
                 referenciaBox.style.display = 'block';
-                // Hacer campos requeridos
                 pagoMovilBox.querySelector('input[name="tlf_afiliado"]').setAttribute('required', 'required');
                 pagoMovilBox.querySelector('select[name="banco_emisor"]').setAttribute('required', 'required');
                 referenciaBox.querySelector('input').setAttribute('required', 'required');
             } else if (metodo === "USDT") {
                 pagoMovilBox.style.display = 'none';
                 referenciaBox.style.display = 'block';
-                // Quitar requeridos de pago movil, mantener referencia
                 pagoMovilBox.querySelector('input[name="tlf_afiliado"]').removeAttribute('required');
                 pagoMovilBox.querySelector('select[name="banco_emisor"]').removeAttribute('required');
                 referenciaBox.querySelector('input').setAttribute('required', 'required');
-            } else { // Efectivo
+            } else { 
                 pagoMovilBox.style.display = 'none';
                 referenciaBox.style.display = 'none';
-                // Quitar todos los requeridos condicionales
                 pagoMovilBox.querySelector('input[name="tlf_afiliado"]').removeAttribute('required');
                 pagoMovilBox.querySelector('select[name="banco_emisor"]').removeAttribute('required');
                 referenciaBox.querySelector('input').removeAttribute('required');
             }
         });
 
-        // --- 5. ENVÍO DEL FORMULARIO A GOOGLE SHEETS v4 ---
+        // --- 5. ENVÍO DEL FORMULARIO A GOOGLE SHEETS ---
         const form = document.getElementById('registration-form');
         const registrationContent = document.getElementById('registration-content');
         const loader = document.getElementById('submit-loader');
@@ -425,26 +403,22 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(datosAEnviar)
             })
-            .then(respuesta => {
-                // 'no-cors' -> opaque response, asumimos éxito si no hay error
+            .then(() => {
                 loader.style.display = 'none';
                 successMsg.style.display = 'block';
                 form.reset();
-                // Reiniciar campos condicionales
                 pagoMovilBox.style.display = 'none';
                 referenciaBox.style.display = 'block';
-                // Re-inicializar tasa para el campo solo lectura
                 calcularMontoBolivares();
             })
             .catch(error => {
                 console.error('Error al enviar:', error);
                 loader.style.display = 'none';
                 registrationContent.style.display = 'block';
-                alert('Hubo un error al procesar tu inscripción. Por favor inténtalo de nuevo o contáctanos.');
+                alert('Hubo un error al procesar tu inscripción. Por favor inténtalo de nuevo.');
             });
         });
 
-        // --- 6. INICIALIZACIÓN v4 ---
         window.onload = calcularMontoBolivares;
     </script>
 </body>
