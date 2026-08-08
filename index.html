@@ -62,12 +62,13 @@
         }
 
         /* ==========================================================================
-           2. NAVBAR Y LOGO DE CABECERA (Reducidos)
+           2. NAVBAR Y LOGO DE CABECERA (Logo Grande, Barra Comprimida)
            ========================================================================== */
         .navbar-sandia {
             background-color: rgba(5, 10, 21, 0.98); 
-            /* Se redujo el padding para hacer la barra más fina */
-            padding: 10px 20px; display: flex;
+            /* Se comprime el padding al mínimo (10px) para que la barra abrace al logo sin dejar espacio inútil */
+            padding: 10px 20px; 
+            display: flex;
             justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(230, 32, 53, 0.15);
             position: fixed; top: 0; width: 100%; z-index: 1000;
@@ -75,10 +76,10 @@
         }
 
         .logo-wrapper { display: flex; align-items: center; order: 1; }
-        .menu-hamburguesa { font-size: 28px; color: white; cursor: pointer; order: 2; user-select: none; }
+        .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; order: 2; user-select: none; }
         
-        /* Reducción drástica del logo en móvil para no comer pantalla */
-        .logo-mobile { height: 50px; width: auto; display: block; }
+        /* Restaurado a su tamaño original grande */
+        .logo-mobile { height: 140px; width: auto; display: block; }
         .logo-desktop { display: none; }
 
         /* ==========================================================================
@@ -107,8 +108,8 @@
         /* ==========================================================================
            4. SECCIONES DE EVENTOS Y CAROUSEL
            ========================================================================== */
-        /* Compensación ajustada a la nueva barra de navegación más pequeña */
-        .proximas-carreras { padding: 90px 15px 30px; }
+        /* Compensación de margen superior para que no lo cubra el logo grande */
+        .proximas-carreras { padding: 180px 15px 30px; }
         .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding-bottom: 15px; -ms-overflow-style: none; scrollbar-width: none; }
         .carousel-container::-webkit-scrollbar { display: none; }
 
@@ -121,7 +122,7 @@
         .inscribirme-card { width: 100%; padding: 14px; border-radius: 8px; font-size: 0.95em; box-shadow: 0 4px 10px rgba(230, 32, 53, 0.3); }
 
         /* ==========================================================================
-           5. NUEVA SECCIÓN: RUN FREE (COMUNIDAD RUNNER) CON LOGO
+           5. SECCIÓN: RUN FREE (COMUNIDAD RUNNER) CON LOGO
            ========================================================================== */
         .seccion-run-free {
             padding: 30px 15px;
@@ -143,7 +144,6 @@
         }
         .run-free-info { display: flex; flex-direction: column; align-items: center; }
         
-        /* Estilos para el logo de Run Free */
         .run-free-logo-img { max-width: 150px; height: auto; margin-bottom: 15px; }
         
         .run-free-info h2 { font-size: 1.5em; color: white; margin-bottom: 10px; font-weight: 800; }
@@ -171,7 +171,7 @@
         .btn-past-results { background-color: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ccc; padding: 9px 16px; border-radius: 20px; font-size: 0.8em; font-weight: 600; }
 
         /* ==========================================================================
-           7. NUEVO FOOTER (PIE DE PÁGINA)
+           7. FOOTER (PIE DE PÁGINA)
            ========================================================================== */
         .footer-sandia {
             background-color: #03060d;
@@ -206,9 +206,10 @@
 
         @media (min-width: 992px) {
             .logo-mobile { display: none; }
-            .logo-desktop { display: block; height: 70px; width: auto; }
-            .navbar-sandia { padding: 15px 40px; }
-            .proximas-carreras { padding-top: 120px; }
+            /* Tamaño gigante restaurado en escritorio */
+            .logo-desktop { display: block; height: 190px; width: auto; }
+            .navbar-sandia { padding: 10px 40px; }
+            .proximas-carreras { padding-top: 240px; }
             .proximas-carreras, .eventos-pasados, .seccion-run-free { padding-left: 40px; padding-right: 40px; }
             .run-free-card { flex-direction: row; justify-content: space-between; text-align: left; padding: 40px; }
             .run-free-info { align-items: flex-start; }
@@ -218,7 +219,7 @@
 </head>
 <body>
 
-    <!-- 1. PANTALLA DE CARGA -->
+    <!-- PANTALLA DE CARGA -->
     <div id="splash-screen">
         <canvas id="bullet-canvas"></canvas>
         <div id="logo-container">
@@ -228,7 +229,7 @@
         </div>
     </div>
 
-    <!-- 2. CONTENIDO PRINCIPAL -->
+    <!-- CONTENIDO PRINCIPAL -->
     <div id="main-content">
         
         <!-- NAVBAR -->
@@ -286,20 +287,19 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 2: INTEGRACIÓN COMUNIDAD RUN FREE CON LOGO -->
+        <!-- SECCIÓN 2: INTEGRACIÓN COMUNIDAD RUN FREE -->
         <section class="seccion-run-free" id="run-free">
             <div class="run-free-card">
                 <div class="run-free-info">
                     <span class="run-free-badge">Comunidad Oficial</span>
                     
-                    <!-- LOGO RUN FREE. Guarda la imagen en img/logo_runfree.png -->
+                    <!-- LOGO RUN FREE -->
                     <img src="img/logo_runfree.png" alt="Run Free" class="run-free-logo-img" onerror="this.style.display='none'">
                     
                     <h2>Únete al Team RUN FREE 🏃‍♂️🔥</h2>
                     <p>Entrenamientos, rutas semanales y la mejor vibra runner de la ciudad. Sumamos kilómetros juntos antes de cada gran reto.</p>
                 </div>
                 <div>
-                    <!-- Enlace directo al WhatsApp o Instagram de Run Free -->
                     <a href="https://www.instagram.com/runfreest/" target="_blank" class="btn-run-free">
                         Ver en Instagram
                     </a>
@@ -332,16 +332,14 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 4: FOOTER (PIE DE PÁGINA CON SELLO DE AGENCIA) -->
+        <!-- SECCIÓN 4: FOOTER (PIE DE PÁGINA) -->
         <footer class="footer-sandia" id="contacto">
             <div class="footer-content">
-                <!-- Columna 1: Marca -->
                 <div class="footer-col">
                     <h4>Sandía Production</h4>
                     <p>Plataforma líder en gestión, logística y cronometraje de eventos deportivos y retos virtuales.</p>
                 </div>
 
-                <!-- Columna 2: Comunidad -->
                 <div class="footer-col">
                     <h4>Comunidad</h4>
                     <ul>
@@ -351,7 +349,6 @@
                     </ul>
                 </div>
 
-                <!-- Columna 3: Contacto -->
                 <div class="footer-col">
                     <h4>Contacto</h4>
                     <ul>
@@ -362,12 +359,11 @@
                 </div>
             </div>
 
-            <!-- Créditos de Desarrollo (Tu marca de agencia) -->
+            <!-- Créditos Onion Web -->
             <div class="footer-bottom">
                 <div>&copy; 2026 Sandía Production. Todos los derechos reservados.</div>
                 <div>
                     Desarrollado por 
-                    <!-- Marcador de posición para tu marca de agencia -->
                     <a href="https://instagram.com/onionweb.ve" target="_blank" class="agency-credit">
                         ⚡ Onion Web
                     </a>
@@ -462,7 +458,6 @@
             animationFrame = requestAnimationFrame(animate);
         }
 
-        // LÓGICA DEL MENÚ LATERAL
         const openMenuBtn = document.getElementById('open-menu-btn');
         const closeMenuBtn = document.getElementById('close-menu-btn');
         const sideMenu = document.getElementById('side-menu');
