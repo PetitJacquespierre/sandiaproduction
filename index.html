@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sandía Production - Prototipo</title>
+    <title>Sandía Production - Plataforma de Eventos Deportivos</title>
     <style>
+        /* ==========================================================================
+           1. ESTILOS GENERALES Y RESETS
+           ========================================================================== */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             background-color: #050a15; 
@@ -13,45 +16,28 @@
             overflow: hidden; 
         }
 
-        /* --- 1. PANTALLA DE CARGA (SPLASH SCREEN) --- */
+        /* --- PANTALLA DE CARGA (SPLASH SCREEN) --- */
         #splash-screen {
             position: fixed; 
             top: 0; left: 0; 
             width: 100vw; height: 100vh;
             background: linear-gradient(rgba(5, 10, 21, 0.9), rgba(5, 10, 21, 0.97)), 
                         url('img/fondo_carrera.jpg') center/cover no-repeat;
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            z-index: 9999; 
-            transition: opacity 1s ease-out;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 1s ease-out;
         }
 
-        #bullet-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;
-        }
-
-        #logo-container {
-            position: relative; width: 130px; height: 130px; display: flex; justify-content: center; align-items: center; z-index: 10;
-        }
-
-        #loading-ring {
-            position: absolute; width: 100%; height: 100%; border: 3px solid rgba(230, 32, 53, 0.1); border-top: 3px solid #e62035; border-right: 3px solid #e62035; border-radius: 50%; animation: spin 2s linear infinite; box-shadow: 0 0 12px rgba(230, 32, 53, 0.3);
-        }
-
-        #loading-ring-inner {
-            position: absolute; width: 82%; height: 82%; border: 2px solid transparent; border-bottom: 2px solid #2ecc71; border-radius: 50%; animation: spin-reverse 3s linear infinite; opacity: 0.7;
-        }
-
-        #sandia-logo {
-            width: 60%; position: relative; z-index: 12; animation: latido 1.6s infinite alternate ease-in-out; filter: drop-shadow(0 0 10px rgba(230, 32, 53, 0.5));
-        }
+        #bullet-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        #logo-container { position: relative; width: 130px; height: 130px; display: flex; justify-content: center; align-items: center; z-index: 10; }
+        #loading-ring { position: absolute; width: 100%; height: 100%; border: 3px solid rgba(230, 32, 53, 0.1); border-top: 3px solid #e62035; border-right: 3px solid #e62035; border-radius: 50%; animation: spin 2s linear infinite; box-shadow: 0 0 12px rgba(230, 32, 53, 0.3); }
+        #loading-ring-inner { position: absolute; width: 82%; height: 82%; border: 2px solid transparent; border-bottom: 2px solid #2ecc71; border-radius: 50%; animation: spin-reverse 3s linear infinite; opacity: 0.7; }
+        #sandia-logo { width: 60%; position: relative; z-index: 12; animation: latido 1.6s infinite alternate ease-in-out; filter: drop-shadow(0 0 10px rgba(230, 32, 53, 0.5)); }
 
         @keyframes latido { 0% { transform: scale(0.97); } 100% { transform: scale(1.03); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes spin-reverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
 
-        /* --- 2. CONTENIDO PRINCIPAL --- */
+        /* --- CONTENIDO PRINCIPAL --- */
         #main-content {
             display: none; 
             min-height: 100vh; 
@@ -62,87 +48,63 @@
         }
 
         .btn-sandia-general {
-            background-color: #e62035; 
-            color: white;
-            border: none; 
-            font-weight: bold; 
-            cursor: pointer; 
-            text-transform: uppercase;
-            transition: background 0.3s, transform 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #e62035; color: white; border: none; 
+            font-weight: bold; cursor: pointer; text-transform: uppercase;
+            transition: background 0.3s, transform 0.2s; text-decoration: none;
+            display: inline-flex; justify-content: center; align-items: center;
+            border-radius: 8px;
         }
         .btn-sandia-general:hover { background-color: #ff334b; transform: scale(1.03); }
 
         .titulo-seccion {
-            text-transform: uppercase;
-            color: #e62035; 
-            font-size: 1.1em;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-            padding-left: 5px;
+            text-transform: uppercase; color: #e62035; font-size: 1.1em;
+            margin-bottom: 15px; letter-spacing: 2px; padding-left: 5px;
         }
 
-        /* --- 1. AJUSTE NAVBAR: Más alta para el logo gigante --- */
+        /* ==========================================================================
+           2. NAVBAR Y LOGO DE CABECERA
+           ========================================================================== */
         .navbar-sandia {
             background-color: rgba(5, 10, 21, 0.98); 
-            padding: 25px 20px; /* Relleno vertical aumentado de 15px a 25px */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 25px 20px; display: flex;
+            justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(230, 32, 53, 0.15);
-            position: fixed; 
-            top: 0; width: 100%; 
-            z-index: 1000;
+            position: fixed; top: 0; width: 100%; z-index: 1000;
             backdrop-filter: blur(5px); 
         }
 
         .logo-wrapper { display: flex; align-items: center; order: 1; }
         .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; order: 2; user-select: none; }
-
-        /* --- 2. AJUSTE LOGO MÓVIL: Duplicado de 70px a 140px --- */
-        .logo-mobile { 
-            height: 140px; /* Aumentado sustancialmente para amplitud y lectura */
-            width: auto;   /* Mantiene la proporción */
-            display: block; 
-        }
+        .logo-mobile { height: 140px; width: auto; display: block; }
         .logo-desktop { display: none; }
 
-        /* PANEL LATERAL DEL MENÚ */
+        /* ==========================================================================
+           3. MENÚ LATERAL DESPLEGABLE
+           ========================================================================== */
         .side-menu-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
+            background: rgba(0, 0, 0, 0.7); z-index: 2000;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
 
         .side-menu {
             position: fixed; top: 0; right: -280px; width: 280px; height: 100vh;
-            background: #09101f;
-            border-left: 1px solid rgba(230, 32, 53, 0.2);
-            z-index: 2001;
-            padding: 25px 20px;
-            display: flex; flex-direction: column;
-            transition: right 0.3s ease;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2);
+            z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column;
+            transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.5);
         }
         .side-menu.active { right: 0; }
-
         .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .close-menu { font-size: 24px; color: #aaa; cursor: pointer; }
         .side-menu-links { list-style: none; display: flex; flex-direction: column; gap: 20px; }
         .side-menu-links a { color: white; text-decoration: none; font-size: 1.1em; font-weight: 600; transition: color 0.2s; }
         .side-menu-links a:hover { color: #e62035; }
 
-        /* SECCIONES Y CAROUSEL */
-        .proximas-carreras { 
-            /* --- 3. AJUSTE CONTENIDO: Más espacio superior para compensar el logo grande --- */
-            padding: 200px 15px 30px; /* Relleno superior aumentado de 130px a 200px */
-        }
+        /* ==========================================================================
+           4. SECCIONES DE EVENTOS Y CAROUSEL
+           ========================================================================== */
+        .proximas-carreras { padding: 200px 15px 30px; }
         .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding-bottom: 15px; -ms-overflow-style: none; scrollbar-width: none; }
         .carousel-container::-webkit-scrollbar { display: none; }
 
@@ -154,6 +116,39 @@
         .event-card p { color: #aaa; margin-bottom: 20px; font-size: 0.95em; }
         .inscribirme-card { width: 100%; padding: 14px; border-radius: 8px; font-size: 0.95em; box-shadow: 0 4px 10px rgba(230, 32, 53, 0.3); }
 
+        /* ==========================================================================
+           5. NUEVA SECCIÓN: RUN FREE (COMUNIDAD RUNNER)
+           ========================================================================== */
+        .seccion-run-free {
+            padding: 30px 15px;
+            background: linear-gradient(135deg, rgba(230, 32, 53, 0.08) 0%, rgba(9, 16, 31, 0.6) 100%);
+            border-top: 1px solid rgba(230, 32, 53, 0.2);
+            border-bottom: 1px solid rgba(230, 32, 53, 0.2);
+            margin: 20px 0;
+        }
+        .run-free-card {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center;
+            background: rgba(255, 255, 255, 0.02); padding: 30px 20px; border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .run-free-badge {
+            background-color: #2ecc71; color: #050a15; font-weight: 800;
+            font-size: 0.75em; padding: 5px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .run-free-info h2 { font-size: 1.8em; color: white; margin-bottom: 10px; font-weight: 800; }
+        .run-free-info p { color: #aaa; font-size: 0.95em; line-height: 1.5; max-width: 600px; }
+        .btn-run-free {
+            background-color: #2ecc71; color: #050a15; padding: 12px 25px;
+            font-weight: 800; border-radius: 25px; text-decoration: none;
+            text-transform: uppercase; font-size: 0.9em; transition: transform 0.2s, background 0.3s;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-run-free:hover { transform: scale(1.05); background-color: #27ae60; color: white; }
+
+        /* ==========================================================================
+           6. EVENTOS PASADOS
+           ========================================================================== */
         .eventos-pasados { padding: 20px 15px 50px; background-color: rgba(0,0,0,0.15); }
         .lista-pasados-container { display: flex; flex-direction: column; gap: 12px; }
         
@@ -165,19 +160,48 @@
         .past-info p { color: #777; font-size: 0.88em; margin: 0; }
         .btn-past-results { background-color: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ccc; padding: 9px 16px; border-radius: 20px; font-size: 0.8em; font-weight: 600; }
 
+        /* ==========================================================================
+           7. NUEVO FOOTER (PIE DE PÁGINA)
+           ========================================================================== */
+        .footer-sandia {
+            background-color: #03060d;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 50px 20px 20px; margin-top: auto;
+        }
+        .footer-content {
+            max-width: 1100px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px; padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .footer-col h4 {
+            color: #e62035; text-transform: uppercase; font-size: 0.95em;
+            margin-bottom: 15px; letter-spacing: 1px;
+        }
+        .footer-col p, .footer-col li { color: #888; font-size: 0.9em; line-height: 1.6; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li a { color: #aaa; text-decoration: none; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: #e62035; }
+        
+        .footer-bottom {
+            max-width: 1100px; margin: 20px auto 0;
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            text-align: center; color: #555; font-size: 0.85em;
+        }
+        .agency-credit {
+            color: #aaa; font-weight: 600; text-decoration: none;
+            transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px;
+        }
+        .agency-credit:hover { color: #e62035; }
+
         @media (min-width: 992px) {
             .logo-mobile { display: none; }
-            /* AJUSTE ESCRITORIO: Logo duplicado de 95px a 190px */
-            .logo-desktop { 
-                display: block; 
-                height: 190px; /* Muy grande y ancho para lectura perfecta */
-                width: auto; 
-            }
-            .event-card { flex: 0 0 45%; }
+            .logo-desktop { display: block; height: 190px; width: auto; }
             .navbar-sandia { padding: 15px 40px; }
-            .proximas-carreras { padding-top: 240px; } /* Más compensación en PC */
-            .proximas-carreras, .eventos-pasados { padding-left: 40px; padding-right: 40px; }
-            .titulo-seccion { font-size: 1.3em; }
+            .proximas-carreras { padding-top: 240px; }
+            .proximas-carreras, .eventos-pasados, .seccion-run-free { padding-left: 40px; padding-right: 40px; }
+            .run-free-card { flex-direction: row; justify-content: space-between; text-align: left; padding: 40px; }
+            .footer-bottom { flex-direction: row; justify-content: space-between; }
         }
     </style>
 </head>
@@ -196,16 +220,16 @@
     <!-- 2. CONTENIDO PRINCIPAL -->
     <div id="main-content">
         
+        <!-- NAVBAR -->
         <nav class="navbar-sandia">
             <div class="logo-wrapper">
-                <!-- Usamos Logo1.png con los colores originales -->
                 <img src="img/Logo1.png" alt="Sandía Production" class="logo-mobile">
                 <img src="img/Logo1.png" alt="Sandía Production" class="logo-desktop">
             </div>
             <div class="menu-hamburguesa" id="open-menu-btn">&#9776;</div>
         </nav>
 
-        <!-- PANEL LATERAL DE NAVEGACIÓN -->
+        <!-- MENÚ LATERAL DESPLEGABLE -->
         <div class="side-menu-overlay" id="menu-overlay"></div>
         <div class="side-menu" id="side-menu">
             <div class="side-menu-header">
@@ -214,14 +238,15 @@
             </div>
             <ul class="side-menu-links">
                 <li><a href="#" onclick="toggleMenu()">Inicio</a></li>
-                <li><a href="#" onclick="toggleMenu()">Calendario</a></li>
-                <li><a href="#" onclick="toggleMenu()">Resultados</a></li>
-                <li><a href="#" onclick="toggleMenu()">Nosotros</a></li>
-                <li><a href="#" onclick="toggleMenu()">Contacto</a></li>
+                <li><a href="#proximas-carreras" onclick="toggleMenu()">Calendario</a></li>
+                <li><a href="#run-free" onclick="toggleMenu()">Comunidad Run Free</a></li>
+                <li><a href="#eventos-pasados" onclick="toggleMenu()">Resultados</a></li>
+                <li><a href="#contacto" onclick="toggleMenu()">Contacto</a></li>
             </ul>
         </div>
 
-        <section class="proximas-carreras">
+        <!-- SECCIÓN 1: PRÓXIMOS RETOS (CAROUSEL) -->
+        <section class="proximas-carreras" id="proximas-carreras">
             <h2 class="titulo-seccion">Próximos Retos</h2>
             <div class="carousel-container">
                 
@@ -250,7 +275,25 @@
             </div>
         </section>
 
-        <section class="eventos-pasados">
+        <!-- SECCIÓN 2: INTEGRACIÓN COMUNIDAD RUN FREE -->
+        <section class="seccion-run-free" id="run-free">
+            <div class="run-free-card">
+                <div class="run-free-info">
+                    <span class="run-free-badge">Comunidad Oficial</span>
+                    <h2>Únete al Team RUN FREE 🏃‍♂️🔥</h2>
+                    <p>Entrenamientos, rutas semanales y la mejor vibra runner de la ciudad. Sumamos kilómetros juntos antes de cada gran reto.</p>
+                </div>
+                <div>
+                    <!-- Enlace directo al WhatsApp o Instagram de Run Free -->
+                    <a href="https://instagram.com" target="_blank" class="btn-run-free">
+                        Ver en Instagram
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: EVENTOS PASADOS -->
+        <section class="eventos-pasados" id="eventos-pasados">
             <h2 class="titulo-seccion">Carreras Superadas</h2>
             <div class="lista-pasados-container">
                 
@@ -274,26 +317,65 @@
             </div>
         </section>
 
+        <!-- SECCIÓN 4: FOOTER (PIE DE PÁGINA CON SELLO DE AGENCIA) -->
+        <footer class="footer-sandia" id="contacto">
+            <div class="footer-content">
+                <!-- Columna 1: Marca -->
+                <div class="footer-col">
+                    <h4>Sandía Production</h4>
+                    <p>Plataforma líder en gestión, logística y cronometraje de eventos deportivos y retos virtuales.</p>
+                </div>
+
+                <!-- Columna 2: Comunidad -->
+                <div class="footer-col">
+                    <h4>Comunidad</h4>
+                    <ul>
+                        <li><a href="#run-free">Run Free Runner Team</a></li>
+                        <li><a href="#proximas-carreras">Próximos Eventos</a></li>
+                        <li><a href="#eventos-pasados">Galería de Fotos</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Contacto -->
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="https://instagram.com" target="_blank">Instagram: @sandiaproduction</a></li>
+                        <li><a href="https://wa.me/584126574354" target="_blank">WhatsApp Oficial</a></li>
+                        <li>Punto Fijo, Falcón - Venezuela</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Créditos de Desarrollo (Tu marca de agencia) -->
+            <div class="footer-bottom">
+                <div>&copy; 2026 Sandía Production. Todos los derechos reservados.</div>
+                <div>
+                    Desarrollado por 
+                    <!-- Marcador de posición para tu marca de agencia -->
+                    <a href="https://instagram.com/onionweb.ve" target="_blank" class="agency-credit">
+                        ⚡ Onion Web
+                    </a>
+                </div>
+            </div>
+        </footer>
+
     </div>
 
-    <!-- 3. SCRIPTS -->
+    <!-- SCRIPTS -->
     <script>
         const canvas = document.getElementById('bullet-canvas');
         const ctx = canvas.getContext('2d');
         const splashScreen = document.getElementById('splash-screen');
         const mainContent = document.getElementById('main-content');
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
         class BulletSeed {
             constructor(centerX, centerY) {
-                this.x = centerX;
-                this.y = centerY;
+                this.x = centerX; this.y = centerY;
                 this.angle = Math.random() * Math.PI * 2;
                 this.speed = 15 + Math.random() * 20; 
                 this.friction = 0.78 + Math.random() * 0.16; 
@@ -307,11 +389,8 @@
             update() {
                 this.x += Math.cos(this.angle) * this.speed;
                 this.y += Math.sin(this.angle) * this.speed;
-                if (this.speed > 0.3) {
-                    this.speed *= this.friction; 
-                } else {
-                    this.speed = 0.1 + Math.random() * 0.1; 
-                }
+                if (this.speed > 0.3) { this.speed *= this.friction; } 
+                else { this.speed = 0.1 + Math.random() * 0.1; }
                 this.opacity -= this.decay;
             }
 
@@ -348,17 +427,13 @@
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
             const cantidad = Math.floor(Math.random() * (max - min + 1)) + min;
-            for (let i = 0; i < cantidad; i++) {
-                seeds.push(new BulletSeed(centerX, centerY));
-            }
+            for (let i = 0; i < cantidad; i++) { seeds.push(new BulletSeed(centerX, centerY)); }
         }
 
         function programarOleadasDispersas() {
             setTimeout(() => emitirRafagaSelectiva(2, 4), 1000 + Math.random() * 800);
             setTimeout(() => emitirRafagaSelectiva(2, 4), 2200 + Math.random() * 800);
-            if (Math.random() > 0.4) {
-                setTimeout(() => emitirRafagaSelectiva(1, 2), 3500 + Math.random() * 700);
-            }
+            if (Math.random() > 0.4) { setTimeout(() => emitirRafagaSelectiva(1, 2), 3500 + Math.random() * 700); }
         }
 
         function animate() {
@@ -367,9 +442,7 @@
             for (let i = seeds.length - 1; i >= 0; i--) {
                 seeds[i].update();
                 seeds[i].draw();
-                if (seeds[i].opacity <= 0) {
-                    seeds.splice(i, 1);
-                }
+                if (seeds[i].opacity <= 0) { seeds.splice(i, 1); }
             }
             animationFrame = requestAnimationFrame(animate);
         }
@@ -389,7 +462,6 @@
         closeMenuBtn.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        // TRANSICIÓN DE CARGA
         window.onload = () => {
             animate();
             emitirRafagaSelectiva(5, 8);
@@ -397,7 +469,6 @@
 
             setTimeout(() => {
                 splashScreen.style.opacity = '0'; 
-                
                 setTimeout(() => {
                     splashScreen.style.display = 'none'; 
                     cancelAnimationFrame(animationFrame);
