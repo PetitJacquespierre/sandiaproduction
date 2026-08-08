@@ -62,11 +62,12 @@
         }
 
         /* ==========================================================================
-           2. NAVBAR Y LOGO DE CABECERA
+           2. NAVBAR Y LOGO DE CABECERA (Reducidos)
            ========================================================================== */
         .navbar-sandia {
             background-color: rgba(5, 10, 21, 0.98); 
-            padding: 25px 20px; display: flex;
+            /* Se redujo el padding para hacer la barra más fina */
+            padding: 10px 20px; display: flex;
             justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(230, 32, 53, 0.15);
             position: fixed; top: 0; width: 100%; z-index: 1000;
@@ -74,8 +75,10 @@
         }
 
         .logo-wrapper { display: flex; align-items: center; order: 1; }
-        .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; order: 2; user-select: none; }
-        .logo-mobile { height: 140px; width: auto; display: block; }
+        .menu-hamburguesa { font-size: 28px; color: white; cursor: pointer; order: 2; user-select: none; }
+        
+        /* Reducción drástica del logo en móvil para no comer pantalla */
+        .logo-mobile { height: 50px; width: auto; display: block; }
         .logo-desktop { display: none; }
 
         /* ==========================================================================
@@ -104,7 +107,8 @@
         /* ==========================================================================
            4. SECCIONES DE EVENTOS Y CAROUSEL
            ========================================================================== */
-        .proximas-carreras { padding: 200px 15px 30px; }
+        /* Compensación ajustada a la nueva barra de navegación más pequeña */
+        .proximas-carreras { padding: 90px 15px 30px; }
         .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding-bottom: 15px; -ms-overflow-style: none; scrollbar-width: none; }
         .carousel-container::-webkit-scrollbar { display: none; }
 
@@ -117,7 +121,7 @@
         .inscribirme-card { width: 100%; padding: 14px; border-radius: 8px; font-size: 0.95em; box-shadow: 0 4px 10px rgba(230, 32, 53, 0.3); }
 
         /* ==========================================================================
-           5. NUEVA SECCIÓN: RUN FREE (COMUNIDAD RUNNER)
+           5. NUEVA SECCIÓN: RUN FREE (COMUNIDAD RUNNER) CON LOGO
            ========================================================================== */
         .seccion-run-free {
             padding: 30px 15px;
@@ -135,8 +139,14 @@
         .run-free-badge {
             background-color: #2ecc71; color: #050a15; font-weight: 800;
             font-size: 0.75em; padding: 5px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 10px; display: inline-block;
         }
-        .run-free-info h2 { font-size: 1.8em; color: white; margin-bottom: 10px; font-weight: 800; }
+        .run-free-info { display: flex; flex-direction: column; align-items: center; }
+        
+        /* Estilos para el logo de Run Free */
+        .run-free-logo-img { max-width: 150px; height: auto; margin-bottom: 15px; }
+        
+        .run-free-info h2 { font-size: 1.5em; color: white; margin-bottom: 10px; font-weight: 800; }
         .run-free-info p { color: #aaa; font-size: 0.95em; line-height: 1.5; max-width: 600px; }
         .btn-run-free {
             background-color: #2ecc71; color: #050a15; padding: 12px 25px;
@@ -196,11 +206,12 @@
 
         @media (min-width: 992px) {
             .logo-mobile { display: none; }
-            .logo-desktop { display: block; height: 190px; width: auto; }
+            .logo-desktop { display: block; height: 70px; width: auto; }
             .navbar-sandia { padding: 15px 40px; }
-            .proximas-carreras { padding-top: 240px; }
+            .proximas-carreras { padding-top: 120px; }
             .proximas-carreras, .eventos-pasados, .seccion-run-free { padding-left: 40px; padding-right: 40px; }
             .run-free-card { flex-direction: row; justify-content: space-between; text-align: left; padding: 40px; }
+            .run-free-info { align-items: flex-start; }
             .footer-bottom { flex-direction: row; justify-content: space-between; }
         }
     </style>
@@ -275,17 +286,21 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 2: INTEGRACIÓN COMUNIDAD RUN FREE -->
+        <!-- SECCIÓN 2: INTEGRACIÓN COMUNIDAD RUN FREE CON LOGO -->
         <section class="seccion-run-free" id="run-free">
             <div class="run-free-card">
                 <div class="run-free-info">
                     <span class="run-free-badge">Comunidad Oficial</span>
+                    
+                    <!-- LOGO RUN FREE. Guarda la imagen en img/logo_runfree.png -->
+                    <img src="img/logo_runfree.png" alt="Run Free" class="run-free-logo-img" onerror="this.style.display='none'">
+                    
                     <h2>Únete al Team RUN FREE 🏃‍♂️🔥</h2>
                     <p>Entrenamientos, rutas semanales y la mejor vibra runner de la ciudad. Sumamos kilómetros juntos antes de cada gran reto.</p>
                 </div>
                 <div>
                     <!-- Enlace directo al WhatsApp o Instagram de Run Free -->
-                    <a href="https://instagram.com" target="_blank" class="btn-run-free">
+                    <a href="https://www.instagram.com/runfreest/" target="_blank" class="btn-run-free">
                         Ver en Instagram
                     </a>
                 </div>
@@ -301,7 +316,7 @@
                     <img src="img/matea_run.png" alt="Matea Run 5K" class="past-logo">
                     <div class="past-info">
                         <h3>MATEA RUN 5K</h3>
-                        <p>Caracas / SEP 2026</p>
+                        <p>Punto Fijo / SEP 2026</p>
                     </div>
                     <button class="btn-past-results" onclick="alert('Abriendo Resultados...')">Resultados</button>
                 </div>
