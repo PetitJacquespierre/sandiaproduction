@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscripción - Coffee Run 3K - Sandía Production</title>
+    <title>Inscripción - Sandía Production</title>
     <style>
+        /* ==========================================================================
+           1. ESTILOS BASE Y RESETS
+           ========================================================================== */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             background-color: #050a15; 
@@ -13,7 +16,6 @@
             overflow-x: hidden;
         }
 
-        /* --- BOTONES Y ESTILOS --- */
         .btn-sandia-general {
             background-color: #e62035; 
             color: white; border: none; 
@@ -25,63 +27,51 @@
         }
         .btn-sandia-general:hover { background-color: #ff334b; transform: scale(1.03); box-shadow: 0 5px 15px rgba(230, 32, 53, 0.4); }
 
-        /* --- NAVBAR E IDENTIDAD DEL LOGO (IGUAL A INDEX) --- */
+        /* ==========================================================================
+           2. NAVBAR Y LOGO DE CABECERA
+           ========================================================================== */
         .navbar-sandia {
             background-color: rgba(5, 10, 21, 0.98); 
             padding: 25px 20px; 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(230, 32, 53, 0.15);
-            position: fixed; 
-            top: 0; width: 100%; 
-            z-index: 1000;
+            position: fixed; top: 0; width: 100%; z-index: 1000;
             backdrop-filter: blur(5px); 
         }
-
         .logo-wrapper { display: flex; align-items: center; order: 1; }
         .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; order: 2; user-select: none; }
-
-        .logo-mobile { 
-            height: 140px; 
-            width: auto; 
-            display: block; 
-        }
+        .logo-mobile { height: 140px; width: auto; display: block; }
         .logo-desktop { display: none; }
 
-        /* --- PANEL LATERAL DEL MENÚ --- */
+        /* ==========================================================================
+           3. MENÚ LATERAL DESPLEGABLE
+           ========================================================================== */
         .side-menu-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
+            background: rgba(0, 0, 0, 0.7); z-index: 2000;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
 
         .side-menu {
             position: fixed; top: 0; right: -280px; width: 280px; height: 100vh;
-            background: #09101f;
-            border-left: 1px solid rgba(230, 32, 53, 0.2);
-            z-index: 2001;
-            padding: 25px 20px;
-            display: flex; flex-direction: column;
-            transition: right 0.3s ease;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2);
+            z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column;
+            transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.5);
         }
         .side-menu.active { right: 0; }
-
         .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .close-menu { font-size: 24px; color: #aaa; cursor: pointer; }
         .side-menu-links { list-style: none; display: flex; flex-direction: column; gap: 20px; }
         .side-menu-links a { color: white; text-decoration: none; font-size: 1.1em; font-weight: 600; transition: color 0.2s; }
         .side-menu-links a:hover { color: #e62035; }
 
-        /* --- SECCIÓN DE INSCRIPCIÓN --- */
+        /* ==========================================================================
+           4. CONTENEDOR PRINCIPAL Y FLYER
+           ========================================================================== */
         .inscripcion-section {
-            padding: 200px 20px 60px; /* Compensación para la Navbar de 140px */
-            min-height: 100vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 200px 20px 60px;
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
         .inscripcion-container {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -93,6 +83,40 @@
         }
         .flyer-img { width: 100%; height: auto; display: block; }
 
+        /* ==========================================================================
+           5. TARJETA DE PAGO MÓVIL Y MONTO DINÁMICO
+           ========================================================================== */
+        .payment-box {
+            background: rgba(230, 32, 53, 0.05); border: 1px solid rgba(230, 32, 53, 0.15);
+            border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;
+        }
+        .payment-header { color: #e62035; font-weight: bold; text-transform: uppercase; font-size: 0.9em; margin-bottom: 15px; }
+        .amount-ves-box { margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
+        .amount-main { font-size: 2.2em; font-weight: 800; color: #2ecc71; }
+        .amount-currency { font-size: 0.5em; color: #2ecc71; margin-left: 5px;}
+        .rate-reference { color: #777; font-size: 0.85em; margin-top: 5px; }
+        #loading-rate { color: #aaa; font-style: italic; font-size: 0.9em; }
+        .payment-method-header { color: white; font-size: 1.1em; font-weight: 700; margin-bottom: 10px; }
+        
+        .copy-group {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px; padding: 12px 15px; margin-bottom: 10px; text-align: left;
+        }
+        .copy-data { color: #ccc; font-size: 0.95em; }
+        .copy-data strong { color: white; }
+        .btn-copy {
+            background: transparent; border: 1px solid rgba(255,255,255,0.2);
+            color: #aaa; padding: 6px 12px; font-size: 0.8em; font-weight: bold;
+            border-radius: 6px; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+        }
+        .btn-copy:hover { border-color: #e62035; color: white; }
+        .btn-copy.copied { background: #2ecc71; border-color: #2ecc71; color: white; }
+        .payment-notes { color: #777; font-size: 0.8em; margin-top: 15px; font-style: italic; }
+
+        /* ==========================================================================
+           6. FORMULARIO DE INSCRIPCIÓN
+           ========================================================================== */
         .form-container {
             background: #09101f; border-radius: 20px; border: 1px solid rgba(230, 32, 53, 0.3);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5); padding: 30px;
@@ -109,43 +133,10 @@
             color: white; font-size: 1em; transition: all 0.2s;
         }
         .form-control:focus { outline: none; border-color: #e62035; background: rgba(230, 32, 53, 0.08); }
-        
         select.form-control { color: #ffffff; background-color: #09101f; }
         select.form-control option { background-color: #09101f; color: #ffffff; padding: 10px; }
 
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-
-        .payment-box {
-            background: rgba(230, 32, 53, 0.05); border: 1px solid rgba(230, 32, 53, 0.15);
-            border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;
-        }
-        .payment-header { color: #e62035; font-weight: bold; text-transform: uppercase; font-size: 0.9em; margin-bottom: 15px; }
-        
-        .amount-ves-box { margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
-        .amount-main { font-size: 2.2em; font-weight: 800; color: #2ecc71; }
-        .amount-currency { font-size: 0.5em; color: #2ecc71; margin-left: 5px;}
-        .rate-reference { color: #777; font-size: 0.85em; margin-top: 5px; }
-        #loading-rate { color: #aaa; font-style: italic; font-size: 0.9em; }
-
-        .payment-method-header { color: white; font-size: 1.1em; font-weight: 700; margin-bottom: 10px; }
-        
-        .copy-group {
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 8px; padding: 12px 15px; margin-bottom: 10px; text-align: left;
-        }
-        .copy-data { color: #ccc; font-size: 0.95em; }
-        .copy-data strong { color: white; }
-        .btn-copy {
-            background: transparent; border: 1px solid rgba(255,255,255,0.2);
-            color: #aaa; padding: 6px 12px; font-size: 0.8em; font-weight: bold;
-            border-radius: 6px; cursor: pointer; transition: all 0.2s;
-            text-transform: uppercase;
-        }
-        .btn-copy:hover { border-color: #e62035; color: white; }
-        .btn-copy.copied { background: #2ecc71; border-color: #2ecc71; color: white; }
-
-        .payment-notes { color: #777; font-size: 0.8em; margin-top: 15px; font-style: italic; }
         .form-instructions { text-align: center; color: #ccc; font-size: 0.9em; margin-bottom: 20px; }
         .btn-submit-registration { width: 100%; padding: 16px; font-size: 1.1em; margin-top: 20px; }
 
@@ -161,11 +152,7 @@
 
         @media (min-width: 992px) {
             .logo-mobile { display: none; }
-            .logo-desktop { 
-                display: block; 
-                height: 190px; 
-                width: auto; 
-            }
+            .logo-desktop { display: block; height: 190px; width: auto; }
             .navbar-sandia { padding: 15px 40px; }
             .inscripcion-section { padding-top: 240px; }
         }
@@ -173,7 +160,9 @@
 </head>
 <body>
 
-    <!-- NAVBAR -->
+    <!-- ==========================================================================
+         [BLOQUE 1] NAVBAR DE NAVEGACIÓN
+         ========================================================================== -->
     <nav class="navbar-sandia">
         <div class="logo-wrapper">
             <img src="img/Logo1.png" alt="Sandía Production" class="logo-mobile">
@@ -182,7 +171,9 @@
         <div class="menu-hamburguesa" id="open-menu-btn">&#9776;</div>
     </nav>
 
-    <!-- PANEL LATERAL DE NAVEGACIÓN -->
+    <!-- ==========================================================================
+         [BLOQUE 2] MENÚ LATERAL
+         ========================================================================== -->
     <div class="side-menu-overlay" id="menu-overlay"></div>
     <div class="side-menu" id="side-menu">
         <div class="side-menu-header">
@@ -198,28 +189,34 @@
         </ul>
     </div>
 
-    <!-- SECCIÓN DE INSCRIPCIÓN -->
+    <!-- ==========================================================================
+         [BLOQUE 3] ÁREA DE INSCRIPCIÓN Y FLYER
+         ========================================================================== -->
     <section class="inscripcion-section">
         <div class="inscripcion-container">
             
-            <!-- FLYER Y DATOS DE PAGO -->
+            <!-- FLYER DE LA CARRERA Y PAGO MÓVIL -->
             <div class="flyer-container">
-                <img src="img/coffee_run.png" alt="Coffee Run - Terraza Tinaja Flyer" class="flyer-img">
+                <!-- CAMBIAR IMAGEN DEL EVENTO AQUÍ -->
+                <img src="img/coffee_run.png" alt="Flyer del Evento" class="flyer-img">
                 
+                <!-- DATOS DE MONTO Y PAGO -->
                 <div class="payment-box">
                     <div class="payment-header">PASO 1: REALIZA EL PAGO</div>
                     
+                    <!-- MONTO CALCULADO EN BS -->
                     <div class="amount-ves-box">
                         <div id="loading-rate">Consultando tasa BCV en vivo...</div>
                         <div id="rate-results" style="display:none;">
                             <div class="amount-main" id="monto-final-ves">0,00<span class="amount-currency">Bs</span></div>
-                            <div class="rate-reference">Equivalente a 5€ (Tasa BCV Euro: <span id="tasa-euro-bcv">0,00</span> Bs)</div>
+                            <div class="rate-reference">Equivalente a <span id="label-costo-divisa">5</span>€ (Tasa BCV Euro: <span id="tasa-euro-bcv">0,00</span> Bs)</div>
                         </div>
                         <div class="rate-reference" style="color:#e62035; margin-top:10px">O paga 5$ / 5€ en Efectivo.</div>
                     </div>
 
-                    <div class="payment-method-header">PAGO MÓVIL</div>
+                    <div class="payment-method-header">DATOS DE PAGO MÓVIL</div>
                     
+                    <!-- DATOS PARA COPIAR -->
                     <div class="copy-group">
                         <div class="copy-data"><strong>Cédula:</strong> <span id="pago-cedula">18.698.675</span></div>
                         <button class="btn-copy" onclick="copyText('pago-cedula', event)">Copiar</button>
@@ -239,18 +236,20 @@
                 </div>
             </div>
 
-            <!-- FORMULARIO -->
+            <!-- ==========================================================================
+                 [BLOQUE 4] FORMULARIO HTML
+                 ========================================================================== -->
             <div class="form-container">
                 <div id="registration-content">
                     <div class="modal-header">
                         <h2>REGISTRO DE DATOS</h2>
-                        <p>COFFEE RUN 3K - TERRAZA TINAJA</p>
+                        <!-- TITULO Y SUBTÍTULO EDITABLES -->
+                        <p id="label-nombre-evento">COFFEE RUN 3K - TERRAZA TINAJA</p>
                     </div>
 
                     <p class="form-instructions">PASO 2: REPORTA TUS DATOS DE INSCRIPCIÓN</p>
 
                     <form id="registration-form">
-                        
                         <div class="form-group">
                             <label>CÉDULA DE IDENTIDAD o PASAPORTE</label>
                             <input type="text" name="cedula" class="form-control" placeholder="V-1234567" required>
@@ -277,7 +276,7 @@
                             <select name="metodo_pago" id="select-metodo-pago" class="form-control" required>
                                 <option value="" disabled selected>Selecciona tu Método de Pago</option>
                                 <option value="Pago Móvil">Pago Móvil (Recomendado)</option>
-                                <option value="Divisas Efectivo">Divisas en Efectivo (5$/5€)</option>
+                                <option value="Divisas Efectivo">Divisas en Efectivo</option>
                                 <option value="USDT">USDT (Cripto)</option>
                             </select>
                         </div>
@@ -345,22 +344,42 @@
                 <div id="success-message">
                     <h3>¡INSCRIPCIÓN EXITOSA! 🎉</h3>
                     <p>Tus datos han sido recibidos. Recuerda que tu cupo se valida únicamente al recibir el capture de pago por WhatsApp.</p>
-                    <p style="margin-top:15px; font-weight:bold; color:white;">¡Nos vemos en Terraza Tinaja!</p>
+                    <p style="margin-top:15px; font-weight:bold; color:white;">¡Nos vemos en el evento!</p>
                     <button class="btn-sandia-general" style="margin-top:20px; padding: 10px 20px;" onclick="window.location.href='index.html'">Volver al Inicio</button>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ==========================================================================
+         [BLOQUE 5] SCRIPTS Y CONFIGURACIÓN RÁPIDA DE EVENTO
+         ========================================================================== -->
     <script>
-        // --- 1. ENDPOINTS CONFIGURADOS ---
-        const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbwsoD8ahtAQUqfY0TQWf3-dDs29HL8kEJa2t-mjDR3PAo3exTTmtSwXqYuNB2ob5dFpgw/exec";
+        /* ----------------------------------------------------------------------
+         * [ CONFIGURACIÓN GENERAL DEL EVENTO ] -> MODIFICA AQUÍ PARA NUEVOS EVENTOS
+         * ---------------------------------------------------------------------- */
+        
+        // 1. URL de la WebApp de Google Apps Script vinculada al Google Sheet de este evento
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyyWPqtX9y7KNGsIHkHPLX7FmqsBvUr1faG8qcbDKDWKVPrrDuvfj4oZPAVFrQ1ziTy/exec";
         
-        const costoEuros = 5; 
-        let tasaEuroActual = 692.05;
+        // 2. API centralizada de extracción BCV
+        const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbwsoD8ahtAQUqfY0TQWf3-dDs29HL8kEJa2t-mjDR3PAo3exTTmtSwXqYuNB2ob5dFpgw/exec";
+        
+        // 3. Precio del evento en divisas
+        const costoDivisa = 5; 
+        
+        // 4. Divisa de cálculo ("eur" para Euro BCV, "usd" para Dólar BCV)
+        const tipoDivisaCalculo = "eur"; 
 
-        // --- 2. LÓGICA DEL MENÚ LATERAL ---
+        // 5. Tasa local de respaldo (por si la API falla)
+        let tasaRespaldoLocal = 692.05; 
+
+        /* ----------------------------------------------------------------------
+         * LÓGICA INTERNA DE LA APLICACIÓN (NO REQUERIDO MODIFICAR)
+         * ---------------------------------------------------------------------- */
+        let tasaActual = tasaRespaldoLocal;
+
+        // --- MENÚ LATERAL ---
         const openMenuBtn = document.getElementById('open-menu-btn');
         const closeMenuBtn = document.getElementById('close-menu-btn');
         const sideMenu = document.getElementById('side-menu');
@@ -375,31 +394,34 @@
         closeMenuBtn.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        // --- 3. CONSULTA EN VIVO A LA API BCV ---
+        // --- CÁLCULO DE TASA EN VIVO ---
         async function calcularMontoBolivares() {
             const loadingBox = document.getElementById('loading-rate');
             const resultsBox = document.getElementById('rate-results');
             const montoVesLabel = document.getElementById('monto-final-ves');
             const formMontoVes = document.getElementById('form-monto-ves');
             const tasaBcvLabel = document.getElementById('tasa-euro-bcv');
+            const labelCostoDivisa = document.getElementById('label-costo-divisa');
+
+            if (labelCostoDivisa) labelCostoDivisa.innerText = costoDivisa;
 
             try {
                 const respuesta = await fetch(urlApiDivisasBCV);
                 const datos = await respuesta.json();
                 
-                if (datos && datos.eur) {
-                    tasaEuroActual = parseFloat(datos.eur);
+                if (datos && datos[tipoDivisaCalculo]) {
+                    tasaActual = parseFloat(datos[tipoDivisaCalculo]);
                 }
             } catch (error) {
-                console.error("Error consultando la API de divisas, utilizando tasa de respaldo local.", error);
+                console.error("Error al consultar la API de divisas, usando respaldo local.", error);
             } finally {
-                const montoTotalVES = costoEuros * tasaEuroActual;
+                const montoTotalVES = costoDivisa * tasaActual;
                 const formateador = new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 
                 const montoFormateado = formateador.format(montoTotalVES);
 
                 montoVesLabel.innerHTML = montoFormateado + '<span class="amount-currency">Bs</span>';
-                tasaBcvLabel.innerText = formateador.format(tasaEuroActual);
+                tasaBcvLabel.innerText = formateador.format(tasaActual);
                 formMontoVes.value = montoFormateado + " VES";
 
                 loadingBox.style.display = 'none';
@@ -407,7 +429,7 @@
             }
         }
 
-        // --- 4. COPIAR DATOS AL PORTAPAPELES ---
+        // --- COPIAR DATOS DE PAGO ---
         function copyText(elementId, event) {
             const textToCopy = document.getElementById(elementId).innerText;
             const btn = event.target;
@@ -421,11 +443,11 @@
                     btn.classList.remove('copied');
                 }, 2000);
             }).catch(err => {
-                console.error("Error al copiar:", err);
+                console.error("Error al copiar texto:", err);
             });
         }
 
-        // --- 5. FORMULARIO DINÁMICO ---
+        // --- FORMULARIO DINÁMICO ---
         const selectMetodo = document.getElementById('select-metodo-pago');
         const pagoMovilBox = document.getElementById('pago-movil-datos-box');
         const referenciaBox = document.getElementById('referencia-box');
@@ -454,7 +476,7 @@
             }
         });
 
-        // --- 6. ENVÍO DEL FORMULARIO A GOOGLE SHEETS ---
+        // --- ENVÍO A GOOGLE SHEETS ---
         const form = document.getElementById('registration-form');
         const registrationContent = document.getElementById('registration-content');
         const loader = document.getElementById('submit-loader');
@@ -485,10 +507,10 @@
                 calcularMontoBolivares();
             })
             .catch(error => {
-                console.error('Error al enviar:', error);
+                console.error('Error enviando datos:', error);
                 loader.style.display = 'none';
                 registrationContent.style.display = 'block';
-                alert('Hubo un error al procesar tu inscripción. Por favor inténtalo de nuevo.');
+                alert('Ocurrió un error al procesar la inscripción. Por favor intenta nuevamente.');
             });
         });
 
