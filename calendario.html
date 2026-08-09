@@ -4,34 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendario Runner - Sandía Production</title>
+    
+    <!-- ICONO DEL NAVEGADOR -->
     <link rel="icon" href="img/Isotipo.png" type="image/png">
+    
     <style>
-        /* ESTILOS GENERALES Y NAVBAR */
+        /* ==========================================================================
+           1. ESTILOS GENERALES Y RESETS
+           ========================================================================== */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #050a15; color: white; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow-x: hidden; }
+        body { 
+            background-color: #050a15; 
+            color: white; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            overflow-x: hidden; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-        .btn-sandia-general { background-color: #e62035; color: white; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: all 0.3s; text-decoration: none; display: inline-flex; justify-content: center; align-items: center; border-radius: 8px; padding: 10px 20px; }
+        .btn-sandia-general { 
+            background-color: #e62035; color: white; border: none; font-weight: bold; cursor: pointer; 
+            text-transform: uppercase; transition: all 0.3s; text-decoration: none; 
+            display: inline-flex; justify-content: center; align-items: center; border-radius: 8px; padding: 10px 20px; 
+        }
         .btn-sandia-general:hover { background-color: #ff334b; transform: scale(1.03); box-shadow: 0 5px 15px rgba(230, 32, 53, 0.4); }
 
-        .navbar-sandia { background-color: rgba(5, 10, 21, 0.98); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(230, 32, 53, 0.15); position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(5px); }
+        /* ==========================================================================
+           2. NAVBAR Y LOGO DE CABECERA (Idéntico a Index)
+           ========================================================================== */
+        .navbar-sandia { 
+            background-color: rgba(5, 10, 21, 0.98); padding: 10px 20px; display: flex; justify-content: space-between; 
+            align-items: center; border-bottom: 1px solid rgba(230, 32, 53, 0.15); position: fixed; top: 0; width: 100%; 
+            z-index: 1000; backdrop-filter: blur(5px); 
+        }
         .logo-wrapper { display: flex; align-items: center; order: 1; }
-        .menu-hamburguesa { font-size: 28px; color: white; cursor: pointer; order: 2; user-select: none; }
-        .logo-mobile { height: 50px; width: auto; display: block; }
+        .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; order: 2; user-select: none; }
+        
+        .logo-mobile { height: 140px; width: auto; display: block; }
         .logo-desktop { display: none; }
 
-        /* CABECERA DIRECTORIO */
-        .calendario-header { padding: 120px 20px 40px; text-align: center; background: linear-gradient(to bottom, rgba(230, 32, 53, 0.05), transparent); }
+        /* ==========================================================================
+           3. MENÚ LATERAL DESPLEGABLE
+           ========================================================================== */
+        .side-menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7); z-index: 2000;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .side-menu {
+            position: fixed; top: 0; right: -280px; width: 280px; height: 100vh;
+            background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2);
+            z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column;
+            transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        }
+        .side-menu.active { right: 0; }
+        .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .close-menu { font-size: 24px; color: #aaa; cursor: pointer; }
+        .side-menu-links { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+        .side-menu-links a { color: white; text-decoration: none; font-size: 1.1em; font-weight: 600; transition: color 0.2s; }
+        .side-menu-links a:hover { color: #e62035; }
+
+        /* ==========================================================================
+           4. CABECERA DIRECTORIO Y FILTROS
+           ========================================================================== */
+        .calendario-header { 
+            padding: 180px 20px 40px; text-align: center; 
+            background: linear-gradient(to bottom, rgba(230, 32, 53, 0.05), transparent); 
+        }
         .calendario-header h1 { font-size: 2.5em; font-weight: 800; color: white; margin-bottom: 10px; text-transform: uppercase; }
         .calendario-header p { color: #aaa; font-size: 1.1em; max-width: 600px; margin: 0 auto 30px; }
 
-        /* FILTROS */
         .filtros-directorio { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
         .btn-filtro { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #ccc; padding: 10px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95em; }
         .btn-filtro:hover { background: rgba(255,255,255,0.1); color: white; }
         .btn-filtro.active { background: #e62035; color: white; border-color: #e62035; box-shadow: 0 0 15px rgba(230, 32, 53, 0.5); }
 
-        /* GRID EVENTOS */
-        .directorio-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 80px; }
+        /* ==========================================================================
+           5. GRID EVENTOS
+           ========================================================================== */
+        .directorio-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 80px; flex-grow: 1; width: 100%; }
         .grid-eventos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
         
         .evento-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; position: relative; }
@@ -47,7 +101,8 @@
         .info-box { padding: 25px 20px; display: flex; flex-direction: column; flex-grow: 1; }
         .etiquetas-container { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
         .etiqueta { font-size: 0.7em; padding: 5px 12px; border-radius: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-        .etiqueta-presencial { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3); }
+        
+        .etiqueta-local { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3); }
         .etiqueta-virtual { background: rgba(155, 89, 182, 0.15); color: #9b59b6; border: 1px solid rgba(155, 89, 182, 0.3); }
         .etiqueta-nacional { background: rgba(52, 152, 219, 0.15); color: #3498db; border: 1px solid rgba(52, 152, 219, 0.3); }
 
@@ -59,22 +114,46 @@
         .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-align: center; flex-grow: 1; text-decoration: none; text-transform: uppercase; font-size: 0.85em; }
         .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.05); }
 
-        /* Loader y Mensajes */
         .estado-carga { text-align: center; padding: 50px; color: #e62035; font-size: 1.2em; font-weight: bold; width: 100%; grid-column: 1 / -1; animation: latido 1s infinite alternate; }
         .sin-resultados { text-align: center; color: #777; padding: 50px 20px; font-size: 1.2em; display: none; width: 100%; grid-column: 1 / -1; }
         @keyframes latido { from { opacity: 0.5; } to { opacity: 1; } }
 
+        /* ==========================================================================
+           6. FOOTER (PIE DE PÁGINA)
+           ========================================================================== */
+        .footer-sandia {
+            background-color: #03060d; border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 50px 20px 20px; width: 100%;
+        }
+        .footer-content {
+            max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px; padding-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .footer-col h4 { color: #e62035; text-transform: uppercase; font-size: 0.95em; margin-bottom: 15px; letter-spacing: 1px; }
+        .footer-col p, .footer-col li { color: #888; font-size: 0.9em; line-height: 1.6; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li a { color: #aaa; text-decoration: none; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: #e62035; }
+        
+        .footer-bottom {
+            max-width: 1100px; margin: 20px auto 0; display: flex; flex-direction: column; align-items: center; gap: 10px;
+            text-align: center; color: #555; font-size: 0.85em;
+        }
+        .agency-credit { color: #aaa; font-weight: 600; text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; }
+        .agency-credit:hover { color: #e62035; }
+
         @media (min-width: 992px) {
             .logo-mobile { display: none; }
-            .logo-desktop { display: block; height: 70px; width: auto; }
-            .navbar-sandia { padding: 15px 40px; }
-            .calendario-header { padding-top: 140px; }
+            .logo-desktop { display: block; height: 190px; width: auto; }
+            .navbar-sandia { padding: 10px 40px; }
+            .calendario-header { padding-top: 240px; }
+            .footer-bottom { flex-direction: row; justify-content: space-between; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR Y LOGO GRANDE -->
     <nav class="navbar-sandia">
         <div class="logo-wrapper">
             <a href="index.html">
@@ -82,18 +161,34 @@
                 <img src="img/Logo1.png" alt="Sandía Production" class="logo-desktop">
             </a>
         </div>
-        <div class="menu-hamburguesa" onclick="window.location.href='index.html'">Inicio 🏠</div>
+        <div class="menu-hamburguesa" id="open-menu-btn">&#9776;</div>
     </nav>
+
+    <!-- MENÚ LATERAL DESPLEGABLE -->
+    <div class="side-menu-overlay" id="menu-overlay"></div>
+    <div class="side-menu" id="side-menu">
+        <div class="side-menu-header">
+            <span style="color:#e62035; font-weight:bold;">MENÚ</span>
+            <span class="close-menu" id="close-menu-btn">&times;</span>
+        </div>
+        <ul class="side-menu-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="calendario.html" onclick="toggleMenu()">Calendario Runner</a></li>
+            <li><a href="index.html#run-free">Comunidad Run Free</a></li>
+            <li><a href="index.html#eventos-pasados">Resultados</a></li>
+            <li><a href="#contacto" onclick="toggleMenu()">Contacto</a></li>
+        </ul>
+    </div>
 
     <!-- CABECERA DIRECTORIO -->
     <header class="calendario-header">
         <h1>Calendario Runner</h1>
-        <p>Explora los retos virtuales y carreras presenciales disponibles. Encuentra tu próxima meta.</p>
+        <p>Explora los retos virtuales y carreras locales y nacionales disponibles. Encuentra tu próxima meta.</p>
         
         <!-- FILTROS -->
         <div class="filtros-directorio">
             <button class="btn-filtro active" data-filtro="todas">Todas</button>
-            <button class="btn-filtro" data-filtro="presencial">🏃‍♂️ Presenciales (Falcón)</button>
+            <button class="btn-filtro" data-filtro="local">📍 Punto Fijo</button>
             <button class="btn-filtro" data-filtro="nacional">🇻🇪 Nacionales</button>
             <button class="btn-filtro" data-filtro="virtual">🌐 Retos Virtuales</button>
         </div>
@@ -111,19 +206,71 @@
         </div>
     </main>
 
-    <!-- SCRIPT DE EXTRACCIÓN Y FILTROS -->
+    <!-- FOOTER (PIE DE PÁGINA) -->
+    <footer class="footer-sandia" id="contacto">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Sandía Production</h4>
+                <p>Producción de eventos deportivos y tu calendario oficial de carreras a nivel regional y nacional.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Comunidad</h4>
+                <ul>
+                    <li><a href="index.html#run-free">Run Free Runner Team</a></li>
+                    <li><a href="calendario.html">Próximos Eventos</a></li>
+                    <li><a href="index.html#eventos-pasados">Galería de Fotos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><a href="https://instagram.com" target="_blank">Instagram: @sandiaproduction</a></li>
+                    <li><a href="https://wa.me/584126574354" target="_blank">WhatsApp Oficial</a></li>
+                    <li>Punto Fijo, Falcón - Venezuela</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Créditos Onion Web -->
+        <div class="footer-bottom">
+            <div>&copy; 2026 Sandía Production. Todos los derechos reservados.</div>
+            <div>
+                Desarrollado por 
+                <a href="https://instagram.com/onionweb.ve" target="_blank" class="agency-credit">
+                    ⚡ Onion Web
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT DE EXTRACCIÓN Y MENÚ -->
     <script>
-        // *** 1. PEGA AQUÍ LA NUEVA URL DE TU APPS SCRIPT ***
+        // --- LÓGICA DEL MENÚ LATERAL ---
+        const openMenuBtn = document.getElementById('open-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const sideMenu = document.getElementById('side-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            sideMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        }
+
+        openMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // --- LÓGICA DEL CALENDARIO DINÁMICO ---
         const urlScriptDirectorio = "https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec";
 
         const gridEventos = document.getElementById('grid-eventos');
         const msjSinResultados = document.getElementById('sin-resultados');
         const botonesFiltro = document.querySelectorAll('.btn-filtro');
 
-        // Función principal para conectar con Google Sheets
         async function cargarEventos() {
             try {
-                // Hacemos un GET al script de Google
                 const respuesta = await fetch(urlScriptDirectorio);
                 const eventos = await respuesta.json();
 
@@ -140,23 +287,19 @@
             }
         }
 
-        // Función para construir el HTML de cada tarjeta
         function renderizarEventos(eventosData) {
-            gridEventos.innerHTML = ''; // Limpiar el mensaje de "Cargando..."
+            gridEventos.innerHTML = ''; 
 
             eventosData.forEach(evento => {
-                // Determinar el color de la etiqueta según la categoría del Excel
-                let claseEtiqueta = 'etiqueta-presencial';
+                let claseEtiqueta = 'etiqueta-local'; 
                 if(evento.categoria.toLowerCase() === 'virtual') claseEtiqueta = 'etiqueta-virtual';
                 if(evento.categoria.toLowerCase() === 'nacional') claseEtiqueta = 'etiqueta-nacional';
 
-                // Definir diseño del botón según si es evento propio o externo
                 let htmlBoton = `<a href="${evento.enlace}" class="btn-outline">${evento.textoBoton}</a>`;
-                if(evento.categoria.toLowerCase() === 'presencial' && evento.enlace.includes('html')) {
+                if(evento.categoria.toLowerCase() === 'local' && evento.enlace.includes('html')) {
                     htmlBoton = `<a href="${evento.enlace}" class="btn-sandia-general" style="width: 100%;">${evento.textoBoton}</a>`;
                 }
 
-                // Construir la tarjeta (Card)
                 const cardHTML = `
                     <div class="evento-card" data-categoria="${evento.categoria.toLowerCase()}">
                         <div class="flyer-box">
@@ -179,15 +322,12 @@
                     </div>
                 `;
                 
-                // Agregar la tarjeta al contenedor
                 gridEventos.innerHTML += cardHTML;
             });
 
-            // Reactivar la función de los botones de filtro sobre las nuevas tarjetas
             configurarFiltros();
         }
 
-        // Función para hacer que los botones de filtro funcionen
         function configurarFiltros() {
             const tarjetas = document.querySelectorAll('.evento-card');
 
@@ -215,9 +355,7 @@
             });
         }
 
-        // Iniciar la carga al abrir la página
         window.onload = cargarEventos;
-
     </script>
 </body>
 </html>
