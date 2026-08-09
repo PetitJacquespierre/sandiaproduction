@@ -272,6 +272,7 @@
     </div>
 
     <!-- SCRIPTS -->
+    <!-- SCRIPTS -->
     <script>
         // --- ANIMACIÓN DE PANTALLA DE CARGA ---
         const canvas = document.getElementById('bullet-canvas');
@@ -372,9 +373,9 @@
         closeMenuBtn.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        // --- LÓGICA DE EXTRACCIÓN DE GOOGLE SHEETS PARA EL CARRUSEL ---
-        // MISMA URL DE LA PÁGINA DEL CALENDARIO
+        // --- LÓGICA DE EXTRACCIÓN Y AUTO-CARRUSEL ---
         const urlScriptDirectorio = "https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec";
+        let carruselInterval; // Variable para controlar la rotación
 
         async function cargarCarrerasCarousel() {
             const carouselContainer = document.getElementById('carousel-carreras');
@@ -384,16 +385,14 @@
                 const eventos = await respuesta.json();
 
                 if (eventos.length > 0) {
-                    carouselContainer.innerHTML = ''; // Quitar el loader
+                    carouselContainer.innerHTML = ''; 
                     
                     eventos.forEach(evento => {
-                        // Configurar qué pasa al darle click al botón
                         let clickAction = `window.location.href='${evento.enlace}'`;
                         if (evento.enlace === '#' || evento.enlace === '') {
                             clickAction = `alert('Próximamente...')`;
                         }
 
-                        // Construir la tarjeta del carrusel inyectando los datos del Excel
                         const cardHTML = `
                             <div class="event-card current" style="background-image: url('img/${evento.imagen}');">
                                 <div class="card-overlay">
@@ -406,9 +405,14 @@
                                 </div>
                             </div>
                         `;
-                        
                         carouselContainer.innerHTML += cardHTML;
                     });
+
+                    // Iniciar la rotación automática si hay más de 1 carrera
+                    if (eventos.length > 1) {
+                        iniciarRotacionAutomatica(carouselContainer);
+                    }
+
                 } else {
                     carouselContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">No hay próximos retos publicados.</p>';
                 }
@@ -418,9 +422,39 @@
             }
         }
 
+        // --- FUNCIÓN DE ROTACIÓN AUTOMÁTICA ---
+        function iniciarRotacionAutomatica(contenedor) {
+            const tiempoRotacion = 4000; // 4 segundos
+            
+            function hacerScroll() {
+                // Obtenemos la primera tarjeta para saber cuánto medir el scroll (+15px de la separación)
+                const tarjeta = contenedor.querySelector('.event-card');
+                if (!tarjeta) return;
+                const scrollAmount = tarjeta.offsetWidth + 15; 
+                
+                // Si ya llegamos al final, volvemos suavemente al inicio
+                if (contenedor.scrollLeft + contenedor.clientWidth >= contenedor.scrollWidth - 10) {
+                    contenedor.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    // Avanzamos una tarjeta
+                    contenedor.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            }
+
+            // Arrancamos el cronómetro
+            carruselInterval = setInterval(hacerScroll, tiempoRotacion);
+
+            // Pausar si ponen el mouse o el dedo encima
+            contenedor.addEventListener('mouseenter', () => clearInterval(carruselInterval));
+            contenedor.addEventListener('touchstart', () => clearInterval(carruselInterval));
+
+            // Reanudar cuando quitan el mouse o el dedo
+            contenedor.addEventListener('mouseleave', () => carruselInterval = setInterval(hacerScroll, tiempoRotacion));
+            contenedor.addEventListener('touchend', () => carruselInterval = setInterval(hacerScroll, tiempoRotacion));
+        }
+
         // --- INICIAR TODO AL CARGAR LA PÁGINA ---
         window.onload = () => {
-            // 1. Iniciar Animación de Splash Screen
             animate();
             emitirRafagaSelectiva(5, 8);
             programarOleadasDispersas();
@@ -435,7 +469,6 @@
                 }, 1000); 
             }, 6500);
 
-            // 2. Cargar eventos del Carrusel desde Google Sheets
             cargarCarrerasCarousel();
         };
     </script>
