@@ -374,9 +374,8 @@
 
                 if (eventos.length > 0) {
                     let htmlCarrusel = '';
-                    let htmlPasados = '';
+                    let pasadosArray = []; // Aquí guardaremos temporalmente los inactivos
                     let countActivos = 0;
-                    let countPasados = 0;
                     
                     eventos.forEach(evento => {
                         // 1. Validar el enlace y la acción del botón
@@ -401,26 +400,16 @@
                             `;
                             countActivos++;
                         } 
-                        // 3. Si el evento NO está activo ("NO"), va a Carreras Superadas
+                        // 3. Si el evento NO está activo ("NO"), lo guardamos en la lista
                         else if (evento.activo === "NO") {
-                            // Por si acaso no le pusiste "Texto Boton" a los viejos, le ponemos "Ver Fotos" por defecto
-                            let textoBtnPasado = evento.textoBoton || "Resultados"; 
-                            
-                            htmlPasados += `
-                                <div class="past-event-item">
-                                    <img src="img/${evento.imagen}" alt="${evento.titulo}" class="past-logo" onerror="this.src='img/Isotipo.png'">
-                                    <div class="past-info">
-                                        <h3>${evento.titulo}</h3>
-                                        <p>${evento.ubicacion} / ${evento.mes}</p>
-                                    </div>
-                                    <button class="btn-past-results" onclick="${clickAction}">${textoBtnPasado}</button>
-                                </div>
-                            `;
-                            countPasados++;
+                            pasadosArray.push({
+                                eventoData: evento,
+                                accionClick: clickAction
+                            });
                         }
                     });
 
-                    // 4. Inyectar el HTML generado en la página
+                    // 4. Inyectar el Carrusel
                     if (countActivos > 0) {
                         carouselContainer.innerHTML = htmlCarrusel;
                         if (countActivos > 1) iniciarRotacionAutomatica(carouselContainer);
@@ -428,7 +417,29 @@
                         carouselContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">No hay próximos retos publicados.</p>';
                     }
 
-                    if (countPasados > 0) {
+                    // 5. LÓGICA DE EVENTOS PASADOS (LÍMITE DE 4)
+                    if (pasadosArray.length > 0) {
+                        let htmlPasados = '';
+                        
+                        // Tomamos solo los últimos 4 del Excel y los invertimos
+                        let ultimosPasados = pasadosArray.slice(-4).reverse();
+                        
+                        ultimosPasados.forEach(item => {
+                            let ev = item.eventoData;
+                            let textoBtnPasado = ev.textoBoton || "Resultados"; 
+                            
+                            htmlPasados += `
+                                <div class="past-event-item">
+                                    <img src="img/${ev.imagen}" alt="${ev.titulo}" class="past-logo" onerror="this.src='img/Isotipo.png'">
+                                    <div class="past-info">
+                                        <h3>${ev.titulo}</h3>
+                                        <p>${ev.ubicacion} / ${ev.mes}</p>
+                                    </div>
+                                    <button class="btn-past-results" onclick="${item.accionClick}">${textoBtnPasado}</button>
+                                </div>
+                            `;
+                        });
+                        
                         pasadosContainer.innerHTML = htmlPasados;
                     } else {
                         pasadosContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">Aún no hay carreras registradas en el historial.</p>';
