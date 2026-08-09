@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sandía Production - Plataforma de Eventos Deportivos</title>
     
-    <!-- ESTA ES LA LÍNEA PARA EL ICONO DEL NAVEGADOR -->
+    <!-- ICONO DEL NAVEGADOR -->
     <link rel="icon" href="img/Isotipo.png" type="image/png">
+    
     <style>
         /* ==========================================================================
            1. ESTILOS GENERALES Y RESETS
@@ -16,14 +17,12 @@
             background-color: #050a15; 
             color: white; 
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden; 
+            overflow-x: hidden; 
         }
 
         /* --- PANTALLA DE CARGA (SPLASH SCREEN) --- */
         #splash-screen {
-            position: fixed; 
-            top: 0; left: 0; 
-            width: 100vw; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(rgba(5, 10, 21, 0.9), rgba(5, 10, 21, 0.97)), 
                         url('img/fondo_carrera.jpg') center/cover no-repeat;
             display: flex; justify-content: center; align-items: center;
@@ -41,66 +40,36 @@
         @keyframes spin-reverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
 
         /* --- CONTENIDO PRINCIPAL --- */
-        #main-content {
-            display: none; 
-            min-height: 100vh; 
-            flex-direction: column; 
-            background-color: #050a15;
-            overflow-y: auto; 
-            -webkit-overflow-scrolling: touch; 
-        }
+        #main-content { display: none; min-height: 100vh; flex-direction: column; background-color: #050a15; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
         .btn-sandia-general {
-            background-color: #e62035; color: white; border: none; 
-            font-weight: bold; cursor: pointer; text-transform: uppercase;
-            transition: background 0.3s, transform 0.2s; text-decoration: none;
-            display: inline-flex; justify-content: center; align-items: center;
-            border-radius: 8px;
+            background-color: #e62035; color: white; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase;
+            transition: background 0.3s, transform 0.2s; text-decoration: none; display: inline-flex; justify-content: center; align-items: center; border-radius: 8px;
         }
         .btn-sandia-general:hover { background-color: #ff334b; transform: scale(1.03); }
 
-        .titulo-seccion {
-            text-transform: uppercase; color: #e62035; font-size: 1.1em;
-            margin-bottom: 15px; letter-spacing: 2px; padding-left: 5px;
-        }
+        .titulo-seccion { text-transform: uppercase; color: #e62035; font-size: 1.1em; margin-bottom: 15px; letter-spacing: 2px; padding-left: 5px; }
 
         /* ==========================================================================
-           2. NAVBAR Y LOGO DE CABECERA (Logo Grande, Barra Comprimida)
+           2. NAVBAR Y LOGO DE CABECERA
            ========================================================================== */
         .navbar-sandia {
-            background-color: rgba(5, 10, 21, 0.98); 
-            /* Se comprime el padding al mínimo (10px) para que la barra abrace al logo sin dejar espacio inútil */
-            padding: 10px 20px; 
-            display: flex;
-            justify-content: space-between; align-items: center;
-            border-bottom: 1px solid rgba(230, 32, 53, 0.15);
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            backdrop-filter: blur(5px); 
+            background-color: rgba(5, 10, 21, 0.98); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(230, 32, 53, 0.15); position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(5px); 
         }
 
         .logo-wrapper { display: flex; align-items: center; order: 1; }
         .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; order: 2; user-select: none; }
-        
-        /* Restaurado a su tamaño original grande */
         .logo-mobile { height: 140px; width: auto; display: block; }
         .logo-desktop { display: none; }
 
         /* ==========================================================================
            3. MENÚ LATERAL DESPLEGABLE
            ========================================================================== */
-        .side-menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.7); z-index: 2000;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-        }
+        .side-menu-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
 
-        .side-menu {
-            position: fixed; top: 0; right: -280px; width: 280px; height: 100vh;
-            background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2);
-            z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column;
-            transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-        }
+        .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2); z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column; transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.5); }
         .side-menu.active { right: 0; }
         .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .close-menu { font-size: 24px; color: #aaa; cursor: pointer; }
@@ -111,7 +80,6 @@
         /* ==========================================================================
            4. SECCIONES DE EVENTOS Y CAROUSEL
            ========================================================================== */
-        /* Compensación de margen superior para que no lo cubra el logo grande */
         .proximas-carreras { padding: 180px 15px 30px; }
         .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding-bottom: 15px; -ms-overflow-style: none; scrollbar-width: none; }
         .carousel-container::-webkit-scrollbar { display: none; }
@@ -124,39 +92,20 @@
         .event-card p { color: #aaa; margin-bottom: 20px; font-size: 0.95em; }
         .inscribirme-card { width: 100%; padding: 14px; border-radius: 8px; font-size: 0.95em; box-shadow: 0 4px 10px rgba(230, 32, 53, 0.3); }
 
+        /* Loader para Carrusel */
+        .estado-carga { text-align: center; padding: 50px; color: #e62035; font-size: 1.1em; font-weight: bold; width: 100%; animation: latido 1s infinite alternate; }
+
         /* ==========================================================================
            5. SECCIÓN: RUN FREE (COMUNIDAD RUNNER) CON LOGO
            ========================================================================== */
-        .seccion-run-free {
-            padding: 30px 15px;
-            background: linear-gradient(135deg, rgba(230, 32, 53, 0.08) 0%, rgba(9, 16, 31, 0.6) 100%);
-            border-top: 1px solid rgba(230, 32, 53, 0.2);
-            border-bottom: 1px solid rgba(230, 32, 53, 0.2);
-            margin: 20px 0;
-        }
-        .run-free-card {
-            max-width: 1100px; margin: 0 auto;
-            display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center;
-            background: rgba(255, 255, 255, 0.02); padding: 30px 20px; border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .run-free-badge {
-            background-color: #2ecc71; color: #050a15; font-weight: 800;
-            font-size: 0.75em; padding: 5px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;
-            margin-bottom: 10px; display: inline-block;
-        }
+        .seccion-run-free { padding: 30px 15px; background: linear-gradient(135deg, rgba(230, 32, 53, 0.08) 0%, rgba(9, 16, 31, 0.6) 100%); border-top: 1px solid rgba(230, 32, 53, 0.2); border-bottom: 1px solid rgba(230, 32, 53, 0.2); margin: 20px 0; }
+        .run-free-card { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center; background: rgba(255, 255, 255, 0.02); padding: 30px 20px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .run-free-badge { background-color: #2ecc71; color: #050a15; font-weight: 800; font-size: 0.75em; padding: 5px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: inline-block; }
         .run-free-info { display: flex; flex-direction: column; align-items: center; }
-        
         .run-free-logo-img { max-width: 150px; height: auto; margin-bottom: 15px; }
-        
         .run-free-info h2 { font-size: 1.5em; color: white; margin-bottom: 10px; font-weight: 800; }
         .run-free-info p { color: #aaa; font-size: 0.95em; line-height: 1.5; max-width: 600px; }
-        .btn-run-free {
-            background-color: #2ecc71; color: #050a15; padding: 12px 25px;
-            font-weight: 800; border-radius: 25px; text-decoration: none;
-            text-transform: uppercase; font-size: 0.9em; transition: transform 0.2s, background 0.3s;
-            display: inline-flex; align-items: center; gap: 8px;
-        }
+        .btn-run-free { background-color: #2ecc71; color: #050a15; padding: 12px 25px; font-weight: 800; border-radius: 25px; text-decoration: none; text-transform: uppercase; font-size: 0.9em; transition: transform 0.2s, background 0.3s; display: inline-flex; align-items: center; gap: 8px; }
         .btn-run-free:hover { transform: scale(1.05); background-color: #27ae60; color: white; }
 
         /* ==========================================================================
@@ -164,10 +113,8 @@
            ========================================================================== */
         .eventos-pasados { padding: 20px 15px 50px; background-color: rgba(0,0,0,0.15); }
         .lista-pasados-container { display: flex; flex-direction: column; gap: 12px; }
-        
         .past-event-item { background-color: rgba(255,255,255,0.02); border-radius: 12px; padding: 16px; display: grid; grid-template-columns: 55px 1fr auto; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.04); transition: background 0.3s; }
         .past-event-item:active { background-color: rgba(255,255,255,0.05); }
-
         .past-logo { width: 55px; height: 55px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
         .past-info h3 { font-size: 1.05em; color: white; margin: 0 0 3px; font-weight: 600; }
         .past-info p { color: #777; font-size: 0.88em; margin: 0; }
@@ -176,40 +123,19 @@
         /* ==========================================================================
            7. FOOTER (PIE DE PÁGINA)
            ========================================================================== */
-        .footer-sandia {
-            background-color: #03060d;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 50px 20px 20px; margin-top: auto;
-        }
-        .footer-content {
-            max-width: 1100px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px; padding-bottom: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .footer-col h4 {
-            color: #e62035; text-transform: uppercase; font-size: 0.95em;
-            margin-bottom: 15px; letter-spacing: 1px;
-        }
+        .footer-sandia { background-color: #03060d; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 50px 20px 20px; margin-top: auto; }
+        .footer-content { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; padding-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .footer-col h4 { color: #e62035; text-transform: uppercase; font-size: 0.95em; margin-bottom: 15px; letter-spacing: 1px; }
         .footer-col p, .footer-col li { color: #888; font-size: 0.9em; line-height: 1.6; }
         .footer-col ul { list-style: none; }
         .footer-col ul li a { color: #aaa; text-decoration: none; transition: color 0.2s; }
         .footer-col ul li a:hover { color: #e62035; }
-        
-        .footer-bottom {
-            max-width: 1100px; margin: 20px auto 0;
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
-            text-align: center; color: #555; font-size: 0.85em;
-        }
-        .agency-credit {
-            color: #aaa; font-weight: 600; text-decoration: none;
-            transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px;
-        }
+        .footer-bottom { max-width: 1100px; margin: 20px auto 0; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; color: #555; font-size: 0.85em; }
+        .agency-credit { color: #aaa; font-weight: 600; text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; }
         .agency-credit:hover { color: #e62035; }
 
         @media (min-width: 992px) {
             .logo-mobile { display: none; }
-            /* Tamaño gigante restaurado en escritorio */
             .logo-desktop { display: block; height: 190px; width: auto; }
             .navbar-sandia { padding: 10px 40px; }
             .proximas-carreras { padding-top: 240px; }
@@ -260,33 +186,13 @@
             </ul>
         </div>
 
-        <!-- SECCIÓN 1: PRÓXIMOS RETOS (CAROUSEL) -->
+        <!-- SECCIÓN 1: PRÓXIMOS RETOS (CARRUSEL DINÁMICO) -->
         <section class="proximas-carreras" id="proximas-carreras">
             <h2 class="titulo-seccion">Próximos Retos</h2>
-            <div class="carousel-container">
-                
-                <div class="event-card current" style="background-image: url('img/coffee_run.png');">
-                    <div class="card-overlay">
-                        <div class="card-info">
-                            <span class="card-date">24 OCT 2026</span>
-                            <h3>1er Coffee Run Terraza Tinaja (3K Vol. 1)</h3>
-                            <p>Santa Irene, Punto Fijo Edo. Falcón</p>
-                            <button class="btn-sandia-general inscribirme-card" onclick="window.location.href='coffeerun.html'">Inscríbete AQUÍ</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="event-card current" style="background-image: url('img/fondo_carrera.jpg'); filter: hue-rotate(90deg);">
-                    <div class="card-overlay">
-                        <div class="card-info">
-                            <span class="card-date">15 NOV 2026</span>
-                            <h3>RETO VIRTUAL 10K</h3>
-                            <p>Edición Noviembre / Online</p>
-                            <button class="btn-sandia-general inscribirme-card" onclick="alert('Próximamente...')">Más Info</button>
-                        </div>
-                    </div>
-                </div>
-                
+            
+            <!-- Contenedor del Carrusel conectado a Google Sheets -->
+            <div class="carousel-container" id="carousel-carreras">
+                <div class="estado-carga">Actualizando Retos... ⏳</div>
             </div>
         </section>
 
@@ -295,10 +201,7 @@
             <div class="run-free-card">
                 <div class="run-free-info">
                     <span class="run-free-badge">Comunidad Oficial</span>
-                    
-                    <!-- LOGO RUN FREE -->
                     <img src="img/runfreelogo.png" alt="Run Free" class="run-free-logo-img" onerror="this.style.display='none'">
-                    
                     <h2>Únete al Team RUN FREE 🏃‍♂️🔥</h2>
                     <p>Entrenamientos, rutas semanales y la mejor vibra runner de la ciudad. Sumamos kilómetros juntos antes de cada gran reto.</p>
                 </div>
@@ -310,11 +213,10 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 3: EVENTOS PASADOS -->
+        <!-- SECCIÓN 3: EVENTOS PASADOS (Este puedes dejarlo manual o automatizarlo después) -->
         <section class="eventos-pasados" id="eventos-pasados">
             <h2 class="titulo-seccion">Carreras Superadas</h2>
             <div class="lista-pasados-container">
-                
                 <div class="past-event-item">
                     <img src="img/matea_run.png" alt="Matea Run 5K" class="past-logo">
                     <div class="past-info">
@@ -323,7 +225,6 @@
                     </div>
                     <button class="btn-past-results" onclick="alert('Abriendo Resultados...')">Resultados</button>
                 </div>
-
                 <div class="past-event-item">
                     <img src="img/Isotipo.png" alt="Glow Run" class="past-logo" style="background:#111; padding:5px;">
                     <div class="past-info">
@@ -338,22 +239,18 @@
         <!-- SECCIÓN 4: FOOTER (PIE DE PÁGINA) -->
         <footer class="footer-sandia" id="contacto">
             <div class="footer-content">
-                <!-- Columna 1: Marca -->
                 <div class="footer-col">
                     <h4>Sandía Production</h4>
-                    <!-- REEMPLAZA EL TEXTO DE ABAJO -->
-                    <p>Producción de eventos deportivos y tu calendario oficial de carreras a nivel regional y nacional.</p>
+                    <p>Producción de eventos deportivos y tu directorio oficial de carreras a nivel local y nacional.</p>
                 </div>
-
                 <div class="footer-col">
                     <h4>Comunidad</h4>
                     <ul>
                         <li><a href="#run-free">Run Free Runner Team</a></li>
-                        <li><a href="#proximas-carreras">Próximos Eventos</a></li>
+                        <li><a href="calendario.html">Próximos Eventos</a></li>
                         <li><a href="#eventos-pasados">Galería de Fotos</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-col">
                     <h4>Contacto</h4>
                     <ul>
@@ -363,15 +260,11 @@
                     </ul>
                 </div>
             </div>
-
-            <!-- Créditos Onion Web -->
             <div class="footer-bottom">
                 <div>&copy; 2026 Sandía Production. Todos los derechos reservados.</div>
                 <div>
                     Desarrollado por 
-                    <a href="https://instagram.com/onionweb.ve" target="_blank" class="agency-credit">
-                        ⚡ Onion Web
-                    </a>
+                    <a href="https://instagram.com/onionweb.ve" target="_blank" class="agency-credit">⚡ Onion Web</a>
                 </div>
             </div>
         </footer>
@@ -380,6 +273,7 @@
 
     <!-- SCRIPTS -->
     <script>
+        // --- ANIMACIÓN DE PANTALLA DE CARGA ---
         const canvas = document.getElementById('bullet-canvas');
         const ctx = canvas.getContext('2d');
         const splashScreen = document.getElementById('splash-screen');
@@ -463,6 +357,7 @@
             animationFrame = requestAnimationFrame(animate);
         }
 
+        // --- MENÚ LATERAL ---
         const openMenuBtn = document.getElementById('open-menu-btn');
         const closeMenuBtn = document.getElementById('close-menu-btn');
         const sideMenu = document.getElementById('side-menu');
@@ -477,7 +372,55 @@
         closeMenuBtn.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
+        // --- LÓGICA DE EXTRACCIÓN DE GOOGLE SHEETS PARA EL CARRUSEL ---
+        // MISMA URL DE LA PÁGINA DEL CALENDARIO
+        const urlScriptDirectorio = "https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec";
+
+        async function cargarCarrerasCarousel() {
+            const carouselContainer = document.getElementById('carousel-carreras');
+            
+            try {
+                const respuesta = await fetch(urlScriptDirectorio);
+                const eventos = await respuesta.json();
+
+                if (eventos.length > 0) {
+                    carouselContainer.innerHTML = ''; // Quitar el loader
+                    
+                    eventos.forEach(evento => {
+                        // Configurar qué pasa al darle click al botón
+                        let clickAction = `window.location.href='${evento.enlace}'`;
+                        if (evento.enlace === '#' || evento.enlace === '') {
+                            clickAction = `alert('Próximamente...')`;
+                        }
+
+                        // Construir la tarjeta del carrusel inyectando los datos del Excel
+                        const cardHTML = `
+                            <div class="event-card current" style="background-image: url('img/${evento.imagen}');">
+                                <div class="card-overlay">
+                                    <div class="card-info">
+                                        <span class="card-date">${evento.dia} ${evento.mes}</span>
+                                        <h3>${evento.titulo}</h3>
+                                        <p>${evento.ubicacion}</p>
+                                        <button class="btn-sandia-general inscribirme-card" onclick="${clickAction}">${evento.textoBoton}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        carouselContainer.innerHTML += cardHTML;
+                    });
+                } else {
+                    carouselContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">No hay próximos retos publicados.</p>';
+                }
+            } catch (error) {
+                console.error("Error al cargar eventos en el carrusel:", error);
+                carouselContainer.innerHTML = '<p style="color:red; text-align:center; width:100%;">Error al conectar con el servidor.</p>';
+            }
+        }
+
+        // --- INICIAR TODO AL CARGAR LA PÁGINA ---
         window.onload = () => {
+            // 1. Iniciar Animación de Splash Screen
             animate();
             emitirRafagaSelectiva(5, 8);
             programarOleadasDispersas();
@@ -491,6 +434,9 @@
                     mainContent.style.display = 'flex'; 
                 }, 1000); 
             }, 6500);
+
+            // 2. Cargar eventos del Carrusel desde Google Sheets
+            cargarCarrerasCarousel();
         };
     </script>
 </body>
