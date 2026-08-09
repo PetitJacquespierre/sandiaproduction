@@ -272,10 +272,13 @@
         async function cargarEventos() {
             try {
                 const respuesta = await fetch(urlScriptDirectorio);
-                const eventos = await respuesta.json();
+                const eventosRaw = await respuesta.json();
 
-                if (eventos.length > 0) {
-                    renderizarEventos(eventos);
+                // FILTRO MAESTRO: Solo dejamos pasar las que dicen "SI"
+                const eventosActivos = eventosRaw.filter(evento => evento.activo === "SI");
+
+                if (eventosActivos.length > 0) {
+                    renderizarEventos(eventosActivos);
                 } else {
                     gridEventos.innerHTML = '';
                     msjSinResultados.style.display = 'block';
