@@ -47,7 +47,6 @@
         /* ==========================================================================
            3. MENÚ LATERAL DESPLEGABLE Y HAMBURGUESA
            ========================================================================== */
-        /* --- Botón Hamburguesa Animado --- */
         .menu-hamburguesa { display: flex; flex-direction: column; gap: 6px; cursor: pointer; z-index: 2002; }
         .menu-hamburguesa span {
             width: 32px; height: 3px; background-color: white; border-radius: 3px;
@@ -58,7 +57,6 @@
         .menu-hamburguesa.active span:nth-child(2) { opacity: 0; transform: translateX(20px); }
         .menu-hamburguesa.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background-color: #e62035; box-shadow: 0 0 10px #e62035; }
 
-        /* --- Fondo y Contenedor del Menú Lateral --- */
         .side-menu-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(3px); }
         .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
 
@@ -67,7 +65,6 @@
         .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; margin-top: 10px; }
         .close-menu { font-size: 24px; color: #aaa; cursor: pointer; }
         
-        /* --- Efecto Cascada en los Enlaces --- */
         .side-menu-links { list-style: none; display: flex; flex-direction: column; gap: 20px; }
         .side-menu-links li { opacity: 0; transform: translateX(40px); transition: all 0.4s ease; }
         .side-menu.active .side-menu-links li { opacity: 1; transform: translateX(0); }
@@ -133,7 +130,7 @@
         @keyframes latido { from { opacity: 0.5; } to { opacity: 1; } }
 
         /* ==========================================================================
-           6. FOOTER (PIE DE PÁGINA)
+           6. FOOTER Y EFECTO WOW GROW STUDIO
            ========================================================================== */
         .footer-sandia {
             background-color: #03060d; border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -153,8 +150,35 @@
             max-width: 1100px; margin: 20px auto 0; display: flex; flex-direction: column; align-items: center; gap: 10px;
             text-align: center; color: #555; font-size: 0.85em;
         }
-        .agency-credit { color: #aaa; font-weight: 600; text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; }
-        .agency-credit:hover { color: #e62035; }
+        
+        /* MAGIA GROW STUDIO */
+        .grow-studio-credit {
+            font-weight: 900;
+            text-transform: uppercase;
+            text-decoration: none;
+            /* Degradado en movimiento continuo */
+            background: linear-gradient(270deg, #ff334b, #e62035, #ff8a00, #e62035);
+            background-size: 300% 300%;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: brillo-grow 4s ease infinite;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+            letter-spacing: 1px;
+            margin-left: 5px;
+        }
+
+        .grow-studio-credit:hover {
+            transform: scale(1.15) rotate(-2deg);
+            filter: drop-shadow(0 0 12px rgba(230, 32, 53, 0.8));
+        }
+
+        @keyframes brillo-grow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
         /* ==========================================================================
            7. MEDIA QUERIES (DISEÑO PARA ESCRITORIO)
@@ -293,8 +317,8 @@
             <div>&copy; 2026 Sandía Production. Todos los derechos reservados.</div>
             <div>
                 Desarrollado por 
-                <a href="https://instagram.com/growstudioweb" target="_blank" class="agency-credit">
-                    ⚡ Grow Studio
+                <a href="https://growstudioweb.vercel.app/" target="_blank" class="grow-studio-credit">
+                     Grow Studio
                 </a>
             </div>
         </div>

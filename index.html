@@ -114,7 +114,6 @@
             border-bottom: 1px solid rgba(230, 32, 53, 0.15); position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(5px); 
         }
 
-        /* Quitamos el "order" para que respeten sus posiciones naturales (Logo izquierda, Menú derecha) */
         .logo-wrapper { display: flex; align-items: center; }
         .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; user-select: none; }
         
@@ -125,19 +124,16 @@
         /* ==========================================================================
            3. MENÚ LATERAL DESPLEGABLE Y EFECTOS WOW MÓVIL
            ========================================================================== */
-        /* --- Botón Hamburguesa Animado --- */
         .menu-hamburguesa { display: flex; flex-direction: column; gap: 6px; cursor: pointer; z-index: 2002; }
         .menu-hamburguesa span {
             width: 32px; height: 3px; background-color: white; border-radius: 3px;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             box-shadow: 0 0 5px rgba(255,255,255,0.3);
         }
-        /* Transformación a la "X" roja cuando está activo */
         .menu-hamburguesa.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); background-color: #e62035; box-shadow: 0 0 10px #e62035; }
         .menu-hamburguesa.active span:nth-child(2) { opacity: 0; transform: translateX(20px); }
         .menu-hamburguesa.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background-color: #e62035; box-shadow: 0 0 10px #e62035; }
 
-        /* --- Fondo y Contenedor del Menú Lateral --- */
         .side-menu-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(3px); }
         .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
 
@@ -145,12 +141,10 @@
         .side-menu.active { right: 0; }
         .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; margin-top: 10px; }
         
-        /* --- Efecto Cascada en los Enlaces --- */
         .side-menu-links { list-style: none; display: flex; flex-direction: column; gap: 20px; }
         .side-menu-links li { opacity: 0; transform: translateX(40px); transition: all 0.4s ease; }
         .side-menu.active .side-menu-links li { opacity: 1; transform: translateX(0); }
         
-        /* Retrasos para que entren uno tras otro */
         .side-menu.active .side-menu-links li:nth-child(1) { transition-delay: 0.1s; }
         .side-menu.active .side-menu-links li:nth-child(2) { transition-delay: 0.2s; }
         .side-menu.active .side-menu-links li:nth-child(3) { transition-delay: 0.3s; }
@@ -175,7 +169,6 @@
         .event-card p { color: #aaa; margin-bottom: 20px; font-size: 0.95em; }
         .inscribirme-card { width: 100%; padding: 14px; border-radius: 8px; font-size: 0.95em; box-shadow: 0 4px 10px rgba(230, 32, 53, 0.3); }
 
-        /* Loader para Carrusel */
         .estado-carga { text-align: center; padding: 50px; color: #e62035; font-size: 1.1em; font-weight: bold; width: 100%; animation: latido 1s infinite alternate; }
 
         /* ==========================================================================
@@ -204,7 +197,7 @@
         .btn-past-results { background-color: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ccc; padding: 9px 16px; border-radius: 20px; font-size: 0.8em; font-weight: 600; }
 
         /* ==========================================================================
-           7. FOOTER (PIE DE PÁGINA)
+           7. FOOTER (PIE DE PÁGINA) Y MAGIA GROW STUDIO
            ========================================================================== */
         .footer-sandia { background-color: #03060d; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 50px 20px 20px; margin-top: auto; }
         .footer-content { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; padding-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
@@ -214,8 +207,35 @@
         .footer-col ul li a { color: #aaa; text-decoration: none; transition: color 0.2s; }
         .footer-col ul li a:hover { color: #e62035; }
         .footer-bottom { max-width: 1100px; margin: 20px auto 0; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; color: #555; font-size: 0.85em; }
-        .agency-credit { color: #aaa; font-weight: 600; text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; }
-        .agency-credit:hover { color: #e62035; }
+        
+        /* MAGIA GROW STUDIO */
+        .grow-studio-credit {
+            font-weight: 900;
+            text-transform: uppercase;
+            text-decoration: none;
+            /* Degradado en movimiento continuo */
+            background: linear-gradient(270deg, #ff334b, #e62035, #ff8a00, #e62035);
+            background-size: 300% 300%;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: brillo-grow 4s ease infinite;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+            letter-spacing: 1.5px;
+            margin-left: 5px;
+        }
+
+        .grow-studio-credit:hover {
+            transform: scale(1.1) rotate(-1deg);
+            filter: drop-shadow(0 0 10px rgba(230, 32, 53, 0.7));
+        }
+
+        @keyframes brillo-grow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
         /* ==========================================================================
            DISEÑO PARA COMPUTADORAS (ESCRITORIO)
@@ -253,7 +273,6 @@
                 width: 100%; /* La línea se expande */
             }
             /* ---------------------------------------------------- */
-            /* ------------------------------------ */
 
             /* Ajustes de espaciado general */
             .proximas-carreras { padding-top: 240px; max-width: 1200px; margin: 0 auto; }
@@ -410,14 +429,15 @@
                 <div>&copy; 2026 Sandía Production. Todos los derechos reservados.</div>
                 <div>
                     Desarrollado por 
-                    <a href="https://instagram.com/growstudioweb" target="_blank" class="agency-credit">⚡ Grow Studio</a>
+                    <a href="https://growstudioweb.vercel.app/" target="_blank" class="grow-studio-credit">
+                        GROW STUDIO
+                    </a>
                 </div>
             </div>
         </footer>
 
     </div>
 
-    <!-- SCRIPTS -->
     <!-- SCRIPTS -->
     <script>
         // --- ANIMACIÓN DE PANTALLA DE CARGA ---
