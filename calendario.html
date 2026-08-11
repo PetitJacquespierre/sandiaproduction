@@ -31,39 +31,53 @@
         .btn-sandia-general:hover { background-color: #ff334b; transform: scale(1.03); box-shadow: 0 5px 15px rgba(230, 32, 53, 0.4); }
 
         /* ==========================================================================
-           2. NAVBAR Y LOGO DE CABECERA (Idéntico a Index)
+           2. NAVBAR Y LOGO DE CABECERA
            ========================================================================== */
         .navbar-sandia { 
             background-color: rgba(5, 10, 21, 0.98); padding: 10px 20px; display: flex; justify-content: space-between; 
             align-items: center; border-bottom: 1px solid rgba(230, 32, 53, 0.15); position: fixed; top: 0; width: 100%; 
             z-index: 1000; backdrop-filter: blur(5px); 
         }
-        .logo-wrapper { display: flex; align-items: center; order: 1; }
-        .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; order: 2; user-select: none; }
         
+        .logo-wrapper { display: flex; align-items: center; }
         .logo-mobile { height: 140px; width: auto; display: block; }
         .logo-desktop { display: none; }
+        .menu-desktop-links { display: none; } /* Oculto en móviles */
 
         /* ==========================================================================
-           3. MENÚ LATERAL DESPLEGABLE
+           3. MENÚ LATERAL DESPLEGABLE Y HAMBURGUESA
            ========================================================================== */
-        .side-menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.7); z-index: 2000;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        /* --- Botón Hamburguesa Animado --- */
+        .menu-hamburguesa { display: flex; flex-direction: column; gap: 6px; cursor: pointer; z-index: 2002; }
+        .menu-hamburguesa span {
+            width: 32px; height: 3px; background-color: white; border-radius: 3px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 0 5px rgba(255,255,255,0.3);
         }
+        .menu-hamburguesa.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); background-color: #e62035; box-shadow: 0 0 10px #e62035; }
+        .menu-hamburguesa.active span:nth-child(2) { opacity: 0; transform: translateX(20px); }
+        .menu-hamburguesa.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background-color: #e62035; box-shadow: 0 0 10px #e62035; }
+
+        /* --- Fondo y Contenedor del Menú Lateral --- */
+        .side-menu-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(3px); }
         .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
 
-        .side-menu {
-            position: fixed; top: 0; right: -280px; width: 280px; height: 100vh;
-            background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2);
-            z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column;
-            transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-        }
+        .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2); z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
         .side-menu.active { right: 0; }
-        .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; margin-top: 10px; }
         .close-menu { font-size: 24px; color: #aaa; cursor: pointer; }
+        
+        /* --- Efecto Cascada en los Enlaces --- */
         .side-menu-links { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+        .side-menu-links li { opacity: 0; transform: translateX(40px); transition: all 0.4s ease; }
+        .side-menu.active .side-menu-links li { opacity: 1; transform: translateX(0); }
+        
+        .side-menu.active .side-menu-links li:nth-child(1) { transition-delay: 0.1s; }
+        .side-menu.active .side-menu-links li:nth-child(2) { transition-delay: 0.2s; }
+        .side-menu.active .side-menu-links li:nth-child(3) { transition-delay: 0.3s; }
+        .side-menu.active .side-menu-links li:nth-child(4) { transition-delay: 0.4s; }
+        .side-menu.active .side-menu-links li:nth-child(5) { transition-delay: 0.5s; }
+
         .side-menu-links a { color: white; text-decoration: none; font-size: 1.1em; font-weight: 600; transition: color 0.2s; }
         .side-menu-links a:hover { color: #e62035; }
 
@@ -142,10 +156,36 @@
         .agency-credit { color: #aaa; font-weight: 600; text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; }
         .agency-credit:hover { color: #e62035; }
 
+        /* ==========================================================================
+           7. MEDIA QUERIES (DISEÑO PARA ESCRITORIO)
+           ========================================================================== */
         @media (min-width: 992px) {
             .logo-mobile { display: none; }
             .logo-desktop { display: block; height: 190px; width: auto; }
             .navbar-sandia { padding: 10px 40px; }
+            
+            /* --- MAGIA DEL MENÚ DE ESCRITORIO --- */
+            .menu-hamburguesa { display: none; } /* Apagamos la hamburguesa */
+            .menu-desktop-links { 
+                display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; align-items: center; 
+            }
+            .menu-desktop-links a { 
+                color: white; text-decoration: none; font-weight: 700; font-size: 0.95em; 
+                text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;
+                position: relative; padding-bottom: 5px;
+            }
+            .menu-desktop-links a::after {
+                content: ''; position: absolute; width: 0; height: 2px;
+                bottom: 0; left: 50%; background-color: #e62035;
+                transition: all 0.3s ease; transform: translateX(-50%);
+                box-shadow: 0 0 10px #e62035, 0 0 20px #e62035;
+            }
+            .menu-desktop-links a:hover { 
+                color: white; 
+                text-shadow: 0 0 10px rgba(230, 32, 53, 0.8);
+            }
+            .menu-desktop-links a:hover::after { width: 100%; }
+
             .calendario-header { padding-top: 240px; }
             .footer-bottom { flex-direction: row; justify-content: space-between; }
         }
@@ -161,7 +201,22 @@
                 <img src="img/Logo1.png" alt="Sandía Production" class="logo-desktop">
             </a>
         </div>
-        <div class="menu-hamburguesa" id="open-menu-btn">&#9776;</div>
+        
+        <!-- MENÚ HORIZONTAL PARA COMPUTADORAS -->
+        <ul class="menu-desktop-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="#">Calendario Runner</a></li>
+            <li><a href="index.html#run-free">Comunidad</a></li>
+            <li><a href="index.html#eventos-pasados">Resultados</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+
+        <!-- MENÚ HAMBURGUESA ANIMADO PARA MÓVILES -->
+        <div class="menu-hamburguesa" id="open-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
 
     <!-- MENÚ LATERAL DESPLEGABLE -->
@@ -233,13 +288,13 @@
             </div>
         </div>
 
-        <!-- Créditos Onion Web -->
+        <!-- Créditos Grow Studio -->
         <div class="footer-bottom">
             <div>&copy; 2026 Sandía Production. Todos los derechos reservados.</div>
             <div>
                 Desarrollado por 
-                <a href="https://instagram.com/onionweb.ve" target="_blank" class="agency-credit">
-                    ⚡ Onion Web
+                <a href="https://instagram.com/growstudioweb" target="_blank" class="agency-credit">
+                    ⚡ Grow Studio
                 </a>
             </div>
         </div>
@@ -256,6 +311,7 @@
         function toggleMenu() {
             sideMenu.classList.toggle('active');
             menuOverlay.classList.toggle('active');
+            openMenuBtn.classList.toggle('active'); // Agregado para que gire la hamburguesa
         }
 
         openMenuBtn.addEventListener('click', toggleMenu);

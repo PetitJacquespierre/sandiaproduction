@@ -20,7 +20,9 @@
             overflow-x: hidden; 
         }
 
-        /* --- PANTALLA DE CARGA (SPLASH SCREEN) --- */
+        /* ==========================================================================
+           EFECTO WOW + TIEMPO DE BALA (SPLASH SCREEN)
+           ========================================================================== */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(rgba(5, 10, 21, 0.9), rgba(5, 10, 21, 0.97)), 
@@ -30,14 +32,68 @@
         }
 
         #bullet-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        #logo-container { position: relative; width: 130px; height: 130px; display: flex; justify-content: center; align-items: center; z-index: 10; }
-        #loading-ring { position: absolute; width: 100%; height: 100%; border: 3px solid rgba(230, 32, 53, 0.1); border-top: 3px solid #e62035; border-right: 3px solid #e62035; border-radius: 50%; animation: spin 2s linear infinite; box-shadow: 0 0 12px rgba(230, 32, 53, 0.3); }
-        #loading-ring-inner { position: absolute; width: 82%; height: 82%; border: 2px solid transparent; border-bottom: 2px solid #2ecc71; border-radius: 50%; animation: spin-reverse 3s linear infinite; opacity: 0.7; }
-        #sandia-logo { width: 60%; position: relative; z-index: 12; animation: latido 1.6s infinite alternate ease-in-out; filter: drop-shadow(0 0 10px rgba(230, 32, 53, 0.5)); }
+        
+        /* Contenedor principal para el efecto WOW */
+        #logo-container { 
+            position: relative; width: 180px; height: 180px; 
+            display: flex; justify-content: center; align-items: center; 
+            z-index: 10;
+        }
 
-        @keyframes latido { 0% { transform: scale(0.97); } 100% { transform: scale(1.03); } }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes spin-reverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+        /* Anillos de energía superpuestos y asimétricos */
+        .energia-ring {
+            position: absolute; border-radius: 50%; border: 2px solid transparent;
+            box-shadow: 0 0 20px rgba(230, 32, 53, 0.4), inset 0 0 20px rgba(230, 32, 53, 0.2);
+        }
+
+        .ring-1 {
+            width: 100%; height: 100%; border-top: 3px solid #e62035; border-right: 3px solid #e62035;
+            animation: giro-wow 3s linear infinite;
+        }
+
+        .ring-2 {
+            width: 85%; height: 85%; border-bottom: 3px solid #2ecc71; border-left: 3px solid #2ecc71;
+            animation: giro-wow-reverse 2s linear infinite; opacity: 0.8;
+        }
+
+        .ring-3 {
+            width: 115%; height: 115%; border-top: 2px dashed #fff;
+            animation: giro-wow 6s linear infinite; opacity: 0.3;
+        }
+
+        /* El Logo palpitante con brillo dinámico */
+        #sandia-logo { 
+            width: 55%; position: relative; z-index: 15; 
+            animation: wow-pulso 1.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); 
+            filter: drop-shadow(0 0 15px rgba(230, 32, 53, 0.8)); 
+        }
+
+        /* Partículas que "salen" del centro (Efecto Chispa) */
+        .particula {
+            position: absolute; width: 6px; height: 6px; background-color: #2ecc71;
+            border-radius: 50%; z-index: 5; opacity: 0; box-shadow: 0 0 10px #2ecc71;
+            animation: explotar 2s infinite ease-out;
+        }
+
+        .p1 { top: 50%; left: 50%; animation-delay: 0s; transform: translate(-50%, -50%) rotate(0deg) translateY(-80px); background-color: #e62035; box-shadow: 0 0 10px #e62035;}
+        .p2 { top: 50%; left: 50%; animation-delay: 0.4s; transform: translate(-50%, -50%) rotate(72deg) translateY(-80px); }
+        .p3 { top: 50%; left: 50%; animation-delay: 0.8s; transform: translate(-50%, -50%) rotate(144deg) translateY(-80px); background-color: #fff; box-shadow: 0 0 10px #fff;}
+        .p4 { top: 50%; left: 50%; animation-delay: 1.2s; transform: translate(-50%, -50%) rotate(216deg) translateY(-80px); background-color: #e62035; box-shadow: 0 0 10px #e62035;}
+        .p5 { top: 50%; left: 50%; animation-delay: 1.6s; transform: translate(-50%, -50%) rotate(288deg) translateY(-80px); }
+
+        /* --- Animaciones Clave --- */
+        @keyframes giro-wow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes giro-wow-reverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+        
+        @keyframes wow-pulso { 
+            0% { transform: scale(0.9); filter: drop-shadow(0 0 10px rgba(230, 32, 53, 0.4)); } 
+            100% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(230, 32, 53, 1)); } 
+        }
+
+        @keyframes explotar {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1) translateY(0); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0) translateY(-120px); }
+        }
 
         /* --- CONTENIDO PRINCIPAL --- */
         #main-content { display: none; min-height: 100vh; flex-direction: column; background-color: #050a15; overflow-y: auto; -webkit-overflow-scrolling: touch; }
@@ -58,22 +114,49 @@
             border-bottom: 1px solid rgba(230, 32, 53, 0.15); position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(5px); 
         }
 
-        .logo-wrapper { display: flex; align-items: center; order: 1; }
-        .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; order: 2; user-select: none; }
+        /* Quitamos el "order" para que respeten sus posiciones naturales (Logo izquierda, Menú derecha) */
+        .logo-wrapper { display: flex; align-items: center; }
+        .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; user-select: none; }
+        
         .logo-mobile { height: 140px; width: auto; display: block; }
         .logo-desktop { display: none; }
+        .menu-desktop-links { display: none; } /* Oculto en móviles */
 
         /* ==========================================================================
-           3. MENÚ LATERAL DESPLEGABLE
+           3. MENÚ LATERAL DESPLEGABLE Y EFECTOS WOW MÓVIL
            ========================================================================== */
-        .side-menu-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        /* --- Botón Hamburguesa Animado --- */
+        .menu-hamburguesa { display: flex; flex-direction: column; gap: 6px; cursor: pointer; z-index: 2002; }
+        .menu-hamburguesa span {
+            width: 32px; height: 3px; background-color: white; border-radius: 3px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 0 5px rgba(255,255,255,0.3);
+        }
+        /* Transformación a la "X" roja cuando está activo */
+        .menu-hamburguesa.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); background-color: #e62035; box-shadow: 0 0 10px #e62035; }
+        .menu-hamburguesa.active span:nth-child(2) { opacity: 0; transform: translateX(20px); }
+        .menu-hamburguesa.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background-color: #e62035; box-shadow: 0 0 10px #e62035; }
+
+        /* --- Fondo y Contenedor del Menú Lateral --- */
+        .side-menu-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(3px); }
         .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
 
-        .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2); z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column; transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.5); }
+        .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2); z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
         .side-menu.active { right: 0; }
-        .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .close-menu { font-size: 24px; color: #aaa; cursor: pointer; }
+        .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; margin-top: 10px; }
+        
+        /* --- Efecto Cascada en los Enlaces --- */
         .side-menu-links { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+        .side-menu-links li { opacity: 0; transform: translateX(40px); transition: all 0.4s ease; }
+        .side-menu.active .side-menu-links li { opacity: 1; transform: translateX(0); }
+        
+        /* Retrasos para que entren uno tras otro */
+        .side-menu.active .side-menu-links li:nth-child(1) { transition-delay: 0.1s; }
+        .side-menu.active .side-menu-links li:nth-child(2) { transition-delay: 0.2s; }
+        .side-menu.active .side-menu-links li:nth-child(3) { transition-delay: 0.3s; }
+        .side-menu.active .side-menu-links li:nth-child(4) { transition-delay: 0.4s; }
+        .side-menu.active .side-menu-links li:nth-child(5) { transition-delay: 0.5s; }
+
         .side-menu-links a { color: white; text-decoration: none; font-size: 1.1em; font-weight: 600; transition: color 0.2s; }
         .side-menu-links a:hover { color: #e62035; }
 
@@ -134,14 +217,59 @@
         .agency-credit { color: #aaa; font-weight: 600; text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; }
         .agency-credit:hover { color: #e62035; }
 
+        /* ==========================================================================
+           DISEÑO PARA COMPUTADORAS (ESCRITORIO)
+           ========================================================================== */
         @media (min-width: 992px) {
             .logo-mobile { display: none; }
             .logo-desktop { display: block; height: 190px; width: auto; }
             .navbar-sandia { padding: 10px 40px; }
-            .proximas-carreras { padding-top: 240px; }
+            
+            /* --- MAGIA DEL MENÚ DE ESCRITORIO (EFECTO LÁSER) --- */
+            .menu-hamburguesa { display: none; } /* Apagamos la hamburguesa en PC */
+            .menu-desktop-links { 
+                display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; align-items: center; 
+            }
+            .menu-desktop-links a { 
+                color: white; text-decoration: none; font-weight: 700; font-size: 0.95em; 
+                text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;
+                position: relative; padding-bottom: 5px;
+            }
+            
+            /* La línea mágica invisible que está debajo */
+            .menu-desktop-links a::after {
+                content: ''; position: absolute; width: 0; height: 2px;
+                bottom: 0; left: 50%; background-color: #e62035;
+                transition: all 0.3s ease; transform: translateX(-50%);
+                box-shadow: 0 0 10px #e62035, 0 0 20px #e62035;
+            }
+            
+            /* Lo que pasa cuando pasas el mouse */
+            .menu-desktop-links a:hover { 
+                color: white; 
+                text-shadow: 0 0 10px rgba(230, 32, 53, 0.8);
+            }
+            .menu-desktop-links a:hover::after {
+                width: 100%; /* La línea se expande */
+            }
+            /* ---------------------------------------------------- */
+            /* ------------------------------------ */
+
+            /* Ajustes de espaciado general */
+            .proximas-carreras { padding-top: 240px; max-width: 1200px; margin: 0 auto; }
+            .eventos-pasados { max-width: 1200px; margin: 0 auto; border-radius: 15px; }
             .proximas-carreras, .eventos-pasados, .seccion-run-free { padding-left: 40px; padding-right: 40px; }
-            .run-free-card { flex-direction: row; justify-content: space-between; text-align: left; padding: 40px; }
+            
+            /* Ajuste del carrusel: Tarjetas a tamaño fijo para que no se estiren */
+            .event-card { flex: 0 0 400px; height: 420px; }
+            
+            /* Ajuste de la Comunidad Run Free con su logo original */
+            .run-free-card { flex-direction: row; justify-content: space-between; text-align: left; padding: 50px; }
             .run-free-info { align-items: flex-start; }
+            
+            /* Ajuste de Carreras Superadas (En PC se ven en 2 columnas) */
+            .lista-pasados-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            
             .footer-bottom { flex-direction: row; justify-content: space-between; }
         }
     </style>
@@ -150,10 +278,24 @@
 
     <!-- PANTALLA DE CARGA -->
     <div id="splash-screen">
+        <!-- Canvas original de las semillas (Tiempo de bala) -->
         <canvas id="bullet-canvas"></canvas>
+        
+        <!-- Nuevo contenedor WOW -->
         <div id="logo-container">
-            <div id="loading-ring"></div>
-            <div id="loading-ring-inner"></div>
+            <!-- Anillos de Energía -->
+            <div class="energia-ring ring-1"></div>
+            <div class="energia-ring ring-2"></div>
+            <div class="energia-ring ring-3"></div>
+            
+            <!-- Partículas (Chispas) -->
+            <div class="particula p1"></div>
+            <div class="particula p2"></div>
+            <div class="particula p3"></div>
+            <div class="particula p4"></div>
+            <div class="particula p5"></div>
+
+            <!-- El Logo -->
             <img src="img/Isotipo.png" alt="Sandía Production Isotipo" id="sandia-logo">
         </div>
     </div>
@@ -164,10 +306,27 @@
         <!-- NAVBAR -->
         <nav class="navbar-sandia">
             <div class="logo-wrapper">
-                <img src="img/Logo1.png" alt="Sandía Production" class="logo-mobile">
-                <img src="img/Logo1.png" alt="Sandía Production" class="logo-desktop">
+                <a href="index.html">
+                    <img src="img/Logo1.png" alt="Sandía Production" class="logo-mobile">
+                    <img src="img/Logo1.png" alt="Sandía Production" class="logo-desktop">
+                </a>
             </div>
-            <div class="menu-hamburguesa" id="open-menu-btn">&#9776;</div>
+            
+            <!-- MENÚ HORIZONTAL PARA COMPUTADORAS -->
+            <ul class="menu-desktop-links">
+                <li><a href="#">Inicio</a></li>
+                <li><a href="calendario.html">Calendario Runner</a></li>
+                <li><a href="#run-free">Comunidad</a></li>
+                <li><a href="#eventos-pasados">Resultados</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+
+            <!-- MENÚ HAMBURGUESA ANIMADO PARA MÓVILES -->
+            <div class="menu-hamburguesa" id="open-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </nav>
 
         <!-- MENÚ LATERAL DESPLEGABLE -->
@@ -251,7 +410,7 @@
                 <div>&copy; 2026 Sandía Production. Todos los derechos reservados.</div>
                 <div>
                     Desarrollado por 
-                    <a href="https://instagram.com/onionweb.ve" target="_blank" class="agency-credit">⚡ Onion Web</a>
+                    <a href="https://instagram.com/growstudioweb" target="_blank" class="agency-credit">⚡ Grow Studio</a>
                 </div>
             </div>
         </footer>
@@ -354,6 +513,7 @@
         function toggleMenu() {
             sideMenu.classList.toggle('active');
             menuOverlay.classList.toggle('active');
+            openMenuBtn.classList.toggle('active'); // <-- ESTA ES LA LÍNEA NUEVA
         }
 
         openMenuBtn.addEventListener('click', toggleMenu);
