@@ -33,42 +33,27 @@
 
         #bullet-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         
-        /* Contenedor principal para el efecto WOW */
         #logo-container { 
             position: relative; width: 180px; height: 180px; 
             display: flex; justify-content: center; align-items: center; 
             z-index: 10;
         }
 
-        /* Anillos de energía superpuestos y asimétricos */
         .energia-ring {
             position: absolute; border-radius: 50%; border: 2px solid transparent;
             box-shadow: 0 0 20px rgba(230, 32, 53, 0.4), inset 0 0 20px rgba(230, 32, 53, 0.2);
         }
 
-        .ring-1 {
-            width: 100%; height: 100%; border-top: 3px solid #e62035; border-right: 3px solid #e62035;
-            animation: giro-wow 3s linear infinite;
-        }
+        .ring-1 { width: 100%; height: 100%; border-top: 3px solid #e62035; border-right: 3px solid #e62035; animation: giro-wow 3s linear infinite; }
+        .ring-2 { width: 85%; height: 85%; border-bottom: 3px solid #2ecc71; border-left: 3px solid #2ecc71; animation: giro-wow-reverse 2s linear infinite; opacity: 0.8; }
+        .ring-3 { width: 115%; height: 115%; border-top: 2px dashed #fff; animation: giro-wow 6s linear infinite; opacity: 0.3; }
 
-        .ring-2 {
-            width: 85%; height: 85%; border-bottom: 3px solid #2ecc71; border-left: 3px solid #2ecc71;
-            animation: giro-wow-reverse 2s linear infinite; opacity: 0.8;
-        }
-
-        .ring-3 {
-            width: 115%; height: 115%; border-top: 2px dashed #fff;
-            animation: giro-wow 6s linear infinite; opacity: 0.3;
-        }
-
-        /* El Logo palpitante con brillo dinámico */
         #sandia-logo { 
             width: 55%; position: relative; z-index: 15; 
             animation: wow-pulso 1.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); 
             filter: drop-shadow(0 0 15px rgba(230, 32, 53, 0.8)); 
         }
 
-        /* Partículas que "salen" del centro (Efecto Chispa) */
         .particula {
             position: absolute; width: 6px; height: 6px; background-color: #2ecc71;
             border-radius: 50%; z-index: 5; opacity: 0; box-shadow: 0 0 10px #2ecc71;
@@ -81,19 +66,10 @@
         .p4 { top: 50%; left: 50%; animation-delay: 1.2s; transform: translate(-50%, -50%) rotate(216deg) translateY(-80px); background-color: #e62035; box-shadow: 0 0 10px #e62035;}
         .p5 { top: 50%; left: 50%; animation-delay: 1.6s; transform: translate(-50%, -50%) rotate(288deg) translateY(-80px); }
 
-        /* --- Animaciones Clave --- */
         @keyframes giro-wow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes giro-wow-reverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
-        
-        @keyframes wow-pulso { 
-            0% { transform: scale(0.9); filter: drop-shadow(0 0 10px rgba(230, 32, 53, 0.4)); } 
-            100% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(230, 32, 53, 1)); } 
-        }
-
-        @keyframes explotar {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(1) translateY(0); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(0) translateY(-120px); }
-        }
+        @keyframes wow-pulso { 0% { transform: scale(0.9); filter: drop-shadow(0 0 10px rgba(230, 32, 53, 0.4)); } 100% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(230, 32, 53, 1)); } }
+        @keyframes explotar { 0% { opacity: 1; transform: translate(-50%, -50%) scale(1) translateY(0); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(0) translateY(-120px); } }
 
         /* --- CONTENIDO PRINCIPAL --- */
         #main-content { display: none; min-height: 100vh; flex-direction: column; background-color: #050a15; overflow-y: auto; -webkit-overflow-scrolling: touch; }
@@ -119,7 +95,7 @@
         
         .logo-mobile { height: 140px; width: auto; display: block; }
         .logo-desktop { display: none; }
-        .menu-desktop-links { display: none; } /* Oculto en móviles */
+        .menu-desktop-links { display: none; } 
 
         /* ==========================================================================
            3. MENÚ LATERAL DESPLEGABLE Y EFECTOS WOW MÓVIL
@@ -172,29 +148,111 @@
         .estado-carga { text-align: center; padding: 50px; color: #e62035; font-size: 1.1em; font-weight: bold; width: 100%; animation: latido 1s infinite alternate; }
 
         /* ==========================================================================
-           5. SECCIÓN: RUN FREE (COMUNIDAD RUNNER) CON LOGO
+           5. SECCIÓN: RUN FREE (3 COLUMNAS: LOGO - TEXTO - CARICATURA)
            ========================================================================== */
-        .seccion-run-free { padding: 30px 15px; background: linear-gradient(135deg, rgba(230, 32, 53, 0.08) 0%, rgba(9, 16, 31, 0.6) 100%); border-top: 1px solid rgba(230, 32, 53, 0.2); border-bottom: 1px solid rgba(230, 32, 53, 0.2); margin: 20px 0; }
-        .run-free-card { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center; background: rgba(255, 255, 255, 0.02); padding: 30px 20px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.05); }
-        .run-free-badge { background-color: #2ecc71; color: #050a15; font-weight: 800; font-size: 0.75em; padding: 5px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: inline-block; }
-        .run-free-info { display: flex; flex-direction: column; align-items: center; }
-        .run-free-logo-img { max-width: 150px; height: auto; margin-bottom: 15px; }
-        .run-free-info h2 { font-size: 1.5em; color: white; margin-bottom: 10px; font-weight: 800; }
-        .run-free-info p { color: #aaa; font-size: 0.95em; line-height: 1.5; max-width: 600px; }
-        .btn-run-free { background-color: #2ecc71; color: #050a15; padding: 12px 25px; font-weight: 800; border-radius: 25px; text-decoration: none; text-transform: uppercase; font-size: 0.9em; transition: transform 0.2s, background 0.3s; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-run-free:hover { transform: scale(1.05); background-color: #27ae60; color: white; }
+        .seccion-run-free { padding: 50px 20px; background-color: transparent; }
+        
+        .run-free-card {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center; gap: 30px;
+        }
+
+        .run-free-logo-container, .run-free-caricatura-container { text-align: center; }
+        
+        /* AQUÍ CONTROLAS EL LOGO (Más grande) */
+        .run-free-logo-img { 
+            max-width: 280px; 
+            height: auto; 
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3)); 
+        }
+
+        /* AQUÍ CONTROLAS LA CARICATURA (Más pequeña) */
+        .run-free-caricatura-img { 
+            max-width: 160px; 
+            height: auto; 
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3)); 
+        }
+
+        .run-free-content { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
+
+        .run-free-badge { 
+            background: linear-gradient(90deg, #ff334b, #ff8a00); color: white; 
+            font-weight: 800; font-size: 0.8em; padding: 6px 16px; border-radius: 20px; 
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; 
+        }
+
+        .run-free-content h2 { font-size: 2.2em; color: white; margin-bottom: 10px; font-weight: 800; }
+        .run-free-content p { color: #ccc; font-size: 1.05em; line-height: 1.5; margin-bottom: 25px; max-width: 500px; }
+
+        .btn-run-free-outline { 
+            background: #050a15; color: white; padding: 12px 30px; font-weight: 800; 
+            border-radius: 30px; text-decoration: none; text-transform: uppercase; font-size: 0.9em; 
+            border: 1px solid rgba(255,255,255,0.2); transition: all 0.3s;
+        }
+        .btn-run-free-outline:hover { background: rgba(230, 32, 53, 0.15); border-color: #ff334b; }
 
         /* ==========================================================================
-           6. EVENTOS PASADOS
+           6. EVENTOS PASADOS (IMÁGENES GRANDES + GRID)
            ========================================================================== */
-        .eventos-pasados { padding: 20px 15px 50px; background-color: rgba(0,0,0,0.15); }
-        .lista-pasados-container { display: flex; flex-direction: column; gap: 12px; }
-        .past-event-item { background-color: rgba(255,255,255,0.02); border-radius: 12px; padding: 16px; display: grid; grid-template-columns: 55px 1fr auto; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.04); transition: background 0.3s; }
-        .past-event-item:active { background-color: rgba(255,255,255,0.05); }
-        .past-logo { width: 55px; height: 55px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
-        .past-info h3 { font-size: 1.05em; color: white; margin: 0 0 3px; font-weight: 600; }
-        .past-info p { color: #777; font-size: 0.88em; margin: 0; }
-        .btn-past-results { background-color: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ccc; padding: 9px 16px; border-radius: 20px; font-size: 0.8em; font-weight: 600; }
+        .eventos-pasados { padding: 20px 15px 50px; background-color: transparent; }
+        
+        .lista-pasados-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; 
+        }
+
+        .past-event-item { 
+            background-color: rgba(255,255,255,0.03); border-radius: 15px; padding: 20px; 
+            display: flex; flex-direction: column; align-items: center; text-align: center; 
+            border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s, background 0.3s; 
+        }
+        .past-event-item:hover { 
+            transform: translateY(-5px); 
+            background-color: rgba(255,255,255,0.06); border-color: rgba(230,32,53,0.3); 
+        }
+
+        .past-logo { 
+            width: 100%; height: 180px; object-fit: cover; border-radius: 10px; 
+            margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); 
+        }
+
+        .past-info { flex-grow: 1; margin-bottom: 15px; }
+        .past-info h3 { font-size: 1.2em; color: white; margin: 0 0 5px; font-weight: 700; }
+        .past-info p { color: #888; font-size: 0.9em; margin: 0; }
+
+        .btn-past-results { 
+            width: 100%; background-color: transparent; border: 1px solid rgba(230,32,53,0.5); 
+            color: #ff334b; padding: 10px 15px; border-radius: 8px; font-size: 0.85em; 
+            font-weight: bold; cursor: pointer; transition: all 0.3s; text-transform: uppercase; 
+        }
+        .past-event-item:hover .btn-past-results { background-color: #e62035; color: white; }
+
+        /* ==========================================================================
+           SECCIÓN ALIADOS COMERCIALES (CARRUSEL INFINITO)
+           ========================================================================== */
+        .aliados-seccion { padding: 50px 0 80px; background-color: #03060d; overflow: hidden; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        
+        .carrusel-infinito-container {
+            width: 100%; max-width: 1200px; margin: 0 auto; overflow: hidden; position: relative;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .carrusel-track {
+            display: flex; gap: 80px; align-items: center; width: max-content;
+            animation: scroll-infinito 25s linear infinite; 
+        }
+        .carrusel-track:hover { animation-play-state: paused; }
+
+        .aliado-item { display: flex; flex-direction: column; align-items: center; gap: 15px; text-decoration: none; cursor: pointer; padding: 10px; }
+        .logo-aliado { height: 130px; width: auto; max-width: 250px; object-fit: contain; filter: grayscale(100%) opacity(0.5); transition: all 0.4s ease; }
+        .nombre-aliado { color: #888; font-size: 1.1em; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: all 0.4s ease; text-align: center; }
+
+        .aliado-item:hover .logo-aliado { filter: grayscale(0%) opacity(1) drop-shadow(0 0 20px rgba(230, 32, 53, 0.8)); transform: scale(1.1); }
+        .aliado-item:hover .nombre-aliado { color: white; text-shadow: 0 0 15px rgba(230, 32, 53, 1); transform: scale(1.05); }
+
+        @keyframes scroll-infinito { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 40px)); } }
 
         /* ==========================================================================
            7. FOOTER (PIE DE PÁGINA) Y MAGIA GROW STUDIO
@@ -213,7 +271,6 @@
             font-weight: 900;
             text-transform: uppercase;
             text-decoration: none;
-            /* Degradado en movimiento continuo */
             background: linear-gradient(270deg, #ff334b, #e62035, #ff8a00, #e62035);
             background-size: 300% 300%;
             color: transparent;
@@ -245,49 +302,24 @@
             .logo-desktop { display: block; height: 190px; width: auto; }
             .navbar-sandia { padding: 10px 40px; }
             
-            /* --- MAGIA DEL MENÚ DE ESCRITORIO (EFECTO LÁSER) --- */
-            .menu-hamburguesa { display: none; } /* Apagamos la hamburguesa en PC */
-            .menu-desktop-links { 
-                display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; align-items: center; 
-            }
-            .menu-desktop-links a { 
-                color: white; text-decoration: none; font-weight: 700; font-size: 0.95em; 
-                text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;
-                position: relative; padding-bottom: 5px;
-            }
-            
-            /* La línea mágica invisible que está debajo */
-            .menu-desktop-links a::after {
-                content: ''; position: absolute; width: 0; height: 2px;
-                bottom: 0; left: 50%; background-color: #e62035;
-                transition: all 0.3s ease; transform: translateX(-50%);
-                box-shadow: 0 0 10px #e62035, 0 0 20px #e62035;
-            }
-            
-            /* Lo que pasa cuando pasas el mouse */
-            .menu-desktop-links a:hover { 
-                color: white; 
-                text-shadow: 0 0 10px rgba(230, 32, 53, 0.8);
-            }
-            .menu-desktop-links a:hover::after {
-                width: 100%; /* La línea se expande */
-            }
-            /* ---------------------------------------------------- */
+            .menu-hamburguesa { display: none; } 
+            .menu-desktop-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; align-items: center; }
+            .menu-desktop-links a { color: white; text-decoration: none; font-weight: 700; font-size: 0.95em; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; position: relative; padding-bottom: 5px; }
+            .menu-desktop-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background-color: #e62035; transition: all 0.3s ease; transform: translateX(-50%); box-shadow: 0 0 10px #e62035, 0 0 20px #e62035; }
+            .menu-desktop-links a:hover { color: white; text-shadow: 0 0 10px rgba(230, 32, 53, 0.8); }
+            .menu-desktop-links a:hover::after { width: 100%; }
 
-            /* Ajustes de espaciado general */
             .proximas-carreras { padding-top: 240px; max-width: 1200px; margin: 0 auto; }
             .eventos-pasados { max-width: 1200px; margin: 0 auto; border-radius: 15px; }
             .proximas-carreras, .eventos-pasados, .seccion-run-free { padding-left: 40px; padding-right: 40px; }
             
-            /* Ajuste del carrusel: Tarjetas a tamaño fijo para que no se estiren */
             .event-card { flex: 0 0 400px; height: 420px; }
             
-            /* Ajuste de la Comunidad Run Free con su logo original */
-            .run-free-card { flex-direction: row; justify-content: space-between; text-align: left; padding: 50px; }
-            .run-free-info { align-items: flex-start; }
-            
-            /* Ajuste de Carreras Superadas (En PC se ven en 2 columnas) */
-            .lista-pasados-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            /* Ajuste de la Comunidad Run Free (3 Columnas en PC con tamaños asimétricos) */
+            .run-free-card { flex-direction: row; justify-content: space-between; align-items: center; gap: 30px; }
+            .run-free-logo-container { margin-bottom: 0; flex: 0 0 300px; display: flex; justify-content: center; }
+            .run-free-caricatura-container { margin-bottom: 0; flex: 0 0 200px; display: flex; justify-content: center; }
+            .run-free-content { flex-grow: 1; align-items: center; text-align: center; }
             
             .footer-bottom { flex-direction: row; justify-content: space-between; }
         }
@@ -297,24 +329,16 @@
 
     <!-- PANTALLA DE CARGA -->
     <div id="splash-screen">
-        <!-- Canvas original de las semillas (Tiempo de bala) -->
         <canvas id="bullet-canvas"></canvas>
-        
-        <!-- Nuevo contenedor WOW -->
         <div id="logo-container">
-            <!-- Anillos de Energía -->
             <div class="energia-ring ring-1"></div>
             <div class="energia-ring ring-2"></div>
             <div class="energia-ring ring-3"></div>
-            
-            <!-- Partículas (Chispas) -->
             <div class="particula p1"></div>
             <div class="particula p2"></div>
             <div class="particula p3"></div>
             <div class="particula p4"></div>
             <div class="particula p5"></div>
-
-            <!-- El Logo -->
             <img src="img/Isotipo.png" alt="Sandía Production Isotipo" id="sandia-logo">
         </div>
     </div>
@@ -367,41 +391,57 @@
         <!-- SECCIÓN 1: PRÓXIMOS RETOS (CARRUSEL DINÁMICO) -->
         <section class="proximas-carreras" id="proximas-carreras">
             <h2 class="titulo-seccion">Próximos Retos</h2>
-            
-            <!-- Contenedor del Carrusel conectado a Google Sheets -->
             <div class="carousel-container" id="carousel-carreras">
                 <div class="estado-carga">Actualizando Retos... ⏳</div>
             </div>
         </section>
 
-        <!-- SECCIÓN 2: INTEGRACIÓN COMUNIDAD RUN FREE -->
+        <!-- SECCIÓN 2: INTEGRACIÓN COMUNIDAD RUN FREE (3 COLUMNAS) -->
         <section class="seccion-run-free" id="run-free">
             <div class="run-free-card">
-                <div class="run-free-info">
-                    <span class="run-free-badge">Comunidad Oficial</span>
+                
+                <!-- LADO IZQUIERDO: LOGO -->
+                <div class="run-free-logo-container">
                     <img src="img/runfreelogo.png" alt="Run Free" class="run-free-logo-img" onerror="this.style.display='none'">
+                </div>
+                
+                <!-- CENTRO: CONTENIDO Y BOTÓN -->
+                <div class="run-free-content">
+                    <span class="run-free-badge">Comunidad Oficial</span>
                     <h2>Únete al Team RUN FREE</h2>
                     <p>Entrenamientos, rutas semanales y la mejor vibra runner de la ciudad. Sumamos kilómetros juntos antes de cada gran reto.</p>
-                </div>
-                <div>
-                    <a href="https://www.instagram.com/runfreest/" target="_blank" class="btn-run-free">
+                    <a href="https://www.instagram.com/runfreest/" target="_blank" class="btn-run-free-outline">
                         Ver en Instagram
                     </a>
                 </div>
+
+                <!-- LADO DERECHO: CARICATURA -->
+                <div class="run-free-caricatura-container">
+                    <img src="img/caricatura.png" alt="Caricatura Team" class="run-free-caricatura-img" onerror="this.style.display='none'">
+                </div>
+
             </div>
         </section>
 
-        <!-- SECCIÓN 3: EVENTOS PASADOS (DINÁMICOS) -->
+        <!-- SECCIÓN 3: EVENTOS PASADOS (DINÁMICOS - LÍMITE DE 6) -->
         <section class="eventos-pasados" id="eventos-pasados">
-            <h2 class="titulo-seccion">Carreras Superadas</h2>
-            
-            <!-- Contenedor conectado a Google Sheets -->
+            <h2 class="titulo-seccion">Eventos Pasados</h2>
             <div class="lista-pasados-container" id="contenedor-pasados">
                 <div class="estado-carga" style="padding: 20px;">Cargando historial... ⏳</div>
             </div>
         </section>
+        
+        <!-- SECCIÓN 4: ALIADOS COMERCIALES (DINÁMICO) -->
+        <section class="aliados-seccion" id="aliados">
+            <h2 class="titulo-seccion" style="text-align: center; margin-bottom: 30px;">Nuestros Aliados</h2>
+            <div class="carrusel-infinito-container">
+                <div class="carrusel-track" id="track-aliados">
+                    <div class="estado-carga" style="padding: 20px;">Sincronizando Aliados... ⏳</div>
+                </div>
+            </div>
+        </section>
 
-        <!-- SECCIÓN 4: FOOTER (PIE DE PÁGINA) -->
+        <!-- FOOTER (PIE DE PÁGINA) -->
         <footer class="footer-sandia" id="contacto">
             <div class="footer-content">
                 <div class="footer-col">
@@ -413,14 +453,13 @@
                     <ul>
                         <li><a href="#run-free">Run Free Runner Team</a></li>
                         <li><a href="calendario.html">Próximos Eventos</a></li>
-                        <li><a href="#eventos-pasados">Galería de Fotos</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Contacto</h4>
                     <ul>
                         <li><a href="https://instagram.com" target="_blank">Instagram: @sandiaproduction</a></li>
-                        <li><a href="https://wa.me/584126574354" target="_blank">WhatsApp Oficial</a></li>
+                        <li><a href="https://wa.me/584120000000" target="_blank">WhatsApp Oficial</a></li>
                         <li>Punto Fijo, Falcón - Venezuela</li>
                     </ul>
                 </div>
@@ -440,7 +479,6 @@
 
     <!-- SCRIPTS -->
     <script>
-        // --- ANIMACIÓN DE PANTALLA DE CARGA ---
         const canvas = document.getElementById('bullet-canvas');
         const ctx = canvas.getContext('2d');
         const splashScreen = document.getElementById('splash-screen');
@@ -524,7 +562,6 @@
             animationFrame = requestAnimationFrame(animate);
         }
 
-        // --- MENÚ LATERAL ---
         const openMenuBtn = document.getElementById('open-menu-btn');
         const closeMenuBtn = document.getElementById('close-menu-btn');
         const sideMenu = document.getElementById('side-menu');
@@ -533,16 +570,15 @@
         function toggleMenu() {
             sideMenu.classList.toggle('active');
             menuOverlay.classList.toggle('active');
-            openMenuBtn.classList.toggle('active'); // <-- ESTA ES LA LÍNEA NUEVA
+            openMenuBtn.classList.toggle('active'); 
         }
 
         openMenuBtn.addEventListener('click', toggleMenu);
         closeMenuBtn.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        // --- LÓGICA DE EXTRACCIÓN Y AUTO-CARRUSEL ---
         const urlScriptDirectorio = "https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec";
-        let carruselInterval; // Variable para controlar la rotación
+        let carruselInterval; 
 
         async function cargarCarrerasCarousel() {
             const carouselContainer = document.getElementById('carousel-carreras');
@@ -554,17 +590,15 @@
 
                 if (eventos.length > 0) {
                     let htmlCarrusel = '';
-                    let pasadosArray = []; // Aquí guardaremos temporalmente los inactivos
+                    let pasadosArray = []; 
                     let countActivos = 0;
                     
                     eventos.forEach(evento => {
-                        // 1. Validar el enlace y la acción del botón
                         let clickAction = `window.location.href='${evento.enlace}'`;
                         if (evento.enlace === '#' || evento.enlace === '') {
                             clickAction = `alert('Más información próximamente...')`;
                         }
 
-                        // 2. Si el evento está ACTIVO ("SI"), va al Carrusel
                         if (evento.activo === "SI") {
                             htmlCarrusel += `
                                 <div class="event-card current" style="background-image: url('img/${evento.imagen}');">
@@ -580,7 +614,6 @@
                             `;
                             countActivos++;
                         } 
-                        // 3. Si el evento NO está activo ("NO"), lo guardamos en la lista
                         else if (evento.activo === "NO") {
                             pasadosArray.push({
                                 eventoData: evento,
@@ -589,7 +622,6 @@
                         }
                     });
 
-                    // 4. Inyectar el Carrusel
                     if (countActivos > 0) {
                         carouselContainer.innerHTML = htmlCarrusel;
                         if (countActivos > 1) iniciarRotacionAutomatica(carouselContainer);
@@ -597,12 +629,9 @@
                         carouselContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">No hay próximos retos publicados.</p>';
                     }
 
-                    // 5. LÓGICA DE EVENTOS PASADOS (LÍMITE DE 4)
                     if (pasadosArray.length > 0) {
                         let htmlPasados = '';
-                        
-                        // Tomamos solo los últimos 4 del Excel y los invertimos
-                        let ultimosPasados = pasadosArray.slice(-4).reverse();
+                        let ultimosPasados = pasadosArray.slice(-6).reverse();
                         
                         ultimosPasados.forEach(item => {
                             let ev = item.eventoData;
@@ -636,38 +665,66 @@
             }
         }
 
-        // --- FUNCIÓN DE ROTACIÓN AUTOMÁTICA ---
         function iniciarRotacionAutomatica(contenedor) {
-            const tiempoRotacion = 4000; // 4 segundos
+            const tiempoRotacion = 4000; 
             
             function hacerScroll() {
-                // Obtenemos la primera tarjeta para saber cuánto medir el scroll (+15px de la separación)
                 const tarjeta = contenedor.querySelector('.event-card');
                 if (!tarjeta) return;
                 const scrollAmount = tarjeta.offsetWidth + 15; 
                 
-                // Si ya llegamos al final, volvemos suavemente al inicio
                 if (contenedor.scrollLeft + contenedor.clientWidth >= contenedor.scrollWidth - 10) {
                     contenedor.scrollTo({ left: 0, behavior: 'smooth' });
                 } else {
-                    // Avanzamos una tarjeta
                     contenedor.scrollBy({ left: scrollAmount, behavior: 'smooth' });
                 }
             }
 
-            // Arrancamos el cronómetro
             carruselInterval = setInterval(hacerScroll, tiempoRotacion);
 
-            // Pausar si ponen el mouse o el dedo encima
             contenedor.addEventListener('mouseenter', () => clearInterval(carruselInterval));
             contenedor.addEventListener('touchstart', () => clearInterval(carruselInterval));
-
-            // Reanudar cuando quitan el mouse o el dedo
             contenedor.addEventListener('mouseleave', () => carruselInterval = setInterval(hacerScroll, tiempoRotacion));
             contenedor.addEventListener('touchend', () => carruselInterval = setInterval(hacerScroll, tiempoRotacion));
         }
 
-        // --- INICIAR TODO AL CARGAR LA PÁGINA ---
+        const urlScriptAliados = "https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec?tipo=aliados"; 
+        
+        async function cargarAliados() {
+            const track = document.getElementById('track-aliados');
+            const seccionAliados = document.getElementById('aliados');
+            
+            try {
+                const respuesta = await fetch(urlScriptAliados);
+                const aliados = await respuesta.json();
+                
+                const aliadosActivos = aliados.filter(a => a.activo && a.activo.toString().toUpperCase() === "SI");
+
+                if (aliadosActivos.length > 0) {
+                    let htmlLogos = '';
+                    aliadosActivos.forEach(aliado => {
+                        let rutaImagen = `img/${aliado.imagen}`;
+                        let enlace = (aliado.enlace === '' || aliado.enlace === '#') ? 'javascript:void(0)' : aliado.enlace;
+                        let target = (enlace !== 'javascript:void(0)') ? 'target="_blank"' : '';
+                        
+                        htmlLogos += `
+                            <a href="${enlace}" ${target} class="aliado-item">
+                                <img src="${rutaImagen}" alt="${aliado.nombre}" class="logo-aliado" onerror="this.style.display='none'">
+                                <span class="nombre-aliado">${aliado.nombre}</span>
+                            </a>
+                        `;
+                    });
+
+                    track.innerHTML = htmlLogos + htmlLogos; 
+                } else {
+                    seccionAliados.style.display = 'none';
+                }
+            } catch (error) {
+                console.error("Error al cargar aliados:", error);
+                track.innerHTML = '<p style="color:#aaa; text-align:center;">No se pudieron cargar los aliados.</p>';
+            }
+        }
+
         window.onload = () => {
             animate();
             emitirRafagaSelectiva(5, 8);
@@ -684,6 +741,7 @@
             }, 6500);
 
             cargarCarrerasCarousel();
+            cargarAliados();
         };
     </script>
 </body>

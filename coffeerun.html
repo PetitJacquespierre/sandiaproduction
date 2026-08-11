@@ -3,96 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sandía Production - Plataforma de Eventos Deportivos</title>
+    <title>Inscripción Coffee Run - Sandía Production</title>
     
-    <!-- ESTA ES LA LÍNEA PARA EL ICONO DEL NAVEGADOR -->
+    <!-- ICONO DEL NAVEGADOR -->
     <link rel="icon" href="img/Isotipo.png" type="image/png">
+    
     <style>
         /* ==========================================================================
-           1. ESTILOS BASE Y RESETS
+           1. ESTILOS BASE Y PLANTILLA MAESTRA
            ========================================================================== */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
-            background-color: #050a15; 
-            color: white; 
+            background-color: #050a15; color: white; 
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow-x: hidden;
+            overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; 
         }
 
         .btn-sandia-general {
-            background-color: #e62035; 
-            color: white; border: none; 
-            font-weight: bold; cursor: pointer; 
-            text-transform: uppercase; transition: all 0.3s;
-            text-decoration: none; display: inline-flex;
-            justify-content: center; align-items: center;
-            border-radius: 8px;
+            background-color: #e62035; color: white; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase;
+            transition: background 0.3s, transform 0.2s; text-decoration: none; display: inline-flex; justify-content: center; align-items: center; border-radius: 8px; padding: 10px 20px;
         }
         .btn-sandia-general:hover { background-color: #ff334b; transform: scale(1.03); box-shadow: 0 5px 15px rgba(230, 32, 53, 0.4); }
 
-        /* ==========================================================================
-           2. NAVBAR Y LOGO DE CABECERA
-           ========================================================================== */
+        /* NAVBAR Y LOGO DE CABECERA */
         .navbar-sandia {
-            background-color: rgba(5, 10, 21, 0.98); 
-            padding: 25px 20px; 
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid rgba(230, 32, 53, 0.15);
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            backdrop-filter: blur(5px); 
+            background-color: rgba(5, 10, 21, 0.98); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(230, 32, 53, 0.15); position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(5px); 
         }
-        .logo-wrapper { display: flex; align-items: center; order: 1; }
-        .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; order: 2; user-select: none; }
+        .logo-wrapper { display: flex; align-items: center; }
+        .menu-hamburguesa { font-size: 32px; color: white; cursor: pointer; user-select: none; }
         .logo-mobile { height: 140px; width: auto; display: block; }
         .logo-desktop { display: none; }
+        .menu-desktop-links { display: none; } 
 
-        /* ==========================================================================
-           3. MENÚ LATERAL DESPLEGABLE
-           ========================================================================== */
-        .side-menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.7); z-index: 2000;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-        }
+        /* MENÚ LATERAL DESPLEGABLE */
+        .menu-hamburguesa { display: flex; flex-direction: column; gap: 6px; cursor: pointer; z-index: 2002; }
+        .menu-hamburguesa span { width: 32px; height: 3px; background-color: white; border-radius: 3px; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); box-shadow: 0 0 5px rgba(255,255,255,0.3); }
+        .menu-hamburguesa.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); background-color: #e62035; box-shadow: 0 0 10px #e62035; }
+        .menu-hamburguesa.active span:nth-child(2) { opacity: 0; transform: translateX(20px); }
+        .menu-hamburguesa.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background-color: #e62035; box-shadow: 0 0 10px #e62035; }
+
+        .side-menu-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(3px); }
         .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
 
-        .side-menu {
-            position: fixed; top: 0; right: -280px; width: 280px; height: 100vh;
-            background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2);
-            z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column;
-            transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-        }
+        .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2); z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
         .side-menu.active { right: 0; }
-        .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .close-menu { font-size: 24px; color: #aaa; cursor: pointer; }
+        .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; margin-top: 10px; }
+        
         .side-menu-links { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+        .side-menu-links li { opacity: 0; transform: translateX(40px); transition: all 0.4s ease; }
+        .side-menu.active .side-menu-links li { opacity: 1; transform: translateX(0); }
+        .side-menu.active .side-menu-links li:nth-child(1) { transition-delay: 0.1s; }
+        .side-menu.active .side-menu-links li:nth-child(2) { transition-delay: 0.2s; }
+        .side-menu.active .side-menu-links li:nth-child(3) { transition-delay: 0.3s; }
+        .side-menu.active .side-menu-links li:nth-child(4) { transition-delay: 0.4s; }
+        .side-menu.active .side-menu-links li:nth-child(5) { transition-delay: 0.5s; }
+
         .side-menu-links a { color: white; text-decoration: none; font-size: 1.1em; font-weight: 600; transition: color 0.2s; }
         .side-menu-links a:hover { color: #e62035; }
 
-        /* ==========================================================================
-           4. CONTENEDOR PRINCIPAL Y FLYER
-           ========================================================================== */
-        .inscripcion-section {
-            padding: 200px 20px 60px;
-            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+        /* FOOTER Y GROW STUDIO */
+        .footer-sandia { background-color: #03060d; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 50px 20px 20px; margin-top: auto; }
+        .footer-content { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; padding-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .footer-col h4 { color: #e62035; text-transform: uppercase; font-size: 0.95em; margin-bottom: 15px; letter-spacing: 1px; }
+        .footer-col p, .footer-col li { color: #888; font-size: 0.9em; line-height: 1.6; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li a { color: #aaa; text-decoration: none; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: #e62035; }
+        .footer-bottom { max-width: 1100px; margin: 20px auto 0; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; color: #555; font-size: 0.85em; }
+        
+        .grow-studio-credit {
+            font-weight: 900; text-transform: uppercase; text-decoration: none;
+            background: linear-gradient(270deg, #ff334b, #e62035, #ff8a00, #e62035); background-size: 300% 300%;
+            color: transparent; -webkit-background-clip: text; background-clip: text;
+            animation: brillo-grow 4s ease infinite; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block; letter-spacing: 1.5px; margin-left: 5px;
         }
-        .inscripcion-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px; max-width: 1100px; width: 100%;
-        }
-        .flyer-container {
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); background: rgba(255,255,255,0.01);
-        }
-        .flyer-img { width: 100%; height: auto; display: block; }
+        .grow-studio-credit:hover { transform: scale(1.1) rotate(-1deg); filter: drop-shadow(0 0 10px rgba(230, 32, 53, 0.7)); }
+        @keyframes brillo-grow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
         /* ==========================================================================
-           5. TARJETA DE PAGO MÓVIL Y MONTO DINÁMICO
+           2. ESTILOS ESPECÍFICOS DE ESTA PÁGINA (COFFEE RUN)
            ========================================================================== */
-        .payment-box {
-            background: rgba(230, 32, 53, 0.05); border: 1px solid rgba(230, 32, 53, 0.15);
-            border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;
-        }
+        .inscripcion-section { padding: 180px 20px 60px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; flex-grow: 1; }
+        .inscripcion-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; max-width: 1100px; width: 100%; }
+        .flyer-container { border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); background: rgba(255,255,255,0.01); }
+        .flyer-img { width: 100%; height: auto; display: block; }
+
+        .payment-box { background: rgba(230, 32, 53, 0.05); border: 1px solid rgba(230, 32, 53, 0.15); border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
         .payment-header { color: #e62035; font-weight: bold; text-transform: uppercase; font-size: 0.9em; margin-bottom: 15px; }
         .amount-ves-box { margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
         .amount-main { font-size: 2.2em; font-weight: 800; color: #2ecc71; }
@@ -101,40 +99,22 @@
         #loading-rate { color: #aaa; font-style: italic; font-size: 0.9em; }
         .payment-method-header { color: white; font-size: 1.1em; font-weight: 700; margin-bottom: 10px; }
         
-        .copy-group {
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 8px; padding: 12px 15px; margin-bottom: 10px; text-align: left;
-        }
+        .copy-group { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 12px 15px; margin-bottom: 10px; text-align: left; }
         .copy-data { color: #ccc; font-size: 0.95em; }
         .copy-data strong { color: white; }
-        .btn-copy {
-            background: transparent; border: 1px solid rgba(255,255,255,0.2);
-            color: #aaa; padding: 6px 12px; font-size: 0.8em; font-weight: bold;
-            border-radius: 6px; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
-        }
+        .btn-copy { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #aaa; padding: 6px 12px; font-size: 0.8em; font-weight: bold; border-radius: 6px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
         .btn-copy:hover { border-color: #e62035; color: white; }
         .btn-copy.copied { background: #2ecc71; border-color: #2ecc71; color: white; }
         .payment-notes { color: #777; font-size: 0.8em; margin-top: 15px; font-style: italic; }
 
-        /* ==========================================================================
-           6. FORMULARIO DE INSCRIPCIÓN
-           ========================================================================== */
-        .form-container {
-            background: #09101f; border-radius: 20px; border: 1px solid rgba(230, 32, 53, 0.3);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); padding: 30px;
-        }
+        .form-container { background: #09101f; border-radius: 20px; border: 1px solid rgba(230, 32, 53, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.5); padding: 30px; }
         .modal-header { text-align: center; margin-bottom: 25px; }
         .modal-header h2 { font-size: 1.8em; font-weight: 800; }
         .modal-header p { color: #ccc; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
 
         .form-group { margin-bottom: 18px; }
         .form-group label { display: block; color: #aaa; font-size: 0.9em; margin-bottom: 7px; font-weight: 600; }
-        .form-control {
-            width: 100%; padding: 14px; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
-            color: white; font-size: 1em; transition: all 0.2s;
-        }
+        .form-control { width: 100%; padding: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1em; transition: all 0.2s; }
         .form-control:focus { outline: none; border-color: #e62035; background: rgba(230, 32, 53, 0.08); }
         select.form-control { color: #ffffff; background-color: #09101f; }
         select.form-control option { background-color: #09101f; color: #ffffff; padding: 10px; }
@@ -147,36 +127,58 @@
         #success-message h3 { color: #2ecc71; font-size: 1.5em; margin-bottom: 10px; }
         #success-message p { color: #ccc; }
 
-        .capture-instruction-box {
-            background: rgba(230, 32, 53, 0.03); border: 1px solid rgba(230, 32, 53, 0.15);
-            border-radius: 8px; padding: 15px; text-align: center; margin-top: 25px;
-        }
+        .capture-instruction-box { background: rgba(230, 32, 53, 0.03); border: 1px solid rgba(230, 32, 53, 0.15); border-radius: 8px; padding: 15px; text-align: center; margin-top: 25px; }
         .capture-label { color: #e62035; font-weight: bold; font-size: 0.95em; margin-bottom: 10px; display: block; }
 
+        /* ==========================================================================
+           DISEÑO PARA COMPUTADORAS (ESCRITORIO)
+           ========================================================================== */
         @media (min-width: 992px) {
             .logo-mobile { display: none; }
             .logo-desktop { display: block; height: 190px; width: auto; }
-            .navbar-sandia { padding: 15px 40px; }
+            .navbar-sandia { padding: 10px 40px; }
+            
+            .menu-hamburguesa { display: none; } 
+            .menu-desktop-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; align-items: center; }
+            .menu-desktop-links a { color: white; text-decoration: none; font-weight: 700; font-size: 0.95em; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; position: relative; padding-bottom: 5px; }
+            .menu-desktop-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background-color: #e62035; transition: all 0.3s ease; transform: translateX(-50%); box-shadow: 0 0 10px #e62035, 0 0 20px #e62035; }
+            .menu-desktop-links a:hover { color: white; text-shadow: 0 0 10px rgba(230, 32, 53, 0.8); }
+            .menu-desktop-links a:hover::after { width: 100%; }
+
+            .footer-bottom { flex-direction: row; justify-content: space-between; }
             .inscripcion-section { padding-top: 240px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ==========================================================================
-         [BLOQUE 1] NAVBAR DE NAVEGACIÓN
-         ========================================================================== -->
+    <!-- NAVBAR Y LOGO DE CABECERA -->
     <nav class="navbar-sandia">
         <div class="logo-wrapper">
-            <img src="img/Logo1.png" alt="Sandía Production" class="logo-mobile">
-            <img src="img/Logo1.png" alt="Sandía Production" class="logo-desktop">
+            <a href="index.html">
+                <img src="img/Logo1.png" alt="Sandía Production" class="logo-mobile">
+                <img src="img/Logo1.png" alt="Sandía Production" class="logo-desktop">
+            </a>
         </div>
-        <div class="menu-hamburguesa" id="open-menu-btn">&#9776;</div>
+        
+        <!-- MENÚ HORIZONTAL PARA COMPUTADORAS -->
+        <ul class="menu-desktop-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="calendario.html">Calendario Runner</a></li>
+            <li><a href="index.html#run-free">Comunidad</a></li>
+            <li><a href="index.html#eventos-pasados">Resultados</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+
+        <!-- MENÚ HAMBURGUESA ANIMADO PARA MÓVILES -->
+        <div class="menu-hamburguesa" id="open-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
 
-    <!-- ==========================================================================
-         [BLOQUE 2] MENÚ LATERAL
-         ========================================================================== -->
+    <!-- MENÚ LATERAL DESPLEGABLE -->
     <div class="side-menu-overlay" id="menu-overlay"></div>
     <div class="side-menu" id="side-menu">
         <div class="side-menu-header">
@@ -186,16 +188,14 @@
         <ul class="side-menu-links">
             <li><a href="index.html">Inicio</a></li>
             <li><a href="calendario.html">Calendario Runner</a></li>
-            <li><a href="index.html#eventos-pasados">Resultados</a></li>
-            <li><a href="#" onclick="toggleMenu()">Nosotros</a></li>
-            <li><a href="#" onclick="toggleMenu()">Contacto</a></li>
+            <li><a href="index.html#run-free" onclick="toggleMenu()">Comunidad Run Free</a></li>
+            <li><a href="index.html#eventos-pasados" onclick="toggleMenu()">Resultados</a></li>
+            <li><a href="#contacto" onclick="toggleMenu()">Contacto</a></li>
         </ul>
     </div>
 
-    <!-- ==========================================================================
-         [BLOQUE 3] ÁREA DE INSCRIPCIÓN Y FLYER
-         ========================================================================== -->
-    <section class="inscripcion-section">
+    <!-- ÁREA DE INSCRIPCIÓN Y FLYER (CONTENIDO DINÁMICO) -->
+    <main class="inscripcion-section">
         <div class="inscripcion-container">
             
             <!-- FLYER DE LA CARRERA Y PAGO MÓVIL -->
@@ -239,9 +239,7 @@
                 </div>
             </div>
 
-            <!-- ==========================================================================
-                 [BLOQUE 4] FORMULARIO HTML
-                 ========================================================================== -->
+            <!-- FORMULARIO HTML -->
             <div class="form-container">
                 <div id="registration-content">
                     <div class="modal-header">
@@ -352,77 +350,51 @@
                 </div>
             </div>
         </div>
-    </section>
+    </main>
 
-
-<!-- SECCIÓN 4: FOOTER (PIE DE PÁGINA) -->
-        <footer class="footer-sandia" id="contacto">
-            <div class="footer-content">
-                <!-- Columna 1: Marca -->
-                <div class="footer-col">
-                    <h4>Sandía Production</h4>
-                    <!-- REEMPLAZA EL TEXTO DE ABAJO -->
-                    <p>Producción de eventos deportivos y tu calendario oficial de carreras a nivel regional y nacional.</p>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Comunidad</h4>
-                    <ul>
-                        <li><a href="#run-free">Run Free Runner Team</a></li>
-                        <li><a href="#proximas-carreras">Próximos Eventos</a></li>
-                        <li><a href="#eventos-pasados">Galería de Fotos</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Contacto</h4>
-                    <ul>
-                        <li><a href="https://instagram.com" target="_blank">Instagram: @sandiaproduction</a></li>
-                        <li><a href="https://wa.me/584126574354" target="_blank">WhatsApp Oficial</a></li>
-                        <li>Punto Fijo, Falcón - Venezuela</li>
-                    </ul>
-                </div>
+    <!-- FOOTER (PIE DE PÁGINA) -->
+    <footer class="footer-sandia" id="contacto">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Sandía Production</h4>
+                <p>Producción de eventos deportivos y tu directorio oficial de carreras a nivel local y nacional.</p>
             </div>
-
-            <!-- Créditos Onion Web -->
-            <div class="footer-bottom">
-                <div>&copy; 2026 Sandía Production. Todos los derechos reservados.</div>
-                <div>
-                    Desarrollado por 
-                    <a href="https://instagram.com/onionweb.ve" target="_blank" class="agency-credit">
-                        ⚡ Onion Web
-                    </a>
-                </div>
+            <div class="footer-col">
+                <h4>Comunidad</h4>
+                <ul>
+                    <li><a href="index.html#run-free">Run Free Runner Team</a></li>
+                    <li><a href="calendario.html">Próximos Eventos</a></li>
+                    <li><a href="index.html#eventos-pasados">Galería de Fotos</a></li>
+                </ul>
             </div>
-        </footer>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><a href="https://instagram.com" target="_blank">Instagram: @sandiaproduction</a></li>
+                    <li><a href="https://wa.me/584126574354" target="_blank">WhatsApp Oficial</a></li>
+                    <li>Punto Fijo, Falcón - Venezuela</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 Sandía Production. Todos los derechos reservados.</div>
+            <div>
+                Desarrollado por 
+                <a href="https://growstudioweb.vercel.app/" target="_blank" class="grow-studio-credit">
+                    GROW STUDIO
+                </a>
+            </div>
+        </div>
+    </footer>
 
-
-    <!-- ==========================================================================
-         [BLOQUE 5] SCRIPTS Y CONFIGURACIÓN RÁPIDA DE EVENTO
-         ========================================================================== -->
+    <!-- SCRIPTS Y LÓGICA DE FORMULARIO -->
     <script>
-        /* ----------------------------------------------------------------------
-         * [ CONFIGURACIÓN GENERAL DEL EVENTO ] -> MODIFICA AQUÍ PARA NUEVOS EVENTOS
-         * ---------------------------------------------------------------------- */
-        
-        // 1. URL de la WebApp de Google Apps Script vinculada al Google Sheet de este evento
+        // --- CONFIGURACIÓN GENERAL DEL EVENTO ---
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbychQtU8RjkpBW5tuNY_NqxpJN32q9Jcc7AAhX8X5nhuDPqQ1MKrCHEI-Qf87A-r-dh1w/exec";
-        
-        // 2. API centralizada de extracción BCV
         const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbwsoD8ahtAQUqfY0TQWf3-dDs29HL8kEJa2t-mjDR3PAo3exTTmtSwXqYuNB2ob5dFpgw/exec";
-        
-        // 3. Precio del evento en divisas
         const costoDivisa = 5; 
-        
-        // 4. Divisa de cálculo ("eur" para Euro BCV, "usd" para Dólar BCV)
         const tipoDivisaCalculo = "eur"; 
-
-        // 5. Tasa local de respaldo (por si la API falla)
         let tasaRespaldoLocal = 692.05; 
-
-        /* ----------------------------------------------------------------------
-         * LÓGICA INTERNA DE LA APLICACIÓN (NO REQUERIDO MODIFICAR)
-         * ---------------------------------------------------------------------- */
         let tasaActual = tasaRespaldoLocal;
 
         // --- MENÚ LATERAL ---
@@ -434,6 +406,7 @@
         function toggleMenu() {
             sideMenu.classList.toggle('active');
             menuOverlay.classList.toggle('active');
+            openMenuBtn.classList.toggle('active'); 
         }
 
         openMenuBtn.addEventListener('click', toggleMenu);
@@ -463,7 +436,6 @@
             } finally {
                 const montoTotalVES = costoDivisa * tasaActual;
                 const formateador = new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                
                 const montoFormateado = formateador.format(montoTotalVES);
 
                 montoVesLabel.innerHTML = montoFormateado + '<span class="amount-currency">Bs</span>';
