@@ -8,212 +8,7 @@
     <!-- ICONO DEL NAVEGADOR -->
     <link rel="icon" href="img/Isotipo.png" type="image/png">
     
-    <style>
-        /* ==========================================================================
-           1. ESTILOS GENERALES Y RESETS
-           ========================================================================== */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background-color: #050a15; 
-            color: white; 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            overflow-x: hidden; 
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .btn-sandia-general { 
-            background-color: #e62035; color: white; border: none; font-weight: bold; cursor: pointer; 
-            text-transform: uppercase; transition: all 0.3s; text-decoration: none; 
-            display: inline-flex; justify-content: center; align-items: center; border-radius: 8px; padding: 10px 20px; 
-        }
-        .btn-sandia-general:hover { background-color: #ff334b; transform: scale(1.03); box-shadow: 0 5px 15px rgba(230, 32, 53, 0.4); }
-
-        /* ==========================================================================
-           2. NAVBAR Y LOGO DE CABECERA
-           ========================================================================== */
-        .navbar-sandia { 
-            background-color: rgba(5, 10, 21, 0.98); padding: 10px 20px; display: flex; justify-content: space-between; 
-            align-items: center; border-bottom: 1px solid rgba(230, 32, 53, 0.15); position: fixed; top: 0; width: 100%; 
-            z-index: 1000; backdrop-filter: blur(5px); 
-        }
-        
-        .logo-wrapper { display: flex; align-items: center; }
-        .logo-mobile { height: 140px; width: auto; display: block; }
-        .logo-desktop { display: none; }
-        .menu-desktop-links { display: none; } /* Oculto en móviles */
-
-        /* ==========================================================================
-           3. MENÚ LATERAL DESPLEGABLE Y HAMBURGUESA
-           ========================================================================== */
-        .menu-hamburguesa { display: flex; flex-direction: column; gap: 6px; cursor: pointer; z-index: 2002; }
-        .menu-hamburguesa span {
-            width: 32px; height: 3px; background-color: white; border-radius: 3px;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 0 0 5px rgba(255,255,255,0.3);
-        }
-        .menu-hamburguesa.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); background-color: #e62035; box-shadow: 0 0 10px #e62035; }
-        .menu-hamburguesa.active span:nth-child(2) { opacity: 0; transform: translateX(20px); }
-        .menu-hamburguesa.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background-color: #e62035; box-shadow: 0 0 10px #e62035; }
-
-        .side-menu-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(3px); }
-        .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
-
-        .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: #09101f; border-left: 1px solid rgba(230, 32, 53, 0.2); z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
-        .side-menu.active { right: 0; }
-        .side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; margin-top: 10px; }
-        .close-menu { font-size: 24px; color: #aaa; cursor: pointer; }
-        
-        .side-menu-links { list-style: none; display: flex; flex-direction: column; gap: 20px; }
-        .side-menu-links li { opacity: 0; transform: translateX(40px); transition: all 0.4s ease; }
-        .side-menu.active .side-menu-links li { opacity: 1; transform: translateX(0); }
-        
-        .side-menu.active .side-menu-links li:nth-child(1) { transition-delay: 0.1s; }
-        .side-menu.active .side-menu-links li:nth-child(2) { transition-delay: 0.2s; }
-        .side-menu.active .side-menu-links li:nth-child(3) { transition-delay: 0.3s; }
-        .side-menu.active .side-menu-links li:nth-child(4) { transition-delay: 0.4s; }
-        .side-menu.active .side-menu-links li:nth-child(5) { transition-delay: 0.5s; }
-
-        .side-menu-links a { color: white; text-decoration: none; font-size: 1.1em; font-weight: 600; transition: color 0.2s; }
-        .side-menu-links a:hover { color: #e62035; }
-
-        /* ==========================================================================
-           4. CABECERA DIRECTORIO Y FILTROS
-           ========================================================================== */
-        .calendario-header { 
-            padding: 180px 20px 40px; text-align: center; 
-            background: linear-gradient(to bottom, rgba(230, 32, 53, 0.05), transparent); 
-        }
-        .calendario-header h1 { font-size: 2.5em; font-weight: 800; color: white; margin-bottom: 10px; text-transform: uppercase; }
-        .calendario-header p { color: #aaa; font-size: 1.1em; max-width: 600px; margin: 0 auto 30px; }
-
-        .filtros-directorio { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-        .btn-filtro { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #ccc; padding: 10px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95em; }
-        .btn-filtro:hover { background: rgba(255,255,255,0.1); color: white; }
-        .btn-filtro.active { background: #e62035; color: white; border-color: #e62035; box-shadow: 0 0 15px rgba(230, 32, 53, 0.5); }
-
-        /* ==========================================================================
-           5. GRID EVENTOS
-           ========================================================================== */
-        .directorio-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 80px; flex-grow: 1; width: 100%; }
-        .grid-eventos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
-        
-        .evento-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; position: relative; }
-        .evento-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.5); border-color: rgba(230, 32, 53, 0.3); }
-
-        .flyer-box { position: relative; width: 100%; padding-top: 100%; background-color: #111; overflow: hidden; }
-        .flyer-box img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-        
-        .fecha-badge { position: absolute; top: 15px; left: 15px; background: rgba(5, 10, 21, 0.9); border: 1px solid #e62035; border-radius: 10px; padding: 10px; text-align: center; display: flex; flex-direction: column; min-width: 65px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .fecha-badge .dia { font-size: 1.8em; font-weight: 900; color: white; line-height: 1; }
-        .fecha-badge .mes { font-size: 0.8em; font-weight: bold; color: #e62035; text-transform: uppercase; }
-
-        .info-box { padding: 25px 20px; display: flex; flex-direction: column; flex-grow: 1; }
-        .etiquetas-container { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
-        .etiqueta { font-size: 0.7em; padding: 5px 12px; border-radius: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .etiqueta-local { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3); }
-        .etiqueta-virtual { background: rgba(155, 89, 182, 0.15); color: #9b59b6; border: 1px solid rgba(155, 89, 182, 0.3); }
-        .etiqueta-nacional { background: rgba(52, 152, 219, 0.15); color: #3498db; border: 1px solid rgba(52, 152, 219, 0.3); }
-
-        .info-box h3 { font-size: 1.4em; color: white; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
-        .info-box .ubicacion { color: #888; font-size: 0.95em; margin-bottom: 20px; display: flex; align-items: center; gap: 5px; }
-        .info-box .ubicacion::before { content: '📍'; }
-
-        .card-acciones { margin-top: auto; display: flex; gap: 10px; }
-        .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-align: center; flex-grow: 1; text-decoration: none; text-transform: uppercase; font-size: 0.85em; }
-        .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.05); }
-
-        .estado-carga { text-align: center; padding: 50px; color: #e62035; font-size: 1.2em; font-weight: bold; width: 100%; grid-column: 1 / -1; animation: latido 1s infinite alternate; }
-        .sin-resultados { text-align: center; color: #777; padding: 50px 20px; font-size: 1.2em; display: none; width: 100%; grid-column: 1 / -1; }
-        @keyframes latido { from { opacity: 0.5; } to { opacity: 1; } }
-
-        /* ==========================================================================
-           6. FOOTER Y EFECTO WOW GROW STUDIO
-           ========================================================================== */
-        .footer-sandia {
-            background-color: #03060d; border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 50px 20px 20px; width: 100%;
-        }
-        .footer-content {
-            max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px; padding-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .footer-col h4 { color: #e62035; text-transform: uppercase; font-size: 0.95em; margin-bottom: 15px; letter-spacing: 1px; }
-        .footer-col p, .footer-col li { color: #888; font-size: 0.9em; line-height: 1.6; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li a { color: #aaa; text-decoration: none; transition: color 0.2s; }
-        .footer-col ul li a:hover { color: #e62035; }
-        
-        .footer-bottom {
-            max-width: 1100px; margin: 20px auto 0; display: flex; flex-direction: column; align-items: center; gap: 10px;
-            text-align: center; color: #555; font-size: 0.85em;
-        }
-        
-        /* MAGIA GROW STUDIO */
-        .grow-studio-credit {
-            font-weight: 900;
-            text-transform: uppercase;
-            text-decoration: none;
-            /* Degradado en movimiento continuo */
-            background: linear-gradient(270deg, #ff334b, #e62035, #ff8a00, #e62035);
-            background-size: 300% 300%;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: brillo-grow 4s ease infinite;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: inline-block;
-            letter-spacing: 1px;
-            margin-left: 5px;
-        }
-
-        .grow-studio-credit:hover {
-            transform: scale(1.15) rotate(-2deg);
-            filter: drop-shadow(0 0 12px rgba(230, 32, 53, 0.8));
-        }
-
-        @keyframes brillo-grow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* ==========================================================================
-           7. MEDIA QUERIES (DISEÑO PARA ESCRITORIO)
-           ========================================================================== */
-        @media (min-width: 992px) {
-            .logo-mobile { display: none; }
-            .logo-desktop { display: block; height: 190px; width: auto; }
-            .navbar-sandia { padding: 10px 40px; }
-            
-            /* --- MAGIA DEL MENÚ DE ESCRITORIO --- */
-            .menu-hamburguesa { display: none; } /* Apagamos la hamburguesa */
-            .menu-desktop-links { 
-                display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; align-items: center; 
-            }
-            .menu-desktop-links a { 
-                color: white; text-decoration: none; font-weight: 700; font-size: 0.95em; 
-                text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;
-                position: relative; padding-bottom: 5px;
-            }
-            .menu-desktop-links a::after {
-                content: ''; position: absolute; width: 0; height: 2px;
-                bottom: 0; left: 50%; background-color: #e62035;
-                transition: all 0.3s ease; transform: translateX(-50%);
-                box-shadow: 0 0 10px #e62035, 0 0 20px #e62035;
-            }
-            .menu-desktop-links a:hover { 
-                color: white; 
-                text-shadow: 0 0 10px rgba(230, 32, 53, 0.8);
-            }
-            .menu-desktop-links a:hover::after { width: 100%; }
-
-            .calendario-header { padding-top: 240px; }
-            .footer-bottom { flex-direction: row; justify-content: space-between; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -264,8 +59,9 @@
         <h1>Calendario Runner</h1>
         <p>Explora el calendario más completo de eventos deportivos a nivel nacional. Descubre tu próxima ruta y conquista tu nueva meta.</p>
         
-        <!-- FILTROS -->
+        <!-- FILTROS Y BÚSQUEDA -->
         <div class="filtros-directorio">
+            <input type="search" id="buscador-eventos" class="buscador-eventos" placeholder="Buscar carrera o lugar...">
             <button class="btn-filtro active" data-filtro="todas">Todas</button>
             <button class="btn-filtro" data-filtro="local">📍 Punto Fijo</button>
             <button class="btn-filtro" data-filtro="nacional">🇻🇪 Nacionales</button>
@@ -326,21 +122,8 @@
 
     <!-- SCRIPT DE EXTRACCIÓN Y MENÚ -->
     <script>
-        // --- LÓGICA DEL MENÚ LATERAL ---
-        const openMenuBtn = document.getElementById('open-menu-btn');
-        const closeMenuBtn = document.getElementById('close-menu-btn');
-        const sideMenu = document.getElementById('side-menu');
-        const menuOverlay = document.getElementById('menu-overlay');
-
-        function toggleMenu() {
-            sideMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            openMenuBtn.classList.toggle('active'); // Agregado para que gire la hamburguesa
-        }
-
-        openMenuBtn.addEventListener('click', toggleMenu);
-        closeMenuBtn.addEventListener('click', toggleMenu);
-        menuOverlay.addEventListener('click', toggleMenu);
+        // --- LÓGICA COMPARTIDA EN MAIN.JS ---
+        // La lógica del menú lateral ahora se maneja en main.js
 
         // --- LÓGICA DEL CALENDARIO DINÁMICO ---
         const urlScriptDirectorio = "https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec";
@@ -413,32 +196,48 @@
 
         function configurarFiltros() {
             const tarjetas = document.querySelectorAll('.evento-card');
+            const buscador = document.getElementById('buscador-eventos');
+            
+            function aplicarFiltros() {
+                const filtroActivo = document.querySelector('.btn-filtro.active').getAttribute('data-filtro');
+                const textoBusqueda = buscador.value.toLowerCase();
+                let visibles = 0;
+
+                tarjetas.forEach(tarjeta => {
+                    const categoriaTarjeta = tarjeta.getAttribute('data-categoria');
+                    const titulo = tarjeta.querySelector('h3').innerText.toLowerCase();
+                    const ubicacion = tarjeta.querySelector('.ubicacion').innerText.toLowerCase();
+                    
+                    const pasaFiltroCat = (filtroActivo === 'todas' || filtroActivo === categoriaTarjeta);
+                    const pasaBusqueda = titulo.includes(textoBusqueda) || ubicacion.includes(textoBusqueda);
+
+                    if (pasaFiltroCat && pasaBusqueda) {
+                        tarjeta.style.display = 'flex';
+                        visibles++;
+                    } else {
+                        tarjeta.style.display = 'none';
+                    }
+                });
+
+                msjSinResultados.style.display = visibles === 0 ? 'block' : 'none';
+                if (visibles === 0) msjSinResultados.innerText = "No se encontraron eventos con los filtros actuales.";
+            }
 
             botonesFiltro.forEach(boton => {
                 boton.addEventListener('click', () => {
                     botonesFiltro.forEach(b => b.classList.remove('active'));
                     boton.classList.add('active');
-
-                    const filtroElegido = boton.getAttribute('data-filtro');
-                    let visibles = 0;
-
-                    tarjetas.forEach(tarjeta => {
-                        const categoriaTarjeta = tarjeta.getAttribute('data-categoria');
-                        if (filtroElegido === 'todas' || filtroElegido === categoriaTarjeta) {
-                            tarjeta.style.display = 'flex';
-                            visibles++;
-                        } else {
-                            tarjeta.style.display = 'none';
-                        }
-                    });
-
-                    msjSinResultados.style.display = visibles === 0 ? 'block' : 'none';
-                    if (visibles === 0) msjSinResultados.innerText = "No hay carreras registradas en esta categoría por el momento.";
+                    aplicarFiltros();
                 });
             });
+
+            if(buscador) {
+                buscador.addEventListener('input', aplicarFiltros);
+            }
         }
 
         window.onload = cargarEventos;
     </script>
+    <script src="main.js"></script>
 </body>
 </html>
