@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscripción Coffee Run - Sandía Production</title>
     
+    <meta name="description" content="Inscríbete en la Coffee Run 3K. Llena tus datos y asegura tu participación.">
+    <meta property="og:title" content="Inscripción Coffee Run 3K">
+    <meta property="og:description" content="¡Inscríbete ya en la Coffee Run 3K! Evento oficial de Sandía Production.">
+    <meta property="og:image" content="https://sandiaproduction.vercel.app/img/Logo1.png">
+    <meta property="og:type" content="website">
+
+    <!-- MANIFEST (PWA) -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#e62035">
+    
     <!-- ICONO DEL NAVEGADOR -->
     <link rel="icon" href="img/Isotipo.png" type="image/png">
     
@@ -314,7 +324,11 @@
             const btn = event.target;
 
             navigator.clipboard.writeText(textToCopy).then(() => {
-                btn.innerText = "¡Copiado!";
+                if(window.showToast) {
+                    window.showToast("¡Dato copiado con éxito!");
+                } else {
+                    btn.innerText = "¡Copiado!";
+                }
                 btn.classList.add('copied');
                 
                 setTimeout(() => {
