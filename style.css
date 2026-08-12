@@ -164,14 +164,12 @@ body {
 
 .eventos-pasados { padding: 20px 15px 50px; background-color: transparent; }
 .lista-pasados-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-.past-event-item { background-color: rgba(255,255,255,0.03); border-radius: 15px; padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s, background 0.3s; }
-.past-event-item:hover { transform: translateY(-5px); background-color: rgba(255,255,255,0.06); border-color: rgba(230,32,53,0.3); }
+.past-event-item { background-color: rgba(255,255,255,0.03); border-radius: 15px; padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; border: 1px solid rgba(255,255,255,0.05); transition: all 0.4s ease; filter: grayscale(100%) opacity(0.6); cursor: default; }
+.past-event-item:hover { transform: translateY(-5px); background-color: rgba(255,255,255,0.06); border-color: rgba(230,32,53,0.3); filter: grayscale(0%) opacity(1); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
 .past-logo { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); }
-.past-info { flex-grow: 1; margin-bottom: 15px; }
+.past-info { flex-grow: 1; margin-bottom: 5px; }
 .past-info h3 { font-size: 1.2em; color: var(--color-texto); margin: 0 0 5px; font-weight: 700; }
 .past-info p { color: var(--color-gris-oscuro); font-size: 0.9em; margin: 0; }
-.btn-past-results { width: 100%; background-color: transparent; border: 1px solid rgba(230,32,53,0.5); color: var(--color-primario-hover); padding: 10px 15px; border-radius: 8px; font-size: 0.85em; font-weight: bold; cursor: pointer; transition: all 0.3s; text-transform: uppercase; }
-.past-event-item:hover .btn-past-results { background-color: var(--color-primario); color: var(--color-texto); }
 
 .aliados-seccion { padding: 50px 0 80px; background-color: #03060d; overflow: hidden; border-top: 1px solid rgba(255, 255, 255, 0.05); }
 .carrusel-infinito-container { width: 100%; max-width: 1200px; margin: 0 auto; overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }

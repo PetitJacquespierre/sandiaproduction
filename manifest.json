@@ -1,0 +1,21 @@
+{
+  "name": "Sandía Production",
+  "short_name": "Sandía",
+  "description": "Directorio de carreras y eventos deportivos.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#050a15",
+  "theme_color": "#e62035",
+  "icons": [
+    {
+      "src": "img/Isotipo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/Isotipo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

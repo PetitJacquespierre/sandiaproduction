@@ -331,7 +331,6 @@
                         
                         ultimosPasados.forEach(item => {
                             let ev = item.eventoData;
-                            let textoBtnPasado = ev.textoBoton || "Resultados"; 
                             
                             htmlPasados += `
                                 <div class="past-event-item">
@@ -340,7 +339,6 @@
                                         <h3>${ev.titulo}</h3>
                                         <p>${ev.ubicacion} / ${ev.mes}</p>
                                     </div>
-                                    <button class="btn-past-results" onclick="${item.accionClick}">${textoBtnPasado}</button>
                                 </div>
                             `;
                         });
