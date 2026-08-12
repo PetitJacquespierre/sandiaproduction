@@ -3,7 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ========================================== -->
+    <!-- ETIQUETAS SEO Y META (AÑADIDAS POR ANTIGRAVITY) -->
+    <!-- ========================================== -->
     <title>Sandía Production - Plataforma de Eventos Deportivos</title>
+    <meta name="description" content="Sandía Production, tu directorio oficial de eventos y carreras deportivas a nivel local y nacional en Falcón. Únete a nuestra comunidad y entérate de los próximos retos.">
+    <meta name="keywords" content="carreras, eventos deportivos, running, maratón, Falcón, Punto Fijo, Sandía Production, Run Free">
+    <meta name="author" content="GROW STUDIO">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (Para previas con imagen en WhatsApp, Instagram, Facebook) -->
+    <meta property="og:title" content="Sandía Production - Eventos Deportivos">
+    <meta property="og:description" content="Directorio oficial de carreras y eventos deportivos. ¡Inscríbete en nuestros próximos retos y únete a la comunidad Run Free!">
+    <!-- Importante: Asegúrate de que esta ruta sea la imagen que quieres que salga en WhatsApp -->
+    <meta property="og:image" content="https://sandiaproduction.vercel.app/img/Logo1.png">
+    <meta property="og:url" content="https://sandiaproduction.vercel.app">
+    <meta property="og:type" content="website">
     
     <!-- ICONO DEL NAVEGADOR -->
     <link rel="icon" href="img/Isotipo.png" type="image/png">
@@ -730,6 +746,9 @@
             emitirRafagaSelectiva(5, 8);
             programarOleadasDispersas();
 
+            // ==========================================
+            // CAMBIO: Reducido de 6500 (6.5s) a 2800 (2.8s) 
+            // ==========================================
             setTimeout(() => {
                 splashScreen.style.opacity = '0'; 
                 setTimeout(() => {
@@ -738,7 +757,7 @@
                     document.body.style.overflow = 'auto'; 
                     mainContent.style.display = 'flex'; 
                 }, 1000); 
-            }, 6500);
+            }, 2800); 
 
             cargarCarrerasCarousel();
             cargarAliados();
