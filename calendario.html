@@ -134,8 +134,15 @@
 
         async function cargarEventos() {
             try {
-                const respuesta = await fetch(urlScriptDirectorio);
-                const eventosRaw = await respuesta.json();
+                let eventosRaw = null;
+                const cached = sessionStorage.getItem('eventosDirectorio');
+                if (cached) {
+                    eventosRaw = JSON.parse(cached);
+                } else {
+                    const respuesta = await fetch(urlScriptDirectorio);
+                    eventosRaw = await respuesta.json();
+                    sessionStorage.setItem('eventosDirectorio', JSON.stringify(eventosRaw));
+                }
 
                 // FILTRO MAESTRO: Solo dejamos pasar las que dicen "SI"
                 const eventosActivos = eventosRaw.filter(evento => evento.activo === "SI");
@@ -169,7 +176,7 @@
                 const cardHTML = `
                     <div class="evento-card" data-categoria="${evento.categoria.toLowerCase()}">
                         <div class="flyer-box">
-                            <img src="img/${evento.imagen}" alt="${evento.titulo}" onerror="this.src='img/Isotipo.png'">
+                            <img src="img/${evento.imagen}" alt="${evento.titulo}" loading="lazy" onerror="this.src='img/Isotipo.png'">
                             <div class="fecha-badge">
                                 <span class="dia">${evento.dia}</span>
                                 <span class="mes">${evento.mes}</span>

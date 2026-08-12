@@ -275,8 +275,19 @@
             if (labelCostoDivisa) labelCostoDivisa.innerText = costoDivisa;
 
             try {
-                const respuesta = await fetch(urlApiDivisasBCV);
-                const datos = await respuesta.json();
+                let datos = null;
+                const cached = sessionStorage.getItem('tasaBCV');
+                const cacheTime = sessionStorage.getItem('tasaBCVTime');
+                
+                // Expirar en 1 hora = 3600000 ms
+                if (cached && cacheTime && (Date.now() - parseInt(cacheTime) < 3600000)) {
+                    datos = JSON.parse(cached);
+                } else {
+                    const respuesta = await fetch(urlApiDivisasBCV);
+                    datos = await respuesta.json();
+                    sessionStorage.setItem('tasaBCV', JSON.stringify(datos));
+                    sessionStorage.setItem('tasaBCVTime', Date.now().toString());
+                }
                 
                 if (datos && datos[tipoDivisaCalculo]) {
                     tasaActual = parseFloat(datos[tipoDivisaCalculo]);

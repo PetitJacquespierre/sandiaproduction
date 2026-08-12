@@ -273,8 +273,15 @@
             const pasadosContainer = document.getElementById('contenedor-pasados');
             
             try {
-                const respuesta = await fetch(urlScriptDirectorio);
-                const eventos = await respuesta.json();
+                let eventos = null;
+                const cached = sessionStorage.getItem('eventosDirectorio');
+                if (cached) {
+                    eventos = JSON.parse(cached);
+                } else {
+                    const respuesta = await fetch(urlScriptDirectorio);
+                    eventos = await respuesta.json();
+                    sessionStorage.setItem('eventosDirectorio', JSON.stringify(eventos));
+                }
 
                 if (eventos.length > 0) {
                     let htmlCarrusel = '';
@@ -327,7 +334,7 @@
                             
                             htmlPasados += `
                                 <div class="past-event-item">
-                                    <img src="img/${ev.imagen}" alt="${ev.titulo}" class="past-logo" onerror="this.src='img/Isotipo.png'">
+                                    <img src="img/${ev.imagen}" alt="${ev.titulo}" class="past-logo" loading="lazy" onerror="this.src='img/Isotipo.png'">
                                     <div class="past-info">
                                         <h3>${ev.titulo}</h3>
                                         <p>${ev.ubicacion} / ${ev.mes}</p>
@@ -383,8 +390,15 @@
             const seccionAliados = document.getElementById('aliados');
             
             try {
-                const respuesta = await fetch(urlScriptAliados);
-                const aliados = await respuesta.json();
+                let aliados = null;
+                const cached = sessionStorage.getItem('aliadosDirectorio');
+                if (cached) {
+                    aliados = JSON.parse(cached);
+                } else {
+                    const respuesta = await fetch(urlScriptAliados);
+                    aliados = await respuesta.json();
+                    sessionStorage.setItem('aliadosDirectorio', JSON.stringify(aliados));
+                }
                 
                 const aliadosActivos = aliados.filter(a => a.activo && a.activo.toString().toUpperCase() === "SI");
 
@@ -397,7 +411,7 @@
                         
                         htmlLogos += `
                             <a href="${enlace}" ${target} class="aliado-item">
-                                <img src="${rutaImagen}" alt="${aliado.nombre}" class="logo-aliado" onerror="this.style.display='none'">
+                                <img src="${rutaImagen}" alt="${aliado.nombre}" class="logo-aliado" loading="lazy" onerror="this.style.display='none'">
                                 <span class="nombre-aliado">${aliado.nombre}</span>
                             </a>
                         `;
