@@ -16,6 +16,11 @@
    1. ESTILOS GENERALES Y RESETS
    ========================================================================== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 120px; /* Ajuste para que el menú fijo no tape los títulos de sección */
+}
+
 body { 
     background-color: var(--color-fondo); 
     color: var(--color-texto); 
