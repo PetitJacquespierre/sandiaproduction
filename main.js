@@ -94,3 +94,17 @@ window.showToast = function(message) {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
+
+// --- TOGGLE RUTINA SEMANAL ---
+window.toggleRutina = function() {
+    const rutinaContainer = document.getElementById('rutina-semanal');
+    if (rutinaContainer) {
+        rutinaContainer.classList.toggle('active');
+        // Auto-scroll a la rutina al abrirla
+        if (rutinaContainer.classList.contains('active')) {
+            setTimeout(() => {
+                rutinaContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+    }
+}

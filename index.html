@@ -112,9 +112,14 @@
                     <span class="run-free-badge">Comunidad Oficial</span>
                     <h2>Únete al Team RUN FREE</h2>
                     <p>Entrenamientos, rutas semanales y la mejor vibra runner de la ciudad. Sumamos kilómetros juntos antes de cada gran reto.</p>
-                    <a href="https://www.instagram.com/runfreest/" target="_blank" class="btn-run-free-outline">
-                        Ver en Instagram
-                    </a>
+                    <div class="run-free-botones" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%;">
+                        <a href="https://www.instagram.com/runfreest/" target="_blank" class="btn-run-free-outline">
+                            Ver en Instagram
+                        </a>
+                        <button class="btn-run-free-outline btn-rutina" onclick="toggleRutina()" style="cursor: pointer;">
+                            Semana Running
+                        </button>
+                    </div>
                 </div>
 
                 <!-- LADO DERECHO: CARICATURA -->
@@ -122,6 +127,42 @@
                     <img src="img/caricatura.png" alt="Caricatura Team" class="run-free-caricatura-img" onerror="this.style.display='none'">
                 </div>
 
+            </div>
+
+            <!-- ACORDEÓN SEMANA RUNNING -->
+            <div class="rutina-semanal-container" id="rutina-semanal">
+                <div class="rutina-grid">
+                    <div class="rutina-dia">
+                        <span class="rutina-nombre">LUNES</span>
+                        <span class="rutina-hora">⏱ 6:00 PM</span>
+                        <span class="rutina-act">5K</span>
+                        <span class="rutina-lugar">CC Las Virtudes / GoldstarsGym</span>
+                    </div>
+                    <div class="rutina-dia">
+                        <span class="rutina-nombre">MIÉRCOLES</span>
+                        <span class="rutina-hora">⏱ 6:00 PM</span>
+                        <span class="rutina-act">3K</span>
+                        <span class="rutina-lugar">Plaza Bolívar / Falcón Fit</span>
+                    </div>
+                    <div class="rutina-dia">
+                        <span class="rutina-nombre">JUEVES</span>
+                        <span class="rutina-hora">⏱ 5:30 AM</span>
+                        <span class="rutina-act">Cuestas/Ritmo</span>
+                        <span class="rutina-lugar">Club Náutico</span>
+                    </div>
+                    <div class="rutina-dia">
+                        <span class="rutina-nombre">VIERNES</span>
+                        <span class="rutina-hora">⏱ 5:30 AM</span>
+                        <span class="rutina-act">10K</span>
+                        <span class="rutina-lugar">C.C. Sambil</span>
+                    </div>
+                    <div class="rutina-dia" style="border-bottom: none;">
+                        <span class="rutina-nombre">SÁBADO</span>
+                        <span class="rutina-hora">⏱ 6:30 AM</span>
+                        <span class="rutina-act" style="color: var(--color-primario);">Coffee Run</span>
+                        <span class="rutina-lugar">Terraza Tinaja</span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -161,7 +202,7 @@
                     <h4>Contacto</h4>
                     <ul>
                         <li><a href="https://instagram.com" target="_blank">Instagram: @sandiaproduction</a></li>
-                        <li><a href="https://wa.me/584120000000" target="_blank">WhatsApp Oficial</a></li>
+                        <li><a href="https://wa.me/584126574354" target="_blank">WhatsApp Oficial</a></li>
                         <li>Punto Fijo, Falcón - Venezuela</li>
                     </ul>
                 </div>
