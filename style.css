@@ -70,7 +70,7 @@ body {
 .menu-hamburguesa.active span:nth-child(2) { opacity: 0; transform: translateX(20px); }
 .menu-hamburguesa.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background-color: var(--color-primario); box-shadow: 0 0 10px var(--color-primario); }
 
-.side-menu-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(3px); }
+.side-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(3px); }
 .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
 
 .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--color-fondo-menu); border-left: 1px solid rgba(230, 32, 53, 0.2); z-index: 2001; padding: 25px 20px; display: flex; flex-direction: column; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
@@ -116,7 +116,7 @@ body {
    5. INDEX.HTML - ESPECÍFICO
    ========================================================================== */
 #splash-screen {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
     background: linear-gradient(rgba(5, 10, 21, 0.9), rgba(5, 10, 21, 0.97)), url('img/fondo_carrera.jpg') center/cover no-repeat;
     display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 1s ease-out;
 }
@@ -223,7 +223,7 @@ body {
    7. COFFEERUN.HTML - ESPECÍFICO (FORMULARIO E INSCRIPCIÓN)
    ========================================================================== */
 .inscripcion-section { padding: 180px 20px 60px; display: flex; flex-direction: column; justify-content: center; align-items: center; flex-grow: 1; }
-.inscripcion-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; max-width: 1100px; width: 100%; }
+.inscripcion-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; width: 100%; }
 .flyer-container { border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); background: rgba(255,255,255,0.01); }
 .flyer-img { width: 100%; height: auto; display: block; }
 .payment-box { background: rgba(230, 32, 53, 0.05); border: 1px solid rgba(230, 32, 53, 0.15); border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
