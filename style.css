@@ -247,6 +247,12 @@ body {
 .btn-past-results:hover { background-color: var(--color-primario); color: var(--color-texto); }
 .past-event-item:hover .btn-past-results { border-color: var(--color-primario); }
 
+/* Modal de Galerías Específico */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+.modal-galeria-content { background: rgba(15, 6, 3, 0.95); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 30px; max-width: 400px; width: 90%; text-align: center; position: relative; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+.btn-close-modal { position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: #fff; font-size: 1.2em; cursor: pointer; opacity: 0.7; transition: opacity 0.3s; }
+.btn-close-modal:hover { opacity: 1; color: var(--color-primario); }
+
 .aliados-seccion { padding: 50px 0 80px; background-color: #03060d; overflow: hidden; border-top: 1px solid rgba(255, 255, 255, 0.05); }
 .carrusel-infinito-container { width: 100%; max-width: 1200px; margin: 0 auto; overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
 .carrusel-track { display: flex; gap: 80px; align-items: center; width: max-content; animation: scroll-infinito 25s linear infinite; }

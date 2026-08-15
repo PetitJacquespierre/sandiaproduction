@@ -77,13 +77,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- FUNCIÓN GLOBAL PARA MOSTRAR TOAST ---
-window.showToast = function(message) {
+window.showToast = function(message, backgroundColor = 'rgba(46, 204, 113, 0.95)') {
     const toastContainer = document.getElementById('toast-container');
     if (!toastContainer) return;
     
     const toast = document.createElement('div');
     toast.className = 'toast-notification';
     toast.innerText = message;
+    toast.style.background = backgroundColor;
     
     toastContainer.appendChild(toast);
     
