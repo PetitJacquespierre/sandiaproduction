@@ -373,6 +373,12 @@
                         ultimosPasados.forEach(item => {
                             let ev = item.eventoData;
                             
+                            let btnGaleriaHtml = '';
+                            if (ev.enlace && ev.enlace.trim() !== '' && ev.enlace !== '#') {
+                                let textoBtnPasado = ev.textoBoton || "Ver Fotos"; 
+                                btnGaleriaHtml = `<button class="btn-past-results" onclick="window.open('${ev.enlace}', '_blank')">${textoBtnPasado}</button>`;
+                            }
+                            
                             htmlPasados += `
                                 <div class="past-event-item">
                                     <img src="img/${ev.imagen}" alt="${ev.titulo}" class="past-logo" loading="lazy" onerror="this.src='img/Isotipo.png'">
@@ -380,6 +386,7 @@
                                         <h3>${ev.titulo}</h3>
                                         <p>${ev.ubicacion} / ${ev.mes}</p>
                                     </div>
+                                    ${btnGaleriaHtml}
                                 </div>
                             `;
                         });

@@ -243,6 +243,9 @@ body {
 .past-info { flex-grow: 1; margin-bottom: 5px; }
 .past-info h3 { font-size: 1.2em; color: var(--color-texto); margin: 0 0 5px; font-weight: 700; }
 .past-info p { color: var(--color-gris-oscuro); font-size: 0.9em; margin: 0; }
+.btn-past-results { width: 100%; background-color: transparent; border: 1px solid rgba(230,32,53,0.5); color: var(--color-primario-hover); padding: 10px 15px; border-radius: 8px; font-size: 0.85em; font-weight: bold; cursor: pointer; transition: all 0.3s; text-transform: uppercase; margin-top: 10px; }
+.btn-past-results:hover { background-color: var(--color-primario); color: var(--color-texto); }
+.past-event-item:hover .btn-past-results { border-color: var(--color-primario); }
 
 .aliados-seccion { padding: 50px 0 80px; background-color: #03060d; overflow: hidden; border-top: 1px solid rgba(255, 255, 255, 0.05); }
 .carrusel-infinito-container { width: 100%; max-width: 1200px; margin: 0 auto; overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
