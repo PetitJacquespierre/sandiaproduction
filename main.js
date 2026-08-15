@@ -74,6 +74,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const toastContainer = document.createElement('div');
     toastContainer.id = 'toast-container';
     document.body.appendChild(toastContainer);
+
+    // --- TRUCO DE ADMINISTRADOR: LIMPIAR CACHÉ ---
+    const adminLogo = document.getElementById('admin-logo-refresh');
+    if (adminLogo) {
+        adminLogo.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            sessionStorage.clear();
+            window.showToast ? window.showToast("Borrando memoria... actualizando datos.", "rgba(230, 32, 53, 0.95)") : alert("Actualizando datos...");
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 1000);
+        });
+    }
 });
 
 // --- FUNCIÓN GLOBAL PARA MOSTRAR TOAST ---
