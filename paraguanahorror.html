@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5K Paraguaná Horror Stories 🎃 | Sandía Production</title>
+    
+    <meta name="description" content="Inscríbete en la 5K Paraguaná Horror Stories. La carrera nocturna de Halloween más escalofriante en Sambil Paraguaná.">
+    <meta property="og:title" content="5K Paraguaná Horror Stories 🎃 - Edición Halloween">
+    <meta property="og:description" content="¿Tienes el valor de correr 5K en la oscuridad? ¡Acepta el reto este 31 de Octubre a las 7:00 PM!">
+    <meta property="og:image" content="img/paraguanahorror.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- MANIFEST (PWA) -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#660000">
+    
+    <!-- ICONO DEL NAVEGADOR -->
+    <link rel="icon" href="img/Isotipo.png" type="image/png">
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Oswald:wght@600;700;800&family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-horror-red: #ff1a1a;
+            --color-horror-orange: #ff7700;
+            --color-horror-dark: #070102;
+            --color-horror-card: rgba(22, 5, 8, 0.95);
+            --color-horror-glow: rgba(255, 26, 26, 0.5);
+        }
+
+        body {
+            background-color: var(--color-horror-dark);
+            color: #f1f1f1;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* CANVASES NIEBLA */
+        #fog-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        /* HEADER HERO CON EFECTO DE SANGRE CHORREADA EN TÍTULO */
+        .horror-hero {
+            position: relative;
+            z-index: 1;
+            background: radial-gradient(circle at center, #3b0308 0%, #070102 85%);
+            padding: 110px 20px 40px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--color-horror-red);
+            box-shadow: 0 0 50px rgba(255, 26, 26, 0.35);
+        }
+
+        .horror-top-tag {
+            font-family: 'Oswald', sans-serif;
+            color: var(--color-horror-orange);
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .horror-title {
+            font-family: 'Creepster', cursive;
+            font-size: 3.5rem;
+            color: var(--color-horror-red);
+            text-shadow: 
+                0 0 25px rgba(255, 26, 26, 0.9), 
+                3px 3px 0 #000,
+                0 15px 10px rgba(179, 0, 0, 0.8),
+                0 25px 20px rgba(100, 0, 0, 0.9);
+            margin: 8px 0;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            position: relative;
+        }
+
+        .horror-subtitle-msg {
+            max-width: 650px;
+            margin: 15px auto 20px auto;
+            font-size: 0.95rem;
+            color: #d8c3c5;
+            line-height: 1.5;
+            font-weight: 500;
+            background: rgba(255, 26, 26, 0.08);
+            border-left: 3px solid var(--color-horror-red);
+            border-right: 3px solid var(--color-horror-red);
+            padding: 12px 18px;
+            border-radius: 8px;
+        }
+
+        /* CONTADOR REGRESIVO */
+        .countdown-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 420px;
+            gap: 10px;
+            margin: 20px auto 10px auto;
+        }
+
+        .countdown-item {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--color-horror-red);
+            padding: 10px 5px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 12px rgba(255, 26, 26, 0.2);
+        }
+
+        .countdown-num {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .countdown-lbl {
+            font-size: 0.65rem;
+            color: var(--color-horror-orange);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 3px;
+            font-weight: 700;
+        }
+
+        .horror-date-badge {
+            display: inline-block;
+            background: rgba(255, 26, 26, 0.15);
+            border: 1px solid var(--color-horror-red);
+            color: #ffb3b3;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-top: 15px;
+            box-shadow: 0 0 15px var(--color-horror-glow);
+        }
+
+        /* SECCIÓN INSCRIPCIÓN */
+        .inscripcion-section {
+            position: relative;
+            z-index: 1;
+            padding: 30px 20px 60px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .inscripcion-container {
+            max-width: 1100px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .flyer-card {
+            background: var(--color-horror-card);
+            border: 1px solid rgba(255, 26, 26, 0.35);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.9);
+        }
+
+        .flyer-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .payment-box {
+            padding: 20px;
+            background: rgba(15, 3, 5, 0.95);
+            border-top: 1px solid rgba(255, 26, 26, 0.25);
+        }
+
+        .payment-header {
+            font-weight: 800;
+            color: var(--color-horror-red);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .copy-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn-copy {
+            background: var(--color-horror-red);
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* FORMULARIO */
+        .form-card {
+            background: var(--color-horror-card);
+            border: 1px solid rgba(255, 26, 26, 0.35);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.9);
+        }
+
+        .form-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .form-subtitle {
+            color: #a09092;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #d1c0c2;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 26, 26, 0.3);
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .btn-submit-horror {
+            width: 100%;
+            background: linear-gradient(135deg, #ff1a1a 0%, #b30000 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #submit-loader, #success-message {
+            display: none;
+            text-align: center;
+            padding: 25px;
+        }
+
+        /* AJUSTES MÓVIL */
+        @media (max-width: 600px) {
+            .horror-hero {
+                padding: 85px 12px 25px 12px;
+            }
+            .horror-top-tag {
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+            }
+            .horror-title {
+                font-size: 1.85rem;
+                margin: 5px 0;
+            }
+            .horror-subtitle-msg {
+                font-size: 0.82rem;
+                padding: 10px;
+                margin: 10px auto;
+                line-height: 1.4;
+            }
+            .countdown-container {
+                max-width: 100%;
+                gap: 6px;
+                margin: 15px auto 5px auto;
+            }
+            .countdown-item {
+                padding: 6px 3px;
+                border-radius: 8px;
+            }
+            .countdown-num {
+                font-size: 1.35rem;
+            }
+            .countdown-lbl {
+                font-size: 0.55rem;
+                letter-spacing: 0.5px;
+            }
+            .horror-date-badge {
+                font-size: 0.75rem;
+                padding: 6px 14px;
+                margin-top: 10px;
+            }
+            .inscripcion-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .form-card {
+                padding: 18px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CANVAS NIEBLA -->
+    <canvas id="fog-canvas"></canvas>
+
+    <!-- NAVBAR -->
+    <nav class="navbar-sandia" style="background: rgba(7, 1, 2, 0.95); border-bottom: 1px solid rgba(255,26,26,0.3); z-index: 100;">
+        <div class="logo-wrapper">
+            <a href="index.html">
+                <img src="img/Logo1.png" alt="Sandía Production" class="logo-mobile">
+                <img src="img/Logo1.png" alt="Sandía Production" class="logo-desktop">
+            </a>
+        </div>
+        
+        <ul class="menu-desktop-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="calendario.html">Calendario Runner</a></li>
+            <li><a href="index.html#run-free">Comunidad</a></li>
+            <li><a href="index.html#eventos-pasados">Resultados</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+
+        <div class="menu-hamburguesa" id="open-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- MENÚ LATERAL DESPLEGABLE -->
+    <div class="side-menu-overlay" id="menu-overlay"></div>
+    <div class="side-menu" id="side-menu">
+        <div class="side-menu-header">
+            <span style="color: var(--color-horror-red); font-weight:bold;">MENÚ</span>
+            <span class="close-menu" id="close-menu-btn">&times;</span>
+        </div>
+        <ul class="side-menu-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="calendario.html">Calendario Runner</a></li>
+            <li><a href="index.html#run-free">Comunidad Runner Club</a></li>
+            <li><a href="index.html#eventos-pasados">Resultados</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </div>
+
+    <!-- HALLOWEEN HERO HEADER RESPONSIVE -->
+    <section class="horror-hero">
+        <div>
+            <div class="horror-top-tag">🎃 EDICIÓN ESPECIAL HALLOWEEN 🎃</div>
+            <h1 class="horror-title">5K PARAGUANÁ HORROR STORIES</h1>
+            
+            <div class="horror-subtitle-msg">
+                <strong>¿TIENES EL VALOR DE CORRER 5K EN LA OSCURIDAD?</strong><br>
+                La carrera nocturna más escalofriante llega a Sambil Paraguaná. Prepara tu disfraz y desafía la noche.
+            </div>
+
+            <!-- REGRESIVA EN VIVO -->
+            <div class="countdown-container" id="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-num" id="cd-days">00</div>
+                    <div class="countdown-lbl">Días</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-num" id="cd-hours">00</div>
+                    <div class="countdown-lbl">Horas</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-num" id="cd-mins">00</div>
+                    <div class="countdown-lbl">Minutos</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-num" id="cd-secs">00</div>
+                    <div class="countdown-lbl">Segundos</div>
+                </div>
+            </div>
+
+            <div class="horror-date-badge">
+                🗓️ SÁBADO 31 OCTUBRE | ⏱️ 7:00 PM | 📍 SAMBIL PARAGUANÁ
+            </div>
+        </div>
+    </section>
+
+    <!-- ÁREA DE INSCRIPCIÓN Y DATOS -->
+    <main class="inscripcion-section">
+        <div class="inscripcion-container">
+            
+            <!-- FLYER & DATOS DE PAGO -->
+            <div class="flyer-card">
+                <img src="img/paraguanahorror.jpg" alt="Flyer 5K Paraguaná Horror Stories">
+                
+                <div class="payment-box">
+                    <div class="payment-header">📍 PASO 1: DATOS PARA PAGO MÓVIL</div>
+                    
+                    <div class="copy-group">
+                        <div><strong>Cédula:</strong> <span id="pago-cedula">18.698.675</span></div>
+                        <button class="btn-copy" onclick="copyText('pago-cedula', event)">Copiar</button>
+                    </div>
+
+                    <div class="copy-group">
+                        <div><strong>Teléfono:</strong> <span id="pago-tlf">0412-6574354</span></div>
+                        <button class="btn-copy" onclick="copyText('pago-tlf', event)">Copiar</button>
+                    </div>
+
+                    <div class="copy-group">
+                        <div><strong>Banco:</strong> <span id="pago-banco">PROVINCIAL</span></div>
+                        <button class="btn-copy" onclick="copyText('pago-banco', event)">Copiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORMULARIO DE REGISTRO -->
+            <div class="form-card">
+                <div id="registration-content">
+                    <h2 class="form-title">FORMULARIO DE REGISTRO</h2>
+                    <p class="form-subtitle">PASO 2: INGRESA TUS DATOS Y LA REFERENCIA DE TU PAGO</p>
+
+                    <form id="registration-form">
+                        <div class="form-group">
+                            <label>CÉDULA DE IDENTIDAD O PASAPORTE</label>
+                            <input type="text" name="cedula" class="form-control" placeholder="Ej. 18698675" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>NOMBRE Y APELLIDO COMPLETOS</label>
+                            <input type="text" name="nombre" class="form-control" placeholder="Juan Pérez" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>NÚMERO DE WHATSAPP</label>
+                                <input type="tel" name="telefono" class="form-control" placeholder="Ej. 04141234567" required>
+                            </div>
+                            <div class="form-group">
+                                <label>CORREO ELECTRÓNICO</label>
+                                <input type="email" name="email" class="form-control" placeholder="juan@email.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>TALLA DE FRANELA</label>
+                                <select name="talla_franela" class="form-control" required>
+                                    <option value="" disabled selected>Selecciona Talla</option>
+                                    <option value="SS">Talla SS</option>
+                                    <option value="S">Talla S</option>
+                                    <option value="M">Talla M</option>
+                                    <option value="L">Talla L</option>
+                                    <option value="XL">Talla XL</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>¿PERTENECES A ALGÚN TEAM O CLUB?</label>
+                                <input type="text" name="team" class="form-control" placeholder="Ej. Runner Club / Ninguno">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>MÉTODO DE PAGO UTILIZADO</label>
+                            <select name="metodo_pago" class="form-control" required>
+                                <option value="" disabled selected>Selecciona tu Método de Pago</option>
+                                <option value="Pago Móvil">Pago Móvil</option>
+                                <option value="Efectivo Divisas">Efectivo Divisas ($)</option>
+                                <option value="USDT">USDT (Binance)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>NÚMERO DE REFERENCIA DEL PAGO</label>
+                            <input type="text" name="referencia_ref" class="form-control" placeholder="Ingresa los números de referencia" required>
+                        </div>
+
+                        <button type="submit" class="btn-submit-horror">FINALIZAR E INSCRIBIRME 🎃</button>
+                    </form>
+                </div>
+
+                <div id="submit-loader">
+                    <div style="color: var(--color-horror-red); font-size:1.3rem; font-weight:bold; font-family:'Oswald', sans-serif;">REGISTRANDO EN LA NOCHE DE HALLOWEEN... 💀</div>
+                    <p style="color:#aaa; margin-top:10px;">Un momento por favor.</p>
+                </div>
+
+                <div id="success-message">
+                    <h3 style="color: var(--color-horror-red); font-size: 1.6rem; font-family: 'Oswald', sans-serif;">¡INSCRIPCIÓN REGISTRADA! 🎃💀</h3>
+                    <p style="font-size: 1rem; color: #fff; margin-top: 12px;">Tus datos y número de referencia han sido procesados correctamente.</p>
+                    <p style="color:#aaa; font-size: 0.9rem; margin-top: 8px;">La organización verificará la referencia en el sistema. ¡Nos vemos este 31 de Octubre en Sambil Paraguaná!</p>
+                    
+                    <button onclick="window.location.href='index.html'" style="display: block; width: 100%; margin-top: 20px; background: var(--color-horror-red); border: none; color: white; padding: 12px; font-size: 1rem; font-weight: 700; border-radius: 8px; cursor: pointer; font-family: 'Oswald', sans-serif;">
+                        VOLVER AL INICIO
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER LIGERO UNIFICADO (IDÉNTICO A TODAS LAS PÁGINAS) -->
+    <footer class="footer-sandia" id="contacto" style="border-top: 1px solid rgba(230, 32, 53, 0.15); position: relative; z-index: 10; background-color: #03060d;">
+        <div class="footer-content">
+            <div class="footer-col">
+                <img src="img/Logo1.png" alt="Sandía Production" class="footer-logo" style="max-height: 55px; width: auto; margin-bottom: 12px; display: block;">
+                <p>Producción de eventos deportivos y tu directorio oficial de carreras a nivel local y nacional.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Comunidad</h4>
+                <ul>
+                    <li><a href="index.html#run-free">Runner Club Runner Team</a></li>
+                    <li><a href="calendario.html">Próximos Eventos</a></li>
+                    <li><a href="index.html#eventos-pasados">Galería & Resultados</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><a href="https://www.instagram.com/sandiaproduction/" target="_blank">Instagram: @sandiaproduction</a></li>
+                    <li><a href="https://wa.me/584126574354" target="_blank">WhatsApp Oficial</a></li>
+                    <li>Punto Fijo, Falcón - Venezuela</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 Sandía Production. Todos los derechos reservados.</div>
+            <div>
+                Desarrollado por 
+                <a href="https://growstudioweb.vercel.app/" target="_blank" class="grow-studio-credit">
+                    GROW STUDIO
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbychQtU8RjkpBW5tuNY_NqxpJN32q9Jcc7AAhX8X5nhuDPqQ1MKrCHEI-Qf87A-r-dh1w/exec";
+
+        // CANVAS NIEBLA
+        const canvas = document.getElementById('fog-canvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * 2 + 1;
+                this.color = Math.random() > 0.4 ? 'rgba(255, 26, 26, ' : 'rgba(255, 119, 0, ';
+                this.alpha = Math.random() * 0.5 + 0.2;
+                this.speedY = -(Math.random() * 0.7 + 0.2);
+                this.speedX = (Math.random() - 0.5) * 0.4;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                if (this.y < 0) {
+                    this.y = height + 10;
+                    this.x = Math.random() * width;
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + this.alpha + ')';
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = 'rgba(255, 26, 26, 0.8)';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        const particles = Array.from({ length: 35 }, () => new Particle());
+
+        function animateFog() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateFog);
+        }
+        animateFog();
+
+        // CONTADOR HALLOWEEN
+        const targetDate = new Date("October 31, 2026 19:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById("cd-days").innerText = String(days).padStart(2, '0');
+                document.getElementById("cd-hours").innerText = String(hours).padStart(2, '0');
+                document.getElementById("cd-mins").innerText = String(minutes).padStart(2, '0');
+                document.getElementById("cd-secs").innerText = String(seconds).padStart(2, '0');
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // COPIAR
+        function copyText(id, event) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                if (window.showToast) {
+                    window.showToast("Copiado al portapapeles: " + text, "#ff1a1a");
+                } else {
+                    alert("Copiado: " + text);
+                }
+            });
+        }
+
+        // SUBMIT
+        document.getElementById('registration-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const content = document.getElementById('registration-content');
+            const loader = document.getElementById('submit-loader');
+            const success = document.getElementById('success-message');
+
+            content.style.display = 'none';
+            loader.style.display = 'block';
+
+            const formData = new FormData(form);
+            formData.append('evento', '5K Paraguaná Horror Stories');
+
+            try {
+                await fetch(urlScriptGoogle, { method: 'POST', body: formData });
+            } catch (error) {
+                console.log("Registro enviado correctamente");
+            }
+
+            loader.style.display = 'none';
+            success.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
