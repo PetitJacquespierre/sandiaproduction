@@ -603,7 +603,7 @@
 
                         <div class="form-group">
                             <label>MÉTODO DE PAGO UTILIZADO</label>
-                            <select name="metodo_pago" class="form-control" required>
+                            <select id="select-metodo-pago" name="metodo_pago" class="form-control" required>
                                 <option value="" disabled selected>Selecciona tu Método de Pago</option>
                                 <option value="Pago Móvil">Pago Móvil</option>
                                 <option value="Efectivo Divisas">Efectivo Divisas ($)</option>
@@ -618,8 +618,25 @@
                             </div>
                             <div class="form-group">
                                 <label>MONTO DEL PAGO (BS / $)</label>
-                                <input type="text" name="monto_pago" class="form-control" placeholder="Ej. 16.844 Bs / 20$" required>
+                                <input type="text" id="input-monto-pago" name="monto_pago" class="form-control" placeholder="Ej. 16.844,13 Bs / 20$" required>
                             </div>
+                        </div>
+
+                        <!-- TÉRMINOS Y CONDICIONES GENERALES DEL EVENTO -->
+                        <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255, 26, 26, 0.2); padding: 12px 14px; border-radius: 10px; margin-top: 15px; margin-bottom: 15px; text-align: left;">
+                            <div style="max-height: 90px; overflow-y: auto; font-size: 0.78rem; color: #bbb; line-height: 1.4; padding-right: 6px; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.08);" id="box-terminos-texto">
+                                <strong>TÉRMINOS Y REGLAMENTO DEL EVENTO:</strong><br>
+                                1. Al inscribirme declaro estar en condiciones físicas aptas para participar en la 5K Paraguaná Horror Story.<br>
+                                2. El participante reconoce que la inscripción es personal e intransferible.<br>
+                                3. La organización no se hace responsable por inconvenientes derivados de datos de referencia bancaria incorrectos o incompletos.<br>
+                                4. El dorsal y kit de participación deben ser retirados en el lugar y horario oficial establecido por el comité organizador.<br>
+                                5. Acepto el uso de imagen fotográfica y de video tomada durante el evento para fines de difusión deportiva.
+                            </div>
+
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.85rem; color: #ffffff; font-weight: 600;">
+                                <input type="checkbox" id="check-terminos" required style="width: 18px; height: 18px; accent-color: var(--color-horror-red); cursor: pointer;">
+                                Acepto los Términos y Condiciones del Evento
+                            </label>
                         </div>
 
                         <button type="submit" class="btn-submit-horror">FINALIZAR E INSCRIBIRME 🎃</button>
@@ -717,6 +734,22 @@
 
                 if (tasaBcvLabel) tasaBcvLabel.innerText = formatVE(tasa);
                 if (montoVesLabel) montoVesLabel.innerHTML = `${formatVE(totalVes)} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                
+                const inputMonto = document.getElementById('input-monto-pago');
+                if (inputMonto && !inputMonto.value) {
+                    inputMonto.value = `${formatVE(totalVes)} Bs`;
+                }
+
+                const selectMetodo = document.getElementById('select-metodo-pago');
+                if (selectMetodo) {
+                    selectMetodo.addEventListener('change', function() {
+                        if (this.value === "Efectivo Divisas" || this.value === "USDT") {
+                            inputMonto.value = "20$";
+                        } else if (this.value === "Pago Móvil") {
+                            inputMonto.value = `${formatVE(totalVes)} Bs`;
+                        }
+                    });
+                }
 
                 if (loadingBox) loadingBox.style.display = 'none';
                 if (resultsBox) resultsBox.style.display = 'block';
@@ -725,6 +758,12 @@
                 let totalVes = tasaRespaldoLocal * costoDivisa;
                 if (tasaBcvLabel) tasaBcvLabel.innerText = formatVE(tasaRespaldoLocal);
                 if (montoVesLabel) montoVesLabel.innerHTML = `${formatVE(totalVes)} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                
+                const inputMonto = document.getElementById('input-monto-pago');
+                if (inputMonto && !inputMonto.value) {
+                    inputMonto.value = `${formatVE(totalVes)} Bs`;
+                }
+                
                 if (loadingBox) loadingBox.style.display = 'none';
                 if (resultsBox) resultsBox.style.display = 'block';
             }
