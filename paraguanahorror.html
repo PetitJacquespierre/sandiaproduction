@@ -828,8 +828,8 @@
             });
         }
 
-        // SUBMIT
-        document.getElementById('registration-form').addEventListener('submit', async (e) => {
+        // SUBMIT FORMULARIO UNIFICADO Y COMPATIBLE CON APPS SCRIPT
+        document.getElementById('registration-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const form = e.target;
             const content = document.getElementById('registration-content');
@@ -839,17 +839,32 @@
             content.style.display = 'none';
             loader.style.display = 'block';
 
-            const formData = new FormData(form);
-            formData.append('evento', '5K Paraguaná Horror Stories');
+            const formDataObj = new FormData(form);
+            const datosAEnviar = {};
+            formDataObj.forEach((value, key) => (datosAEnviar[key] = value));
+            
+            // Asegurar que si el Apps Script requiere monto_exacto o referencia_ref se mapeen idéntico a Coffee Run
+            datosAEnviar['monto_exacto'] = form.monto_pago ? form.monto_pago.value : '';
+            datosAEnviar['evento'] = '5K Paraguaná Horror Story';
 
-            try {
-                await fetch(urlScriptGoogle, { method: 'POST', body: formData });
-            } catch (error) {
-                console.log("Registro enviado correctamente");
-            }
-
-            loader.style.display = 'none';
-            success.style.display = 'block';
+            fetch(urlScriptGoogle, {
+                method: 'POST',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datosAEnviar)
+            })
+            .then(() => {
+                loader.style.display = 'none';
+                success.style.display = 'block';
+                form.reset();
+            })
+            .catch(error => {
+                console.error('Error enviando datos:', error);
+                loader.style.display = 'none';
+                content.style.display = 'block';
+                alert('Ocurrió un error al procesar la inscripción. Por favor intenta nuevamente.');
+            });
         });
 
         window.onload = () => {
