@@ -663,6 +663,10 @@
         const costoDivisa = 20; // 20$ primeros 100 cupos
         let tasaRespaldoLocal = 764.35;
 
+        function formatVE(num) {
+            return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
+        }
+
         async function calcularMontoBolivares() {
             const loadingBox = document.getElementById('loading-rate');
             const resultsBox = document.getElementById('rate-results');
@@ -683,18 +687,19 @@
                     sessionStorage.setItem('tasaBCVTime', Date.now().toString());
                 }
 
-                let tasa = datos.usd || tasaRespaldoLocal;
-                let totalVes = (tasa * costoDivisa).toFixed(2);
+                let tasa = parseFloat(datos.usd) || tasaRespaldoLocal;
+                let totalVes = tasa * costoDivisa;
 
-                if (tasaBcvLabel) tasaBcvLabel.innerText = tasa;
-                if (montoVesLabel) montoVesLabel.innerHTML = `${totalVes} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                if (tasaBcvLabel) tasaBcvLabel.innerText = formatVE(tasa);
+                if (montoVesLabel) montoVesLabel.innerHTML = `${formatVE(totalVes)} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
 
                 if (loadingBox) loadingBox.style.display = 'none';
                 if (resultsBox) resultsBox.style.display = 'block';
             } catch (err) {
                 console.error("Error consultando BCV:", err);
-                let totalVes = (tasaRespaldoLocal * costoDivisa).toFixed(2);
-                if (montoVesLabel) montoVesLabel.innerHTML = `${totalVes} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                let totalVes = tasaRespaldoLocal * costoDivisa;
+                if (tasaBcvLabel) tasaBcvLabel.innerText = formatVE(tasaRespaldoLocal);
+                if (montoVesLabel) montoVesLabel.innerHTML = `${formatVE(totalVes)} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
                 if (loadingBox) loadingBox.style.display = 'none';
                 if (resultsBox) resultsBox.style.display = 'block';
             }
