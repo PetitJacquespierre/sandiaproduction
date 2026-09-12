@@ -228,6 +228,16 @@
 
     </div>
 
+    <!-- SCRIPTS FIREBASE SANDÍA -->
+    <script type="module">
+        import { verificarEstadoSitioWeb, getSandiaEventos, getSandiaAliados } from './firebase-sandia.js';
+        window.verificarEstadoSitioWeb = verificarEstadoSitioWeb;
+        window.getSandiaEventos = getSandiaEventos;
+        window.getSandiaAliados = getSandiaAliados;
+        // Ejecución inmediata del verificador de estado de sitio (Kill switch / Mantenimiento)
+        verificarEstadoSitioWeb();
+    </script>
+
     <!-- SCRIPTS -->
     <script>
         const canvas = document.getElementById('bullet-canvas');
@@ -318,32 +328,25 @@
         const urlScriptDirectorio = "https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec";
         let carruselInterval; 
 
+        let carruselInterval;
+
         async function cargarCarrerasCarousel() {
             const carouselContainer = document.getElementById('carousel-carreras');
             const pasadosContainer = document.getElementById('contenedor-pasados');
             
             try {
-                let eventos = null;
-                const cached = sessionStorage.getItem('eventosDirectorio');
-                if (cached) {
-                    eventos = JSON.parse(cached);
-                } else {
-                    const respuesta = await fetch(urlScriptDirectorio);
-                    eventos = await respuesta.json();
-                    sessionStorage.setItem('eventosDirectorio', JSON.stringify(eventos));
-                }
-
-                // Eventos locales destacados asegurados
-                const eventosLocales = [
+                // Eventos locales destacados de respaldo
+                const eventosLocalesFallback = [
                     {
-                        titulo: "5K Paraguaná Horror Stories",
+                        titulo: "5K Paraguaná Horror Story",
                         dia: "31",
                         mes: "OCT",
                         ubicacion: "Sambil Paraguaná / 7:00 PM",
-                        imagen: "paraguanahorror.jpg",
+                        imagen: "paraguanahorror.jpeg",
                         enlace: "paraguanahorror.html",
                         textoBoton: "Inscribirme Ahora 🎃",
-                        activo: "SI"
+                        estado: "ACTIVO",
+                        destacado_index: true
                     },
                     {
                         titulo: "Coffee Run ¡Madre Mía! 3K Vol. 2",
@@ -353,119 +356,106 @@
                         imagen: "madremia.jpg",
                         enlace: "https://forms.gle/CqN4gF54xLK3vo6T6",
                         textoBoton: "Inscribirme en Google Forms",
-                        activo: "SI"
+                        estado: "ACTIVO",
+                        destacado_index: true
+                    },
+                    {
+                        titulo: "Coffee Run 3K Vol. 1",
+                        dia: "10",
+                        mes: "AGO",
+                        ubicacion: "Terraza Tinaja",
+                        imagen: "coffee_run.png",
+                        enlace: "",
+                        textoBoton: "Galería de Fotos",
+                        estado: "COMPLETADO",
+                        destacado_index: false
                     }
                 ];
 
-                let todosLosEventos = [...eventosLocales];
-                if (eventos && Array.isArray(eventos) && eventos.length > 0) {
-                    // Evitar duplicados por título
-                    eventos.forEach(ev => {
-                        if (!todosLosEventos.some(l => l.titulo.toLowerCase() === ev.titulo.toLowerCase())) {
-                            todosLosEventos.push(ev);
-                        }
-                    });
+                let eventosFirebase = [];
+                try {
+                    if (window.getSandiaEventos) {
+                        eventosFirebase = await window.getSandiaEventos();
+                    }
+                } catch(e) {
+                    console.warn("Fallo lectura Firebase, usando lista local:", e);
                 }
 
-                if (todosLosEventos.length > 0) {
-                    let htmlCarrusel = '';
-                    let pasadosArray = []; 
-                    let countActivos = 0;
-                    
-                    todosLosEventos.forEach(evento => {
-                        let clickAction = evento.enlace.startsWith('http') ? `window.open('${evento.enlace}', '_blank')` : `window.location.href='${evento.enlace}'`;
-                        if (evento.enlace === '#' || evento.enlace === '') {
-                            clickAction = `alert('Más información próximamente...')`;
-                        }
+                let todosLosEventos = (eventosFirebase && eventosFirebase.length > 0) ? eventosFirebase : eventosLocalesFallback;
 
-                        if (evento.activo === "SI") {
-                            htmlCarrusel += `
-                                <div class="event-card current" style="background-image: url('img/${evento.imagen}');">
-                                    <div class="card-overlay">
-                                        <div class="card-info">
-                                            <span class="card-date">${evento.dia} ${evento.mes}</span>
-                                            <h3>${evento.titulo}</h3>
-                                            <p>${evento.ubicacion}</p>
-                                            <button class="btn-sandia-general inscribirme-card" onclick="${clickAction}">${evento.textoBoton || 'Más Información'}</button>
-                                        </div>
+                let htmlCarrusel = '';
+                let pasadosArray = []; 
+                let countActivos = 0;
+                
+                todosLosEventos.forEach(evento => {
+                    let clickAction = evento.enlace && evento.enlace.startsWith('http') ? `window.open('${evento.enlace}', '_blank')` : (evento.enlace ? `window.location.href='${evento.enlace}'` : `alert('Más información próximamente...')`);
+
+                    const esActivo = (evento.estado === "ACTIVO" || evento.activo === "SI");
+                    const esCompletado = (evento.estado === "COMPLETADO" || evento.activo === "NO");
+
+                    if (esActivo && (evento.destacado_index !== false)) {
+                        htmlCarrusel += `
+                            <div class="event-card current" style="background-image: url('img/${evento.imagen}');">
+                                <div class="card-overlay">
+                                    <div class="card-info">
+                                        <span class="card-date">${evento.dia} ${evento.mes}</span>
+                                        <h3>${evento.titulo}</h3>
+                                        <p>${evento.ubicacion || ''}</p>
+                                        <button class="btn-sandia-general inscribirme-card" onclick="${clickAction}">${evento.textoBoton || 'Más Información'}</button>
                                     </div>
                                 </div>
-                            `;
-                            countActivos++;
-                        } 
-                        else if (evento.activo === "NO") {
-                            pasadosArray.push({
-                                eventoData: evento,
-                                accionClick: clickAction
-                            });
-                        }
-                    });
-
-                    if (countActivos > 0) {
-                        carouselContainer.innerHTML = htmlCarrusel;
-                        if (countActivos > 1) iniciarRotacionAutomatica(carouselContainer);
-                    } else {
-                        carouselContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">No hay próximos retos publicados.</p>';
-                    }
-
-                    if (pasadosArray.length === 0) {
-                        pasadosArray = [
-                            {
-                                eventoData: {
-                                    titulo: "Coffee Run 3K Vol. 1",
-                                    ubicacion: "Terraza Tinaja",
-                                    mes: "Agosto 2026",
-                                    imagen: "coffee_run.png"
-                                }
-                            },
-                            {
-                                eventoData: {
-                                    titulo: "Matea Run 5K",
-                                    ubicacion: "Punto Fijo",
-                                    mes: "Julio 2026",
-                                    imagen: "matea_run.png"
-                                }
-                            }
-                        ];
-                    }
-
-                    if (pasadosArray.length > 0) {
-                        let htmlPasados = '';
-                        let ultimosPasados = pasadosArray.slice(-6).reverse();
-                        
-                        ultimosPasados.forEach(item => {
-                            let ev = item.eventoData;
-                            
-                            let btnGaleriaHtml = '';
-                            if (ev.titulo.toLowerCase().includes('coffee run')) {
-                                let textoBtnPasado = "Galerías de Fotos"; 
-                                btnGaleriaHtml = `<button class="btn-past-results" onclick="abrirModalCoffeeRun()">${textoBtnPasado}</button>`;
-                            } else if (ev.enlace && ev.enlace.trim() !== '' && ev.enlace !== '#') {
-                                let textoBtnPasado = ev.textoBoton || "Ver Fotos"; 
-                                btnGaleriaHtml = `<button class="btn-past-results" onclick="window.open('${ev.enlace}', '_blank')">${textoBtnPasado}</button>`;
-                            }
-                            
-                            htmlPasados += `
-                                <div class="past-event-item">
-                                    <img src="img/${ev.imagen}" alt="${ev.titulo}" class="past-logo" loading="lazy" onerror="this.src='img/Isotipo.png'">
-                                    <div class="past-info">
-                                        <h3>${ev.titulo}</h3>
-                                        <p>${ev.ubicacion} / ${ev.mes}</p>
-                                    </div>
-                                    ${btnGaleriaHtml}
-                                </div>
-                            `;
+                            </div>
+                        `;
+                        countActivos++;
+                    } 
+                    else if (esCompletado) {
+                        pasadosArray.push({
+                            eventoData: evento,
+                            accionClick: clickAction
                         });
-                        
-                        pasadosContainer.innerHTML = htmlPasados;
-                    } else {
-                        pasadosContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">Aún no hay carreras registradas en el historial.</p>';
                     }
+                });
 
+                if (countActivos > 0) {
+                    carouselContainer.innerHTML = htmlCarrusel;
+                    if (countActivos > 1) iniciarRotacionAutomatica(carouselContainer);
                 } else {
-                    carouselContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">No hay eventos publicados.</p>';
-                    pasadosContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">No hay eventos publicados.</p>';
+                    carouselContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">No hay próximos retos publicados.</p>';
                 }
+
+                if (pasadosArray.length > 0) {
+                    let htmlPasados = '';
+                    let ultimosPasados = pasadosArray.slice(0, 6); // Límite de 6 en miniatura
+                    
+                    ultimosPasados.forEach(item => {
+                        let ev = item.eventoData;
+                        let btnGaleriaHtml = '';
+                        if (ev.titulo.toLowerCase().includes('coffee run')) {
+                            btnGaleriaHtml = `<button class="btn-past-results" onclick="abrirModalCoffeeRun()">📸 Fotos Oficiales</button>`;
+                        } else if (ev.enlace && ev.enlace.trim() !== '' && ev.enlace !== '#') {
+                            btnGaleriaHtml = `<button class="btn-past-results" onclick="${item.accionClick}">📸 Ver Resultados</button>`;
+                        }
+                        
+                        htmlPasados += `
+                            <div class="past-event-item">
+                                <img src="img/${ev.imagen}" alt="${ev.titulo}" class="past-logo" loading="lazy" onerror="this.src='img/Isotipo.png'">
+                                <div class="past-info">
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <h3 style="margin:0;">${ev.titulo}</h3>
+                                        <span style="background: rgba(230, 126, 34, 0.2); color: #e67e22; border: 1px solid rgba(230, 126, 34, 0.4); font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 4px;">🏁 COMPLETADO</span>
+                                    </div>
+                                    <p>${ev.ubicacion || ''} • ${ev.mes || ''}</p>
+                                </div>
+                                ${btnGaleriaHtml}
+                            </div>
+                        `;
+                    });
+                    
+                    pasadosContainer.innerHTML = htmlPasados;
+                } else {
+                    pasadosContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">Aún no hay carreras registradas en el historial.</p>';
+                }
+
             } catch (error) {
                 console.error("Error al cargar eventos:", error);
                 carouselContainer.innerHTML = '<p style="color:red; text-align:center; width:100%;">Error al conectar con el servidor.</p>';
@@ -496,28 +486,19 @@
             contenedor.addEventListener('touchend', () => carruselInterval = setInterval(hacerScroll, tiempoRotacion));
         }
 
-        const urlScriptAliados = "https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec?tipo=aliados"; 
-        
         async function cargarAliados() {
             const track = document.getElementById('track-aliados');
             const seccionAliados = document.getElementById('aliados');
             
             try {
-                let aliados = null;
-                const cached = sessionStorage.getItem('aliadosDirectorio');
-                if (cached) {
-                    aliados = JSON.parse(cached);
-                } else {
-                    const respuesta = await fetch(urlScriptAliados);
-                    aliados = await respuesta.json();
-                    sessionStorage.setItem('aliadosDirectorio', JSON.stringify(aliados));
+                let aliados = [];
+                if (window.getSandiaAliados) {
+                    aliados = await window.getSandiaAliados();
                 }
-                
-                const aliadosActivos = aliados.filter(a => a.activo && a.activo.toString().toUpperCase() === "SI");
 
-                if (aliadosActivos.length > 0) {
+                if (aliados && aliados.length > 0) {
                     let htmlLogos = '';
-                    aliadosActivos.forEach(aliado => {
+                    aliados.forEach(aliado => {
                         let rutaImagen = `img/${aliado.imagen}`;
                         let enlace = (aliado.enlace === '' || aliado.enlace === '#') ? 'javascript:void(0)' : aliado.enlace;
                         let target = (enlace !== 'javascript:void(0)') ? 'target="_blank"' : '';

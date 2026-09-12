@@ -133,13 +133,18 @@
         </div>
     </footer>
 
+    <!-- SCRIPTS FIREBASE SANDÍA -->
+    <script type="module">
+        import { verificarEstadoSitioWeb, getSandiaEventos } from './firebase-sandia.js';
+        window.verificarEstadoSitioWeb = verificarEstadoSitioWeb;
+        window.getSandiaEventos = getSandiaEventos;
+        verificarEstadoSitioWeb();
+    </script>
+
     <!-- SCRIPT DE EXTRACCIÓN Y MENÚ -->
     <script>
         // --- LÓGICA COMPARTIDA EN MAIN.JS ---
         // La lógica del menú lateral ahora se maneja en main.js
-
-        // --- LÓGICA DEL CALENDARIO DINÁMICO ---
-        const urlScriptDirectorio = "https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec";
 
         const gridEventos = document.getElementById('grid-eventos');
         const msjSinResultados = document.getElementById('sin-resultados');
@@ -147,18 +152,33 @@
 
         async function cargarEventos() {
             try {
-                let eventosRaw = null;
-                const cached = sessionStorage.getItem('eventosDirectorio');
-                if (cached) {
-                    eventosRaw = JSON.parse(cached);
-                } else {
-                    const respuesta = await fetch(urlScriptDirectorio);
-                    eventosRaw = await respuesta.json();
-                    sessionStorage.setItem('eventosDirectorio', JSON.stringify(eventosRaw));
+                let eventosData = [];
+
+                // 1. Intento de carga directa desde Firebase Firestore
+                try {
+                    if (window.getSandiaEventos) {
+                        eventosData = await window.getSandiaEventos();
+                    }
+                } catch(e) {
+                    console.warn("Fallo lectura Firebase, usando respaldo:", e);
                 }
 
-                // FILTRO MAESTRO: Solo dejamos pasar las que dicen "SI"
-                const eventosActivos = eventosRaw.filter(evento => evento.activo === "SI");
+                // 2. Si aún no hay eventos en Firebase, intentar desde Apps Script o lista local
+                if (!eventosData || eventosData.length === 0) {
+                    try {
+                        const respuesta = await fetch("https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec");
+                        eventosData = await respuesta.json();
+                    } catch(err) {
+                        console.warn("Respaldo Google Apps Script no disponible:", err);
+                    }
+                }
+
+                // FILTRO MAESTRO: Solo mostramos eventos con estado ACTIVO
+                const eventosActivos = (eventosData || []).filter(evento => {
+                    const est = (evento.estado || '').toUpperCase();
+                    const act = (evento.activo || '').toUpperCase();
+                    return est === 'ACTIVO' || act === 'SI' || (!est && !act);
+                });
 
                 if (eventosActivos.length > 0) {
                     renderizarEventos(eventosActivos);
@@ -177,30 +197,33 @@
             gridEventos.innerHTML = ''; 
 
             eventosData.forEach(evento => {
+                const cat = (evento.categoria || 'local').toLowerCase();
                 let claseEtiqueta = 'etiqueta-local'; 
-                if(evento.categoria.toLowerCase() === 'virtual') claseEtiqueta = 'etiqueta-virtual';
-                if(evento.categoria.toLowerCase() === 'nacional') claseEtiqueta = 'etiqueta-nacional';
+                if(cat === 'virtual') claseEtiqueta = 'etiqueta-virtual';
+                if(cat === 'nacional') claseEtiqueta = 'etiqueta-nacional';
 
-                let htmlBoton = `<a href="${evento.enlace}" class="btn-outline">${evento.textoBoton}</a>`;
-                if(evento.categoria.toLowerCase() === 'local' && evento.enlace.includes('html')) {
-                    htmlBoton = `<a href="${evento.enlace}" class="btn-sandia-general" style="width: 100%;">${evento.textoBoton}</a>`;
+                const textoBtn = evento.textoBoton || 'Más Información';
+                const enlaceUrl = evento.enlace || '#';
+                let htmlBoton = `<a href="${enlaceUrl}" class="btn-outline">${textoBtn}</a>`;
+                if((cat === 'local' || !evento.categoria) && enlaceUrl.includes('html')) {
+                    htmlBoton = `<a href="${enlaceUrl}" class="btn-sandia-general" style="width: 100%;">${textoBtn}</a>`;
                 }
 
                 const cardHTML = `
-                    <div class="evento-card" data-categoria="${evento.categoria.toLowerCase()}">
+                    <div class="evento-card" data-categoria="${cat}">
                         <div class="flyer-box">
-                            <img src="img/${evento.imagen}" alt="${evento.titulo}" loading="lazy" onerror="this.src='img/Isotipo.png'">
+                            <img src="img/${evento.imagen || 'Isotipo.png'}" alt="${evento.titulo}" loading="lazy" onerror="this.src='img/Isotipo.png'">
                             <div class="fecha-badge">
-                                <span class="dia">${evento.dia}</span>
-                                <span class="mes">${evento.mes}</span>
+                                <span class="dia">${evento.dia || '00'}</span>
+                                <span class="mes">${evento.mes || 'MES'}</span>
                             </div>
                         </div>
                         <div class="info-box">
                             <div class="etiquetas-container">
-                                <span class="etiqueta ${claseEtiqueta}">${evento.etiqueta}</span>
+                                <span class="etiqueta ${claseEtiqueta}">${evento.etiqueta || (cat.toUpperCase())}</span>
                             </div>
                             <h3>${evento.titulo}</h3>
-                            <div class="ubicacion">${evento.ubicacion}</div>
+                            <div class="ubicacion">${evento.ubicacion || ''}</div>
                             <div class="card-acciones">
                                 ${htmlBoton}
                             </div>
@@ -220,13 +243,13 @@
             
             function aplicarFiltros() {
                 const filtroActivo = document.querySelector('.btn-filtro.active').getAttribute('data-filtro');
-                const textoBusqueda = buscador.value.toLowerCase();
+                const textoBusqueda = buscador ? buscador.value.toLowerCase() : '';
                 let visibles = 0;
 
                 tarjetas.forEach(tarjeta => {
-                    const categoriaTarjeta = tarjeta.getAttribute('data-categoria');
-                    const titulo = tarjeta.querySelector('h3').innerText.toLowerCase();
-                    const ubicacion = tarjeta.querySelector('.ubicacion').innerText.toLowerCase();
+                    const categoriaTarjeta = tarjeta.getAttribute('data-categoria') || '';
+                    const titulo = tarjeta.querySelector('h3') ? tarjeta.querySelector('h3').innerText.toLowerCase() : '';
+                    const ubicacion = tarjeta.querySelector('.ubicacion') ? tarjeta.querySelector('.ubicacion').innerText.toLowerCase() : '';
                     
                     const pasaFiltroCat = (filtroActivo === 'todas' || filtroActivo === categoriaTarjeta);
                     const pasaBusqueda = titulo.includes(textoBusqueda) || ubicacion.includes(textoBusqueda);
@@ -239,8 +262,10 @@
                     }
                 });
 
-                msjSinResultados.style.display = visibles === 0 ? 'block' : 'none';
-                if (visibles === 0) msjSinResultados.innerText = "No se encontraron eventos con los filtros actuales.";
+                if (msjSinResultados) {
+                    msjSinResultados.style.display = visibles === 0 ? 'block' : 'none';
+                    if (visibles === 0) msjSinResultados.innerText = "No se encontraron eventos con los filtros actuales.";
+                }
             }
 
             botonesFiltro.forEach(boton => {
