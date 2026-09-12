@@ -432,6 +432,39 @@
         </div>
     </section>
 
+    <!-- SECCIÓN DE PREMIACIONES -->
+    <section style="position: relative; z-index: 1; max-width: 1100px; margin: 30px auto 0 auto; padding: 0 20px;">
+        <div style="background: rgba(22, 5, 8, 0.9); border: 1px solid rgba(255, 26, 26, 0.35); border-radius: 16px; padding: 25px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center;">
+            <h2 style="font-family: 'Oswald', sans-serif; font-size: 1.6rem; color: var(--color-horror-red); margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 2px;">
+                🏆 PREMIACIONES OFICIALES
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; align-items: center;">
+                <!-- PREMIO ABSOLUTO -->
+                <div style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 26, 26, 0.2); padding: 18px; border-radius: 12px;">
+                    <div style="font-family: 'Oswald', sans-serif; font-size: 1.1rem; color: #ffffff; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">
+                        🥇 ABSOLUTO MASCULINO Y FEMENINO
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 15px; font-size: 0.95rem; font-weight: 700; color: #ffb3b3;">
+                        <span>🥇 1er Lugar</span>
+                        <span>🥈 2do Lugar</span>
+                        <span>🥉 3er Lugar</span>
+                    </div>
+                </div>
+
+                <!-- PREMIO AL MEJOR DISFRAZ -->
+                <div style="background: rgba(255, 119, 0, 0.08); border: 1px solid var(--color-horror-orange); padding: 18px; border-radius: 12px; box-shadow: 0 0 15px rgba(255, 119, 0, 0.15);">
+                    <div style="font-family: 'Oswald', sans-serif; font-size: 1.1rem; color: var(--color-horror-orange); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px;">
+                        🎭 PREMIO AL MEJOR DISFRAZ 🎃
+                    </div>
+                    <div style="font-size: 0.85rem; color: #e0d0d2;">
+                        ¡Premiación especial para el disfraz más creativo y escalofriante de la noche!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ÁREA DE INSCRIPCIÓN Y DATOS -->
     <main class="inscripcion-section">
         <div class="inscripcion-container">
@@ -442,6 +475,18 @@
                 
                 <div class="payment-box">
                     <div class="payment-header">📍 PASO 1: DATOS PARA PAGO MÓVIL</div>
+                    
+                    <!-- MONTO EN BS (PRIMEROS 100 CUPOS 20$) -->
+                    <div class="amount-ves-box" style="background: rgba(255, 26, 26, 0.08); border: 1px solid rgba(255, 26, 26, 0.3); border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 18px;">
+                        <div style="font-size: 0.85rem; color: var(--color-horror-orange); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">🔥 PRIMEROS 100 CUPOS PROMOCIONALES 🔥</div>
+                        <div id="loading-rate" style="color:#aaa; font-size:0.9rem;">Consultando Tasa BCV en vivo...</div>
+                        <div id="rate-results" style="display:none;">
+                            <div class="amount-main" id="monto-final-ves" style="font-size:2.2rem; font-weight:800; color:#ffffff; font-family:'Oswald', sans-serif;">0,00<span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span></div>
+                            <div style="font-size:0.85rem; color:#ccc; margin-top:4px;">
+                                Equivalente a <strong>20$ USD</strong> (Tasa BCV Oficial: <span id="tasa-usd-bcv">0,00</span> Bs)
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="copy-group">
                         <div><strong>Cédula:</strong> <span id="pago-cedula">18.698.675</span></div>
@@ -583,6 +628,47 @@
     <script>
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbychQtU8RjkpBW5tuNY_NqxpJN32q9Jcc7AAhX8X5nhuDPqQ1MKrCHEI-Qf87A-r-dh1w/exec";
 
+        const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbwsoD8ahtAQUqfY0TQWf3-dDs29HL8kEJa2t-mjDR3PAo3exTTmtSwXqYuNB2ob5dFpgw/exec";
+        const costoDivisa = 20; // 20$ primeros 100 cupos
+        let tasaRespaldoLocal = 764.35;
+
+        async function calcularMontoBolivares() {
+            const loadingBox = document.getElementById('loading-rate');
+            const resultsBox = document.getElementById('rate-results');
+            const montoVesLabel = document.getElementById('monto-final-ves');
+            const tasaBcvLabel = document.getElementById('tasa-usd-bcv');
+
+            try {
+                let datos = null;
+                const cached = sessionStorage.getItem('tasaBCV');
+                const cacheTime = sessionStorage.getItem('tasaBCVTime');
+                
+                if (cached && cacheTime && (Date.now() - parseInt(cacheTime) < 3600000)) {
+                    datos = JSON.parse(cached);
+                } else {
+                    const respuesta = await fetch(urlApiDivisasBCV);
+                    datos = await respuesta.json();
+                    sessionStorage.setItem('tasaBCV', JSON.stringify(datos));
+                    sessionStorage.setItem('tasaBCVTime', Date.now().toString());
+                }
+
+                let tasa = datos.usd || tasaRespaldoLocal;
+                let totalVes = (tasa * costoDivisa).toFixed(2);
+
+                if (tasaBcvLabel) tasaBcvLabel.innerText = tasa;
+                if (montoVesLabel) montoVesLabel.innerHTML = `${totalVes} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
+
+                if (loadingBox) loadingBox.style.display = 'none';
+                if (resultsBox) resultsBox.style.display = 'block';
+            } catch (err) {
+                console.error("Error consultando BCV:", err);
+                let totalVes = (tasaRespaldoLocal * costoDivisa).toFixed(2);
+                if (montoVesLabel) montoVesLabel.innerHTML = `${totalVes} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                if (loadingBox) loadingBox.style.display = 'none';
+                if (resultsBox) resultsBox.style.display = 'block';
+            }
+        }
+
         // CANVAS NIEBLA
         const canvas = document.getElementById('fog-canvas');
         const ctx = canvas.getContext('2d');
@@ -689,6 +775,10 @@
             loader.style.display = 'none';
             success.style.display = 'block';
         });
+
+        window.onload = () => {
+            calcularMontoBolivares();
+        };
     </script>
 </body>
 </html>
