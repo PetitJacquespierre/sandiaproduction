@@ -220,6 +220,39 @@
             cursor: pointer;
         }
 
+        /* KIT COMPACTO RESPONSIVE */
+        .kit-compact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .kit-mini-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 26, 26, 0.25);
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: left;
+        }
+
+        @media (max-width: 600px) {
+            .kit-compact-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .kit-mini-box {
+                font-size: 0.75rem;
+                padding: 8px;
+            }
+        }
+
         /* FORMULARIO */
         .form-card {
             background: var(--color-horror-card);
@@ -465,37 +498,19 @@
         </div>
     </section>
 
-    <!-- KIT DE INSCRIPCIÓN -->
-    <section style="position: relative; z-index: 1; max-width: 1100px; margin: 25px auto 0 auto; padding: 0 20px;">
-        <div style="background: rgba(22, 5, 8, 0.9); border: 1px solid rgba(255, 26, 26, 0.35); border-radius: 16px; padding: 25px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center;">
-            <h2 style="font-family: 'Oswald', sans-serif; font-size: 1.5rem; color: var(--color-horror-orange); margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 2px;">
+    <!-- KIT DE INSCRIPCIÓN COMPACTO -->
+    <section style="position: relative; z-index: 1; max-width: 1100px; margin: 20px auto 0 auto; padding: 0 20px;">
+        <div style="background: rgba(22, 5, 8, 0.9); border: 1px solid rgba(255, 26, 26, 0.35); border-radius: 16px; padding: 18px 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center;">
+            <h2 style="font-family: 'Oswald', sans-serif; font-size: 1.3rem; color: var(--color-horror-orange); margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 1.5px;">
                 🎒 TU KIT DE INSCRIPCIÓN INCLUYE
             </h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; text-align: center;">
-                <div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,26,26,0.2); padding: 12px; border-radius: 10px;">
-                    <span style="font-size: 1.5rem; display: block; margin-bottom: 5px;">🎽</span>
-                    <span style="font-size: 0.85rem; font-weight: 700; color: #fff;">Dorsal de Participación</span>
-                </div>
-                <div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,26,26,0.2); padding: 12px; border-radius: 10px;">
-                    <span style="font-size: 1.5rem; display: block; margin-bottom: 5px;">🏅</span>
-                    <span style="font-size: 0.85rem; font-weight: 700; color: #fff;">Medalla Finisher Metálica</span>
-                </div>
-                <div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,26,26,0.2); padding: 12px; border-radius: 10px;">
-                    <span style="font-size: 1.5rem; display: block; margin-bottom: 5px;">💧</span>
-                    <span style="font-size: 0.85rem; font-weight: 700; color: #fff;">Hidratación en la Ruta</span>
-                </div>
-                <div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,26,26,0.2); padding: 12px; border-radius: 10px;">
-                    <span style="font-size: 1.5rem; display: block; margin-bottom: 5px;">💡</span>
-                    <span style="font-size: 0.85rem; font-weight: 700; color: #fff;">Pulsera LED</span>
-                </div>
-                <div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,26,26,0.2); padding: 12px; border-radius: 10px;">
-                    <span style="font-size: 1.5rem; display: block; margin-bottom: 5px;">🎉</span>
-                    <span style="font-size: 0.85rem; font-weight: 700; color: #fff;">After Run</span>
-                </div>
-                <div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,26,26,0.2); padding: 12px; border-radius: 10px;">
-                    <span style="font-size: 1.5rem; display: block; margin-bottom: 5px;">🎁</span>
-                    <span style="font-size: 0.85rem; font-weight: 700; color: #fff;">Premios Sorpresas</span>
-                </div>
+            <div class="kit-compact-grid">
+                <div class="kit-mini-box"><span>🎽</span> Dorsal de Participación</div>
+                <div class="kit-mini-box"><span>🏅</span> Medalla Finisher Metálica</div>
+                <div class="kit-mini-box"><span>💧</span> Hidratación en la Ruta</div>
+                <div class="kit-mini-box"><span>💡</span> Pulsera LED</div>
+                <div class="kit-mini-box"><span>🎉</span> After Run</div>
+                <div class="kit-mini-box"><span>🎁</span> Premios Sorpresas</div>
             </div>
         </div>
     </section>
@@ -509,10 +524,13 @@
                 <img src="img/paraguanahorror.jpg" alt="Flyer 5K Paraguaná Horror Stories">
                 
                 <div class="payment-box">
-                    <div class="payment-header">📍 PASO 1: DATOS PARA PAGO MÓVIL</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <div class="payment-header" style="margin-bottom: 0;">📍 DATOS DE PAGO MÓVIL</div>
+                        <button class="btn-copy" onclick="copyAllPaymentData(event)" style="background: var(--color-horror-orange); color: #000; font-weight: 800; padding: 6px 14px; border-radius: 8px;">📋 Copiar Datos de Pago</button>
+                    </div>
                     
                     <!-- MONTO EN BS (PRIMEROS 100 CUPOS 20$) -->
-                    <div class="amount-ves-box" style="background: rgba(255, 26, 26, 0.08); border: 1px solid rgba(255, 26, 26, 0.3); border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 18px;">
+                    <div class="amount-ves-box" style="background: rgba(255, 26, 26, 0.08); border: 1px solid rgba(255, 26, 26, 0.3); border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 15px;">
                         <div style="font-size: 0.85rem; color: var(--color-horror-orange); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">🔥 PRIMEROS 100 CUPOS PROMOCIONALES 🔥</div>
                         <div id="loading-rate" style="color:#aaa; font-size:0.9rem;">Consultando Tasa BCV en vivo...</div>
                         <div id="rate-results" style="display:none;">
@@ -523,19 +541,10 @@
                         </div>
                     </div>
                     
-                    <div class="copy-group">
-                        <div><strong>Cédula:</strong> <span id="pago-cedula">18.698.675</span></div>
-                        <button class="btn-copy" onclick="copyText('pago-cedula', event)">Copiar</button>
-                    </div>
-
-                    <div class="copy-group">
+                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 26, 26, 0.2); border-radius: 10px; padding: 12px 15px; font-size: 0.9rem; line-height: 1.6;">
+                        <div><strong>Banco:</strong> <span id="pago-banco">PROVINCIAL (0108)</span></div>
+                        <div><strong>Cédula / RIF:</strong> <span id="pago-cedula">18.698.675</span></div>
                         <div><strong>Teléfono:</strong> <span id="pago-tlf">0412-6574354</span></div>
-                        <button class="btn-copy" onclick="copyText('pago-tlf', event)">Copiar</button>
-                    </div>
-
-                    <div class="copy-group">
-                        <div><strong>Banco:</strong> <span id="pago-banco">PROVINCIAL</span></div>
-                        <button class="btn-copy" onclick="copyText('pago-banco', event)">Copiar</button>
                     </div>
                 </div>
             </div>
@@ -762,7 +771,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // COPIAR
+        // COPIAR INDIVIDUAL O GLOBAL
         function copyText(id, event) {
             const text = document.getElementById(id).innerText;
             navigator.clipboard.writeText(text).then(() => {
@@ -770,6 +779,21 @@
                     window.showToast("Copiado al portapapeles: " + text, "#ff1a1a");
                 } else {
                     alert("Copiado: " + text);
+                }
+            });
+        }
+
+        function copyAllPaymentData(event) {
+            const banco = document.getElementById('pago-banco').innerText;
+            const cedula = document.getElementById('pago-cedula').innerText;
+            const tlf = document.getElementById('pago-tlf').innerText;
+            
+            const fullData = `Banco: ${banco}\nCédula: ${cedula}\nTeléfono: ${tlf}`;
+            navigator.clipboard.writeText(fullData).then(() => {
+                if (window.showToast) {
+                    window.showToast("¡Datos de Pago Móvil copiados!", "#ff8000");
+                } else {
+                    alert("¡Datos de Pago Móvil copiados al portapapeles!");
                 }
             });
         }
