@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- PÁGINA PRINCIPAL (HOME) -->
+  <url>
+    <loc>https://www.sandiaproduction.com/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.sandiaproduction.com/img/logoconfondo.jpg</image:loc>
+      <image:title>Sandía Production - Producción de Eventos Deportivos &amp; Carreras Runner</image:title>
+    </image:image>
+  </url>
+
+  <!-- CALENDARIO RUNNER -->
+  <url>
+    <loc>https://www.sandiaproduction.com/calendario.html</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- INSCRIPCIONES EVENTO PARAGUANÁ HORROR -->
+  <url>
+    <loc>https://www.sandiaproduction.com/paraguanahorror.html</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.sandiaproduction.com/img/paraguanahorror.jpeg</image:loc>
+      <image:title>Inscripciones 5K Paraguaná Horror Story</image:title>
+    </image:image>
+  </url>
+
+  <!-- EVENTO COFFEE RUN -->
+  <url>
+    <loc>https://www.sandiaproduction.com/coffeerun.html</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
