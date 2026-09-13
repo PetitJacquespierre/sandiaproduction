@@ -107,11 +107,13 @@ window.toggleCronogramaRunFree = function() {
     }
 
     if (cronoContainer) {
+        const estaAbriendo = !cronoContainer.classList.contains('active');
         cronoContainer.classList.toggle('active');
-        if (cronoContainer.classList.contains('active')) {
+        
+        if (estaAbriendo) {
             setTimeout(() => {
-                cronoContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 300);
+                cronoContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 150);
         }
     }
 }
@@ -127,12 +129,13 @@ window.toggleRutina = function() {
     }
 
     if (rutinaContainer) {
+        const estaAbriendo = !rutinaContainer.classList.contains('active');
         rutinaContainer.classList.toggle('active');
-        // Auto-scroll a la rutina al abrirla
-        if (rutinaContainer.classList.contains('active')) {
+        
+        if (estaAbriendo) {
             setTimeout(() => {
-                rutinaContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 300);
+                rutinaContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 150);
         }
     }
 }
