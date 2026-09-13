@@ -58,7 +58,7 @@ body {
     border-bottom: 1px solid rgba(230, 32, 53, 0.15); position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(5px); 
 }
 .logo-wrapper { display: flex; align-items: center; }
-.logo-mobile { max-height: 65px; width: auto; max-width: 100%; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
+.logo-mobile { max-height: 115px; width: auto; max-width: 100%; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
 .logo-desktop { display: none; }
 .menu-desktop-links { display: none; } 
 
@@ -144,7 +144,7 @@ body {
 @keyframes explotar { 0% { opacity: 1; transform: translate(-50%, -50%) scale(1) translateY(0); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(0) translateY(-120px); } }
 #main-content { display: none; min-height: 100vh; flex-direction: column; background-color: var(--color-fondo); overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
-.proximas-carreras { padding: 105px 15px 30px; }
+.proximas-carreras { padding: 145px 15px 30px; }
 .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding-bottom: 15px; -ms-overflow-style: none; scrollbar-width: none; }
 .carousel-container::-webkit-scrollbar { display: none; }
 .event-card { flex: 0 0 88%; max-width: 420px; height: 390px; border-radius: 16px; background-size: cover; background-position: center; position: relative; scroll-snap-align: center; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: transform 0.3s ease, border-color 0.3s ease; }
@@ -375,7 +375,7 @@ select.form-control option { background-color: var(--color-fondo-menu); color: #
     .menu-desktop-links a.activo { color: var(--color-primario); text-shadow: 0 0 10px rgba(230, 32, 53, 0.5); }
     .menu-desktop-links a.activo::after { width: 100%; }
 
-    .proximas-carreras { padding-top: 140px; max-width: 1200px; margin: 0 auto; }
+    .proximas-carreras { padding-top: 190px; max-width: 1200px; margin: 0 auto; }
     .eventos-pasados { max-width: 1200px; margin: 0 auto; border-radius: 15px; }
     .proximas-carreras, .eventos-pasados, .seccion-run-free { padding-left: 40px; padding-right: 40px; }
     .event-card { flex: 0 0 400px; height: 420px; }
