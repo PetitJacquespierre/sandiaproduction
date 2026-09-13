@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
     projectId: "grow-studio-menus",
@@ -12,6 +12,26 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+// 0. Registrar Visita al Sitio Web
+export async function registrarVisitaSandia() {
+    try {
+        if (!sessionStorage.getItem('sandia_visited_session')) {
+            sessionStorage.setItem('sandia_visited_session', 'true');
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const mesKey = `vis_${yyyy}_${mm}`;
+
+            await updateDoc(doc(db, "sandia_config", "general"), {
+                visitas: increment(1),
+                [mesKey]: increment(1)
+            });
+        }
+    } catch(e) {
+        console.warn("No se pudo registrar la visita:", e);
+    }
+}
 
 // 1. Verificación de Estado Web (Online / Mantenimiento / Kill Switch)
 export async function verificarEstadoSitioWeb() {

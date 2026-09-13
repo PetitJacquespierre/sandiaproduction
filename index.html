@@ -93,6 +93,15 @@
         <!-- SECCIÓN 1: PRÓXIMOS RETOS (CARRUSEL DINÁMICO) -->
         <section class="proximas-carreras" id="proximas-carreras">
             <h2 class="titulo-seccion">Próximos Retos</h2>
+            
+            <!-- FILTROS DE CATEGORÍA -->
+            <div class="carreras-filtros" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
+                <button class="btn-filtro active" onclick="filtrarCarreras('TODOS', this)">Todos</button>
+                <button class="btn-filtro" onclick="filtrarCarreras('SANDIA', this)">Sandía</button>
+                <button class="btn-filtro" onclick="filtrarCarreras('REGIONAL', this)">Regional</button>
+                <button class="btn-filtro" onclick="filtrarCarreras('NACIONAL', this)">Nacional</button>
+            </div>
+
             <div class="carousel-container" id="carousel-carreras">
                 <div class="estado-carga">Actualizando Retos... ⏳</div>
             </div>
@@ -231,12 +240,13 @@
 
     <!-- SCRIPTS FIREBASE SANDÍA -->
     <script type="module">
-        import { verificarEstadoSitioWeb, getSandiaEventos, getSandiaAliados } from './firebase-sandia.js';
+        import { verificarEstadoSitioWeb, registrarVisitaSandia, getSandiaEventos, getSandiaAliados } from './firebase-sandia.js';
         window.verificarEstadoSitioWeb = verificarEstadoSitioWeb;
         window.getSandiaEventos = getSandiaEventos;
         window.getSandiaAliados = getSandiaAliados;
-        // Ejecución inmediata del verificador de estado de sitio (Kill switch / Mantenimiento)
+        // Ejecución inmediata del verificador y contador de visitas
         verificarEstadoSitioWeb();
+        registrarVisitaSandia();
     </script>
 
     <!-- SCRIPTS -->
@@ -328,6 +338,7 @@
 
         const urlScriptDirectorio = "https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec";
         let carruselInterval; 
+        let eventosActivosGlobal = [];
 
         async function cargarCarrerasCarousel() {
             const carouselContainer = document.getElementById('carousel-carreras');
@@ -345,6 +356,7 @@
                         enlace: "paraguanahorror.html",
                         textoBoton: "Inscribirme Ahora 🎃",
                         estado: "ACTIVO",
+                        categoria: "SANDIA",
                         destacado_index: true
                     },
                     {
@@ -356,6 +368,7 @@
                         enlace: "https://forms.gle/CqN4gF54xLK3vo6T6",
                         textoBoton: "Inscribirme en Google Forms",
                         estado: "ACTIVO",
+                        categoria: "REGIONAL",
                         destacado_index: true
                     },
                     {
@@ -367,6 +380,7 @@
                         enlace: "",
                         textoBoton: "Galería de Fotos",
                         estado: "COMPLETADO",
+                        categoria: "SANDIA",
                         destacado_index: false
                     }
                 ];
@@ -382,10 +396,9 @@
 
                 let todosLosEventos = (eventosFirebase && eventosFirebase.length > 0) ? eventosFirebase : eventosLocalesFallback;
 
-                let htmlCarrusel = '';
+                eventosActivosGlobal = [];
                 let pasadosArray = []; 
-                let countActivos = 0;
-                
+
                 todosLosEventos.forEach(evento => {
                     let clickAction = evento.enlace && evento.enlace.startsWith('http') ? `window.open('${evento.enlace}', '_blank')` : (evento.enlace ? `window.location.href='${evento.enlace}'` : `alert('Más información próximamente...')`);
 
@@ -393,21 +406,10 @@
                     const esCompletado = (evento.estado === "COMPLETADO" || evento.activo === "NO");
 
                     if (esActivo && (evento.destacado_index !== false)) {
-                        const btnTexto = "Inscribirme";
-
-                        htmlCarrusel += `
-                            <div class="event-card current" style="background-image: url('img/${evento.imagen}');">
-                                <div class="card-overlay">
-                                    <div class="card-info">
-                                        <span class="card-date">${evento.dia} ${evento.mes}</span>
-                                        <h3>${evento.titulo}</h3>
-                                        <p>${evento.ubicacion || ''}</p>
-                                        <button class="btn-sandia-general inscribirme-card" onclick="${clickAction}">${btnTexto}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        countActivos++;
+                        eventosActivosGlobal.push({
+                            eventoData: evento,
+                            accionClick: clickAction
+                        });
                     } 
                     else if (esCompletado) {
                         pasadosArray.push({
@@ -417,13 +419,7 @@
                     }
                 });
 
-                if (countActivos > 0) {
-                    carouselContainer.innerHTML = htmlCarrusel;
-                    crearDotsCarrusel(carouselContainer, countActivos);
-                    if (countActivos > 1) iniciarRotacionAutomatica(carouselContainer);
-                } else {
-                    carouselContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">No hay próximos retos publicados.</p>';
-                }
+                renderizarCarrerasActivas(eventosActivosGlobal);
 
                 if (pasadosArray.length > 0) {
                     let htmlPasados = '';
@@ -464,6 +460,55 @@
                 pasadosContainer.innerHTML = '<p style="color:red; text-align:center; width:100%;">Error al conectar con el servidor.</p>';
             }
         }
+
+        function renderizarCarrerasActivas(listaEventos) {
+            const carouselContainer = document.getElementById('carousel-carreras');
+            if (carruselInterval) clearInterval(carruselInterval);
+
+            if (!listaEventos || listaEventos.length === 0) {
+                carouselContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">No hay retos para esta categoría.</p>';
+                document.getElementById('carousel-dots').innerHTML = '';
+                return;
+            }
+
+            let htmlCarrusel = '';
+            listaEventos.forEach(item => {
+                let evento = item.eventoData;
+                let btnTexto = "Inscribirme";
+
+                htmlCarrusel += `
+                    <div class="event-card current" style="background-image: url('img/${evento.imagen}');">
+                        <div class="card-overlay">
+                            <div class="card-info">
+                                <span class="card-date">${evento.dia} ${evento.mes}</span>
+                                <h3>${evento.titulo}</h3>
+                                <p>${evento.ubicacion || ''}</p>
+                                <button class="btn-sandia-general inscribirme-card" onclick="${item.accionClick}">${btnTexto}</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            carouselContainer.innerHTML = htmlCarrusel;
+            crearDotsCarrusel(carouselContainer, listaEventos.length);
+            if (listaEventos.length > 1) iniciarRotacionAutomatica(carouselContainer);
+        }
+
+        window.filtrarCarreras = function(cat, btnElem) {
+            document.querySelectorAll('.carreras-filtros .btn-filtro').forEach(b => b.classList.remove('active'));
+            if (btnElem) btnElem.classList.add('active');
+
+            if (cat === 'TODOS') {
+                renderizarCarrerasActivas(eventosActivosGlobal);
+            } else {
+                const filtrados = eventosActivosGlobal.filter(item => {
+                    const c = (item.eventoData.categoria || item.eventoData.tipo || '').toUpperCase();
+                    return c.includes(cat);
+                });
+                renderizarCarrerasActivas(filtrados);
+            }
+        };
 
         function scrollContenedorATarjeta(contenedor, tarjeta) {
             if (!contenedor || !tarjeta) return;
