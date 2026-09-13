@@ -212,11 +212,20 @@
                 if(cat === 'virtual') claseEtiqueta = 'etiqueta-virtual';
                 if(cat === 'nacional') claseEtiqueta = 'etiqueta-nacional';
 
-                const textoBtn = evento.textoBoton || 'Más Información';
-                const enlaceUrl = evento.enlace || '#';
-                let htmlBoton = `<a href="${enlaceUrl}" class="btn-outline">${textoBtn}</a>`;
-                if((cat === 'local' || !evento.categoria) && enlaceUrl.includes('html')) {
-                    htmlBoton = `<a href="${enlaceUrl}" class="btn-sandia-general" style="width: 100%;">${textoBtn}</a>`;
+                const textoBtn = evento.textoBoton || '';
+                const enlaceUrl = evento.enlace || '';
+                let htmlBoton = '';
+
+                if (textoBtn && enlaceUrl) {
+                    const isExternal = enlaceUrl.startsWith('http://') || enlaceUrl.startsWith('https://');
+                    const targetAttr = isExternal ? 'target="_blank"' : '';
+                    if ((cat === 'local' || cat === 'sandia' || !evento.categoria) && (enlaceUrl.includes('html') || enlaceUrl.includes('forms') || enlaceUrl.includes('google'))) {
+                        htmlBoton = `<a href="${enlaceUrl}" ${targetAttr} class="btn-sandia-general" style="width: 100%; text-align: center;">${textoBtn}</a>`;
+                    } else {
+                        htmlBoton = `<a href="${enlaceUrl}" ${targetAttr} class="btn-outline" style="width: 100%; text-align: center;">${textoBtn}</a>`;
+                    }
+                } else if (textoBtn) {
+                    htmlBoton = `<span class="btn-outline" style="opacity: 0.6; cursor: default; width: 100%; text-align: center;">${textoBtn}</span>`;
                 }
 
                 const cardHTML = `
@@ -234,9 +243,7 @@
                             </div>
                             <h3>${evento.titulo}</h3>
                             <div class="ubicacion">${evento.ubicacion || ''}</div>
-                            <div class="card-acciones">
-                                ${htmlBoton}
-                            </div>
+                            ${htmlBoton ? `<div class="card-acciones">${htmlBoton}</div>` : ''}
                         </div>
                     </div>
                 `;
