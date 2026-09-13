@@ -92,13 +92,28 @@
 
     <!-- DIRECTORIO DE EVENTOS -->
     <main class="directorio-container">
-        <!-- Contenedor dinámico donde aparecerán las tarjetas -->
+        <!-- SECCIÓN 1: PRÓXIMAS CARRERAS ACTIVAS -->
+        <div class="directorio-seccion-header">
+            <h2>🏆 Próximas Carreras</h2>
+        </div>
+        
         <div class="grid-eventos" id="grid-eventos">
             <div class="estado-carga" id="cargando-eventos">Actualizando Calendario... ⏳</div>
         </div>
         
         <div class="sin-resultados" id="sin-resultados">
             No hay carreras registradas en esta categoría por el momento.
+        </div>
+
+        <!-- SECCIÓN 2: EVENTOS COMPLETADOS / PASADOS -->
+        <div class="seccion-completados-container" id="seccion-completados-container">
+            <div class="directorio-seccion-header completados-header">
+                <h2>🏁 Eventos Realizados</h2>
+                <span class="completados-subtag">Galería & Resultados</span>
+            </div>
+            <div class="grid-eventos grid-completados" id="grid-eventos-completados">
+                <!-- Tarjetas completadas cargadas dinámicamente -->
+            </div>
         </div>
     </main>
 
@@ -281,73 +296,123 @@
             }
         ];
 
+        const MESES_MAP = {
+            'ENE': 1, 'FEB': 2, 'MAR': 3, 'ABR': 4, 'MAY': 5, 'JUN': 6,
+            'JUL': 7, 'AGO': 8, 'AGOS': 8, 'SEP': 9, 'SEPT': 9, 'OCT': 10, 'NOV': 11, 'DIC': 12
+        };
+
+        function getEventDateWeight(ev) {
+            const mesStr = (ev.mes || '').toUpperCase().trim();
+            let mesNum = 9;
+            for (let k in MESES_MAP) {
+                if (mesStr.startsWith(k)) {
+                    mesNum = MESES_MAP[k];
+                    break;
+                }
+            }
+            const diaNum = parseInt(ev.dia, 10) || 1;
+            return mesNum * 100 + diaNum;
+        }
+
         async function cargarEventos() {
             try {
                 let eventosData = [];
 
-                // 1. Intento de carga directa desde Firebase Firestore
+                // 1. Carga directa y en tiempo real desde Firebase Firestore (Admin Grow Studio)
                 try {
                     if (window.getSandiaEventos) {
                         eventosData = await window.getSandiaEventos();
                     }
                 } catch(e) {
-                    console.warn("Fallo lectura Firebase, usando respaldo:", e);
+                    console.warn("Fallo lectura Firebase Firestore, usando respaldo local:", e);
                 }
 
-                // 2. Si aún no hay eventos en Firebase, intentar desde Apps Script o respaldo local
-                if (!eventosData || eventosData.length === 0) {
-                    try {
-                        const respuesta = await fetch("https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec");
-                        eventosData = await respuesta.json();
-                    } catch(err) {
-                        console.warn("Respaldo Google Apps Script no disponible, usando local:", err);
-                    }
-                }
-
-                // 3. Fallback directo a lista local si sigue vacío
+                // 2. Respaldo local de seguridad (únicamente si no hay conexión a internet)
                 if (!eventosData || eventosData.length === 0) {
                     eventosData = EVENTOS_FALLBACK_LOCAL;
                 }
 
-                // FILTRO MAESTRO: Solo mostramos eventos con estado ACTIVO
-                const eventosActivos = (eventosData || []).filter(evento => {
-                    const est = (evento.estado || '').toUpperCase();
-                    const act = (evento.activo || '').toUpperCase();
-                    return est === 'ACTIVO' || act === 'SI' || (!est && !act);
+                // Asegurar que Coffee Run Madre Mía y 5K Paraguaná Horror estén siempre incluidos
+                const tieneMadreMia = eventosData.some(e => (e.titulo || '').toUpperCase().includes('MADRE'));
+                if (!tieneMadreMia) {
+                    eventosData.push({
+                        titulo: "Coffee Run ¡Madre Mía! 3K",
+                        dia: 27,
+                        mes: "Sep",
+                        ubicacion: "Av. Francisco de Miranda / Madre Mía",
+                        categoria: "Local",
+                        etiqueta: "Punto Fijo",
+                        imagen: "madremia.jpg",
+                        enlace: "https://forms.gle/CqN4gF54xLK3vo6T6",
+                        textoBoton: "INSCRIBIRME",
+                        activo: "SI",
+                        estado: "ACTIVO"
+                    });
+                }
+                const tieneHorror = eventosData.some(e => (e.titulo || '').toUpperCase().includes('HORROR'));
+                if (!tieneHorror) {
+                    eventosData.push({
+                        titulo: "5K Paraguaná Horror Story",
+                        dia: 31,
+                        mes: "Oct",
+                        ubicacion: "Sambil Paraguaná / 7:00 PM",
+                        categoria: "Local",
+                        etiqueta: "Punto Fijo",
+                        imagen: "paraguanahorror.jpeg",
+                        enlace: "paraguanahorror.html",
+                        textoBoton: "INSCRIBIRME",
+                        activo: "SI",
+                        estado: "ACTIVO"
+                    });
+                }
+
+                // Separar en Activos (Próximos) y Completados (Pasados)
+                const eventosActivos = [];
+                const eventosCompletados = [];
+
+                eventosData.forEach(ev => {
+                    const est = (ev.estado || '').toUpperCase();
+                    const act = (ev.activo || '').toUpperCase();
+                    const weight = getEventDateWeight(ev);
+                    
+                    const isPassedOrCompleted = est === 'COMPLETADO' || act === 'NO' || weight < 900;
+
+                    if (isPassedOrCompleted) {
+                        eventosCompletados.push(ev);
+                    } else {
+                        eventosActivos.push(ev);
+                    }
                 });
 
-                if (eventosActivos.length > 0) {
-                    renderizarEventos(eventosActivos);
-                } else {
-                    gridEventos.innerHTML = '';
-                    msjSinResultados.style.display = 'block';
-                    msjSinResultados.innerText = "No hay eventos activos en este momento.";
-                }
+                // Ordenar activos cronológicamente (más próximo primero: 20 Sep -> 27 Sep -> 10 Oct -> 25 Oct -> 31 Oct -> 29 Nov)
+                eventosActivos.sort((a, b) => getEventDateWeight(a) - getEventDateWeight(b));
+
+                // Ordenar completados (los más recientes primero)
+                eventosCompletados.sort((a, b) => getEventDateWeight(b) - getEventDateWeight(a));
+
+                renderizarDirectorio(eventosActivos, eventosCompletados);
             } catch (error) {
                 console.error("Error al cargar eventos:", error);
-                renderizarEventos(EVENTOS_FALLBACK_LOCAL);
+                renderizarDirectorio(EVENTOS_FALLBACK_LOCAL, []);
             }
         }
 
-        function renderizarEventos(eventosData) {
-            gridEventos.innerHTML = ''; 
+        function generarCardHTML(evento, esCompletado = false) {
+            const tituloUpper = (evento.titulo || '').toUpperCase();
+            const imagenUpper = (evento.imagen || '').toUpperCase();
+            const categoriaOriginal = (evento.categoria || '').toLowerCase();
 
-            eventosData.forEach(evento => {
-                const tituloUpper = (evento.titulo || '').toUpperCase();
-                const imagenUpper = (evento.imagen || '').toUpperCase();
-                const categoriaOriginal = (evento.categoria || '').toLowerCase();
+            let cat = categoriaOriginal || 'local';
+            if (cat === 'regional') cat = 'local';
 
-                // Normalización de categorías y botones clave
-                let cat = categoriaOriginal || 'local';
-                if (cat === 'regional') cat = 'local';
+            let isSandia = categoriaOriginal === 'sandia' || tituloUpper.includes('HORROR') || tituloUpper.includes('MADRE') || tituloUpper.includes('COFFEE');
+            let dataCatAttr = cat;
+            if (isSandia) dataCatAttr += ' sandia';
 
-                let isSandia = categoriaOriginal === 'sandia' || tituloUpper.includes('HORROR') || tituloUpper.includes('MADRE') || tituloUpper.includes('COFFEE');
-                let dataCatAttr = cat;
-                if (isSandia) dataCatAttr += ' sandia';
+            let textoBtn = evento.textoBoton || '';
+            let enlaceUrl = evento.enlace || '';
 
-                let textoBtn = evento.textoBoton || '';
-                let enlaceUrl = evento.enlace || '';
-
+            if (!esCompletado) {
                 if (tituloUpper.includes('MADRE MÍA') || tituloUpper.includes('MADRE MIA') || imagenUpper.includes('MADREMIA')) {
                     textoBtn = 'INSCRIBIRME';
                     enlaceUrl = enlaceUrl || 'https://forms.gle/CqN4gF54xLK3vo6T6';
@@ -359,48 +424,75 @@
                     enlaceUrl = enlaceUrl || 'paraguanahorror.html';
                     cat = 'local';
                 }
+            }
 
-                let claseEtiqueta = 'etiqueta-local'; 
-                if(cat === 'virtual') claseEtiqueta = 'etiqueta-virtual';
-                if(cat === 'nacional') claseEtiqueta = 'etiqueta-nacional';
+            let claseEtiqueta = 'etiqueta-local'; 
+            if(cat === 'virtual') claseEtiqueta = 'etiqueta-virtual';
+            if(cat === 'nacional') claseEtiqueta = 'etiqueta-nacional';
 
-                let htmlBoton = '';
+            let htmlBoton = '';
 
-                if (textoBtn && enlaceUrl) {
-                    const isExternal = enlaceUrl.startsWith('http://') || enlaceUrl.startsWith('https://');
-                    const targetAttr = isExternal ? 'target="_blank"' : '';
-                    if ((cat === 'local' || isSandia || !evento.categoria) && (enlaceUrl.includes('html') || enlaceUrl.includes('forms') || enlaceUrl.includes('google'))) {
-                        htmlBoton = `<a href="${enlaceUrl}" ${targetAttr} class="btn-sandia-general" style="width: 100%; text-align: center;">${textoBtn}</a>`;
-                    } else {
-                        htmlBoton = `<a href="${enlaceUrl}" ${targetAttr} class="btn-outline" style="width: 100%; text-align: center;">${textoBtn}</a>`;
-                    }
-                } else if (textoBtn) {
-                    htmlBoton = `<span class="btn-outline" style="opacity: 0.6; cursor: default; width: 100%; text-align: center;">${textoBtn}</span>`;
+            if (textoBtn && enlaceUrl) {
+                const isExternal = enlaceUrl.startsWith('http://') || enlaceUrl.startsWith('https://');
+                const targetAttr = isExternal ? 'target="_blank"' : '';
+                if ((cat === 'local' || isSandia || !evento.categoria) && (enlaceUrl.includes('html') || enlaceUrl.includes('forms') || enlaceUrl.includes('google'))) {
+                    htmlBoton = `<a href="${enlaceUrl}" ${targetAttr} class="btn-sandia-general" style="width: 100%; text-align: center;">${textoBtn}</a>`;
+                } else {
+                    htmlBoton = `<a href="${enlaceUrl}" ${targetAttr} class="btn-outline" style="width: 100%; text-align: center;">${textoBtn}</a>`;
                 }
+            } else if (textoBtn) {
+                htmlBoton = `<span class="btn-outline" style="opacity: 0.6; cursor: default; width: 100%; text-align: center;">${textoBtn}</span>`;
+            } else if (esCompletado) {
+                htmlBoton = `<span class="btn-outline" style="opacity: 0.5; cursor: default; width: 100%; text-align: center; border-color: rgba(255,255,255,0.1);">CARRERA FINALIZADA</span>`;
+            }
 
-                const cardHTML = `
-                    <div class="evento-card" data-categoria="${dataCatAttr}">
-                        <div class="flyer-box">
-                            <img src="img/${evento.imagen || 'Isotipo.png'}" alt="${evento.titulo}" loading="lazy" onerror="this.src='img/Isotipo.png'">
-                            <div class="fecha-badge">
-                                <span class="dia">${evento.dia || '00'}</span>
-                                <span class="mes">${evento.mes || 'MES'}</span>
-                            </div>
-                        </div>
-                        <div class="info-box">
-                            <div class="etiquetas-container">
-                                ${isSandia ? '<span class="etiqueta" style="background: rgba(230, 32, 53, 0.2); color: #ff334b; border: 1px solid rgba(230, 32, 53, 0.4);">🍉 SANDÍA</span>' : ''}
-                                <span class="etiqueta ${claseEtiqueta}">${evento.etiqueta || (cat.toUpperCase())}</span>
-                            </div>
-                            <h3>${evento.titulo}</h3>
-                            <div class="ubicacion">${evento.ubicacion || ''}</div>
-                            ${htmlBoton ? `<div class="card-acciones">${htmlBoton}</div>` : ''}
+            return `
+                <div class="evento-card" data-categoria="${dataCatAttr}">
+                    <div class="flyer-box">
+                        <img src="img/${evento.imagen || 'Isotipo.png'}" alt="${evento.titulo}" loading="lazy" onerror="this.src='img/Isotipo.png'">
+                        <div class="fecha-badge">
+                            <span class="dia">${evento.dia || '00'}</span>
+                            <span class="mes">${evento.mes || 'MES'}</span>
                         </div>
                     </div>
-                `;
-                
-                gridEventos.innerHTML += cardHTML;
-            });
+                    <div class="info-box">
+                        <div class="etiquetas-container">
+                            ${esCompletado ? '<span class="etiqueta" style="background: rgba(255,255,255,0.06); color: #888; border: 1px solid rgba(255,255,255,0.12);">🏁 FINALIZADO</span>' : ''}
+                            ${isSandia ? '<span class="etiqueta" style="background: rgba(230, 32, 53, 0.2); color: #ff334b; border: 1px solid rgba(230, 32, 53, 0.4);">🍉 SANDÍA</span>' : ''}
+                            <span class="etiqueta ${claseEtiqueta}">${evento.etiqueta || (cat.toUpperCase())}</span>
+                        </div>
+                        <h3>${evento.titulo}</h3>
+                        <div class="ubicacion">${evento.ubicacion || ''}</div>
+                        ${htmlBoton ? `<div class="card-acciones">${htmlBoton}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderizarDirectorio(eventosActivos, eventosCompletados) {
+            gridEventos.innerHTML = '';
+            const gridCompletados = document.getElementById('grid-eventos-completados');
+            const seccionCompletados = document.getElementById('seccion-completados-container');
+
+            if (gridCompletados) gridCompletados.innerHTML = '';
+
+            if (eventosActivos.length > 0) {
+                eventosActivos.forEach(ev => {
+                    gridEventos.innerHTML += generarCardHTML(ev, false);
+                });
+            } else {
+                msjSinResultados.style.display = 'block';
+                msjSinResultados.innerText = "No hay eventos activos en este momento.";
+            }
+
+            if (gridCompletados && eventosCompletados.length > 0) {
+                eventosCompletados.forEach(ev => {
+                    gridCompletados.innerHTML += generarCardHTML(ev, true);
+                });
+                if (seccionCompletados) seccionCompletados.style.display = 'block';
+            } else if (seccionCompletados) {
+                seccionCompletados.style.display = 'none';
+            }
 
             configurarFiltros();
         }
@@ -408,11 +500,13 @@
         function configurarFiltros() {
             const tarjetas = document.querySelectorAll('.evento-card');
             const buscador = document.getElementById('buscador-eventos');
+            const seccionCompletados = document.getElementById('seccion-completados-container');
             
             function aplicarFiltros() {
                 const filtroActivo = document.querySelector('.btn-filtro.active').getAttribute('data-filtro');
                 const textoBusqueda = buscador ? buscador.value.toLowerCase() : '';
-                let visibles = 0;
+                let visiblesActivos = 0;
+                let visiblesCompletados = 0;
 
                 tarjetas.forEach(tarjeta => {
                     const categoriaTarjeta = (tarjeta.getAttribute('data-categoria') || '').toLowerCase();
@@ -421,18 +515,24 @@
                     
                     const pasaFiltroCat = (filtroActivo === 'todas' || categoriaTarjeta.includes(filtroActivo));
                     const pasaBusqueda = titulo.includes(textoBusqueda) || ubicacion.includes(textoBusqueda);
+                    const esTarjetaCompletada = tarjeta.closest('#grid-eventos-completados');
 
                     if (pasaFiltroCat && pasaBusqueda) {
                         tarjeta.style.display = 'flex';
-                        visibles++;
+                        if (esTarjetaCompletada) visiblesCompletados++;
+                        else visiblesActivos++;
                     } else {
                         tarjeta.style.display = 'none';
                     }
                 });
 
                 if (msjSinResultados) {
-                    msjSinResultados.style.display = visibles === 0 ? 'block' : 'none';
-                    if (visibles === 0) msjSinResultados.innerText = "No se encontraron eventos con los filtros actuales.";
+                    msjSinResultados.style.display = visiblesActivos === 0 ? 'block' : 'none';
+                    if (visiblesActivos === 0) msjSinResultados.innerText = "No se encontraron próximas carreras con los filtros actuales.";
+                }
+
+                if (seccionCompletados) {
+                    seccionCompletados.style.display = visiblesCompletados > 0 ? 'block' : 'none';
                 }
             }
 

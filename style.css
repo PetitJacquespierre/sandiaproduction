@@ -739,7 +739,46 @@ body {
 }
 
 .directorio-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 80px; flex-grow: 1; width: 100%; }
+.directorio-seccion-header {
+    margin: 10px 0 25px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.directorio-seccion-header h2 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+.completados-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+}
+.completados-header h2 {
+    color: #888888;
+    font-size: 1.25rem;
+}
+.completados-subtag {
+    color: #666666;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 .grid-eventos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+.grid-completados .evento-card {
+    opacity: 0.85;
+    filter: saturate(0.85);
+    border-color: rgba(255, 255, 255, 0.04);
+}
+.grid-completados .evento-card:hover {
+    opacity: 1;
+    filter: saturate(1);
+    border-color: rgba(255, 255, 255, 0.15);
+}
 .evento-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; position: relative; }
 .evento-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.5); border-color: rgba(230, 32, 53, 0.3); }
 .flyer-box { position: relative; width: 100%; padding-top: 100%; background-color: #111; overflow: hidden; }
