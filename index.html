@@ -465,6 +465,12 @@
             }
         }
 
+        function scrollContenedorATarjeta(contenedor, tarjeta) {
+            if (!contenedor || !tarjeta) return;
+            const targetLeft = tarjeta.offsetLeft - (contenedor.clientWidth / 2) + (tarjeta.clientWidth / 2);
+            contenedor.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+        }
+
         function crearDotsCarrusel(contenedor, totalItems) {
             const dotsContainer = document.getElementById('carousel-dots');
             if (!dotsContainer) return;
@@ -476,7 +482,7 @@
                 dot.addEventListener('click', () => {
                     const tarjetas = contenedor.querySelectorAll('.event-card');
                     if (tarjetas[i]) {
-                        tarjetas[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                        scrollContenedorATarjeta(contenedor, tarjetas[i]);
                         actualizarDotActivo(i);
                     }
                 });
@@ -503,7 +509,7 @@
                 currentIndex = (currentIndex + 1) % tarjetas.length;
                 const tarjeta = tarjetas[currentIndex];
                 if (tarjeta) {
-                    tarjeta.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    scrollContenedorATarjeta(contenedor, tarjeta);
                     actualizarDotActivo(currentIndex);
                 }
             }
