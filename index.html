@@ -476,9 +476,10 @@
         }
 
         function programarOleadasDispersas() {
-            setTimeout(() => emitirRafagaSelectiva(2, 4), 1000 + Math.random() * 800);
-            setTimeout(() => emitirRafagaSelectiva(2, 4), 2200 + Math.random() * 800);
-            if (Math.random() > 0.4) { setTimeout(() => emitirRafagaSelectiva(1, 2), 3500 + Math.random() * 700); }
+            setTimeout(() => emitirRafagaSelectiva(4, 7), 600);
+            setTimeout(() => emitirRafagaSelectiva(5, 9), 1200);
+            setTimeout(() => emitirRafagaSelectiva(4, 8), 1800);
+            setTimeout(() => emitirRafagaSelectiva(3, 6), 2500);
         }
 
         function animate() {
@@ -774,12 +775,10 @@
 
         window.onload = () => {
             animate();
-            emitirRafagaSelectiva(5, 8);
+            emitirRafagaSelectiva(6, 10);
             programarOleadasDispersas();
 
-            // ==========================================
-            // CAMBIO: Reducido de 6500 (6.5s) a 2800 (2.8s) 
-            // ==========================================
+            // Tiempo óptimo: 3.4 segundos para apreciar la animación y semillas con fade-out fluido
             setTimeout(() => {
                 splashScreen.style.opacity = '0'; 
                 setTimeout(() => {
@@ -787,8 +786,8 @@
                     cancelAnimationFrame(animationFrame);
                     document.body.style.overflow = 'auto'; 
                     mainContent.style.display = 'flex'; 
-                }, 1000); 
-            }, 2800); 
+                }, 800); 
+            }, 3400); 
 
             cargarCarrerasCarousel();
             cargarAliados();
