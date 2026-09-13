@@ -507,9 +507,10 @@ body {
 @keyframes scroll-infinito { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 40px)); } }
 
 /* ==========================================================================
-   6. CALENDARIO.HTML - VIDEO HERO & DIRECTORIO
+   6. HERO CONTAINERS (INDEX & CALENDARIO) CON VIDEO Y POSTER
    ========================================================================== */
-.calendario-hero-container {
+.calendario-hero-container,
+.index-hero-container {
     position: relative;
     width: 100%;
     min-height: 560px;
@@ -520,11 +521,20 @@ body {
     padding: 170px 20px 70px;
     box-sizing: border-box;
     background-color: #050a15;
+    background-image: url('img/hero_poster.jpeg');
+    background-size: cover;
+    background-position: center;
     border-bottom: 1px solid rgba(230, 32, 53, 0.2);
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
-.calendario-hero-video {
+.index-hero-container {
+    min-height: 600px;
+    margin-bottom: 10px;
+}
+
+.calendario-hero-video,
+.index-hero-video {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -538,7 +548,8 @@ body {
     filter: brightness(0.6) contrast(1.1);
 }
 
-.calendario-hero-overlay {
+.calendario-hero-overlay,
+.index-hero-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -549,7 +560,8 @@ body {
     backdrop-filter: blur(1.5px);
 }
 
-.calendario-hero-content {
+.calendario-hero-content,
+.index-hero-content {
     position: relative;
     z-index: 3;
     text-align: center;
@@ -558,7 +570,8 @@ body {
     margin: 0 auto;
 }
 
-.calendario-hero-tag {
+.calendario-hero-tag,
+.index-hero-tag {
     display: inline-block;
     background: rgba(230, 32, 53, 0.25);
     border: 1px solid rgba(230, 32, 53, 0.6);
@@ -573,7 +586,8 @@ body {
     backdrop-filter: blur(6px);
 }
 
-.calendario-hero-title {
+.calendario-hero-title,
+.index-hero-title {
     font-size: 3.2rem;
     font-weight: 900;
     color: #ffffff;
@@ -584,13 +598,59 @@ body {
     line-height: 1.15;
 }
 
-.calendario-hero-desc {
+.index-hero-title span {
+    color: var(--color-primario);
+    text-shadow: 0 0 20px rgba(230, 32, 53, 0.8);
+}
+
+.calendario-hero-desc,
+.index-hero-desc {
     color: #e0e0e0;
     font-size: 1.15rem;
     line-height: 1.5;
-    max-width: 620px;
-    margin: 0 auto 32px;
+    max-width: 650px;
+    margin: 0 auto 30px;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Botones de acción del Index Hero */
+.index-hero-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.btn-hero-cta {
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 25px rgba(230, 32, 53, 0.5);
+    text-decoration: none;
+    border-radius: 30px;
+}
+
+.btn-hero-calendario {
+    padding: 13px 26px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+.btn-hero-calendario:hover {
+    background: rgba(230, 32, 53, 0.2);
+    border-color: var(--color-primario);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(230, 32, 53, 0.4);
 }
 
 .filtros-directorio { 
@@ -651,23 +711,38 @@ body {
 }
 
 @media (max-width: 768px) {
-    .calendario-hero-container {
+    .calendario-hero-container,
+    .index-hero-container {
         min-height: 520px;
         padding: 155px 15px 45px;
     }
-    .calendario-hero-tag {
+    .calendario-hero-tag,
+    .index-hero-tag {
         font-size: 0.7rem;
         padding: 4px 12px;
         margin-bottom: 10px;
     }
-    .calendario-hero-title {
+    .calendario-hero-title,
+    .index-hero-title {
         font-size: 1.85rem;
         margin-bottom: 10px;
     }
-    .calendario-hero-desc {
+    .calendario-hero-desc,
+    .index-hero-desc {
         font-size: 0.9rem;
         margin-bottom: 22px;
         line-height: 1.45;
+    }
+    .index-hero-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    .btn-hero-cta,
+    .btn-hero-calendario {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
     }
     .filtros-directorio {
         padding: 12px 14px;
@@ -772,7 +847,8 @@ select.form-control option { background-color: var(--color-fondo-menu); color: #
     .menu-desktop-links a.activo { color: var(--color-primario); text-shadow: 0 0 10px rgba(230, 32, 53, 0.5); }
     .menu-desktop-links a.activo::after { width: 100%; }
 
-    .proximas-carreras { padding-top: 190px; max-width: 1200px; margin: 0 auto; }
+    .index-hero-container { padding-top: 220px; min-height: 640px; }
+    .proximas-carreras { padding-top: 40px; max-width: 1200px; margin: 0 auto; }
     .eventos-pasados { max-width: 1200px; margin: 0 auto; border-radius: 15px; }
     .proximas-carreras, .eventos-pasados, .seccion-run-free { padding-left: 40px; padding-right: 40px; }
     .event-card { flex: 0 0 400px; height: 420px; }
@@ -781,7 +857,7 @@ select.form-control option { background-color: var(--color-fondo-menu); color: #
     .run-free-caricatura-container { margin-bottom: 0; flex: 0 0 200px; display: flex; justify-content: center; }
     .run-free-content { flex-grow: 1; align-items: center; text-align: center; }
     
-    .calendario-header { padding-top: 240px; }
+    .calendario-hero-container { padding-top: 210px; }
     .inscripcion-section { padding-top: 240px; }
     .footer-bottom { flex-direction: row; justify-content: space-between; }
 }
