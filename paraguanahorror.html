@@ -338,7 +338,15 @@
         #submit-loader, #success-message {
             display: none;
             text-align: center;
-            padding: 25px;
+            padding: 35px 20px;
+            min-height: 280px;
+            box-sizing: border-box;
+        }
+
+        #success-message {
+            background: rgba(255, 26, 26, 0.05);
+            border: 1px solid rgba(255, 26, 26, 0.3);
+            border-radius: 12px;
         }
 
         /* AJUSTES MÓVIL */
@@ -874,9 +882,15 @@
             const content = document.getElementById('registration-content');
             const loader = document.getElementById('submit-loader');
             const success = document.getElementById('success-message');
+            const formCard = document.querySelector('.form-card');
 
             content.style.display = 'none';
             loader.style.display = 'block';
+
+            // Scroll directo a la tarjeta para que no salte al footer
+            if (formCard) {
+                formCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
 
             const formDataObj = new FormData(form);
             const datosAEnviar = {};
@@ -897,6 +911,11 @@
                 loader.style.display = 'none';
                 success.style.display = 'block';
                 form.reset();
+                
+                // Asegurar foco y scroll centrado en el mensaje de éxito
+                setTimeout(() => {
+                    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
             })
             .catch(error => {
                 console.error('Error enviando datos:', error);
