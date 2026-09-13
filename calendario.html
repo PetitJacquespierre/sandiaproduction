@@ -160,6 +160,126 @@
         const msjSinResultados = document.getElementById('sin-resultados');
         const botonesFiltro = document.querySelectorAll('.btn-filtro');
 
+        const EVENTOS_FALLBACK_LOCAL = [
+            {
+                titulo: "5K Paraguaná Horror Story",
+                dia: "31",
+                mes: "OCT",
+                ubicacion: "Sambil Paraguaná / 7:00 PM",
+                categoria: "local",
+                etiqueta: "Punto Fijo",
+                imagen: "paraguanahorror.jpeg",
+                enlace: "paraguanahorror.html",
+                textoBoton: "INSCRIBIRME",
+                estado: "ACTIVO",
+                activo: "SI"
+            },
+            {
+                titulo: "Coffee Run ¡Madre Mía! 3K",
+                dia: "27",
+                mes: "SEP",
+                ubicacion: "Av. Francisco de Miranda / Madre Mía",
+                categoria: "local",
+                etiqueta: "Punto Fijo",
+                imagen: "madremia.jpg",
+                enlace: "https://forms.gle/CqN4gF54xLK3vo6T6",
+                textoBoton: "INSCRIBIRME",
+                estado: "ACTIVO",
+                activo: "SI"
+            },
+            {
+                titulo: "10k Paraguana 2026",
+                dia: "23",
+                mes: "AGO",
+                ubicacion: "Punto Fijo, Falcón",
+                categoria: "local",
+                etiqueta: "Punto Fijo",
+                imagen: "10kparaguana2026.png",
+                enlace: "https://papaya25.info/modp25.php?idc=16947",
+                textoBoton: "Inscribirse",
+                estado: "ACTIVO",
+                activo: "SI"
+            },
+            {
+                titulo: "Trail Botánico 10K",
+                dia: "30",
+                mes: "AGO",
+                ubicacion: "Maracaibo, Zulia",
+                categoria: "nacional",
+                etiqueta: "Nacional",
+                imagen: "trailbotanico2026.png",
+                enlace: "https://papaya25.info/modp25.php?idc=16892",
+                textoBoton: "Inscribirse",
+                estado: "ACTIVO",
+                activo: "SI"
+            },
+            {
+                titulo: "Run and Music Fest 10K",
+                dia: "20",
+                mes: "SEP",
+                ubicacion: "Maracaibo, Zulia",
+                categoria: "nacional",
+                etiqueta: "Nacional",
+                imagen: "runmusicfest.png",
+                enlace: "https://papaya25.info/modp25.php?idc=16923",
+                textoBoton: "Inscribirse",
+                estado: "ACTIVO",
+                activo: "SI"
+            },
+            {
+                titulo: "Chirimena Extrema 15K",
+                dia: "27",
+                mes: "SEP",
+                ubicacion: "Miranda",
+                categoria: "nacional",
+                etiqueta: "Nacional",
+                imagen: "chirimenaextrema15ksep27.png",
+                enlace: "",
+                textoBoton: "",
+                estado: "ACTIVO",
+                activo: "SI"
+            },
+            {
+                titulo: "Bicolor 10K",
+                dia: "10",
+                mes: "OCT",
+                ubicacion: "San Francisco, Zulia",
+                categoria: "nacional",
+                etiqueta: "Nacional",
+                imagen: "bicolor10k2026.png",
+                enlace: "https://papaya25.info/modp25.php?idc=16901",
+                textoBoton: "Inscribirse",
+                estado: "ACTIVO",
+                activo: "SI"
+            },
+            {
+                titulo: "Copaiba 10K 2026",
+                dia: "25",
+                mes: "OCT",
+                ubicacion: "Cabimas, Zulia",
+                categoria: "nacional",
+                etiqueta: "Nacional",
+                imagen: "Copaiba10K2026.png",
+                enlace: "https://papaya25.info/modp25.php?idc=16911",
+                textoBoton: "Inscribirse",
+                estado: "ACTIVO",
+                activo: "SI"
+            },
+            {
+                titulo: "CHINITA 10K 2026",
+                dia: "29",
+                mes: "NOV",
+                ubicacion: "Maracaibo, Zulia",
+                categoria: "nacional",
+                etiqueta: "Nacional",
+                imagen: "Chinita10K2026.png",
+                enlace: "https://papaya25.info/modp25.php?idc=16956",
+                textoBoton: "Inscribirse",
+                estado: "ACTIVO",
+                activo: "SI"
+            }
+        ];
+
         async function cargarEventos() {
             try {
                 let eventosData = [];
@@ -173,14 +293,19 @@
                     console.warn("Fallo lectura Firebase, usando respaldo:", e);
                 }
 
-                // 2. Si aún no hay eventos en Firebase, intentar desde Apps Script o lista local
+                // 2. Si aún no hay eventos en Firebase, intentar desde Apps Script o respaldo local
                 if (!eventosData || eventosData.length === 0) {
                     try {
                         const respuesta = await fetch("https://script.google.com/macros/s/AKfycbzlVL7zjykjbAb0s20H4jliek0UpOZlx20LKu04d-KNl6shv3beE8QffRJKSGsIqcUX/exec");
                         eventosData = await respuesta.json();
                     } catch(err) {
-                        console.warn("Respaldo Google Apps Script no disponible:", err);
+                        console.warn("Respaldo Google Apps Script no disponible, usando local:", err);
                     }
+                }
+
+                // 3. Fallback directo a lista local si sigue vacío
+                if (!eventosData || eventosData.length === 0) {
+                    eventosData = EVENTOS_FALLBACK_LOCAL;
                 }
 
                 // FILTRO MAESTRO: Solo mostramos eventos con estado ACTIVO
@@ -199,7 +324,7 @@
                 }
             } catch (error) {
                 console.error("Error al cargar eventos:", error);
-                gridEventos.innerHTML = '<div style="color:red; grid-column:1/-1; text-align:center;">Error al conectar con la base de datos. Verifica tu conexión.</div>';
+                renderizarEventos(EVENTOS_FALLBACK_LOCAL);
             }
         }
 
@@ -207,13 +332,32 @@
             gridEventos.innerHTML = ''; 
 
             eventosData.forEach(evento => {
-                const cat = (evento.categoria || 'local').toLowerCase();
+                const tituloUpper = (evento.titulo || '').toUpperCase();
+                const imagenUpper = (evento.imagen || '').toUpperCase();
+
+                // Normalización de categorías y botones clave
+                let cat = (evento.categoria || 'local').toLowerCase();
+                if (cat === 'sandia' || cat === 'regional') cat = 'local';
+
+                let textoBtn = evento.textoBoton || '';
+                let enlaceUrl = evento.enlace || '';
+
+                if (tituloUpper.includes('MADRE MÍA') || tituloUpper.includes('MADRE MIA') || imagenUpper.includes('MADREMIA')) {
+                    textoBtn = 'INSCRIBIRME';
+                    enlaceUrl = enlaceUrl || 'https://forms.gle/CqN4gF54xLK3vo6T6';
+                    cat = 'local';
+                }
+
+                if (tituloUpper.includes('HORROR') || imagenUpper.includes('HORROR')) {
+                    textoBtn = 'INSCRIBIRME';
+                    enlaceUrl = enlaceUrl || 'paraguanahorror.html';
+                    cat = 'local';
+                }
+
                 let claseEtiqueta = 'etiqueta-local'; 
                 if(cat === 'virtual') claseEtiqueta = 'etiqueta-virtual';
                 if(cat === 'nacional') claseEtiqueta = 'etiqueta-nacional';
 
-                const textoBtn = evento.textoBoton || '';
-                const enlaceUrl = evento.enlace || '';
                 let htmlBoton = '';
 
                 if (textoBtn && enlaceUrl) {
