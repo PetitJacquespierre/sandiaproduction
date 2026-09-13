@@ -96,6 +96,7 @@
             <div class="carousel-container" id="carousel-carreras">
                 <div class="estado-carga">Actualizando Retos... ⏳</div>
             </div>
+            <div class="carousel-dots" id="carousel-dots"></div>
         </section>
 
         <!-- SECCIÓN 2: INTEGRACIÓN COMUNIDAD Runner Club (3 COLUMNAS) -->
@@ -166,10 +167,10 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 3: EVENTOS PASADOS (DINÁMICOS - LÍMITE DE 6) -->
+        <!-- SECCIÓN 3: EVENTOS PASADOS (SLIDER CARRUSEL HORIZONTAL) -->
         <section class="eventos-pasados" id="eventos-pasados">
-            <h2 class="titulo-seccion" style="text-align: center; margin-bottom: 30px;">Eventos Pasados</h2>
-            <div class="lista-pasados-container" id="contenedor-pasados">
+            <h2 class="titulo-seccion" style="text-align: center; margin-bottom: 25px;">Eventos Pasados</h2>
+            <div class="pasados-carousel-container" id="contenedor-pasados">
                 <div class="estado-carga" style="padding: 20px;">Cargando historial... ⏳</div>
             </div>
         </section>
@@ -392,6 +393,8 @@
                     const esCompletado = (evento.estado === "COMPLETADO" || evento.activo === "NO");
 
                     if (esActivo && (evento.destacado_index !== false)) {
+                        const btnTexto = "Inscribirme";
+
                         htmlCarrusel += `
                             <div class="event-card current" style="background-image: url('img/${evento.imagen}');">
                                 <div class="card-overlay">
@@ -399,7 +402,7 @@
                                         <span class="card-date">${evento.dia} ${evento.mes}</span>
                                         <h3>${evento.titulo}</h3>
                                         <p>${evento.ubicacion || ''}</p>
-                                        <button class="btn-sandia-general inscribirme-card" onclick="${clickAction}">${evento.textoBoton || 'Más Información'}</button>
+                                        <button class="btn-sandia-general inscribirme-card" onclick="${clickAction}">${btnTexto}</button>
                                     </div>
                                 </div>
                             </div>
@@ -416,6 +419,7 @@
 
                 if (countActivos > 0) {
                     carouselContainer.innerHTML = htmlCarrusel;
+                    crearDotsCarrusel(carouselContainer, countActivos);
                     if (countActivos > 1) iniciarRotacionAutomatica(carouselContainer);
                 } else {
                     carouselContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">No hay próximos retos publicados.</p>';
@@ -423,25 +427,25 @@
 
                 if (pasadosArray.length > 0) {
                     let htmlPasados = '';
-                    let ultimosPasados = pasadosArray.slice(0, 6); // Límite de 6 en miniatura
+                    let ultimosPasados = pasadosArray.slice(0, 10);
                     
                     ultimosPasados.forEach(item => {
                         let ev = item.eventoData;
                         let btnGaleriaHtml = '';
                         if (ev.titulo.toLowerCase().includes('coffee run')) {
-                            btnGaleriaHtml = `<button class="btn-past-results" onclick="abrirModalCoffeeRun()">📸 Fotos Oficiales</button>`;
+                            btnGaleriaHtml = `<button class="btn-past-results" onclick="abrirModalCoffeeRun()">Fotos Oficiales</button>`;
                         } else if (ev.enlace && ev.enlace.trim() !== '' && ev.enlace !== '#') {
-                            btnGaleriaHtml = `<button class="btn-past-results" onclick="${item.accionClick}">📸 Ver Resultados</button>`;
+                            btnGaleriaHtml = `<button class="btn-past-results" onclick="${item.accionClick}">Ver Resultados</button>`;
                         }
                         
                         htmlPasados += `
                             <div class="past-event-item">
                                 <img src="img/${ev.imagen}" alt="${ev.titulo}" class="past-logo" loading="lazy" onerror="this.src='img/Isotipo.png'">
                                 <div class="past-info">
-                                    <div style="display:flex; align-items:center; gap:8px;">
+                                    <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; margin-bottom:4px;">
                                         <h3 style="margin:0;">${ev.titulo}</h3>
-                                        <span style="background: rgba(230, 126, 34, 0.2); color: #e67e22; border: 1px solid rgba(230, 126, 34, 0.4); font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 4px;">🏁 COMPLETADO</span>
                                     </div>
+                                    <span style="background: rgba(230, 126, 34, 0.2); color: #e67e22; border: 1px solid rgba(230, 126, 34, 0.4); font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom:6px;">COMPLETADO</span>
                                     <p>${ev.ubicacion || ''} • ${ev.mes || ''}</p>
                                 </div>
                                 ${btnGaleriaHtml}
@@ -461,18 +465,46 @@
             }
         }
 
+        function crearDotsCarrusel(contenedor, totalItems) {
+            const dotsContainer = document.getElementById('carousel-dots');
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            
+            for (let i = 0; i < totalItems; i++) {
+                const dot = document.createElement('div');
+                dot.className = `dot ${i === 0 ? 'active' : ''}`;
+                dot.addEventListener('click', () => {
+                    const tarjetas = contenedor.querySelectorAll('.event-card');
+                    if (tarjetas[i]) {
+                        tarjetas[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                        actualizarDotActivo(i);
+                    }
+                });
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function actualizarDotActivo(index) {
+            const dots = document.querySelectorAll('#carousel-dots .dot');
+            dots.forEach((dot, idx) => {
+                if (idx === index) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        }
+
         function iniciarRotacionAutomatica(contenedor) {
             const tiempoRotacion = 4000; 
+            let currentIndex = 0;
             
             function hacerScroll() {
-                const tarjeta = contenedor.querySelector('.event-card');
-                if (!tarjeta) return;
-                const scrollAmount = tarjeta.offsetWidth + 15; 
+                const tarjetas = contenedor.querySelectorAll('.event-card');
+                if (!tarjetas || tarjetas.length === 0) return;
                 
-                if (contenedor.scrollLeft + contenedor.clientWidth >= contenedor.scrollWidth - 10) {
-                    contenedor.scrollTo({ left: 0, behavior: 'smooth' });
-                } else {
-                    contenedor.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                currentIndex = (currentIndex + 1) % tarjetas.length;
+                const tarjeta = tarjetas[currentIndex];
+                if (tarjeta) {
+                    tarjeta.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    actualizarDotActivo(currentIndex);
                 }
             }
 
@@ -482,6 +514,18 @@
             contenedor.addEventListener('touchstart', () => clearInterval(carruselInterval));
             contenedor.addEventListener('mouseleave', () => carruselInterval = setInterval(hacerScroll, tiempoRotacion));
             contenedor.addEventListener('touchend', () => carruselInterval = setInterval(hacerScroll, tiempoRotacion));
+            
+            contenedor.addEventListener('scroll', () => {
+                const tarjetas = contenedor.querySelectorAll('.event-card');
+                tarjetas.forEach((tarjeta, idx) => {
+                    const rect = tarjeta.getBoundingClientRect();
+                    const containerRect = contenedor.getBoundingClientRect();
+                    if (Math.abs(rect.left - containerRect.left) < rect.width / 2) {
+                        currentIndex = idx;
+                        actualizarDotActivo(idx);
+                    }
+                });
+            });
         }
 
         async function cargarAliados() {
