@@ -64,18 +64,28 @@
         </ul>
     </div>
 
-    <!-- CABECERA DIRECTORIO -->
-    <header class="calendario-header">
-        <h1>Calendario Runner</h1>
-        <p>Explora el calendario más completo de eventos deportivos a nivel nacional. Descubre tu próxima ruta y conquista tu nueva meta.</p>
-        
-        <!-- FILTROS Y BÚSQUEDA -->
-        <div class="filtros-directorio">
-            <input type="search" id="buscador-eventos" class="buscador-eventos" placeholder="Buscar carrera o lugar...">
-            <button class="btn-filtro active" data-filtro="todas">Todas</button>
-            <button class="btn-filtro" data-filtro="local">📍 Punto Fijo</button>
-            <button class="btn-filtro" data-filtro="nacional">🇻🇪 Nacionales</button>
-            <button class="btn-filtro" data-filtro="virtual">🌐 Retos Virtuales</button>
+    <!-- CABECERA DIRECTORIO CON VIDEO HERO -->
+    <header class="calendario-hero-container">
+        <!-- VIDEO DE FONDO -->
+        <video autoplay loop muted playsinline class="calendario-hero-video">
+            <source src="img/hero_calendario.mp4" type="video/mp4">
+        </video>
+        <div class="calendario-hero-overlay"></div>
+
+        <!-- CONTENIDO FLOTANTE CENTRAL -->
+        <div class="calendario-hero-content">
+            <span class="calendario-hero-tag">DIRECTORIO OFICIAL 2026</span>
+            <h1 class="calendario-hero-title">CALENDARIO RUNNER</h1>
+            <p class="calendario-hero-desc">Explora el calendario más completo de eventos deportivos a nivel nacional. Descubre tu próxima ruta y conquista tu nueva meta.</p>
+            
+            <!-- FILTROS Y BÚSQUEDA FLOTANTES -->
+            <div class="filtros-directorio">
+                <input type="search" id="buscador-eventos" class="buscador-eventos" placeholder="Buscar carrera o lugar...">
+                <button class="btn-filtro active" data-filtro="todas">Todas</button>
+                <button class="btn-filtro" data-filtro="local">📍 Punto Fijo</button>
+                <button class="btn-filtro" data-filtro="nacional">🇻🇪 Nacionales</button>
+                <button class="btn-filtro" data-filtro="virtual">🌐 Retos Virtuales</button>
+            </div>
         </div>
     </header>
 

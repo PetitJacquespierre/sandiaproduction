@@ -507,20 +507,182 @@ body {
 @keyframes scroll-infinito { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 40px)); } }
 
 /* ==========================================================================
-   6. CALENDARIO.HTML - ESPECÍFICO
+   6. CALENDARIO.HTML - VIDEO HERO & DIRECTORIO
    ========================================================================== */
-.calendario-header { padding: 180px 20px 40px; text-align: center; background: linear-gradient(to bottom, rgba(230, 32, 53, 0.05), transparent); }
-.calendario-header h1 { font-size: 2.5em; font-weight: 800; color: var(--color-texto); margin-bottom: 10px; text-transform: uppercase; }
-.calendario-header p { color: #aaa; font-size: 1.1em; max-width: 600px; margin: 0 auto 30px; }
+.calendario-hero-container {
+    position: relative;
+    width: 100%;
+    min-height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 170px 20px 70px;
+    box-sizing: border-box;
+    background-color: #050a15;
+    border-bottom: 1px solid rgba(230, 32, 53, 0.2);
+    margin-bottom: 40px;
+}
 
-.filtros-directorio { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
-.btn-filtro { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--color-gris-claro); padding: 10px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95em; }
-.btn-filtro:hover { background: rgba(255,255,255,0.1); color: var(--color-texto); }
-.btn-filtro.active { background: var(--color-primario); color: var(--color-texto); border-color: var(--color-primario); box-shadow: 0 0 15px rgba(230, 32, 53, 0.5); }
+.calendario-hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 1;
+    filter: brightness(0.6) contrast(1.1);
+}
+
+.calendario-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(5, 10, 21, 0.45) 0%, rgba(5, 10, 21, 0.9) 85%, rgba(5, 10, 21, 0.98) 100%);
+    z-index: 2;
+    backdrop-filter: blur(1.5px);
+}
+
+.calendario-hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: 850px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.calendario-hero-tag {
+    display: inline-block;
+    background: rgba(230, 32, 53, 0.25);
+    border: 1px solid rgba(230, 32, 53, 0.6);
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    padding: 5px 16px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    backdrop-filter: blur(6px);
+}
+
+.calendario-hero-title {
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: #ffffff;
+    margin: 0 0 14px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 30px rgba(230, 32, 53, 0.4);
+    line-height: 1.15;
+}
+
+.calendario-hero-desc {
+    color: #e0e0e0;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    max-width: 620px;
+    margin: 0 auto 32px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.filtros-directorio { 
+    display: flex; 
+    gap: 10px; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    align-items: center; 
+    background: rgba(10, 15, 25, 0.7);
+    padding: 12px 18px;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.btn-filtro { 
+    background: rgba(255, 255, 255, 0.06); 
+    border: 1px solid rgba(255, 255, 255, 0.15); 
+    color: var(--color-gris-claro); 
+    padding: 9px 20px; 
+    border-radius: 30px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    font-size: 0.9rem; 
+}
+.btn-filtro:hover { 
+    background: rgba(230, 32, 53, 0.2); 
+    color: var(--color-texto); 
+    border-color: var(--color-primario);
+}
+.btn-filtro.active { 
+    background: var(--color-primario); 
+    color: var(--color-texto); 
+    border-color: var(--color-primario); 
+    box-shadow: 0 0 15px rgba(230, 32, 53, 0.6); 
+}
 
 /* Buscador Calendario */
-.buscador-eventos { padding: 10px 15px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); color: white; width: 250px; font-size: 0.95em; outline: none; transition: border-color 0.3s; }
-.buscador-eventos:focus { border-color: var(--color-primario); }
+.buscador-eventos { 
+    padding: 9px 16px; 
+    border-radius: 30px; 
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    background: rgba(0, 0, 0, 0.5); 
+    color: white; 
+    width: 220px; 
+    font-size: 0.9rem; 
+    outline: none; 
+    transition: all 0.3s ease; 
+}
+.buscador-eventos:focus { 
+    border-color: var(--color-primario); 
+    box-shadow: 0 0 12px rgba(230, 32, 53, 0.4);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 768px) {
+    .calendario-hero-container {
+        min-height: 520px;
+        padding: 155px 15px 45px;
+    }
+    .calendario-hero-tag {
+        font-size: 0.7rem;
+        padding: 4px 12px;
+        margin-bottom: 10px;
+    }
+    .calendario-hero-title {
+        font-size: 1.85rem;
+        margin-bottom: 10px;
+    }
+    .calendario-hero-desc {
+        font-size: 0.9rem;
+        margin-bottom: 22px;
+        line-height: 1.45;
+    }
+    .filtros-directorio {
+        padding: 12px 14px;
+        border-radius: 20px;
+        gap: 8px;
+    }
+    .buscador-eventos {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .btn-filtro {
+        font-size: 0.78rem;
+        padding: 8px 12px;
+    }
+}
 
 .directorio-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 80px; flex-grow: 1; width: 100%; }
 .grid-eventos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
