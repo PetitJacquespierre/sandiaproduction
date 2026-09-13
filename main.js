@@ -96,9 +96,36 @@ window.showToast = function(message, backgroundColor = 'rgba(46, 204, 113, 0.95)
     }, 3000);
 }
 
+// --- TOGGLE CRONOGRAMA RUN FREE (MENSUAL) ---
+window.toggleCronogramaRunFree = function() {
+    const cronoContainer = document.getElementById('cronograma-runfree');
+    const rutinaContainer = document.getElementById('rutina-semanal');
+    
+    // Cerrar la rutina si está abierta para mantener la vista limpia
+    if (rutinaContainer && rutinaContainer.classList.contains('active')) {
+        rutinaContainer.classList.remove('active');
+    }
+
+    if (cronoContainer) {
+        cronoContainer.classList.toggle('active');
+        if (cronoContainer.classList.contains('active')) {
+            setTimeout(() => {
+                cronoContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+    }
+}
+
 // --- TOGGLE RUTINA SEMANAL ---
 window.toggleRutina = function() {
     const rutinaContainer = document.getElementById('rutina-semanal');
+    const cronoContainer = document.getElementById('cronograma-runfree');
+
+    // Cerrar el cronograma mensual si está abierto
+    if (cronoContainer && cronoContainer.classList.contains('active')) {
+        cronoContainer.classList.remove('active');
+    }
+
     if (rutinaContainer) {
         rutinaContainer.classList.toggle('active');
         // Auto-scroll a la rutina al abrirla

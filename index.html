@@ -108,7 +108,7 @@
             <div class="carousel-dots" id="carousel-dots"></div>
         </section>
 
-        <!-- SECCIÓN 2: INTEGRACIÓN COMUNIDAD Runner Club (3 COLUMNAS) -->
+        <!-- SECCIÓN 2: INTEGRACIÓN COMUNIDAD Runner Club (3 COLUMNAS + CRONOGRAMA MENSUAL) -->
         <section class="seccion-run-free" id="run-free">
             <div class="run-free-card">
                 
@@ -117,7 +117,7 @@
                     <img src="img/runfreelogo.png" alt="Runner Club" class="run-free-logo-img" onerror="this.style.display='none'">
                 </div>
                 
-                <!-- CENTRO: CONTENIDO Y BOTÓN -->
+                <!-- CENTRO: CONTENIDO Y BOTONES -->
                 <div class="run-free-content">
                     <span class="run-free-badge">Comunidad Oficial</span>
                     <h2>Únete al Team Runner Club</h2>
@@ -126,8 +126,11 @@
                         <a href="https://www.instagram.com/runfreest/" target="_blank" class="btn-run-free-outline">
                             Ver en Instagram
                         </a>
+                        <button class="btn-run-free-outline btn-crono-runfree" onclick="toggleCronogramaRunFree()" style="cursor: pointer; background: rgba(0, 255, 102, 0.12); border-color: #00ff66; color: #00ff66;">
+                            📅 Cronograma Septiembre
+                        </button>
                         <button class="btn-run-free-outline btn-rutina" onclick="toggleRutina()" style="cursor: pointer;">
-                            Semana Running
+                            🏃 Semana Running
                         </button>
                     </div>
                 </div>
@@ -139,38 +142,193 @@
 
             </div>
 
-            <!-- ACORDEÓN SEMANA RUNNING -->
+            <!-- ACORDEÓN CRONOGRAMA RUNNING SEPTIEMBRE (NUEVO) -->
+            <div class="cronograma-runfree-container" id="cronograma-runfree">
+                <div class="crono-box">
+                    <div class="crono-header">
+                        <div class="crono-header-brand">
+                            <span class="crono-tag">SOCIAL TEAM</span>
+                            <h3>CRONOGRAMA <span>RUNNING</span></h3>
+                            <span class="crono-mes">SEPTIEMBRE</span>
+                        </div>
+                        <p class="crono-subtitulo">MÁS KILÓMETROS • MÁS HISTORIAS JUNTOS</p>
+                    </div>
+
+                    <div class="crono-lista">
+                        <!-- 13 SEP -->
+                        <div class="crono-item">
+                            <div class="crono-fecha">
+                                <span class="crono-dia">13</span>
+                                <span class="crono-mes-lbl">SEP</span>
+                            </div>
+                            <div class="crono-dist"><span class="shoe-icon">👟</span> 10K</div>
+                            <div class="crono-nombre">Farmacias grupo san Anselmo</div>
+                            <div class="crono-lugar">📍 Naguanagua, Carabobo</div>
+                        </div>
+
+                        <!-- 13 SEP -->
+                        <div class="crono-item">
+                            <div class="crono-fecha">
+                                <span class="crono-dia">13</span>
+                                <span class="crono-mes-lbl">SEP</span>
+                            </div>
+                            <div class="crono-dist"><span class="shoe-icon">👟</span> 10K</div>
+                            <div class="crono-nombre">Mcbo Gatorade Rock</div>
+                            <div class="crono-lugar">📍 Maracaibo</div>
+                        </div>
+
+                        <!-- 20 SEP -->
+                        <div class="crono-item">
+                            <div class="crono-fecha">
+                                <span class="crono-dia">20</span>
+                                <span class="crono-mes-lbl">SEP</span>
+                            </div>
+                            <div class="crono-dist"><span class="shoe-icon">👟</span> 5K / 10K</div>
+                            <div class="crono-nombre">Tecno farma</div>
+                            <div class="crono-lugar">📍 Caracas</div>
+                        </div>
+
+                        <!-- 20 SEP -->
+                        <div class="crono-item">
+                            <div class="crono-fecha">
+                                <span class="crono-dia">20</span>
+                                <span class="crono-mes-lbl">SEP</span>
+                            </div>
+                            <div class="crono-dist"><span class="shoe-icon">👟</span> 10K</div>
+                            <div class="crono-nombre">Palacio del Blúmer</div>
+                            <div class="crono-lugar">📍 Barquisimeto</div>
+                        </div>
+
+                        <!-- 20 SEP -->
+                        <div class="crono-item">
+                            <div class="crono-fecha">
+                                <span class="crono-dia">20</span>
+                                <span class="crono-mes-lbl">SEP</span>
+                            </div>
+                            <div class="crono-dist"><span class="shoe-icon">👟</span> 10K</div>
+                            <div class="crono-nombre">La cinética</div>
+                            <div class="crono-lugar">📍 Ciudad Bolívar</div>
+                        </div>
+
+                        <!-- 20 SEP -->
+                        <div class="crono-item">
+                            <div class="crono-fecha">
+                                <span class="crono-dia">20</span>
+                                <span class="crono-mes-lbl">SEP</span>
+                            </div>
+                            <div class="crono-dist"><span class="shoe-icon">👟</span> 10K</div>
+                            <div class="crono-nombre">Alkosto RUN fest</div>
+                            <div class="crono-lugar">📍 Maracaibo</div>
+                        </div>
+
+                        <!-- 27 SEP - CARRERA DESTACADA LOCAL SANDÍA -->
+                        <div class="crono-item crono-destacada" onclick="window.open('https://forms.gle/CqN4gF54xLK3vo6T6', '_blank')">
+                            <div class="crono-fecha">
+                                <span class="crono-dia">27</span>
+                                <span class="crono-mes-lbl">SEP</span>
+                            </div>
+                            <div class="crono-dist"><span class="shoe-icon">👟</span> 3K</div>
+                            <div class="crono-nombre">
+                                <strong>Coffee RUN ¡Madre Mía!</strong>
+                                <span class="crono-local-tag">Punto Fijo - Falcón</span>
+                            </div>
+                            <div class="crono-badge-destacada">
+                                ★ CARRERA DESTACADA
+                            </div>
+                        </div>
+
+                        <!-- 27 SEP -->
+                        <div class="crono-item">
+                            <div class="crono-fecha">
+                                <span class="crono-dia">27</span>
+                                <span class="crono-mes-lbl">SEP</span>
+                            </div>
+                            <div class="crono-dist"><span class="shoe-icon">👟</span> 3K / 5K / 10K</div>
+                            <div class="crono-nombre">Bimbo global race</div>
+                            <div class="crono-lugar">📍 Caracas</div>
+                        </div>
+
+                        <!-- 27 SEP -->
+                        <div class="crono-item" style="border-bottom: none;">
+                            <div class="crono-fecha">
+                                <span class="crono-dia">27</span>
+                                <span class="crono-mes-lbl">SEP</span>
+                            </div>
+                            <div class="crono-dist"><span class="shoe-icon">👟</span> 5K</div>
+                            <div class="crono-nombre">Beauty concept coffee RUN</div>
+                            <div class="crono-lugar">📍 Maracaibo</div>
+                        </div>
+                    </div>
+
+                    <div class="crono-footer">
+                        <span>CORRE</span> • <span>DISFRUTA</span> • <span>CONECTA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACORDEÓN SEMANA RUNNING (ACTUALIZADO CON FECHAS) -->
             <div class="rutina-semanal-container" id="rutina-semanal">
                 <div class="rutina-grid">
+                    <div class="crono-header" style="margin-bottom: 15px; padding-bottom: 12px;">
+                        <h3 style="margin: 0; font-size: 1.3rem; color: #fff; font-weight: 800; letter-spacing: 1px;">
+                            🏃 RUTAS & ENTRENAMIENTOS <span style="color: #00ff66;">SEMANALES</span>
+                        </h3>
+                        <p style="font-size: 0.8rem; color: #888; margin: 4px 0 0;">TEAM RUNNER CLUB • PUNTO FIJO</p>
+                    </div>
+
+                    <!-- LUNES -->
                     <div class="rutina-dia">
-                        <span class="rutina-nombre">LUNES</span>
+                        <div class="rutina-header-col">
+                            <span class="rutina-nombre">LUNES</span>
+                            <span class="rutina-fecha-tag">📍 RUTA FIJA</span>
+                        </div>
                         <span class="rutina-hora">⏱ 6:00 PM</span>
-                        <span class="rutina-act">5K</span>
+                        <span class="rutina-act"><span class="shoe-icon">👟</span> 5K</span>
                         <span class="rutina-lugar">CC Las Virtudes / GoldstarsGym</span>
                     </div>
+
+                    <!-- MIÉRCOLES -->
                     <div class="rutina-dia">
-                        <span class="rutina-nombre">MIÉRCOLES</span>
+                        <div class="rutina-header-col">
+                            <span class="rutina-nombre">MIÉRCOLES</span>
+                            <span class="rutina-fecha-tag">📍 RUTA FIJA</span>
+                        </div>
                         <span class="rutina-hora">⏱ 6:00 PM</span>
-                        <span class="rutina-act">3K</span>
+                        <span class="rutina-act"><span class="shoe-icon">👟</span> 3K</span>
                         <span class="rutina-lugar">Plaza Bolívar / Falcón Fit</span>
                     </div>
+
+                    <!-- JUEVES -->
                     <div class="rutina-dia">
-                        <span class="rutina-nombre">JUEVES</span>
+                        <div class="rutina-header-col">
+                            <span class="rutina-nombre">JUEVES</span>
+                            <span class="rutina-fecha-tag">🌅 MAÑANERO</span>
+                        </div>
                         <span class="rutina-hora">⏱ 5:30 AM</span>
-                        <span class="rutina-act">Cuestas/Ritmo</span>
+                        <span class="rutina-act"><span class="shoe-icon">👟</span> Cuestas / Ritmo</span>
                         <span class="rutina-lugar">Club Náutico</span>
                     </div>
+
+                    <!-- VIERNES -->
                     <div class="rutina-dia">
-                        <span class="rutina-nombre">VIERNES</span>
+                        <div class="rutina-header-col">
+                            <span class="rutina-nombre">VIERNES</span>
+                            <span class="rutina-fecha-tag">🌅 FONDO</span>
+                        </div>
                         <span class="rutina-hora">⏱ 5:30 AM</span>
-                        <span class="rutina-act">10K</span>
+                        <span class="rutina-act"><span class="shoe-icon">👟</span> 10K</span>
                         <span class="rutina-lugar">C.C. Sambil</span>
                     </div>
-                    <div class="rutina-dia" style="border-bottom: none;">
-                        <span class="rutina-nombre">SÁBADO</span>
+
+                    <!-- SÁBADO -->
+                    <div class="rutina-dia" style="border-bottom: none; background: rgba(0, 255, 102, 0.05); border: 1px solid rgba(0, 255, 102, 0.2); border-radius: 10px;">
+                        <div class="rutina-header-col">
+                            <span class="rutina-nombre" style="color: #00ff66;">SÁBADO</span>
+                            <span class="rutina-fecha-tag" style="color: #ff334b;">☕ COFFEE RUN</span>
+                        </div>
                         <span class="rutina-hora">⏱ 6:30 AM</span>
-                        <span class="rutina-act" style="color: var(--color-primario);">Coffee Run</span>
-                        <span class="rutina-lugar">Terraza Tinaja</span>
+                        <span class="rutina-act" style="color: #00ff66;"><span class="shoe-icon">👟</span> 3K / 5K</span>
+                        <span class="rutina-lugar" style="color: #fff; font-weight: 700;">Terraza Tinaja</span>
                     </div>
                 </div>
             </div>

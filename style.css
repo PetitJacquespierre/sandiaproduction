@@ -168,6 +168,214 @@ body {
 .run-free-content p { color: var(--color-gris-claro); font-size: 1.05em; line-height: 1.5; margin-bottom: 25px; max-width: 500px; }
 .btn-run-free-outline { background: var(--color-fondo); color: var(--color-texto); padding: 12px 30px; font-weight: 800; border-radius: 30px; text-decoration: none; text-transform: uppercase; font-size: 0.9em; border: 1px solid rgba(255,255,255,0.2); transition: all 0.3s; }
 .btn-run-free-outline:hover { background: rgba(230, 32, 53, 0.15); border-color: var(--color-primario-hover); }
+.btn-crono-runfree:hover { background: rgba(0, 255, 102, 0.25) !important; box-shadow: 0 0 15px rgba(0, 255, 102, 0.4); transform: scale(1.03); }
+
+/* ==========================================================================
+   CRONOGRAMA RUN FREE (ESTILO OFICIAL SOCIAL TEAM FLYER)
+   ========================================================================== */
+.cronograma-runfree-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease, margin-top 0.3s ease;
+}
+.cronograma-runfree-container.active {
+    max-height: 2500px;
+    opacity: 1;
+    margin-top: 25px;
+    overflow: visible;
+}
+.crono-box {
+    background: radial-gradient(circle at 10% 20%, rgba(0, 255, 102, 0.04) 0%, rgba(10, 15, 25, 0.95) 90%);
+    border: 1px solid rgba(0, 255, 102, 0.2);
+    border-radius: 20px;
+    padding: 30px 25px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 0 30px rgba(0, 255, 102, 0.03);
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+.crono-header {
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 20px;
+}
+.crono-header-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.crono-tag {
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: #00ff66;
+    background: rgba(0, 255, 102, 0.1);
+    padding: 3px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 255, 102, 0.3);
+}
+.crono-header-brand h3 {
+    margin: 6px 0 2px;
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+}
+.crono-header-brand h3 span {
+    color: #ffffff;
+    font-weight: 300;
+}
+.crono-mes {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #00ff66;
+    letter-spacing: 4px;
+    text-shadow: 0 0 15px rgba(0, 255, 102, 0.5);
+}
+.crono-subtitulo {
+    font-size: 0.78rem;
+    color: #888;
+    letter-spacing: 2px;
+    margin: 8px 0 0;
+    font-weight: 700;
+}
+
+.crono-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.crono-item {
+    display: grid;
+    grid-template-columns: 85px 120px 1.5fr 1.2fr;
+    align-items: center;
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: all 0.25s ease;
+}
+.crono-item:hover {
+    background: rgba(0, 255, 102, 0.05);
+    transform: translateX(4px);
+}
+.crono-fecha {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+.crono-dia {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #00ff66;
+    line-height: 1;
+}
+.crono-mes-lbl {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #888;
+    letter-spacing: 1px;
+}
+.crono-dist {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.crono-dist .shoe-icon {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 0 5px rgba(0, 255, 102, 0.6));
+}
+.crono-nombre {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #e0e0e0;
+}
+.crono-lugar {
+    font-size: 0.85rem;
+    color: #999;
+    text-align: right;
+}
+
+/* Carrera Destacada (Coffee Run Punto Fijo) */
+.crono-item.crono-destacada {
+    background: rgba(0, 255, 102, 0.08);
+    border: 2px solid #00ff66;
+    box-shadow: 0 0 25px rgba(0, 255, 102, 0.3), inset 0 0 15px rgba(0, 255, 102, 0.1);
+    border-radius: 12px;
+    margin: 6px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.crono-item.crono-destacada:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 35px rgba(0, 255, 102, 0.5);
+    background: rgba(0, 255, 102, 0.14);
+}
+.crono-destacada .crono-nombre strong {
+    color: #ffffff;
+    font-size: 1.05rem;
+    display: block;
+}
+.crono-local-tag {
+    font-size: 0.75rem;
+    color: #00ff66;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+.crono-badge-destacada {
+    background: #00ff66;
+    color: #050a15;
+    font-weight: 900;
+    font-size: 0.72rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-align: center;
+    letter-spacing: 1px;
+    box-shadow: 0 0 12px rgba(0, 255, 102, 0.6);
+    justify-self: end;
+}
+
+.crono-footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: #00ff66;
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
+}
+
+@media (max-width: 768px) {
+    .crono-item {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        text-align: center;
+        padding: 16px 12px;
+    }
+    .crono-fecha {
+        justify-content: center;
+    }
+    .crono-dist {
+        justify-content: center;
+    }
+    .crono-lugar {
+        text-align: center;
+    }
+    .crono-badge-destacada {
+        justify-self: center;
+        margin-top: 5px;
+    }
+}
 
 /* Rutina Semanal Acordeón */
 .rutina-semanal-container {
@@ -177,50 +385,71 @@ body {
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease, margin-top 0.3s ease;
+    transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease, margin-top 0.3s ease;
 }
 .rutina-semanal-container.active {
-    max-height: 800px;
+    max-height: 1500px;
     opacity: 1;
-    margin-top: 20px;
+    margin-top: 25px;
+    overflow: visible;
 }
 .rutina-grid {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: radial-gradient(circle at 10% 20%, rgba(0, 255, 102, 0.03) 0%, rgba(10, 15, 25, 0.95) 90%);
+    border: 1px solid rgba(0, 255, 102, 0.15);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
     display: flex;
     flex-direction: column;
+    gap: 8px;
 }
 .rutina-dia {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1.5fr;
+    grid-template-columns: 140px 100px 1.2fr 1.5fr;
     align-items: center;
-    padding: 15px 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    gap: 10px;
-    transition: background 0.3s;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    gap: 12px;
+    transition: all 0.25s ease;
 }
 .rutina-dia:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 255, 102, 0.05);
+    transform: translateX(4px);
+}
+.rutina-header-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 .rutina-nombre {
     font-weight: 900;
     color: var(--color-texto);
     letter-spacing: 1px;
+    font-size: 0.95rem;
+}
+.rutina-fecha-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #00ff66;
+    letter-spacing: 0.5px;
 }
 .rutina-hora {
     color: var(--color-gris-claro);
     font-size: 0.9em;
+    font-weight: 700;
 }
 .rutina-act {
-    color: var(--color-exito);
-    font-weight: bold;
+    color: #ffffff;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 .rutina-lugar {
-    color: var(--color-gris-oscuro);
-    font-size: 0.85em;
+    color: #999;
+    font-size: 0.88em;
     text-align: right;
 }
 
@@ -228,12 +457,18 @@ body {
     .rutina-dia {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 5px;
-        padding: 20px 10px;
+        gap: 6px;
+        padding: 16px 12px;
+    }
+    .rutina-header-col {
+        align-items: center;
+    }
+    .rutina-act {
+        justify-content: center;
     }
     .rutina-lugar {
         text-align: center;
-        margin-top: 5px;
+        margin-top: 2px;
     }
 }
 
