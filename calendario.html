@@ -82,6 +82,7 @@
             <div class="filtros-directorio">
                 <input type="search" id="buscador-eventos" class="buscador-eventos" placeholder="Buscar carrera o lugar...">
                 <button class="btn-filtro active" data-filtro="todas">Todas</button>
+                <button class="btn-filtro" data-filtro="sandia">🍉 Sandía</button>
                 <button class="btn-filtro" data-filtro="local">📍 Punto Fijo</button>
                 <button class="btn-filtro" data-filtro="nacional">🇻🇪 Nacionales</button>
                 <button class="btn-filtro" data-filtro="virtual">🌐 Retos Virtuales</button>
@@ -334,10 +335,15 @@
             eventosData.forEach(evento => {
                 const tituloUpper = (evento.titulo || '').toUpperCase();
                 const imagenUpper = (evento.imagen || '').toUpperCase();
+                const categoriaOriginal = (evento.categoria || '').toLowerCase();
 
                 // Normalización de categorías y botones clave
-                let cat = (evento.categoria || 'local').toLowerCase();
-                if (cat === 'sandia' || cat === 'regional') cat = 'local';
+                let cat = categoriaOriginal || 'local';
+                if (cat === 'regional') cat = 'local';
+
+                let isSandia = categoriaOriginal === 'sandia' || tituloUpper.includes('HORROR') || tituloUpper.includes('MADRE') || tituloUpper.includes('COFFEE');
+                let dataCatAttr = cat;
+                if (isSandia) dataCatAttr += ' sandia';
 
                 let textoBtn = evento.textoBoton || '';
                 let enlaceUrl = evento.enlace || '';
@@ -363,7 +369,7 @@
                 if (textoBtn && enlaceUrl) {
                     const isExternal = enlaceUrl.startsWith('http://') || enlaceUrl.startsWith('https://');
                     const targetAttr = isExternal ? 'target="_blank"' : '';
-                    if ((cat === 'local' || cat === 'sandia' || !evento.categoria) && (enlaceUrl.includes('html') || enlaceUrl.includes('forms') || enlaceUrl.includes('google'))) {
+                    if ((cat === 'local' || isSandia || !evento.categoria) && (enlaceUrl.includes('html') || enlaceUrl.includes('forms') || enlaceUrl.includes('google'))) {
                         htmlBoton = `<a href="${enlaceUrl}" ${targetAttr} class="btn-sandia-general" style="width: 100%; text-align: center;">${textoBtn}</a>`;
                     } else {
                         htmlBoton = `<a href="${enlaceUrl}" ${targetAttr} class="btn-outline" style="width: 100%; text-align: center;">${textoBtn}</a>`;
@@ -373,7 +379,7 @@
                 }
 
                 const cardHTML = `
-                    <div class="evento-card" data-categoria="${cat}">
+                    <div class="evento-card" data-categoria="${dataCatAttr}">
                         <div class="flyer-box">
                             <img src="img/${evento.imagen || 'Isotipo.png'}" alt="${evento.titulo}" loading="lazy" onerror="this.src='img/Isotipo.png'">
                             <div class="fecha-badge">
@@ -383,6 +389,7 @@
                         </div>
                         <div class="info-box">
                             <div class="etiquetas-container">
+                                ${isSandia ? '<span class="etiqueta" style="background: rgba(230, 32, 53, 0.2); color: #ff334b; border: 1px solid rgba(230, 32, 53, 0.4);">🍉 SANDÍA</span>' : ''}
                                 <span class="etiqueta ${claseEtiqueta}">${evento.etiqueta || (cat.toUpperCase())}</span>
                             </div>
                             <h3>${evento.titulo}</h3>
@@ -408,11 +415,11 @@
                 let visibles = 0;
 
                 tarjetas.forEach(tarjeta => {
-                    const categoriaTarjeta = tarjeta.getAttribute('data-categoria') || '';
+                    const categoriaTarjeta = (tarjeta.getAttribute('data-categoria') || '').toLowerCase();
                     const titulo = tarjeta.querySelector('h3') ? tarjeta.querySelector('h3').innerText.toLowerCase() : '';
                     const ubicacion = tarjeta.querySelector('.ubicacion') ? tarjeta.querySelector('.ubicacion').innerText.toLowerCase() : '';
                     
-                    const pasaFiltroCat = (filtroActivo === 'todas' || filtroActivo === categoriaTarjeta);
+                    const pasaFiltroCat = (filtroActivo === 'todas' || categoriaTarjeta.includes(filtroActivo));
                     const pasaBusqueda = titulo.includes(textoBusqueda) || ubicacion.includes(textoBusqueda);
 
                     if (pasaFiltroCat && pasaBusqueda) {

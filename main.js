@@ -10,15 +10,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const sideMenu = document.getElementById('side-menu');
     const menuOverlay = document.getElementById('menu-overlay');
 
-    function toggleMenu() {
+    window.toggleMenu = function() {
         if(sideMenu) sideMenu.classList.toggle('active');
         if(menuOverlay) menuOverlay.classList.toggle('active');
         if(openMenuBtn) openMenuBtn.classList.toggle('active'); 
-    }
+    };
 
-    if(openMenuBtn) openMenuBtn.addEventListener('click', toggleMenu);
-    if(closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
-    if(menuOverlay) menuOverlay.addEventListener('click', toggleMenu);
+    window.cerrarMenu = function() {
+        if(sideMenu) sideMenu.classList.remove('active');
+        if(menuOverlay) menuOverlay.classList.remove('active');
+        if(openMenuBtn) openMenuBtn.classList.remove('active');
+    };
+
+    if(openMenuBtn) openMenuBtn.addEventListener('click', window.toggleMenu);
+    if(closeMenuBtn) closeMenuBtn.addEventListener('click', window.cerrarMenu);
+    if(menuOverlay) menuOverlay.addEventListener('click', window.cerrarMenu);
+
+    document.querySelectorAll('.side-menu-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            setTimeout(window.cerrarMenu, 100);
+        });
+    });
 
     // --- ESTADO ACTIVO DEL MENÚ (ESCRITORIO) ---
     function setMenuActivo() {
