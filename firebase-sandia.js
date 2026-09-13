@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, increment, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
     projectId: "grow-studio-menus",
@@ -67,7 +67,7 @@ export async function verificarEstadoSitioWeb() {
     }
 }
 
-// 2. Obtener Eventos Deportivos desde Firebase
+// 2. Obtener Eventos Deportivos desde Firebase (Ordenados en memoria)
 export async function getSandiaEventos() {
     try {
         const querySnapshot = await getDocs(collection(db, "sandia_eventos"));
@@ -75,6 +75,7 @@ export async function getSandiaEventos() {
         querySnapshot.forEach((d) => {
             eventos.push({ id: d.id, ...d.data() });
         });
+        eventos.sort((a, b) => (a.orden !== undefined ? a.orden : 999) - (b.orden !== undefined ? b.orden : 999));
         return eventos;
     } catch (error) {
         console.error("Error al obtener eventos de Firestore:", error);
@@ -82,7 +83,7 @@ export async function getSandiaEventos() {
     }
 }
 
-// 3. Obtener Aliados Comerciales desde Firebase
+// 3. Obtener Aliados Comerciales desde Firebase (Ordenados en memoria)
 export async function getSandiaAliados() {
     try {
         const querySnapshot = await getDocs(collection(db, "sandia_aliados"));
@@ -90,6 +91,7 @@ export async function getSandiaAliados() {
         querySnapshot.forEach((d) => {
             aliados.push({ id: d.id, ...d.data() });
         });
+        aliados.sort((a, b) => (a.orden !== undefined ? a.orden : 999) - (b.orden !== undefined ? b.orden : 999));
         return aliados;
     } catch (error) {
         console.error("Error al obtener aliados de Firestore:", error);
