@@ -744,21 +744,30 @@
             const montoVesLabel = document.getElementById('monto-final-ves');
             const tasaBcvLabel = document.getElementById('tasa-usd-bcv');
 
+            let tasa = tasaRespaldoLocal;
+
             try {
-                let datos = null;
                 const cached = sessionStorage.getItem('tasaBCV');
                 const cacheTime = sessionStorage.getItem('tasaBCVTime');
                 
                 if (cached && cacheTime && (Date.now() - parseInt(cacheTime) < 3600000)) {
-                    datos = JSON.parse(cached);
+                    const datos = JSON.parse(cached);
+                    if (datos && datos.usd) tasa = parseFloat(datos.usd);
                 } else {
-                    const respuesta = await fetch(urlApiDivisasBCV);
-                    datos = await respuesta.json();
-                    sessionStorage.setItem('tasaBCV', JSON.stringify(datos));
-                    sessionStorage.setItem('tasaBCVTime', Date.now().toString());
+                    const respuesta = await fetch(urlApiDivisasBCV, { mode: 'cors' });
+                    if (respuesta.ok) {
+                        const datos = await respuesta.json();
+                        if (datos && datos.usd) {
+                            tasa = parseFloat(datos.usd);
+                            sessionStorage.setItem('tasaBCV', JSON.stringify(datos));
+                            sessionStorage.setItem('tasaBCVTime', Date.now().toString());
+                        }
+                    }
                 }
-
-                let tasa = parseFloat(datos.usd) || tasaRespaldoLocal;
+            } catch (err) {
+                // Si la API de Google Apps Script no responde o retorna 404, usamos silenciosamente la tasa de respaldo oficial
+                tasa = tasaRespaldoLocal;
+            } finally {
                 let totalVes = tasa * costoDivisa;
 
                 if (tasaBcvLabel) tasaBcvLabel.innerText = formatVE(tasa);
@@ -780,19 +789,6 @@
                     });
                 }
 
-                if (loadingBox) loadingBox.style.display = 'none';
-                if (resultsBox) resultsBox.style.display = 'block';
-            } catch (err) {
-                console.error("Error consultando BCV:", err);
-                let totalVes = tasaRespaldoLocal * costoDivisa;
-                if (tasaBcvLabel) tasaBcvLabel.innerText = formatVE(tasaRespaldoLocal);
-                if (montoVesLabel) montoVesLabel.innerHTML = `${formatVE(totalVes)} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
-                
-                const inputMonto = document.getElementById('input-monto-pago');
-                if (inputMonto && !inputMonto.value) {
-                    inputMonto.value = `${formatVE(totalVes)} Bs`;
-                }
-                
                 if (loadingBox) loadingBox.style.display = 'none';
                 if (resultsBox) resultsBox.style.display = 'block';
             }
