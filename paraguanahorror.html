@@ -732,7 +732,7 @@
 
         const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbwsoD8ahtAQUqfY0TQWf3-dDs29HL8kEJa2t-mjDR3PAo3exTTmtSwXqYuNB2ob5dFpgw/exec";
         const costoDivisa = 20; // 20$ primeros 100 cupos
-        let tasaRespaldoLocal = 764.35;
+        let tasaRespaldoLocal = 842.21;
 
         function formatVE(num) {
             return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
@@ -754,7 +754,16 @@
                     const datos = JSON.parse(cached);
                     if (datos && datos.usd) tasa = parseFloat(datos.usd);
                 } else {
-                    const respuesta = await fetch(urlApiDivisasBCV, { mode: 'cors' });
+                    // Control de tiempo límite: máximo 2.5 segundos de espera a Google Apps Script
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 2500);
+
+                    const respuesta = await fetch(urlApiDivisasBCV, { 
+                        mode: 'cors',
+                        signal: controller.signal 
+                    });
+                    clearTimeout(timeoutId);
+
                     if (respuesta.ok) {
                         const datos = await respuesta.json();
                         if (datos && datos.usd) {
@@ -765,7 +774,7 @@
                     }
                 }
             } catch (err) {
-                // Si la API de Google Apps Script no responde o retorna 404, usamos silenciosamente la tasa de respaldo oficial
+                // Si la API tarda más de 2.5s o falla, usamos inmediatamente la tasa oficial de respaldo
                 tasa = tasaRespaldoLocal;
             } finally {
                 let totalVes = tasa * costoDivisa;
