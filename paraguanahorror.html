@@ -750,20 +750,13 @@
                 const cached = sessionStorage.getItem('tasaBCV');
                 const cacheTime = sessionStorage.getItem('tasaBCVTime');
                 
-                if (cached && cacheTime && (Date.now() - parseInt(cacheTime) < 3600000)) {
+                // Expirar caché a los 10 minutos para frescura máxima de la tasa
+                if (cached && cacheTime && (Date.now() - parseInt(cacheTime) < 600000)) {
                     const datos = JSON.parse(cached);
                     if (datos && datos.usd) tasa = parseFloat(datos.usd);
                 } else {
-                    // Control de tiempo límite: máximo 2.5 segundos de espera a Google Apps Script
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 2500);
-
-                    const respuesta = await fetch(urlApiDivisasBCV, { 
-                        mode: 'cors',
-                        signal: controller.signal 
-                    });
-                    clearTimeout(timeoutId);
-
+                    // Consulta con bypass de caché para obtener siempre el precio más reciente
+                    const respuesta = await fetch(urlApiDivisasBCV + "?t=" + Date.now());
                     if (respuesta.ok) {
                         const datos = await respuesta.json();
                         if (datos && datos.usd) {
@@ -774,7 +767,7 @@
                     }
                 }
             } catch (err) {
-                // Si la API tarda más de 2.5s o falla, usamos inmediatamente la tasa oficial de respaldo
+                console.warn("Usando tasa de respaldo oficial:", err);
                 tasa = tasaRespaldoLocal;
             } finally {
                 let totalVes = tasa * costoDivisa;
