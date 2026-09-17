@@ -275,10 +275,10 @@
     <script>
         // --- CONFIGURACIÓN GENERAL DEL EVENTO ---
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbychQtU8RjkpBW5tuNY_NqxpJN32q9Jcc7AAhX8X5nhuDPqQ1MKrCHEI-Qf87A-r-dh1w/exec";
-        const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbwsoD8ahtAQUqfY0TQWf3-dDs29HL8kEJa2t-mjDR3PAo3exTTmtSwXqYuNB2ob5dFpgw/exec";
+        const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbyazhyYfK-vURGv34XF-oTW1_34rTVRs2WM7-aNlswf-mIGhIwgaLgwfGx1xZxfm50/exec";
         const costoDivisa = 5; 
         const tipoDivisaCalculo = "eur"; 
-        let tasaRespaldoLocal = 692.05; 
+        let tasaRespaldoLocal = 974.42; 
         let tasaActual = tasaRespaldoLocal;
 
         // --- LÓGICA COMPARTIDA EN MAIN.JS ---
@@ -304,7 +304,7 @@
                 if (cached && cacheTime && (Date.now() - parseInt(cacheTime) < 3600000)) {
                     datos = JSON.parse(cached);
                 } else {
-                    const respuesta = await fetch(urlApiDivisasBCV);
+                    const respuesta = await fetch(urlApiDivisasBCV + "?t=" + Date.now());
                     datos = await respuesta.json();
                     sessionStorage.setItem('tasaBCV', JSON.stringify(datos));
                     sessionStorage.setItem('tasaBCVTime', Date.now().toString());
