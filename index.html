@@ -666,6 +666,24 @@
                     }
                 });
 
+                // PRIORIDAD ABSOLUTA: Eventos oficiales de Sandía Production siempre de primerito
+                eventosActivosGlobal.sort((a, b) => {
+                    const catA = (a.eventoData.categoria || '').toUpperCase();
+                    const catB = (b.eventoData.categoria || '').toUpperCase();
+                    const titA = (a.eventoData.titulo || '').toLowerCase();
+                    const titB = (b.eventoData.titulo || '').toLowerCase();
+                    
+                    const esSandiaA = catA.includes('SANDIA') || titA.includes('horror') || titA.includes('coffee run') || titA.includes('sandía');
+                    const esSandiaB = catB.includes('SANDIA') || titB.includes('horror') || titB.includes('coffee run') || titB.includes('sandía');
+
+                    if (esSandiaA && !esSandiaB) return -1;
+                    if (!esSandiaA && esSandiaB) return 1;
+                    
+                    const ordA = a.eventoData.orden !== undefined ? a.eventoData.orden : 999;
+                    const ordB = b.eventoData.orden !== undefined ? b.eventoData.orden : 999;
+                    return ordA - ordB;
+                });
+
                 renderizarCarrerasActivas(eventosActivosGlobal);
 
                 if (pasadosArray.length > 0) {
@@ -791,12 +809,12 @@
         }
 
         function iniciarRotacionAutomatica(contenedor) {
-            const tiempoRotacion = 4000; 
+            const tiempoRotacion = 3500; 
             let currentIndex = 0;
             
             function hacerScroll() {
                 const tarjetas = contenedor.querySelectorAll('.event-card');
-                if (!tarjetas || tarjetas.length === 0) return;
+                if (!tarjetas || tarjetas.length <= 1) return;
                 
                 currentIndex = (currentIndex + 1) % tarjetas.length;
                 const tarjeta = tarjetas[currentIndex];
@@ -806,24 +824,35 @@
                 }
             }
 
-            carruselInterval = setInterval(hacerScroll, tiempoRotacion);
+            function reiniciarTimer() {
+                if (carruselInterval) clearInterval(carruselInterval);
+                carruselInterval = setInterval(hacerScroll, tiempoRotacion);
+            }
+
+            reiniciarTimer();
 
             contenedor.addEventListener('mouseenter', () => clearInterval(carruselInterval));
-            contenedor.addEventListener('touchstart', () => clearInterval(carruselInterval));
-            contenedor.addEventListener('mouseleave', () => carruselInterval = setInterval(hacerScroll, tiempoRotacion));
-            contenedor.addEventListener('touchend', () => carruselInterval = setInterval(hacerScroll, tiempoRotacion));
+            contenedor.addEventListener('touchstart', () => clearInterval(carruselInterval), { passive: true });
+            contenedor.addEventListener('mouseleave', () => reiniciarTimer());
+            contenedor.addEventListener('touchend', () => {
+                setTimeout(reiniciarTimer, 1500);
+            }, { passive: true });
             
+            let scrollTimeout;
             contenedor.addEventListener('scroll', () => {
-                const tarjetas = contenedor.querySelectorAll('.event-card');
-                tarjetas.forEach((tarjeta, idx) => {
-                    const rect = tarjeta.getBoundingClientRect();
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const tarjetas = contenedor.querySelectorAll('.event-card');
                     const containerRect = contenedor.getBoundingClientRect();
-                    if (Math.abs(rect.left - containerRect.left) < rect.width / 2) {
-                        currentIndex = idx;
-                        actualizarDotActivo(idx);
-                    }
-                });
-            });
+                    tarjetas.forEach((tarjeta, idx) => {
+                        const rect = tarjeta.getBoundingClientRect();
+                        if (Math.abs(rect.left - containerRect.left) < rect.width / 2) {
+                            currentIndex = idx;
+                            actualizarDotActivo(idx);
+                        }
+                    });
+                }, 100);
+            }, { passive: true });
         }
 
         async function cargarAliados() {
