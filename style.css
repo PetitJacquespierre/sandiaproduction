@@ -918,3 +918,16 @@ select.form-control option { background-color: var(--color-fondo-menu); color: #
     overflow: hidden !important;
 }
 
+/* ==========================================================================
+   11. GROW STUDIO - EASTER EGG (TOQUE MÁGICO EN LOGOTIPO)
+   ========================================================================== */
+@keyframes growMagicGlow {
+    0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 5px rgba(230, 32, 53, 0.4)); }
+    25% { transform: scale(1.15) rotate(-6deg); filter: drop-shadow(0 0 25px rgba(230, 32, 53, 1)) drop-shadow(0 0 35px #00c6eb); }
+    50% { transform: scale(1.22) rotate(360deg); filter: drop-shadow(0 0 35px #00c6eb) drop-shadow(0 0 45px #2ecc71); }
+    75% { transform: scale(1.1) rotate(365deg); filter: drop-shadow(0 0 20px #e62035); }
+    100% { transform: scale(1) rotate(360deg); filter: drop-shadow(0 0 5px rgba(230, 32, 53, 0.4)); }
+}
+.grow-magic-active {
+    animation: growMagicGlow 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}

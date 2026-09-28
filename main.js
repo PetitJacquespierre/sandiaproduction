@@ -97,6 +97,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const toastContainer = document.createElement('div');
     toastContainer.id = 'toast-container';
     document.body.appendChild(toastContainer);
+
+    // --- GROW STUDIO - EASTER EGG (TOQUE MÁGICO EN LOGO Y KONAMI) ---
+    const brandLogos = document.querySelectorAll('.logo-wrapper img, .navbar-sandia img, #sandia-logo');
+    brandLogos.forEach(logo => {
+        let pressTimer;
+        let lastTap = 0;
+
+        const triggerMagic = () => {
+            logo.classList.remove('grow-magic-active');
+            void logo.offsetWidth; // Forzar reflow
+            logo.classList.add('grow-magic-active');
+            if (window.showToast) {
+                window.showToast("🍉 Sandía Mode: ¡Pasión Runner Activada! ⚡", "rgba(230, 32, 53, 0.95)");
+            }
+            setTimeout(() => logo.classList.remove('grow-magic-active'), 1400);
+        };
+
+        // Doble clic o doble toque rápido
+        logo.addEventListener('click', (e) => {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if (tapLength < 350 && tapLength > 0) {
+                triggerMagic();
+                e.preventDefault();
+            }
+            lastTap = currentTime;
+        });
+
+        // Mantener presionado en móviles y escritorio
+        logo.addEventListener('mousedown', () => { pressTimer = setTimeout(triggerMagic, 1200); });
+        logo.addEventListener('mouseup', () => clearTimeout(pressTimer));
+        logo.addEventListener('mouseleave', () => clearTimeout(pressTimer));
+        logo.addEventListener('touchstart', () => { pressTimer = setTimeout(triggerMagic, 1200); }, { passive: true });
+        logo.addEventListener('touchend', () => clearTimeout(pressTimer));
+        logo.addEventListener('touchcancel', () => clearTimeout(pressTimer));
+    });
+
+    // Código Konami Runner (Teclas: ArrowUp, ArrowUp, ArrowDown, ArrowDown, s, a, n, d, i, a)
+    let konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown'];
+    let konamiIndex = 0;
+    window.addEventListener('keydown', (e) => {
+        if (e.key === konamiCode[konamiIndex]) {
+            konamiIndex++;
+            if (konamiIndex === konamiCode.length) {
+                konamiIndex = 0;
+                brandLogos.forEach(logo => {
+                    logo.classList.add('grow-magic-active');
+                    setTimeout(() => logo.classList.remove('grow-magic-active'), 1400);
+                });
+                if (window.showToast) {
+                    window.showToast("⚡ Sandía Production x Grow Studio 🚀", "rgba(0, 198, 235, 0.95)");
+                }
+            }
+        } else {
+            konamiIndex = 0;
+        }
+    });
 });
 
 // --- FUNCIÓN GLOBAL PARA MOSTRAR TOAST ---
