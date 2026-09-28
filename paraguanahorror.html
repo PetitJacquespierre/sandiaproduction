@@ -552,7 +552,7 @@
             
             <!-- FLYER & DATOS DE PAGO -->
             <div class="flyer-card">
-                <img src="img/paraguanahorror.jpeg" alt="Flyer 5K Paraguaná Horror Stories">
+                <img src="img/paraguanahorror.jpeg" alt="Flyer 5K Paraguaná Horror Stories" loading="lazy" decoding="async">
                 
                 <div class="payment-box">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -587,6 +587,12 @@
                     <p class="form-subtitle">PASO 2: INGRESA TUS DATOS Y LA REFERENCIA DE TU PAGO</p>
 
                     <form id="registration-form">
+                        <!-- CAMPO TRAMPA HONEYPOT ANTI-SPAM (INVISIBLE PARA HUMANOS) -->
+                        <div class="form-honeypot" aria-hidden="true" style="display:none !important;">
+                            <label for="gotcha-hp">No llenar este campo</label>
+                            <input type="text" name="_gotcha" id="gotcha-hp" tabindex="-1" autocomplete="off">
+                        </div>
+
                         <div class="form-group">
                             <label>CÉDULA DE IDENTIDAD O PASAPORTE</label>
                             <input type="text" name="cedula" class="form-control" placeholder="Ej. 18698675" required>
@@ -915,6 +921,18 @@
             const datosAEnviar = {};
             formDataObj.forEach((value, key) => (datosAEnviar[key] = value));
             
+            // Verificación silenciosa Anti-Spam Honeypot (Zero Friction para atletas reales)
+            if (datosAEnviar['_gotcha'] && datosAEnviar['_gotcha'].trim() !== '') {
+                console.warn('Registro descartado silenciosamente por filtro Anti-Bot.');
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    success.style.display = 'block';
+                    form.reset();
+                }, 800);
+                return;
+            }
+            delete datosAEnviar['_gotcha']; // Evitar enviar este campo al Google Sheet de atletas
+
             // Asegurar que si el Apps Script requiere monto_exacto o referencia_ref se mapeen idéntico a Coffee Run
             datosAEnviar['monto_exacto'] = form.monto_pago ? form.monto_pago.value : '';
             datosAEnviar['evento'] = '5K Paraguaná Horror Story';

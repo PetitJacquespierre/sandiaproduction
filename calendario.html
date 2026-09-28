@@ -453,7 +453,7 @@
             return `
                 <div class="evento-card" data-categoria="${dataCatAttr}">
                     <div class="flyer-box">
-                        <img src="img/${evento.imagen || 'Isotipo.png'}" alt="${evento.titulo}" loading="lazy" onerror="this.src='img/Isotipo.png'">
+                        <img src="img/${evento.imagen || 'Isotipo.png'}" alt="${evento.titulo}" loading="lazy" decoding="async" onerror="this.src='img/Isotipo.png'">
                         <div class="fecha-badge">
                             <span class="dia">${evento.dia || '00'}</span>
                             <span class="mes">${evento.mes || 'MES'}</span>

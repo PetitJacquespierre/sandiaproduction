@@ -75,7 +75,7 @@
             <!-- FLYER DE LA CARRERA Y PAGO MÓVIL -->
             <div class="flyer-container">
                 <!-- CAMBIAR IMAGEN DEL EVENTO AQUÍ -->
-                <img src="img/coffee_run.png" alt="Flyer del Evento" class="flyer-img">
+                <img src="img/coffee_run.png" alt="Flyer del Evento" class="flyer-img" loading="lazy" decoding="async">
                 
                 <!-- DATOS DE MONTO Y PAGO -->
                 <div class="payment-box">
@@ -125,6 +125,12 @@
                     <p class="form-instructions">PASO 2: REPORTA TUS DATOS DE INSCRIPCIÓN</p>
 
                     <form id="registration-form">
+                        <!-- CAMPO TRAMPA HONEYPOT ANTI-SPAM (INVISIBLE PARA HUMANOS) -->
+                        <div class="form-honeypot" aria-hidden="true" style="display:none !important;">
+                            <label for="gotcha-hp-coffee">No llenar este campo</label>
+                            <input type="text" name="_gotcha" id="gotcha-hp-coffee" tabindex="-1" autocomplete="off">
+                        </div>
+
                         <div class="form-group">
                             <label>CÉDULA DE IDENTIDAD o PASAPORTE</label>
                             <input type="text" name="cedula" class="form-control" placeholder="Ej. 18698675" pattern="\d+" title="Ingrese solo números" required>
@@ -394,6 +400,18 @@
             const FormDataObj = new FormData(form);
             const datosAEnviar = {};
             FormDataObj.forEach((value, key) => (datosAEnviar[key] = value));
+
+            // Verificación silenciosa Anti-Spam Honeypot (Zero Friction)
+            if (datosAEnviar['_gotcha'] && datosAEnviar['_gotcha'].trim() !== '') {
+                console.warn('Registro descartado silenciosamente por filtro Anti-Bot.');
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    successMsg.style.display = 'block';
+                    form.reset();
+                }, 800);
+                return;
+            }
+            delete datosAEnviar['_gotcha'];
 
             fetch(urlScriptGoogle, {
                 method: 'POST',

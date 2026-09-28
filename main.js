@@ -1,8 +1,19 @@
 // ==========================================================================
+// CRAFTED BY GROW STUDIO - DIGITAL ENGINEERING & PRODUCT DESIGN
+// https://growstudioweb.vercel.app/
+// ==========================================================================
+console.log(
+    "%c🍉 Sandía Production %c| Crafted with ⚡ by Grow Studio (https://growstudioweb.vercel.app/)",
+    "background: #e62035; color: #ffffff; padding: 4px 10px; border-radius: 4px 0 0 4px; font-weight: 800; font-size: 11px;",
+    "background: #03060d; color: #00c6eb; padding: 4px 10px; border-radius: 0 4px 4px 0; font-weight: 700; font-size: 11px; border: 1px solid #1a1a2e;"
+);
+
+// ==========================================================================
 // LÓGICA COMPARTIDA (MENÚ Y NAVEGACIÓN)
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+
     
     // --- LÓGICA DEL MENÚ LATERAL ---
     const openMenuBtn = document.getElementById('open-menu-btn');
