@@ -100,15 +100,29 @@ export async function getSandiaAliados() {
 }
 
 // 4. Gestión de Cupones de Cortesía de Un Solo Uso (Sorteos y Eventos)
-export async function verificarCuponUsado(codigo) {
+export async function consultarEstadoCupon(codigo) {
     try {
         const idSanitizado = String(codigo).trim().toUpperCase();
         const docRef = doc(db, "sandia_cupones_horror", idSanitizado);
         const snap = await getDoc(docRef);
-        return snap.exists(); // true si ya fue usado, false si está disponible
+        
+        if (!snap.exists()) {
+            return { valido: false, razon: 'NO_EXISTE', mensaje: 'Este código de cortesía no está activo o no ha sido habilitado.' };
+        }
+
+        const data = snap.data();
+        if (data.estado === 'USADO' || (data.usadoEn && !data.habilitado)) {
+            return { valido: false, razon: 'YA_USADO', mensaje: `Este cupón (${idSanitizado}) ya fue canjeado por otro participante.` };
+        }
+
+        if (data.estado === 'PAUSADO' || data.habilitado === false) {
+            return { valido: false, razon: 'PAUSADO', mensaje: 'Este cupón se encuentra pausado temporalmente.' };
+        }
+
+        return { valido: true, data };
     } catch (error) {
-        console.error("Error al verificar cupón en Firestore:", error);
-        return false;
+        console.error("Error al consultar cupón en Firestore:", error);
+        return { valido: false, razon: 'ERROR', mensaje: 'Error al consultar disponibilidad del cupón.' };
     }
 }
 
@@ -118,6 +132,8 @@ export async function marcarCuponUsado(codigo, atletaData = {}) {
         const docRef = doc(db, "sandia_cupones_horror", idSanitizado);
         await setDoc(docRef, {
             codigo: idSanitizado,
+            estado: 'USADO',
+            habilitado: false,
             usadoEn: new Date().toISOString(),
             atleta: {
                 nombre: atletaData.nombre || '',
@@ -126,7 +142,7 @@ export async function marcarCuponUsado(codigo, atletaData = {}) {
                 telefono: atletaData.telefono || ''
             },
             evento: '5K Paraguaná Horror Story'
-        });
+        }, { merge: true });
         return true;
     } catch (error) {
         console.error("Error al registrar cupón usado en Firestore:", error);

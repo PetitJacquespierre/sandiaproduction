@@ -810,7 +810,7 @@
 
     <script src="main.js"></script>
     <script type="module">
-        import { verificarCuponUsado, marcarCuponUsado } from "./firebase-sandia.js";
+        import { consultarEstadoCupon, marcarCuponUsado } from "./firebase-sandia.js";
 
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyl4z2AEREoDCINfDc-3zLukIEafbXHRO88Lr5tinkRZGUTQsALCrRQJvNMd6hUycPE3A/exec";
         const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbyazhyYfK-vURGv34XF-oTW1_34rTVRs2WM7-aNlswf-mIGhIwgaLgwfGx1xZxfm50/exec";
@@ -1035,10 +1035,10 @@
                 msgCupon.innerText = '⏳ Verificando disponibilidad del cupón...';
             }
 
-            // Verificar en Firestore si ya fue quemado/usado por alguien más
+            // Verificar en Firestore si existe, si está habilitado por el admin y si ya fue usado
             try {
-                const yaUsado = await verificarCuponUsado(codigo);
-                if (yaUsado) {
+                const resultado = await consultarEstadoCupon(codigo);
+                if (!resultado.valido) {
                     if (btnAplicar) {
                         btnAplicar.innerText = 'Aplicar';
                         btnAplicar.disabled = false;
@@ -1046,7 +1046,7 @@
                     if (msgCupon) {
                         msgCupon.style.display = 'block';
                         msgCupon.style.color = '#ff1a1a';
-                        msgCupon.innerText = `✖ Este cupón (${codigo}) ya fue canjeado por otro participante.`;
+                        msgCupon.innerText = `✖ ${resultado.mensaje || 'Cupón no disponible.'}`;
                     }
                     return;
                 }
@@ -1149,11 +1149,11 @@
             // Si hay cupón activo, verificar nuevamente antes de quemar y marcarlo en Firestore
             if (cuponActivoCodigo) {
                 try {
-                    const yaUsado = await verificarCuponUsado(cuponActivoCodigo);
-                    if (yaUsado) {
+                    const checkCupon = await consultarEstadoCupon(cuponActivoCodigo);
+                    if (!checkCupon.valido) {
                         loader.style.display = 'none';
                         content.style.display = 'block';
-                        alert(`El cupón ${cuponActivoCodigo} ya fue canjeado por otra persona en este momento.`);
+                        alert(checkCupon.mensaje || `El cupón ${cuponActivoCodigo} no está disponible.`);
                         return;
                     }
                     // Quemar cupón en Firestore para que no pueda usarse nuevamente
