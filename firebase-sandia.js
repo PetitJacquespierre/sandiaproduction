@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, increment, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, getDoc, setDoc, updateDoc, increment, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
     projectId: "grow-studio-menus",
@@ -96,5 +96,40 @@ export async function getSandiaAliados() {
     } catch (error) {
         console.error("Error al obtener aliados de Firestore:", error);
         return [];
+    }
+}
+
+// 4. Gestión de Cupones de Cortesía de Un Solo Uso (Sorteos y Eventos)
+export async function verificarCuponUsado(codigo) {
+    try {
+        const idSanitizado = String(codigo).trim().toUpperCase();
+        const docRef = doc(db, "sandia_cupones_horror", idSanitizado);
+        const snap = await getDoc(docRef);
+        return snap.exists(); // true si ya fue usado, false si está disponible
+    } catch (error) {
+        console.error("Error al verificar cupón en Firestore:", error);
+        return false;
+    }
+}
+
+export async function marcarCuponUsado(codigo, atletaData = {}) {
+    try {
+        const idSanitizado = String(codigo).trim().toUpperCase();
+        const docRef = doc(db, "sandia_cupones_horror", idSanitizado);
+        await setDoc(docRef, {
+            codigo: idSanitizado,
+            usadoEn: new Date().toISOString(),
+            atleta: {
+                nombre: atletaData.nombre || '',
+                cedula: atletaData.cedula || '',
+                email: atletaData.email || '',
+                telefono: atletaData.telefono || ''
+            },
+            evento: '5K Paraguaná Horror Story'
+        });
+        return true;
+    } catch (error) {
+        console.error("Error al registrar cupón usado en Firestore:", error);
+        return false;
     }
 }

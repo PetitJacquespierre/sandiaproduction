@@ -673,7 +673,7 @@
                                 <span>🎟️</span> ¿Tienes un cupón de cortesía o sorteo?
                             </label>
                             <div style="display: flex; gap: 8px;">
-                                <input type="text" id="input-cupon" class="form-control" placeholder="Ej. HALLOWEEN2026" style="text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0;">
+                                <input type="text" id="input-cupon" class="form-control" placeholder="Ingresa tu código de cortesía" style="text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0;">
                                 <button type="button" id="btn-aplicar-cupon" onclick="aplicarCupon()" style="background: var(--color-horror-orange); color: #000; font-weight: 800; border: none; border-radius: 8px; padding: 0 16px; cursor: pointer; text-transform: uppercase; font-size: 0.82rem; white-space: nowrap; transition: 0.25s;">
                                     Aplicar
                                 </button>
@@ -809,12 +809,16 @@
     </footer>
 
     <script src="main.js"></script>
-    <script>
-        const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyl4z2AEREoDCINfDc-3zLukIEafbXHRO88Lr5tinkRZGUTQsALCrRQJvNMd6hUycPE3A/exec";
+    <script type="module">
+        import { verificarCuponUsado, marcarCuponUsado } from "./firebase-sandia.js";
 
+        const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyl4z2AEREoDCINfDc-3zLukIEafbXHRO88Lr5tinkRZGUTQsALCrRQJvNMd6hUycPE3A/exec";
         const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbyazhyYfK-vURGv34XF-oTW1_34rTVRs2WM7-aNlswf-mIGhIwgaLgwfGx1xZxfm50/exec";
         const costoDivisa = 20; // 20$ primeros 100 cupos
         let tasaRespaldoLocal = 848.55;
+
+        // Estado del cupón actualmente activo en el formulario
+        let cuponActivoCodigo = null;
 
         function formatVE(num) {
             return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
@@ -855,16 +859,19 @@
                 let totalVes = tasa * costoDivisa;
 
                 if (tasaBcvLabel) tasaBcvLabel.innerText = formatVE(tasa);
-                if (montoVesLabel) montoVesLabel.innerHTML = `${formatVE(totalVes)} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                if (montoVesLabel && !cuponActivoCodigo) {
+                    montoVesLabel.innerHTML = `${formatVE(totalVes)} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                }
                 
                 const inputMonto = document.getElementById('input-monto-pago');
-                if (inputMonto && !inputMonto.value) {
+                if (inputMonto && !inputMonto.value && !cuponActivoCodigo) {
                     inputMonto.value = `${formatVE(totalVes)} Bs`;
                 }
 
                 const selectMetodo = document.getElementById('select-metodo-pago');
                 if (selectMetodo) {
                     selectMetodo.addEventListener('change', function() {
+                        if (cuponActivoCodigo) return;
                         if (this.value === "Efectivo Divisas" || this.value === "USDT") {
                             inputMonto.value = "20$";
                         } else if (this.value === "Pago Móvil") {
@@ -950,7 +957,7 @@
         updateCountdown();
 
         // COPIAR INDIVIDUAL O GLOBAL
-        function copyText(id, event) {
+        window.copyText = function(id, event) {
             const text = document.getElementById(id).innerText;
             navigator.clipboard.writeText(text).then(() => {
                 if (window.showToast) {
@@ -959,9 +966,9 @@
                     alert("Copiado: " + text);
                 }
             });
-        }
+        };
 
-        function copyAllPaymentData(event) {
+        window.copyAllPaymentData = function(event) {
             const banco = document.getElementById('pago-banco').innerText;
             const cedula = document.getElementById('pago-cedula').innerText;
             const tlf = document.getElementById('pago-tlf').innerText;
@@ -974,10 +981,140 @@
                     alert("¡Datos de Pago Móvil copiados al portapapeles!");
                 }
             });
+        };
+
+        // ========================================================
+        // LÓGICA DE CUPONES SECUENCIALES RUNFREE (DE UN SOLO USO)
+        // ========================================================
+        // Valida cupones secuenciales como RUNFREE1, RUNFREE2, RUNFREE3... y códigos maestros de prueba
+        function esPatronCuponValido(codigo) {
+            if (/^RUNFREE\d*$/i.test(codigo)) return true;
+            const especiales = ['HALLOWEEN2026', 'HALLOWEEN', 'SORTEO5K', 'GANADOR5K', 'SANDIAFREE'];
+            return especiales.includes(codigo);
         }
 
-        // SUBMIT FORMULARIO UNIFICADO Y COMPATIBLE CON APPS SCRIPT
-        document.getElementById('registration-form').addEventListener('submit', function(e) {
+        window.aplicarCupon = async function(codigoManual) {
+            const inputCupon = document.getElementById('input-cupon');
+            const msgCupon = document.getElementById('cupon-mensaje');
+            const seccionPago = document.getElementById('seccion-campos-pago');
+            const bannerActivo = document.getElementById('cupon-activo-banner');
+            const selectMetodo = document.getElementById('select-metodo-pago');
+            const inputRef = document.getElementById('input-referencia');
+            const inputMonto = document.getElementById('input-monto-pago');
+            const btnAplicar = document.getElementById('btn-aplicar-cupon');
+            const montoFinalVes = document.getElementById('monto-final-ves');
+
+            const codigo = (codigoManual || (inputCupon ? inputCupon.value : '')).trim().toUpperCase();
+
+            if (!codigo) {
+                if (msgCupon) {
+                    msgCupon.style.display = 'block';
+                    msgCupon.style.color = '#ff1a1a';
+                    msgCupon.innerText = 'Por favor ingresa un código de cortesía.';
+                }
+                return;
+            }
+
+            if (!esPatronCuponValido(codigo)) {
+                if (msgCupon) {
+                    msgCupon.style.display = 'block';
+                    msgCupon.style.color = '#ff1a1a';
+                    msgCupon.innerText = '✖ Código no válido o no reconocido. Verifica e intenta de nuevo.';
+                }
+                return;
+            }
+
+            // Indicador de validación
+            if (btnAplicar) {
+                btnAplicar.innerText = 'Validando...';
+                btnAplicar.disabled = true;
+            }
+            if (msgCupon) {
+                msgCupon.style.display = 'block';
+                msgCupon.style.color = '#ffa500';
+                msgCupon.innerText = '⏳ Verificando disponibilidad del cupón...';
+            }
+
+            // Verificar en Firestore si ya fue quemado/usado por alguien más
+            try {
+                const yaUsado = await verificarCuponUsado(codigo);
+                if (yaUsado) {
+                    if (btnAplicar) {
+                        btnAplicar.innerText = 'Aplicar';
+                        btnAplicar.disabled = false;
+                    }
+                    if (msgCupon) {
+                        msgCupon.style.display = 'block';
+                        msgCupon.style.color = '#ff1a1a';
+                        msgCupon.innerText = `✖ Este cupón (${codigo}) ya fue canjeado por otro participante.`;
+                    }
+                    return;
+                }
+            } catch (err) {
+                console.warn("Fallo temporal de verificación online del cupón:", err);
+            }
+
+            // Guardar código activo
+            cuponActivoCodigo = codigo;
+
+            // 1. Desactivar input y cambiar botón
+            if (inputCupon) {
+                inputCupon.value = codigo;
+                inputCupon.disabled = true;
+                inputCupon.style.borderColor = '#00ff66';
+                inputCupon.style.color = '#00ff66';
+            }
+            if (btnAplicar) {
+                btnAplicar.innerText = 'Aplicado ✔';
+                btnAplicar.style.background = '#00ff66';
+                btnAplicar.style.color = '#000';
+                btnAplicar.disabled = true;
+            }
+
+            // 2. Mostrar mensaje de éxito
+            if (msgCupon) {
+                msgCupon.style.display = 'block';
+                msgCupon.style.color = '#00ff66';
+                msgCupon.innerText = `✔ ¡Cupón ${codigo} activado! Inscripción 100% Bonificada por Sorteo.`;
+            }
+
+            // 3. Ocultar sección de pago y mostrar banner verde
+            if (seccionPago) seccionPago.style.display = 'none';
+            if (bannerActivo) bannerActivo.style.display = 'block';
+
+            // 4. Remover 'required' y pre-llenar valores para Google Apps Script
+            if (selectMetodo) {
+                selectMetodo.removeAttribute('required');
+                selectMetodo.value = 'CUPÓN DE CORTESÍA';
+            }
+            if (inputRef) {
+                inputRef.removeAttribute('required');
+                inputRef.value = 'CUPÓN: ' + codigo;
+            }
+            if (inputMonto) {
+                inputMonto.removeAttribute('required');
+                inputMonto.value = '0$ / 0,00 Bs (CORTESÍA)';
+            }
+
+            // 5. Ajustar visualmente la tarjeta de monto lateral
+            if (montoFinalVes) {
+                montoFinalVes.innerHTML = `0,00 <span class="amount-currency" style="color:#00ff66; font-size:1.2rem; margin-left:5px;">Bs</span>`;
+            }
+            const rateResults = document.getElementById('rate-results');
+            if (rateResults) {
+                const desc = rateResults.querySelector('div:last-child');
+                if (desc) {
+                    desc.innerHTML = `<strong style="color:#00ff66; font-size:1rem;">🎉 100% CORTESÍA SORTEO (${codigo})</strong>`;
+                }
+            }
+
+            if (window.showToast) {
+                window.showToast(`🎉 ¡Cupón ${codigo} aplicado con éxito!`, '#00ff66');
+            }
+        };
+
+        // SUBMIT FORMULARIO UNIFICADO Y COMPATIBLE CON APPS SCRIPT Y FIRESTORE
+        document.getElementById('registration-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const form = e.target;
             const content = document.getElementById('registration-content');
@@ -997,7 +1134,7 @@
             const datosAEnviar = {};
             formDataObj.forEach((value, key) => (datosAEnviar[key] = value));
             
-            // Verificación silenciosa Anti-Spam Honeypot (Zero Friction para atletas reales)
+            // Verificación silenciosa Anti-Spam Honeypot
             if (datosAEnviar['_gotcha'] && datosAEnviar['_gotcha'].trim() !== '') {
                 console.warn('Registro descartado silenciosamente por filtro Anti-Bot.');
                 setTimeout(() => {
@@ -1007,9 +1144,26 @@
                 }, 800);
                 return;
             }
-            delete datosAEnviar['_gotcha']; // Evitar enviar este campo al Google Sheet de atletas
+            delete datosAEnviar['_gotcha'];
 
-            // Asegurar que si el Apps Script requiere monto_exacto o referencia_ref se mapeen idéntico a Coffee Run
+            // Si hay cupón activo, verificar nuevamente antes de quemar y marcarlo en Firestore
+            if (cuponActivoCodigo) {
+                try {
+                    const yaUsado = await verificarCuponUsado(cuponActivoCodigo);
+                    if (yaUsado) {
+                        loader.style.display = 'none';
+                        content.style.display = 'block';
+                        alert(`El cupón ${cuponActivoCodigo} ya fue canjeado por otra persona en este momento.`);
+                        return;
+                    }
+                    // Quemar cupón en Firestore para que no pueda usarse nuevamente
+                    await marcarCuponUsado(cuponActivoCodigo, datosAEnviar);
+                } catch (err) {
+                    console.error("Error al registrar cupón en Firestore:", err);
+                }
+            }
+
+            // Datos para Google Apps Script
             datosAEnviar['monto_exacto'] = form.monto_pago ? form.monto_pago.value : '';
             datosAEnviar['evento'] = '5K Paraguaná Horror Story';
 
@@ -1025,7 +1179,6 @@
                 success.style.display = 'block';
                 form.reset();
                 
-                // Asegurar foco y scroll centrado en el mensaje de éxito
                 setTimeout(() => {
                     success.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }, 100);
@@ -1038,107 +1191,15 @@
             });
         });
 
-        // ========================================================
-        // LÓGICA DE CUPÓN DE CORTESÍA / GANADOR DE SORTEO (OPCIONES 1 Y 2)
-        // ========================================================
-        const CUPONES_VALIDOS = ['HALLOWEEN2026', 'HALLOWEEN', 'SORTEO5K', 'GANADOR5K', 'SANDIAFREE', 'RUNFREE'];
+        // Inicialización al cargar la página
+        calcularMontoBolivares();
 
-        function aplicarCupon(codigoManual) {
-            const inputCupon = document.getElementById('input-cupon');
-            const msgCupon = document.getElementById('cupon-mensaje');
-            const seccionPago = document.getElementById('seccion-campos-pago');
-            const bannerActivo = document.getElementById('cupon-activo-banner');
-            const selectMetodo = document.getElementById('select-metodo-pago');
-            const inputRef = document.getElementById('input-referencia');
-            const inputMonto = document.getElementById('input-monto-pago');
-            const btnAplicar = document.getElementById('btn-aplicar-cupon');
-            const montoFinalVes = document.getElementById('monto-final-ves');
-
-            const codigo = (codigoManual || (inputCupon ? inputCupon.value : '')).trim().toUpperCase();
-
-            if (!codigo) {
-                if (msgCupon) {
-                    msgCupon.style.display = 'block';
-                    msgCupon.style.color = '#ff1a1a';
-                    msgCupon.innerText = 'Por favor ingresa un código de cupón.';
-                }
-                return;
-            }
-
-            if (CUPONES_VALIDOS.includes(codigo)) {
-                // 1. Desactivar input y cambiar botón
-                if (inputCupon) {
-                    inputCupon.value = codigo;
-                    inputCupon.disabled = true;
-                    inputCupon.style.borderColor = '#00ff66';
-                    inputCupon.style.color = '#00ff66';
-                }
-                if (btnAplicar) {
-                    btnAplicar.innerText = 'Aplicado ✔';
-                    btnAplicar.style.background = '#00ff66';
-                    btnAplicar.style.color = '#000';
-                    btnAplicar.disabled = true;
-                }
-
-                // 2. Mostrar mensaje de éxito
-                if (msgCupon) {
-                    msgCupon.style.display = 'block';
-                    msgCupon.style.color = '#00ff66';
-                    msgCupon.innerText = '✔ ¡Cupón válido! Inscripción 100% Bonificada por Sorteo.';
-                }
-
-                // 3. Ocultar sección de pago y mostrar banner verde
-                if (seccionPago) seccionPago.style.display = 'none';
-                if (bannerActivo) bannerActivo.style.display = 'block';
-
-                // 4. Remover 'required' y pre-llenar valores para Google Apps Script
-                if (selectMetodo) {
-                    selectMetodo.removeAttribute('required');
-                    selectMetodo.value = 'CUPÓN DE CORTESÍA';
-                }
-                if (inputRef) {
-                    inputRef.removeAttribute('required');
-                    inputRef.value = 'CUPÓN: ' + codigo;
-                }
-                if (inputMonto) {
-                    inputMonto.removeAttribute('required');
-                    inputMonto.value = '0$ / 0,00 Bs (CORTESÍA)';
-                }
-
-                // 5. Ajustar visualmente la tarjeta de monto lateral
-                if (montoFinalVes) {
-                    montoFinalVes.innerHTML = `0,00 <span class="amount-currency" style="color:#00ff66; font-size:1.2rem; margin-left:5px;">Bs</span>`;
-                }
-                const rateResults = document.getElementById('rate-results');
-                if (rateResults) {
-                    const desc = rateResults.querySelector('div:last-child');
-                    if (desc) {
-                        desc.innerHTML = '<strong style="color:#00ff66; font-size:1rem;">🎉 100% CORTESÍA DE SORTEO (0$ USD)</strong>';
-                    }
-                }
-
-                if (window.showToast) {
-                    window.showToast('🎉 ¡Cupón de cortesía activado con éxito!', '#00ff66');
-                }
-            } else {
-                if (msgCupon) {
-                    msgCupon.style.display = 'block';
-                    msgCupon.style.color = '#ff1a1a';
-                    msgCupon.innerText = '✖ Cupón no válido o no reconocido. Verifica e intenta de nuevo.';
-                }
-            }
+        // DETECCIÓN AUTOMÁTICA DE ENLACE VIP / CORTESÍA (OPCIÓN 2)
+        const urlParams = new URLSearchParams(window.location.search);
+        const cuponUrl = urlParams.get('cupon') || urlParams.get('cortesia') || urlParams.get('vip') || urlParams.get('sorteo');
+        if (cuponUrl) {
+            window.aplicarCupon(cuponUrl);
         }
-
-        window.onload = () => {
-            calcularMontoBolivares();
-
-            // DETECCIÓN AUTOMÁTICA DE ENLACE VIP / CORTESÍA (OPCIÓN 2)
-            const urlParams = new URLSearchParams(window.location.search);
-            const cuponUrl = urlParams.get('cupon') || urlParams.get('cortesia') || urlParams.get('vip') || urlParams.get('sorteo');
-            if (cuponUrl) {
-                aplicarCupon(cuponUrl);
-            }
-        };
     </script>
 </body>
 </html>
