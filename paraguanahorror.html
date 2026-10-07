@@ -667,24 +667,52 @@
                             <input type="text" name="team" class="form-control" placeholder="Ej. Runner Club / Ninguno">
                         </div>
 
-                        <div class="form-group">
-                            <label>MÉTODO DE PAGO UTILIZADO</label>
-                            <select id="select-metodo-pago" name="metodo_pago" class="form-control" required>
-                                <option value="" disabled selected>Selecciona tu Método de Pago</option>
-                                <option value="Pago Móvil">Pago Móvil</option>
-                                <option value="Efectivo Divisas">Efectivo Divisas ($)</option>
-                                <option value="USDT">USDT (Binance)</option>
-                            </select>
+                        <!-- CAJA DE CUPÓN DE DESCUENTO / CORTESÍA -->
+                        <div class="cupon-box" style="background: rgba(255, 119, 0, 0.08); border: 1px dashed rgba(255, 119, 0, 0.4); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
+                            <label for="input-cupon" style="font-size: 0.8rem; font-weight: 700; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; text-transform: uppercase;">
+                                <span>🎟️</span> ¿Tienes un cupón de cortesía o sorteo?
+                            </label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="text" id="input-cupon" class="form-control" placeholder="Ej. HALLOWEEN2026" style="text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0;">
+                                <button type="button" id="btn-aplicar-cupon" onclick="aplicarCupon()" style="background: var(--color-horror-orange); color: #000; font-weight: 800; border: none; border-radius: 8px; padding: 0 16px; cursor: pointer; text-transform: uppercase; font-size: 0.82rem; white-space: nowrap; transition: 0.25s;">
+                                    Aplicar
+                                </button>
+                            </div>
+                            <div id="cupon-mensaje" style="font-size: 0.8rem; margin-top: 6px; display: none; font-weight: 600;"></div>
                         </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>NÚMERO DE REFERENCIA</label>
-                                <input type="text" name="referencia_ref" class="form-control" placeholder="Ej. 12345678" required>
+                        <!-- BANNER CUANDO EL CUPÓN ESTÁ APLICADO (CORTESÍA 100%) -->
+                        <div id="cupon-activo-banner" style="display: none; background: rgba(0, 255, 102, 0.1); border: 1px solid #00ff66; border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; text-align: center; box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);">
+                            <div style="color: #00ff66; font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">
+                                🎉 ¡CUPÓN DE CORTESÍA ACTIVADO (100% BONIFICADO)!
                             </div>
+                            <div style="color: #ddd; font-size: 0.8rem; line-height: 1.4;">
+                                Tu inscripción es completamente gratuita cortesía del sorteo oficial. No requieres realizar ningún pago bancario.
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN CAMPOS DE PAGO (SE OCULTA SI SE APLICA CUPÓN) -->
+                        <div id="seccion-campos-pago">
                             <div class="form-group">
-                                <label>MONTO DEL PAGO (BS / $)</label>
-                                <input type="text" id="input-monto-pago" name="monto_pago" class="form-control" placeholder="Ej. 16.844,13 Bs / 20$" required>
+                                <label>MÉTODO DE PAGO UTILIZADO</label>
+                                <select id="select-metodo-pago" name="metodo_pago" class="form-control" required>
+                                    <option value="" disabled selected>Selecciona tu Método de Pago</option>
+                                    <option value="Pago Móvil">Pago Móvil</option>
+                                    <option value="Efectivo Divisas">Efectivo Divisas ($)</option>
+                                    <option value="USDT">USDT (Binance)</option>
+                                    <option value="CUPÓN DE CORTESÍA" style="display:none;">CUPÓN DE CORTESÍA</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>NÚMERO DE REFERENCIA</label>
+                                    <input type="text" id="input-referencia" name="referencia_ref" class="form-control" placeholder="Ej. 12345678" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>MONTO DEL PAGO (BS / $)</label>
+                                    <input type="text" id="input-monto-pago" name="monto_pago" class="form-control" placeholder="Ej. 16.844,13 Bs / 20$" required>
+                                </div>
                             </div>
                         </div>
 
@@ -1010,8 +1038,106 @@
             });
         });
 
+        // ========================================================
+        // LÓGICA DE CUPÓN DE CORTESÍA / GANADOR DE SORTEO (OPCIONES 1 Y 2)
+        // ========================================================
+        const CUPONES_VALIDOS = ['HALLOWEEN2026', 'HALLOWEEN', 'SORTEO5K', 'GANADOR5K', 'SANDIAFREE', 'RUNFREE'];
+
+        function aplicarCupon(codigoManual) {
+            const inputCupon = document.getElementById('input-cupon');
+            const msgCupon = document.getElementById('cupon-mensaje');
+            const seccionPago = document.getElementById('seccion-campos-pago');
+            const bannerActivo = document.getElementById('cupon-activo-banner');
+            const selectMetodo = document.getElementById('select-metodo-pago');
+            const inputRef = document.getElementById('input-referencia');
+            const inputMonto = document.getElementById('input-monto-pago');
+            const btnAplicar = document.getElementById('btn-aplicar-cupon');
+            const montoFinalVes = document.getElementById('monto-final-ves');
+
+            const codigo = (codigoManual || (inputCupon ? inputCupon.value : '')).trim().toUpperCase();
+
+            if (!codigo) {
+                if (msgCupon) {
+                    msgCupon.style.display = 'block';
+                    msgCupon.style.color = '#ff1a1a';
+                    msgCupon.innerText = 'Por favor ingresa un código de cupón.';
+                }
+                return;
+            }
+
+            if (CUPONES_VALIDOS.includes(codigo)) {
+                // 1. Desactivar input y cambiar botón
+                if (inputCupon) {
+                    inputCupon.value = codigo;
+                    inputCupon.disabled = true;
+                    inputCupon.style.borderColor = '#00ff66';
+                    inputCupon.style.color = '#00ff66';
+                }
+                if (btnAplicar) {
+                    btnAplicar.innerText = 'Aplicado ✔';
+                    btnAplicar.style.background = '#00ff66';
+                    btnAplicar.style.color = '#000';
+                    btnAplicar.disabled = true;
+                }
+
+                // 2. Mostrar mensaje de éxito
+                if (msgCupon) {
+                    msgCupon.style.display = 'block';
+                    msgCupon.style.color = '#00ff66';
+                    msgCupon.innerText = '✔ ¡Cupón válido! Inscripción 100% Bonificada por Sorteo.';
+                }
+
+                // 3. Ocultar sección de pago y mostrar banner verde
+                if (seccionPago) seccionPago.style.display = 'none';
+                if (bannerActivo) bannerActivo.style.display = 'block';
+
+                // 4. Remover 'required' y pre-llenar valores para Google Apps Script
+                if (selectMetodo) {
+                    selectMetodo.removeAttribute('required');
+                    selectMetodo.value = 'CUPÓN DE CORTESÍA';
+                }
+                if (inputRef) {
+                    inputRef.removeAttribute('required');
+                    inputRef.value = 'CUPÓN: ' + codigo;
+                }
+                if (inputMonto) {
+                    inputMonto.removeAttribute('required');
+                    inputMonto.value = '0$ / 0,00 Bs (CORTESÍA)';
+                }
+
+                // 5. Ajustar visualmente la tarjeta de monto lateral
+                if (montoFinalVes) {
+                    montoFinalVes.innerHTML = `0,00 <span class="amount-currency" style="color:#00ff66; font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                }
+                const rateResults = document.getElementById('rate-results');
+                if (rateResults) {
+                    const desc = rateResults.querySelector('div:last-child');
+                    if (desc) {
+                        desc.innerHTML = '<strong style="color:#00ff66; font-size:1rem;">🎉 100% CORTESÍA DE SORTEO (0$ USD)</strong>';
+                    }
+                }
+
+                if (window.showToast) {
+                    window.showToast('🎉 ¡Cupón de cortesía activado con éxito!', '#00ff66');
+                }
+            } else {
+                if (msgCupon) {
+                    msgCupon.style.display = 'block';
+                    msgCupon.style.color = '#ff1a1a';
+                    msgCupon.innerText = '✖ Cupón no válido o no reconocido. Verifica e intenta de nuevo.';
+                }
+            }
+        }
+
         window.onload = () => {
             calcularMontoBolivares();
+
+            // DETECCIÓN AUTOMÁTICA DE ENLACE VIP / CORTESÍA (OPCIÓN 2)
+            const urlParams = new URLSearchParams(window.location.search);
+            const cuponUrl = urlParams.get('cupon') || urlParams.get('cortesia') || urlParams.get('vip') || urlParams.get('sorteo');
+            if (cuponUrl) {
+                aplicarCupon(cuponUrl);
+            }
         };
     </script>
 </body>
