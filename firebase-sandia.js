@@ -99,7 +99,7 @@ export async function getSandiaAliados() {
     }
 }
 
-// 4. Gestión de Cupones de Cortesía de Un Solo Uso (Sorteos y Eventos)
+// 4. Gestión de Cupones de Cortesía y Descuentos (Sorteos y Promociones)
 export async function consultarEstadoCupon(codigo) {
     try {
         const idSanitizado = String(codigo).trim().toUpperCase();
@@ -111,41 +111,68 @@ export async function consultarEstadoCupon(codigo) {
         }
 
         const data = snap.data();
-        if (data.estado === 'USADO' || (data.usadoEn && !data.habilitado)) {
+        const esReutilizable = data.tipo !== 'UN_SOLO_USO';
+        const precioUSD = (data.precioUSD !== undefined) ? Number(data.precioUSD) : 0;
+
+        // Si es de un solo uso y ya fue usado
+        if (!esReutilizable && (data.estado === 'USADO' || (data.usadoEn && !data.habilitado))) {
             return { valido: false, razon: 'YA_USADO', mensaje: `Este cupón (${idSanitizado}) ya fue canjeado por otro participante.` };
         }
 
+        // Si está pausado manualmente por el administrador
         if (data.estado === 'PAUSADO' || data.habilitado === false) {
             return { valido: false, razon: 'PAUSADO', mensaje: 'Este cupón se encuentra pausado temporalmente.' };
         }
 
-        return { valido: true, data };
+        return { 
+            valido: true, 
+            data,
+            precioUSD: precioUSD,
+            esReutilizable: esReutilizable
+        };
     } catch (error) {
         console.error("Error al consultar cupón en Firestore:", error);
         return { valido: false, razon: 'ERROR', mensaje: 'Error al consultar disponibilidad del cupón.' };
     }
 }
 
-export async function marcarCuponUsado(codigo, atletaData = {}) {
+export async function marcarCuponUsado(codigo, atletaData = {}, cuponInfo = {}) {
     try {
         const idSanitizado = String(codigo).trim().toUpperCase();
         const docRef = doc(db, "sandia_cupones_horror", idSanitizado);
-        await setDoc(docRef, {
-            codigo: idSanitizado,
-            estado: 'USADO',
-            habilitado: false,
-            usadoEn: new Date().toISOString(),
-            atleta: {
-                nombre: atletaData.nombre || '',
-                cedula: atletaData.cedula || '',
-                email: atletaData.email || '',
-                telefono: atletaData.telefono || ''
-            },
-            evento: '5K Paraguaná Horror Story'
-        }, { merge: true });
+        const esReutilizable = cuponInfo.esReutilizable || (cuponInfo.data && cuponInfo.data.tipo !== 'UN_SOLO_USO');
+
+        if (esReutilizable) {
+            // No se quema: se mantiene habilitado y solo se incrementa el contador de usos
+            await updateDoc(docRef, {
+                usosCount: increment(1),
+                ultimoUsoEn: new Date().toISOString(),
+                ultimoAtleta: {
+                    nombre: atletaData.nombre || '',
+                    cedula: atletaData.cedula || '',
+                    email: atletaData.email || '',
+                    telefono: atletaData.telefono || ''
+                }
+            });
+        } else {
+            // De un solo uso: se quema y desactiva
+            await setDoc(docRef, {
+                codigo: idSanitizado,
+                estado: 'USADO',
+                habilitado: false,
+                usadoEn: new Date().toISOString(),
+                atleta: {
+                    nombre: atletaData.nombre || '',
+                    cedula: atletaData.cedula || '',
+                    email: atletaData.email || '',
+                    telefono: atletaData.telefono || ''
+                },
+                evento: '5K Paraguaná Horror Story'
+            }, { merge: true });
+        }
         return true;
     } catch (error) {
-        console.error("Error al registrar cupón usado en Firestore:", error);
+        console.error("Error al registrar cupón en Firestore:", error);
         return false;
     }
 }

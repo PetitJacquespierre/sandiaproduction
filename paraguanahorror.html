@@ -984,14 +984,10 @@
         };
 
         // ========================================================
-        // LÓGICA DE CUPONES SECUENCIALES RUNFREE (DE UN SOLO USO)
+        // LÓGICA DE CUPONES DE CORTESÍA Y PRECIO PERSONALIZADO
         // ========================================================
-        // Valida cupones secuenciales como RUNFREE1, RUNFREE2, RUNFREE3... y códigos maestros de prueba
-        function esPatronCuponValido(codigo) {
-            if (/^RUNFREE\d*$/i.test(codigo)) return true;
-            const especiales = ['HALLOWEEN2026', 'HALLOWEEN', 'SORTEO5K', 'GANADOR5K', 'SANDIAFREE'];
-            return especiales.includes(codigo);
-        }
+        // Objeto con la información del cupón validado en Firestore
+        let cuponActivoData = null;
 
         window.aplicarCupon = async function(codigoManual) {
             const inputCupon = document.getElementById('input-cupon');
@@ -1015,15 +1011,6 @@
                 return;
             }
 
-            if (!esPatronCuponValido(codigo)) {
-                if (msgCupon) {
-                    msgCupon.style.display = 'block';
-                    msgCupon.style.color = '#ff1a1a';
-                    msgCupon.innerText = '✖ Código no válido o no reconocido. Verifica e intenta de nuevo.';
-                }
-                return;
-            }
-
             // Indicador de validación
             if (btnAplicar) {
                 btnAplicar.innerText = 'Validando...';
@@ -1036,8 +1023,9 @@
             }
 
             // Verificar en Firestore si existe, si está habilitado por el admin y si ya fue usado
+            let resultado;
             try {
-                const resultado = await consultarEstadoCupon(codigo);
+                resultado = await consultarEstadoCupon(codigo);
                 if (!resultado.valido) {
                     if (btnAplicar) {
                         btnAplicar.innerText = 'Aplicar';
@@ -1052,10 +1040,22 @@
                 }
             } catch (err) {
                 console.warn("Fallo temporal de verificación online del cupón:", err);
+                if (btnAplicar) {
+                    btnAplicar.innerText = 'Aplicar';
+                    btnAplicar.disabled = false;
+                }
+                if (msgCupon) {
+                    msgCupon.style.display = 'block';
+                    msgCupon.style.color = '#ff1a1a';
+                    msgCupon.innerText = '✖ No se pudo verificar el cupón en este momento. Intenta de nuevo.';
+                }
+                return;
             }
 
-            // Guardar código activo
+            // Guardar datos del cupón activo
             cuponActivoCodigo = codigo;
+            cuponActivoData = resultado;
+            const precioUSD = resultado.precioUSD !== undefined ? Number(resultado.precioUSD) : 0;
 
             // 1. Desactivar input y cambiar botón
             if (inputCupon) {
@@ -1071,40 +1071,93 @@
                 btnAplicar.disabled = true;
             }
 
-            // 2. Mostrar mensaje de éxito
-            if (msgCupon) {
-                msgCupon.style.display = 'block';
-                msgCupon.style.color = '#00ff66';
-                msgCupon.innerText = `✔ ¡Cupón ${codigo} activado! Inscripción 100% Bonificada por Sorteo.`;
-            }
+            // Obtener tasa BCV actual
+            let tasa = tasaRespaldoLocal;
+            try {
+                const cached = sessionStorage.getItem('tasaBCV');
+                if (cached) {
+                    const d = JSON.parse(cached);
+                    if (d && d.usd) tasa = parseFloat(d.usd);
+                }
+            } catch(e) {}
+            const totalVesAjustado = tasa * precioUSD;
 
-            // 3. Ocultar sección de pago y mostrar banner verde
-            if (seccionPago) seccionPago.style.display = 'none';
-            if (bannerActivo) bannerActivo.style.display = 'block';
+            // 2. Si el precio es 0$ (CORTESÍA 100% GRATIS)
+            if (precioUSD === 0) {
+                if (msgCupon) {
+                    msgCupon.style.display = 'block';
+                    msgCupon.style.color = '#00ff66';
+                    msgCupon.innerText = `✔ ¡Cupón ${codigo} activado! Inscripción 100% Bonificada ($0 USD).`;
+                }
+                if (bannerActivo) {
+                    bannerActivo.innerHTML = `
+                        <div style="color: #00ff66; font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">
+                            🎉 ¡CUPÓN DE CORTESÍA ACTIVADO (${codigo})!
+                        </div>
+                        <div style="color: #ddd; font-size: 0.8rem; line-height: 1.4;">
+                            Tu inscripción es 100% bonificada ($0 USD). No requieres realizar ningún pago bancario.
+                        </div>
+                    `;
+                    bannerActivo.style.display = 'block';
+                }
+                if (seccionPago) seccionPago.style.display = 'none';
 
-            // 4. Remover 'required' y pre-llenar valores para Google Apps Script
-            if (selectMetodo) {
-                selectMetodo.removeAttribute('required');
-                selectMetodo.value = 'CUPÓN DE CORTESÍA';
-            }
-            if (inputRef) {
-                inputRef.removeAttribute('required');
-                inputRef.value = 'CUPÓN: ' + codigo;
-            }
-            if (inputMonto) {
-                inputMonto.removeAttribute('required');
-                inputMonto.value = '0$ / 0,00 Bs (CORTESÍA)';
-            }
+                if (selectMetodo) {
+                    selectMetodo.removeAttribute('required');
+                    selectMetodo.value = 'CUPÓN DE CORTESÍA';
+                }
+                if (inputRef) {
+                    inputRef.removeAttribute('required');
+                    inputRef.value = 'CUPÓN: ' + codigo;
+                }
+                if (inputMonto) {
+                    inputMonto.removeAttribute('required');
+                    inputMonto.value = '0$ / 0,00 Bs (CORTESÍA)';
+                }
 
-            // 5. Ajustar visualmente la tarjeta de monto lateral
-            if (montoFinalVes) {
-                montoFinalVes.innerHTML = `0,00 <span class="amount-currency" style="color:#00ff66; font-size:1.2rem; margin-left:5px;">Bs</span>`;
-            }
-            const rateResults = document.getElementById('rate-results');
-            if (rateResults) {
-                const desc = rateResults.querySelector('div:last-child');
-                if (desc) {
-                    desc.innerHTML = `<strong style="color:#00ff66; font-size:1rem;">🎉 100% CORTESÍA SORTEO (${codigo})</strong>`;
+                if (montoFinalVes) {
+                    montoFinalVes.innerHTML = `0,00 <span class="amount-currency" style="color:#00ff66; font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                }
+                const rateResults = document.getElementById('rate-results');
+                if (rateResults) {
+                    const desc = rateResults.querySelector('div:last-child');
+                    if (desc) desc.innerHTML = `<strong style="color:#00ff66; font-size:1rem;">🎉 100% CORTESÍA ($0 USD)</strong>`;
+                }
+            } 
+            // 3. Si el precio es mayor a 0$ (PRECIO ESPECIAL CON DESCUENTO)
+            else {
+                if (msgCupon) {
+                    msgCupon.style.display = 'block';
+                    msgCupon.style.color = '#00ff66';
+                    msgCupon.innerText = `✔ ¡Cupón ${codigo} activado! Precio especial aplicado: $${precioUSD} USD.`;
+                }
+                if (bannerActivo) {
+                    bannerActivo.innerHTML = `
+                        <div style="color: #00ff66; font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">
+                            🎉 ¡PRECIO ESPECIAL APLICADO: $${precioUSD} USD! (Cupón ${codigo})
+                        </div>
+                        <div style="color: #ddd; font-size: 0.8rem; line-height: 1.4;">
+                            Tu monto a pagar ha sido actualizado a <strong>$${precioUSD} USD</strong> (${formatVE(totalVesAjustado)} Bs). Completa tu registro y reporta tu pago móvil o transferencia.
+                        </div>
+                    `;
+                    bannerActivo.style.display = 'block';
+                }
+
+                // Mantener sección de pago visible pero con monto actualizado
+                if (seccionPago) seccionPago.style.display = 'block';
+                if (inputMonto) {
+                    inputMonto.value = `${formatVE(totalVesAjustado)} Bs / ${precioUSD}$`;
+                }
+
+                if (montoFinalVes) {
+                    montoFinalVes.innerHTML = `${formatVE(totalVesAjustado)} <span class="amount-currency" style="color:#00ff66; font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                }
+                const rateResults = document.getElementById('rate-results');
+                if (rateResults) {
+                    const desc = rateResults.querySelector('div:last-child');
+                    if (desc) {
+                        desc.innerHTML = `Precio Especial con Cupón <strong>${codigo}</strong>: <strong style="color:#00ff66; font-size:1.1rem;">${precioUSD}$ USD</strong> (Tasa BCV: ${formatVE(tasa)} Bs)`;
+                    }
                 }
             }
 
@@ -1156,8 +1209,8 @@
                         alert(checkCupon.mensaje || `El cupón ${cuponActivoCodigo} no está disponible.`);
                         return;
                     }
-                    // Quemar cupón en Firestore para que no pueda usarse nuevamente
-                    await marcarCuponUsado(cuponActivoCodigo, datosAEnviar);
+                    // Registrar uso del cupón en Firestore (sin quemar si es reutilizable)
+                    await marcarCuponUsado(cuponActivoCodigo, datosAEnviar, checkCupon);
                 } catch (err) {
                     console.error("Error al registrar cupón en Firestore:", err);
                 }
