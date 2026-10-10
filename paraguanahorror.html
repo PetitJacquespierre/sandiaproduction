@@ -1229,13 +1229,21 @@
             datosAEnviar['monto_exacto'] = form.monto_pago ? form.monto_pago.value : '';
             datosAEnviar['evento'] = '5K Paraguaná Horror Story';
             
-            // Si tiene cupón aplicado, especificar el descuento o cortesía en los detalles
-            if (cuponActivoCodigo && cuponActivoData) {
-                const pUSD = cuponActivoData.precioUSD !== undefined ? Number(cuponActivoData.precioUSD) : 0;
-                datosAEnviar['descuento_aplicado'] = pUSD === 0 ? '100% CORTESÍA (0$)' : `PRECIO ESPECIAL: $${pUSD} USD`;
-                if (!datosAEnviar['metodo_pago']) {
-                    datosAEnviar['metodo_pago'] = pUSD === 0 ? 'CUPÓN DE CORTESÍA' : (form.metodo_pago ? form.metodo_pago.value : 'PAGO CON DESCUENTO');
+            // Si tiene cupón aplicado, asegurar que se refleje visiblemente en las columnas existentes de Google Sheets:
+            if (cuponActivoCodigo) {
+                const pUSD = (cuponActivoData && cuponActivoData.precioUSD !== undefined) ? Number(cuponActivoData.precioUSD) : 0;
+                
+                // 1. En la columna de Referencia: se estampa el Cupón para que lo leas de inmediato en la hoja
+                const refOriginal = form.referencia_ref ? form.referencia_ref.value.trim() : '';
+                if (pUSD === 0) {
+                    datosAEnviar['referencia_ref'] = `[CUPÓN: ${cuponActivoCodigo}]`;
+                } else {
+                    datosAEnviar['referencia_ref'] = `[CUPÓN: ${cuponActivoCodigo}] Ref: ${refOriginal}`;
                 }
+
+                // 2. En el Método de Pago y Monto:
+                datosAEnviar['metodo_pago'] = pUSD === 0 ? `CUPÓN CORTESÍA (${cuponActivoCodigo})` : `${form.metodo_pago ? form.metodo_pago.value : 'Pago'} (Cupón ${cuponActivoCodigo})`;
+                datosAEnviar['descuento_aplicado'] = pUSD === 0 ? '100% CORTESÍA (0$)' : `PRECIO ESPECIAL: $${pUSD} USD`;
             }
 
             fetch(urlScriptGoogle, {
