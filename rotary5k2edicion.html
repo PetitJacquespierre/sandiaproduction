@@ -856,244 +856,263 @@
         </div>
     </main>
 
-    <!-- SECCIÓN: NUESTROS ALIADOS (DOBLE CARRUSEL BIDIRECCIONAL CONTINUO) -->
-    <section class="rotary-aliados-seccion" id="aliados" style="padding: 60px 0 70px 0; position: relative; z-index: 2; overflow: hidden; background: linear-gradient(180deg, transparent 0%, rgba(5, 12, 28, 0.8) 50%, transparent 100%);">
-        <div style="text-align: center; max-width: 900px; margin: 0 auto 35px auto; padding: 0 20px;">
+    <!-- SECCIÓN: NUESTROS ALIADOS (DOBLE CARRUSEL CONTINUO BIDIRECCIONAL - ESTILO OFICIAL SANDÍA) -->
+    <section class="aliados-seccion-rotary" id="aliados" style="padding: 60px 0 80px 0; background-color: #03060d; overflow: hidden; border-top: 1px solid rgba(255, 255, 255, 0.05); position: relative; z-index: 2;">
+        <div style="text-align: center; max-width: 900px; margin: 0 auto 40px auto; padding: 0 20px;">
             <div style="font-family: 'Oswald', sans-serif; color: var(--rotary-gold); font-size: 0.95rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px;">
-                ALIANZA INSTITUCIONAL & COMERCIAL
+                MARCAS PARTICIPANTES
             </div>
-            <h2 style="font-family: 'Montserrat', sans-serif; font-size: 2.2rem; font-weight: 900; color: #ffffff; margin: 0; text-transform: uppercase; letter-spacing: 1px;">
+            <h2 style="font-family: 'Montserrat', sans-serif; font-size: 2.3rem; font-weight: 900; color: #ffffff; margin: 0; text-transform: uppercase; letter-spacing: 1px;">
                 NUESTROS ALIADOS
             </h2>
-            <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px;">
-                Marcas y organizaciones que impulsan la 2da Edición 5K contra la Polio en Falcón
+            <p style="color: #888; font-size: 0.9rem; margin-top: 8px;">
+                Espacios oficiales disponibles para marcas y patrocinadores de la 2da Carrera 5K End Polio Now
             </p>
         </div>
 
-        <!-- CONTENEDOR MÁSCARA DEL CARRUSEL BIDIRECCIONAL -->
-        <div class="carrusel-doble-wrapper" style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="display: flex; flex-direction: column; gap: 40px; width: 100%;">
             
             <!-- HILERA 1: MOVIMIENTO CONTINUO HACIA LA IZQUIERDA -->
-            <div class="marquee-container" style="width: 100%; overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);">
-                <div class="marquee-track track-left" style="display: flex; gap: 25px; width: max-content; align-items: center; animation: marquee-scroll-left 32s linear infinite;">
+            <div class="carrusel-infinito-container">
+                <div class="carrusel-track track-fila-izq">
                     
-                    <!-- ROTARY EXPOMAR -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: var(--rotary-gold);">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/></svg>
-                        </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">ROTARY EXPOMAR</span>
-                            <span class="brand-badge-role">COMITÉ ORGANIZADOR</span>
-                        </div>
+                    <!-- 1. GOLD'S STARS GYM -->
+                    <div class="aliado-item">
+                        <img src="img/gsg.png" alt="Gold's Stars Gym" class="logo-aliado">
+                        <span class="nombre-aliado">GOLD'S STARS GYM</span>
                     </div>
 
-                    <!-- GOLD'S STARS GYM -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: #ffffff;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <!-- 2. TU MARCA AQUÍ - MODELO A (ORO / ÁMBAR) -->
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#ffc72c" stroke-width="3" stroke-dasharray="6 4" opacity="0.6"/>
+                                <polygon points="50,15 82,33 82,67 50,85 18,67 18,33" fill="url(#gradGold)" stroke="#ffe082" stroke-width="2"/>
+                                <path d="M38 42 H62 M50 42 V65" stroke="#071329" stroke-width="4.5" stroke-linecap="round"/>
+                                <circle cx="50" cy="50" r="22" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 2"/>
+                                <defs>
+                                    <linearGradient id="gradGold" x1="18" y1="15" x2="82" y2="85" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#ffe082"/>
+                                        <stop offset="0.5" stop-color="#ffc72c"/>
+                                        <stop offset="1" stop-color="#ff9800"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">GOLD'S STARS GYM</span>
-                            <span class="brand-badge-role">PRESENTADOR OFICIAL</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: var(--rotary-gold);">TU MARCA AQUÍ</span>
                     </div>
 
-                    <!-- TU MARCA AQUÍ (ESPACIO 1) -->
-                    <div class="brand-badge-card sponsor-spotlight">
-                        <div class="brand-badge-icon spotlight-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                        </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title" style="color: var(--rotary-gold);">TU MARCA AQUÍ</span>
-                            <span class="brand-badge-role" style="color: #ff9800;">PATROCINANTE OFICIAL</span>
-                        </div>
+                    <!-- 3. SANDÍA PRODUCTION -->
+                    <div class="aliado-item">
+                        <img src="img/Logo1.png" alt="Sandía Production" class="logo-aliado">
+                        <span class="nombre-aliado">SANDÍA PRODUCTION</span>
                     </div>
 
-                    <!-- CC LAS VIRTUDES -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: var(--rotary-gold);">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3M9 9v.01M9 13v.01M9 17v.01"/></svg>
+                    <!-- 4. TU MARCA AQUÍ - MODELO B (CIAN NEÓN / VELOCIDAD) -->
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#00e5ff" stroke-width="2" opacity="0.5"/>
+                                <path d="M50 18 L78 35 V65 L50 82 L22 65 V35 Z" fill="url(#gradCyan)" opacity="0.85"/>
+                                <path d="M34 50 L46 62 L66 38" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="50" cy="50" r="30" stroke="#00e5ff" stroke-width="2" stroke-dasharray="8 4"/>
+                                <defs>
+                                    <linearGradient id="gradCyan" x1="22" y1="18" x2="78" y2="82" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#00e5ff"/>
+                                        <stop offset="1" stop-color="#0288d1"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">CC LAS VIRTUDES</span>
-                            <span class="brand-badge-role">SEDE SALIDA & META</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: #38bdf8;">TU MARCA AQUÍ</span>
                     </div>
 
-                    <!-- SANDÍA PRODUCTION -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: var(--rotary-red);">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    <!-- 5. TU MARCA AQUÍ - MODELO C (FUEGO CARMESÍ / ENERGÍA) -->
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#ff3d00" stroke-width="2" stroke-dasharray="5 3" opacity="0.6"/>
+                                <circle cx="50" cy="50" r="34" fill="url(#gradRed)" stroke="#ff6e40" stroke-width="2"/>
+                                <polygon points="50,26 58,44 76,44 62,56 68,74 50,62 32,74 38,56 24,44 42,44" fill="#ffffff"/>
+                                <defs>
+                                    <linearGradient id="gradRed" x1="16" y1="16" x2="84" y2="84" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#ff3d00"/>
+                                        <stop offset="0.6" stop-color="#d50000"/>
+                                        <stop offset="1" stop-color="#880e4f"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">SANDÍA PRODUCTION</span>
-                            <span class="brand-badge-role">PLATAFORMA & PRENSA</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: #ff5252;">TU MARCA AQUÍ</span>
                     </div>
 
-                    <!-- REPETICIÓN EXACTA PARA BUCLE INFINITO CONTINUO -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: var(--rotary-gold);">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/></svg>
-                        </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">ROTARY EXPOMAR</span>
-                            <span class="brand-badge-role">COMITÉ ORGANIZADOR</span>
-                        </div>
+                    <!-- BUCLE EXACTO PARA SCROLL CONTINUO SIN SALTOS -->
+                    <div class="aliado-item">
+                        <img src="img/gsg.png" alt="Gold's Stars Gym" class="logo-aliado">
+                        <span class="nombre-aliado">GOLD'S STARS GYM</span>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: #ffffff;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#ffc72c" stroke-width="3" stroke-dasharray="6 4" opacity="0.6"/>
+                                <polygon points="50,15 82,33 82,67 50,85 18,67 18,33" fill="url(#gradGold2)" stroke="#ffe082" stroke-width="2"/>
+                                <path d="M38 42 H62 M50 42 V65" stroke="#071329" stroke-width="4.5" stroke-linecap="round"/>
+                                <circle cx="50" cy="50" r="22" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 2"/>
+                                <defs>
+                                    <linearGradient id="gradGold2" x1="18" y1="15" x2="82" y2="85" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#ffe082"/>
+                                        <stop offset="0.5" stop-color="#ffc72c"/>
+                                        <stop offset="1" stop-color="#ff9800"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">GOLD'S STARS GYM</span>
-                            <span class="brand-badge-role">PRESENTADOR OFICIAL</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: var(--rotary-gold);">TU MARCA AQUÍ</span>
                     </div>
 
-                    <div class="brand-badge-card sponsor-spotlight">
-                        <div class="brand-badge-icon spotlight-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                        </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title" style="color: var(--rotary-gold);">TU MARCA AQUÍ</span>
-                            <span class="brand-badge-role" style="color: #ff9800;">PATROCINANTE OFICIAL</span>
-                        </div>
+                    <div class="aliado-item">
+                        <img src="img/Logo1.png" alt="Sandía Production" class="logo-aliado">
+                        <span class="nombre-aliado">SANDÍA PRODUCTION</span>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: var(--rotary-gold);">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3M9 9v.01M9 13v.01M9 17v.01"/></svg>
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#00e5ff" stroke-width="2" opacity="0.5"/>
+                                <path d="M50 18 L78 35 V65 L50 82 L22 65 V35 Z" fill="url(#gradCyan2)" opacity="0.85"/>
+                                <path d="M34 50 L46 62 L66 38" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="50" cy="50" r="30" stroke="#00e5ff" stroke-width="2" stroke-dasharray="8 4"/>
+                                <defs>
+                                    <linearGradient id="gradCyan2" x1="22" y1="18" x2="78" y2="82" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#00e5ff"/>
+                                        <stop offset="1" stop-color="#0288d1"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">CC LAS VIRTUDES</span>
-                            <span class="brand-badge-role">SEDE SALIDA & META</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: #38bdf8;">TU MARCA AQUÍ</span>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: var(--rotary-red);">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#ff3d00" stroke-width="2" stroke-dasharray="5 3" opacity="0.6"/>
+                                <circle cx="50" cy="50" r="34" fill="url(#gradRed2)" stroke="#ff6e40" stroke-width="2"/>
+                                <polygon points="50,26 58,44 76,44 62,56 68,74 50,62 32,74 38,56 24,44 42,44" fill="#ffffff"/>
+                                <defs>
+                                    <linearGradient id="gradRed2" x1="16" y1="16" x2="84" y2="84" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#ff3d00"/>
+                                        <stop offset="0.6" stop-color="#d50000"/>
+                                        <stop offset="1" stop-color="#880e4f"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">SANDÍA PRODUCTION</span>
-                            <span class="brand-badge-role">PLATAFORMA & PRENSA</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: #ff5252;">TU MARCA AQUÍ</span>
                     </div>
 
                 </div>
             </div>
 
             <!-- HILERA 2: MOVIMIENTO CONTINUO HACIA LA DERECHA -->
-            <div class="marquee-container" style="width: 100%; overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);">
-                <div class="marquee-track track-right" style="display: flex; gap: 25px; width: max-content; align-items: center; animation: marquee-scroll-right 34s linear infinite;">
+            <div class="carrusel-infinito-container">
+                <div class="carrusel-track track-fila-der">
                     
-                    <!-- MANTA SPORT WEAR -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: #38bdf8;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 1.9V10a6 6 0 0 0 6 6h6a6 6 0 0 0 6-6V5.36a2 2 0 0 0-1.28-1.9z"/></svg>
+                    <!-- 1. TU MARCA AQUÍ - MODELO B (CIAN NEÓN) -->
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#00e5ff" stroke-width="2" opacity="0.5"/>
+                                <path d="M50 18 L78 35 V65 L50 82 L22 65 V35 Z" fill="url(#gradCyan)" opacity="0.85"/>
+                                <path d="M34 50 L46 62 L66 38" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="50" cy="50" r="30" stroke="#00e5ff" stroke-width="2" stroke-dasharray="8 4"/>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">MANTA SPORT WEAR</span>
-                            <span class="brand-badge-role">INDUMENTARIA DEPORTIVA</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: #38bdf8;">TU MARCA AQUÍ</span>
                     </div>
 
-                    <!-- TU MARCA AQUÍ (ESPACIO 2) -->
-                    <div class="brand-badge-card sponsor-spotlight">
-                        <div class="brand-badge-icon spotlight-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                        </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title" style="color: var(--rotary-gold);">TU MARCA AQUÍ</span>
-                            <span class="brand-badge-role" style="color: #ff9800;">ESPACIO DISPONIBLE</span>
-                        </div>
+                    <!-- 2. SANDÍA PRODUCTION -->
+                    <div class="aliado-item">
+                        <img src="img/Logo1.png" alt="Sandía Production" class="logo-aliado">
+                        <span class="nombre-aliado">SANDÍA PRODUCTION</span>
                     </div>
 
-                    <!-- RUNFREE SOCIAL TEAM -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: #00ff66;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 4v16M17 8l-4-4-4 4M21 12H3"/></svg>
+                    <!-- 3. TU MARCA AQUÍ - MODELO C (FUEGO CARMESÍ) -->
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#ff3d00" stroke-width="2" stroke-dasharray="5 3" opacity="0.6"/>
+                                <circle cx="50" cy="50" r="34" fill="url(#gradRed)" stroke="#ff6e40" stroke-width="2"/>
+                                <polygon points="50,26 58,44 76,44 62,56 68,74 50,62 32,74 38,56 24,44 42,44" fill="#ffffff"/>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">RUNFREE TEAM</span>
-                            <span class="brand-badge-role">COMUNIDAD RUNNER</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: #ff5252;">TU MARCA AQUÍ</span>
                     </div>
 
-                    <!-- RUNNERS PUNTO FIJO -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: var(--rotary-gold);">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><path d="M6.5 9l3.5 4 4-2.5 3.5 5.5M10 13l-2.5 7M14 10.5l3.5 5"/></svg>
-                        </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">RUNNERS PUNTO FIJO</span>
-                            <span class="brand-badge-role">CLUB ATLETA FALCÓN</span>
-                        </div>
+                    <!-- 4. GOLD'S STARS GYM -->
+                    <div class="aliado-item">
+                        <img src="img/gsg.png" alt="Gold's Stars Gym" class="logo-aliado">
+                        <span class="nombre-aliado">GOLD'S STARS GYM</span>
                     </div>
 
-                    <!-- TU MARCA AQUÍ (ESPACIO 3) -->
-                    <div class="brand-badge-card sponsor-spotlight">
-                        <div class="brand-badge-icon spotlight-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <!-- 5. TU MARCA AQUÍ - MODELO A (ORO / ÁMBAR) -->
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#ffc72c" stroke-width="3" stroke-dasharray="6 4" opacity="0.6"/>
+                                <polygon points="50,15 82,33 82,67 50,85 18,67 18,33" fill="url(#gradGold)" stroke="#ffe082" stroke-width="2"/>
+                                <path d="M38 42 H62 M50 42 V65" stroke="#071329" stroke-width="4.5" stroke-linecap="round"/>
+                                <circle cx="50" cy="50" r="22" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 2"/>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title" style="color: var(--rotary-gold);">TU MARCA AQUÍ</span>
-                            <span class="brand-badge-role" style="color: #ff9800;">ALIADO ESTRATÉGICO</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: var(--rotary-gold);">TU MARCA AQUÍ</span>
                     </div>
 
-                    <!-- REPETICIÓN EXACTA PARA BUCLE INFINITO CONTINUO -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: #38bdf8;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 1.9V10a6 6 0 0 0 6 6h6a6 6 0 0 0 6-6V5.36a2 2 0 0 0-1.28-1.9z"/></svg>
+                    <!-- BUCLE EXACTO PARA SCROLL CONTINUO SIN SALTOS -->
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#00e5ff" stroke-width="2" opacity="0.5"/>
+                                <path d="M50 18 L78 35 V65 L50 82 L22 65 V35 Z" fill="url(#gradCyan2)" opacity="0.85"/>
+                                <path d="M34 50 L46 62 L66 38" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="50" cy="50" r="30" stroke="#00e5ff" stroke-width="2" stroke-dasharray="8 4"/>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">MANTA SPORT WEAR</span>
-                            <span class="brand-badge-role">INDUMENTARIA DEPORTIVA</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: #38bdf8;">TU MARCA AQUÍ</span>
                     </div>
 
-                    <div class="brand-badge-card sponsor-spotlight">
-                        <div class="brand-badge-icon spotlight-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                        </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title" style="color: var(--rotary-gold);">TU MARCA AQUÍ</span>
-                            <span class="brand-badge-role" style="color: #ff9800;">ESPACIO DISPONIBLE</span>
-                        </div>
+                    <div class="aliado-item">
+                        <img src="img/Logo1.png" alt="Sandía Production" class="logo-aliado">
+                        <span class="nombre-aliado">SANDÍA PRODUCTION</span>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: #00ff66;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 4v16M17 8l-4-4-4 4M21 12H3"/></svg>
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#ff3d00" stroke-width="2" stroke-dasharray="5 3" opacity="0.6"/>
+                                <circle cx="50" cy="50" r="34" fill="url(#gradRed2)" stroke="#ff6e40" stroke-width="2"/>
+                                <polygon points="50,26 58,44 76,44 62,56 68,74 50,62 32,74 38,56 24,44 42,44" fill="#ffffff"/>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">RUNFREE TEAM</span>
-                            <span class="brand-badge-role">COMUNIDAD RUNNER</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: #ff5252;">TU MARCA AQUÍ</span>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon" style="color: var(--rotary-gold);">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><path d="M6.5 9l3.5 4 4-2.5 3.5 5.5M10 13l-2.5 7M14 10.5l3.5 5"/></svg>
-                        </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title">RUNNERS PUNTO FIJO</span>
-                            <span class="brand-badge-role">CLUB ATLETA FALCÓN</span>
-                        </div>
+                    <div class="aliado-item">
+                        <img src="img/gsg.png" alt="Gold's Stars Gym" class="logo-aliado">
+                        <span class="nombre-aliado">GOLD'S STARS GYM</span>
                     </div>
 
-                    <div class="brand-badge-card sponsor-spotlight">
-                        <div class="brand-badge-icon spotlight-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <div class="aliado-item">
+                        <div class="logo-aliado svg-logo-box">
+                            <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" stroke="#ffc72c" stroke-width="3" stroke-dasharray="6 4" opacity="0.6"/>
+                                <polygon points="50,15 82,33 82,67 50,85 18,67 18,33" fill="url(#gradGold2)" stroke="#ffe082" stroke-width="2"/>
+                                <path d="M38 42 H62 M50 42 V65" stroke="#071329" stroke-width="4.5" stroke-linecap="round"/>
+                                <circle cx="50" cy="50" r="22" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 2"/>
+                            </svg>
                         </div>
-                        <div class="brand-badge-info">
-                            <span class="brand-badge-title" style="color: var(--rotary-gold);">TU MARCA AQUÍ</span>
-                            <span class="brand-badge-role" style="color: #ff9800;">ALIADO ESTRATÉGICO</span>
-                        </div>
+                        <span class="nombre-aliado" style="color: var(--rotary-gold);">TU MARCA AQUÍ</span>
                     </div>
 
                 </div>
@@ -1102,6 +1121,88 @@
         </div>
     </section>
 
+    <style>
+        /* CSS OFICIAL IDÉNTICO A INDEX.HTML PERO EN 2 FILAS BIDIRECCIONALES */
+        .carrusel-infinito-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+        }
+        .carrusel-track {
+            display: flex;
+            gap: 70px;
+            align-items: center;
+            width: max-content;
+        }
+        .carrusel-track:hover {
+            animation-play-state: paused !important;
+        }
+        .track-fila-izq {
+            animation: scroll-fila-izq 26s linear infinite;
+        }
+        .track-fila-der {
+            animation: scroll-fila-der 28s linear infinite;
+        }
+
+        @keyframes scroll-fila-izq {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes scroll-fila-der {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        .aliado-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 10px;
+            min-width: 160px;
+            user-select: none;
+            transition: transform 0.3s ease;
+        }
+        .logo-aliado {
+            height: 100px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
+            transition: all 0.4s ease;
+        }
+        .svg-logo-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nombre-aliado {
+            color: #94a3b8;
+            font-size: 1.05rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.4s ease;
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+        }
+        .aliado-item:hover {
+            transform: translateY(-4px);
+        }
+        .aliado-item:hover .logo-aliado {
+            transform: scale(1.12);
+            filter: drop-shadow(0 0 20px rgba(255, 199, 44, 0.75));
+        }
+        .aliado-item:hover .nombre-aliado {
+            color: #ffffff !important;
+            text-shadow: 0 0 15px rgba(255, 199, 44, 0.9);
+        }
+    </style>
     <!-- SECCIÓN: PREGUNTAS FRECUENTES (DISEÑO EDITORIAL RUNNER, CERO CAJAS GENÉRICAS) -->
     <section class="rotary-faq-section" style="max-width: 900px; margin: 0 auto 80px auto; padding: 0 20px; position: relative; z-index: 2;">
         <div style="border-top: 1px solid rgba(255, 199, 44, 0.2); padding-top: 45px;">
