@@ -145,101 +145,18 @@
             margin-bottom: 12px;
         }
 
-        /* SELLO OFICIAL INSTITUCIONAL ROTARY & GSG EN EL HERO */
-        .rotary-official-seal-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 16px auto;
-            max-width: 650px;
-        }
-        .rotary-seal-card {
-            display: inline-flex;
-            align-items: center;
-            gap: 20px;
-            background: rgba(7, 19, 41, 0.88);
-            backdrop-filter: blur(14px);
-            border: 1.5px solid rgba(255, 199, 44, 0.55);
-            border-radius: 50px;
-            padding: 8px 24px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 199, 44, 0.18);
-            transition: all 0.3s ease;
-        }
-        .rotary-seal-card:hover {
-            border-color: var(--rotary-gold);
-            box-shadow: 0 12px 35px rgba(255, 199, 44, 0.4);
-            transform: translateY(-2px);
-        }
-        .rotary-brand-unit {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-align: left;
-        }
-        .rotary-wheel-svg {
-            width: 46px;
-            height: 46px;
-            flex-shrink: 0;
-            filter: drop-shadow(0 2px 8px rgba(255, 199, 44, 0.6));
-            animation: slowWheelSpin 45s linear infinite;
-        }
-        @keyframes slowWheelSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .rotary-gsg-logo {
-            height: 40px;
-            width: auto;
-            max-width: 90px;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.5));
-        }
-        .rotary-seal-text {
-            display: flex;
-            flex-direction: column;
-        }
-        .rotary-seal-title {
+        .presenters-tag {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: 1px;
-            line-height: 1.1;
-        }
-        .rotary-seal-sub {
-            font-size: 0.68rem;
-            color: var(--rotary-gold);
-            font-weight: 700;
-            letter-spacing: 1px;
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
-        .rotary-seal-divider {
-            width: 1px;
-            height: 36px;
-            background: linear-gradient(to bottom, transparent, rgba(255, 199, 44, 0.7), transparent);
-        }
-        @media (max-width: 600px) {
-            .rotary-seal-card {
-                gap: 12px;
-                padding: 6px 14px;
-                border-radius: 20px;
-            }
-            .rotary-wheel-svg {
-                width: 34px;
-                height: 34px;
-            }
-            .rotary-gsg-logo {
-                height: 28px;
-            }
-            .rotary-seal-title {
-                font-size: 0.8rem;
-            }
-            .rotary-seal-sub {
-                font-size: 0.55rem;
-            }
-            .rotary-seal-divider {
-                height: 26px;
-            }
+        .presenters-tag span {
+            color: var(--rotary-gold);
+            font-weight: 800;
         }
 
         .rotary-title {
@@ -647,7 +564,6 @@
             <a href="index.html">
                 <img src="img/Logo1.png" alt="Sandía Production" class="logo-mobile">
                 <img src="img/Logo1.png" alt="Sandía Production" class="logo-desktop">
-                <img src="img/Isotipo.png" alt="Sandía Production" class="logo-isotipo">
             </a>
         </div>
         
@@ -693,90 +609,12 @@
         <div class="hero-overlay-gradient"></div>
 
         <div style="position: relative; z-index: 2;">
-            
-            <!-- SELLO OFICIAL INSTITUCIONAL ROTARY EXPOMAR & GSG -->
-            <div class="rotary-official-seal-wrapper">
-                <div class="rotary-seal-card">
-                    <!-- RUEDA DENTADA OFICIAL ROTARY INTERNATIONAL -->
-                    <div class="rotary-brand-unit">
-                        <svg class="rotary-wheel-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Engranaje dorado exterior con 24 dientes precisos -->
-                            <g fill="url(#rotaryGoldMetal)">
-                                <circle cx="50" cy="50" r="46"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1"/>
-                                <rect x="47" y="91" width="6" height="8" rx="1"/>
-                                <rect x="1" y="47" width="8" height="6" rx="1"/>
-                                <rect x="91" y="47" width="8" height="6" rx="1"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(15 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(30 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(45 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(60 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(75 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(90 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(105 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(120 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(135 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(150 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(165 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(180 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(195 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(210 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(225 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(240 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(255 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(270 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(285 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(300 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(315 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(330 50 50)"/>
-                                <rect x="47" y="1" width="6" height="8" rx="1" transform="rotate(345 50 50)"/>
-                            </g>
-                            <!-- Anillo azul marino interior oficial de Rotary -->
-                            <circle cx="50" cy="50" r="39" fill="#00246c"/>
-                            <!-- Anillo dorado de la llanta -->
-                            <circle cx="50" cy="50" r="28" fill="none" stroke="url(#rotaryGoldMetal)" stroke-width="2.5"/>
-                            <!-- 6 rayos / radios de la rueda -->
-                            <line x1="50" y1="28" x2="50" y2="17" stroke="url(#rotaryGoldMetal)" stroke-width="4.5"/>
-                            <line x1="50" y1="72" x2="50" y2="83" stroke="url(#rotaryGoldMetal)" stroke-width="4.5"/>
-                            <line x1="31" y1="39" x2="21" y2="33" stroke="url(#rotaryGoldMetal)" stroke-width="4.5"/>
-                            <line x1="69" y1="61" x2="79" y2="67" stroke="url(#rotaryGoldMetal)" stroke-width="4.5"/>
-                            <line x1="31" y1="61" x2="21" y2="67" stroke="url(#rotaryGoldMetal)" stroke-width="4.5"/>
-                            <line x1="69" y1="39" x2="79" y2="33" stroke="url(#rotaryGoldMetal)" stroke-width="4.5"/>
-                            <!-- Cubo central con chaveta (keyway) oficial Rotary -->
-                            <circle cx="50" cy="50" r="13" fill="url(#rotaryGoldMetal)"/>
-                            <circle cx="50" cy="50" r="6" fill="#071329"/>
-                            <rect x="48" y="41" width="4" height="6" fill="#071329"/>
-                            <defs>
-                                <linearGradient id="rotaryGoldMetal" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-                                    <stop offset="0%" stop-color="#fff2a8"/>
-                                    <stop offset="35%" stop-color="#ffc72c"/>
-                                    <stop offset="70%" stop-color="#e09900"/>
-                                    <stop offset="100%" stop-color="#ffb300"/>
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <div class="rotary-seal-text">
-                            <span class="rotary-seal-title">ROTARY EXPOMAR</span>
-                            <span class="rotary-seal-sub">PUNTO FIJO · FALCÓN</span>
-                        </div>
-                    </div>
-
-                    <!-- DIVISOR VERTICAL -->
-                    <div class="rotary-seal-divider"></div>
-
-                    <!-- LOGO GSG (GOLD'S STARS GYM) -->
-                    <div class="rotary-brand-unit">
-                        <img src="img/gsg.png" alt="Gold's Stars Gym" class="rotary-gsg-logo">
-                        <div class="rotary-seal-text">
-                            <span class="rotary-seal-title">GOLD'S STARS GYM</span>
-                            <span class="rotary-seal-sub">CO-ORGANIZADOR OFICIAL</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="edition-badge">
                 <span>🏆</span> 2DA EDICIÓN OFICIAL 2026
+            </div>
+
+            <div class="presenters-tag">
+                <span>ROTARY EXPOMAR</span> & <span>GSG GOLD'S STARS GYM</span> PRESENTAN
             </div>
 
             <h1 class="rotary-title">
