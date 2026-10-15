@@ -43,6 +43,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- SMART NAVBAR COMPACTA AL HACER SCROLL (DESKTOP & MOBILE) ---
+    const navbarSandia = document.querySelector('.navbar-sandia');
+    if (navbarSandia) {
+        const logoWrapperLink = navbarSandia.querySelector('.logo-wrapper a');
+        if (logoWrapperLink && !logoWrapperLink.querySelector('.logo-isotipo')) {
+            const isotipoImg = document.createElement('img');
+            isotipoImg.src = 'img/Isotipo.png';
+            isotipoImg.alt = 'Sandía Production';
+            isotipoImg.className = 'logo-isotipo';
+            logoWrapperLink.appendChild(isotipoImg);
+        }
+
+        const handleNavbarScroll = () => {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            if (currentScroll > 40) {
+                navbarSandia.classList.add('scrolled');
+            } else {
+                navbarSandia.classList.remove('scrolled');
+            }
+        };
+
+        window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+        handleNavbarScroll(); // Comprobar estado inicial
+    }
+
     // --- ESTADO ACTIVO DEL MENÚ (ESCRITORIO) ---
     function setMenuActivo() {
         const currentPath = window.location.pathname;

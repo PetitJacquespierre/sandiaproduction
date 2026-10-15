@@ -55,11 +55,13 @@ body {
    ========================================================================== */
 .navbar-sandia {
     background-color: rgba(5, 10, 21, 0.98); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid rgba(230, 32, 53, 0.15); position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(5px); 
+    border-bottom: 1px solid rgba(230, 32, 53, 0.15); position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(5px);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .logo-wrapper { display: flex; align-items: center; }
-.logo-mobile { max-height: 115px; width: auto; max-width: 100%; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
+.logo-mobile { max-height: 115px; width: auto; max-width: 100%; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); transition: all 0.35s ease; }
 .logo-desktop { display: none; }
+.logo-isotipo { display: none; height: 42px; width: auto; filter: drop-shadow(0 2px 8px rgba(230, 32, 53, 0.6)); transition: all 0.35s ease; }
 .menu-desktop-links { display: none; } 
 
 /* ==========================================================================
@@ -853,17 +855,46 @@ select.form-control option { background-color: var(--color-fondo-menu); color: #
    ========================================================================== */
 @media (min-width: 992px) {
     .logo-mobile { display: none; }
-    .logo-desktop { display: block; height: 190px; width: auto; }
+    .logo-desktop { display: block; height: 110px; width: auto; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+    .logo-isotipo { display: none; height: 44px; width: auto; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
     .navbar-sandia { padding: 10px 40px; }
     
+    /* SMART SCROLLED NAVBAR (COMPACTA EN LAPTOP AL HACER SCROLL) */
+    .navbar-sandia.scrolled {
+        padding: 6px 40px;
+        background-color: rgba(3, 7, 18, 0.97);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(230, 32, 53, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+    }
+    .navbar-sandia.scrolled .logo-desktop {
+        display: none !important;
+    }
+    .navbar-sandia.scrolled .logo-isotipo {
+        display: block !important;
+        animation: fadeInIsotipo 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .navbar-sandia.scrolled .menu-desktop-links {
+        gap: 22px;
+    }
+    .navbar-sandia.scrolled .menu-desktop-links a {
+        font-size: 0.88em;
+    }
+
     .menu-hamburguesa { display: none; } 
-    .menu-desktop-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; align-items: center; }
+    .menu-desktop-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; align-items: center; transition: all 0.3s ease; }
     .menu-desktop-links a { color: var(--color-texto); text-decoration: none; font-weight: 700; font-size: 0.95em; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; position: relative; padding-bottom: 5px; }
     .menu-desktop-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background-color: var(--color-primario); transition: all 0.3s ease; transform: translateX(-50%); box-shadow: 0 0 10px var(--color-primario), 0 0 20px var(--color-primario); }
     .menu-desktop-links a:hover { color: var(--color-texto); text-shadow: 0 0 10px rgba(230, 32, 53, 0.8); }
     .menu-desktop-links a:hover::after { width: 100%; }
     .menu-desktop-links a.activo { color: var(--color-primario); text-shadow: 0 0 10px rgba(230, 32, 53, 0.5); }
     .menu-desktop-links a.activo::after { width: 100%; }
+}
+
+@keyframes fadeInIsotipo {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+}
 
     .index-hero-container { padding-top: 180px; padding-bottom: 25px; min-height: 460px; }
     .proximas-carreras { padding-top: 15px; max-width: 1200px; margin: 0 auto; }
