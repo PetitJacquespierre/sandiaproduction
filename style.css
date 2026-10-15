@@ -60,6 +60,7 @@ body {
 .logo-wrapper { display: flex; align-items: center; }
 .logo-mobile { max-height: 115px; width: auto; max-width: 100%; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
 .logo-desktop { display: none; }
+.logo-isotipo { display: none; }
 .menu-desktop-links { display: none; } 
 
 /* ==========================================================================
@@ -853,11 +854,33 @@ select.form-control option { background-color: var(--color-fondo-menu); color: #
    ========================================================================== */
 @media (min-width: 992px) {
     .logo-mobile { display: none; }
-    .logo-desktop { display: block; height: 190px; width: auto; }
-    .navbar-sandia { padding: 10px 40px; }
+    .logo-desktop { display: block; height: 110px; width: auto; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+    .logo-isotipo { display: none; height: 44px; width: auto; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+    .navbar-sandia { padding: 10px 40px; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
     
+    /* COMPACTA AL HACER SCROLL EN LAPTOP / ESCRITORIO */
+    .navbar-sandia.scrolled {
+        padding: 6px 40px;
+        background-color: rgba(3, 7, 18, 0.97);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(230, 32, 53, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+    }
+    .navbar-sandia.scrolled .logo-desktop {
+        display: none !important;
+    }
+    .navbar-sandia.scrolled .logo-isotipo {
+        display: block !important;
+    }
+    .navbar-sandia.scrolled .menu-desktop-links {
+        gap: 22px;
+    }
+    .navbar-sandia.scrolled .menu-desktop-links a {
+        font-size: 0.88em;
+    }
+
     .menu-hamburguesa { display: none; } 
-    .menu-desktop-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; align-items: center; }
+    .menu-desktop-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; align-items: center; transition: all 0.3s ease; }
     .menu-desktop-links a { color: var(--color-texto); text-decoration: none; font-weight: 700; font-size: 0.95em; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; position: relative; padding-bottom: 5px; }
     .menu-desktop-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background-color: var(--color-primario); transition: all 0.3s ease; transform: translateX(-50%); box-shadow: 0 0 10px var(--color-primario), 0 0 20px var(--color-primario); }
     .menu-desktop-links a:hover { color: var(--color-texto); text-shadow: 0 0 10px rgba(230, 32, 53, 0.8); }

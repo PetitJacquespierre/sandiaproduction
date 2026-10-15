@@ -43,6 +43,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- SMART NAVBAR COMPACTA AL HACER SCROLL (DESKTOP) ---
+    const navbarSandia = document.querySelector('.navbar-sandia');
+    if (navbarSandia) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) {
+                navbarSandia.classList.add('scrolled');
+            } else {
+                navbarSandia.classList.remove('scrolled');
+            }
+        }, { passive: true });
+    }
+
     // --- ESTADO ACTIVO DEL MENÚ (ESCRITORIO) ---
     function setMenuActivo() {
         const currentPath = window.location.pathname;
