@@ -1,155 +1,134 @@
-# 🌐 ROTARY EXPOMAR / PARAGUANÁ — DOSSIER MAESTRO & PLAN DE PROYECTO WEB
+# 🌐 PROPUESTA COMERCIAL & GUÍA DE DESARROLLO WEB: ROTARY CLUB PARAGUANÁ / EXPOMAR
 
-> **Documento Estratégico y Técnico para el Desarrollo del Portal Oficial:** `rotaryexpomar.org`  
-> **Elaborado por:** Grow Studio Agency  
-> **Fecha de creación:** Octubre 2026  
-> **Objetivo:** Propuesta comercial, lineamientos de marca Rotary International y arquitectura de software para el Rotary Club de Paraguaná (Punto Fijo, Falcón).
-
----
-
-## 💼 1. ANÁLISIS DE NEGOCIO: ¿TIENEN DINERO PARA PAGAR?
-
-### ¿Quiénes conforman un Rotary Club?
-Aunque Rotary es una organización de beneficencia y ayuda humanitaria, **sus socios no son voluntarios sin recursos**. Históricamente y por estatutos mundiales, los clubes rotarios están integrados por:
-* Empresarios locales, comerciantes y contratistas.
-* Médicos reconocidos, directores de clínicas y laboratorios.
-* Abogados, agentes aduanales y profesionales de alto nivel en Punto Fijo (Sambil, Las Virtudes, Zona Franca).
-
-### ¿Cómo manejan sus finanzas?
-Rotary opera bajo dos cuentas/fondos separados:
-1. **Fondo de Servicio (Social):** Dinero de donaciones destinado estrictamente a vacunas, sillas de ruedas y obras comunitarias.
-2. **Fondo Administrativo / Operativo:** Financiado por las **cuotas mensuales/anuales de los propios socios** y los remanentes de eventos benéficos. De este fondo pagan eventos, alquileres, insumos institucionales y **servicios tecnológicos y de publicidad**.
-
-> **Conclusión Financiera:** Un presupuesto de **$350 a $450 USD** para un sitio web y **$35 USD/mes** de mantenimiento es un monto sumamente accesible para una junta directiva de 15 a 30 socios profesionales, sobre todo cuando se les demuestra que la página web les permitirá **recaudar miles de dólares en donaciones internacionales (Zelle/PayPal)** que hoy no pueden recibir por falta de una pasarela.
+> **Documento de Trabajo & Pitch Comercial:** Creación del Portal Web Oficial (`rotaryexpomar.org` o `rotaryparaguana.org`).  
+> **Agencia Desarrolladora:** Grow Studio Agency.  
+> **Público Objetivo:** Francisco Madrid y Junta Directiva del Rotary Club de Paraguaná (Punto Fijo, Estado Falcón — Distrito 4380).
 
 ---
 
-## 🏛️ 2. MARCO LEGAL & DIRECTRICES DE MARCA ROTARY INTERNATIONAL
+## 💡 1. DIAGNÓSTICO: ¿POR QUÉ ROTARY NECESITA ESTA PÁGINA WEB?
 
-Rotary International otorga **total autonomía operativa y de diseño** a cada club local, siempre y cuando se respeten los estándares del **Rotary Brand Center**:
+Actualmente, el Rotary Club de Paraguaná maneja su presencia digital únicamente con **Instagram** y formularios improvisados de **Google Forms**. Esto genera los siguientes problemas críticos:
 
-### A. Uso del Logotipo y Marca
-* **Rueda Rotaria Oficial:** Debe acompañarse siempre del nombre del club local (`Rotary Club Paraguaná` o `Rotary Expomar`). No se debe usar la rueda aislada sin identificación del club en la cabecera principal.
-* **Proporciones y Zona de Seguridad:** No deformar, rotar ni alterar los 24 dientes ni los 6 rayos de la rueda.
+1. **Pérdida de Donaciones Internacionales:** Hay cientos de venezolanos y benefactores en el exterior dispuestos a colaborar con las obras médicas en Paraguaná, pero no tienen una pasarela centralizada (Zelle, PayPal, transferencias) ni un lugar formal donde verificar a dónde va su dinero.
+2. **Dependencia de Redes Sociales:** Las publicaciones en Instagram se pierden en el feed a los pocos días. No existe un histórico permanente de las jornadas de vacunación, entrega de sillas de ruedas o banco de leche.
+3. **Poco Atractivo para Grandes Patrocinantes:** Las empresas de Punto Fijo (Sambil, Las Virtudes, clínicas, aduaneras) que donan dinero solo reciben una mención efímera en historias de Instagram, en lugar de una **vitrina corporativa fija durante todo el año**.
+4. **Falta de Identidad Propia:** Depender de links externos de Google Forms le resta seriedad institucional a una de las organizaciones benéficas más prestigiosas del mundo.
 
-### B. Paleta de Colores Corporativa Oficial (Exacta de Rotary)
-| Color | Nombre Oficial | HEX | Uso Recomendado |
+---
+
+## 💰 2. CONDICIONES ECONÓMICAS & PRECIOS
+
+### A. Costo del Desarrollo Web (Pago Único)
+* **Inversión Total:** **$350.00 – $450.00 USD**  
+* **Modalidad de Pago:**  
+  * **50% de anticipo ($175 - $225 USD):** Para iniciar el levantamiento y diseño del prototipo.
+  * **50% contra entrega ($175 - $225 USD):** Una vez aprobado y publicado en el dominio final.
+
+### B. Dominio Institucional `.org` (Pago Anual)
+* **Extensión recomendada:** `.org` (Obligatoria para ONG y organizaciones sin fines de lucro según estándares internacionales de Rotary).
+* **Opciones de dominio:** `rotaryexpomar.org` o `rotaryparaguana.org`.
+* **Costo de compra del dominio:** **~$8.50 a $15.00 USD / año** (según registrador como Namecheap o Cloudflare).
+* **Hosting / Servidores:** **$0.00 USD** (Despliegue en red global CDN de alta velocidad Vercel/Cloudflare, con certificado de seguridad SSL gratis de por vida).
+
+### C. Plan de Mantenimiento & Gestión Mensual (Recurrente)
+* **Tarifa Mensual:** **$35.00 USD / mes**
+* **¿Qué cubre este mantenimiento?**
+  * Carga y actualización fotográfica de cada jornada médica o de vacunación realizada en el mes.
+  * Publicación de noticias y comunicados de la junta directiva.
+  * Creación y mantenimiento de formularios para eventos y cenas benéficas.
+  * Actualización y rotación de marcas y empresas patrocinantes.
+  * Soporte técnico 24/7 y copias de seguridad de datos de benefactores.
+
+---
+
+## 🏦 3. SOLVENCIA FINANCIERA: ¿TIENEN CAPACIDAD DE PAGO?
+
+Rotary es una fundación de beneficencia, pero **sus miembros no son voluntarios sin capacidad económica**:
+* **Perfil de los Socios:** Comerciantes locales, médicos reconocidos, directores de clínicas, abogados y empresarios de Punto Fijo.
+* **Separación de Fondos en Rotary:**
+  * **Fondo de Servicio Social:** Intocable, va a vacunas y ayuda médica.
+  * **Fondo Administrativo / Cuotas de Socios:** Cada rotario paga una cuota mensual/trimestral para sostener los gastos operativos, eventos y propaganda institucional del club.
+* **Retorno Inmediato:** Con solo conseguir **un (1) patrocinante corporativo anual** en la web o una donación internacional de $500, el sitio web se paga solo.
+
+---
+
+## 🏛️ 4. NORMATIVA LEGAL & IDENTIDAD DE MARCA (ROTARY BRAND CENTER)
+
+Rotary International otorga **100% de autonomía a cada club** para tener su propio sitio web (los sitios del Distrito 4380 solo informan generalidades regionales, no gestionan la recaudación ni las obras locales). 
+
+Para cumplir estrictamente con los estatutos de marca mundial de Rotary, el sitio web debe regirse por:
+
+### A. Paleta de Colores Oficial
+| Color | Nombre Oficial | HEX | Aplicación |
 | :--- | :--- | :--- | :--- |
-| 🔵 | **Rotary Royal Blue** | `#00246C` | Color primario, barras de navegación, títulos institucionales. |
-| 🟡 | **Rotary Gold** | `#FFC72C` | Color secundario, botones de acción (CTA), bordes de honor. |
-| 🔴 | **End Polio Cranberry** | `#D91E2B` | Exclusivo para llamados de vacunación y campaña *End Polio Now*. |
-| 🔷 | **Azure Blue** | `#005DAA` | Fondos interactivos, enlaces y estados hover. |
-| ⚪ | **Blanco Puro** | `#FFFFFF` | Fondos de lectura limpia y contraste en modo oscuro/claro. |
-| ⚫ | **Navy Profundo** | `#071329` | Fondo oscuro moderno para modo nocturno deportivo. |
+| 🔵 | **Rotary Royal Blue** | `#00246C` | Barra de navegación, encabezados, footer institucional. |
+| 🟡 | **Rotary Gold** | `#FFC72C` | Botones de llamado a la acción (CTA), destacados, sellos de honor. |
+| 🔴 | **End Polio Cranberry** | `#D91E2B` | Secciones exclusivas de vacunación y campaña *End Polio Now*. |
+| 🔷 | **Azure Blue** | `#005DAA` | Enlaces, fondos secundarios e interactividad. |
+| ⚪ | **Blanco Puro** | `#FFFFFF` | Contraste limpio y textos de fácil lectura. |
 
-### C. Tipografías Autorizadas
-* **Títulos y Cabeceras:** `Montserrat`, `Oswald` o `Open Sans Condensed` (Impacto visual y seriedad institucional).
-* **Cuerpo de Texto:** `Open Sans`, `Poppins` o `Roboto` (Legibilidad óptima en móviles).
+### B. Tipografías Autorizadas
+* **Titulares:** `Montserrat` o `Open Sans Condensed` (Fuerza visual y seriedad).
+* **Textos:** `Open Sans` o `Poppins` (Excelente lectura en dispositivos móviles).
 
----
-
-## 🎯 3. PERFIL DEL CLIENTE & CONTACTOS CLAVE (PUNTO FIJO)
-
-* **Organización:** Rotary Club Paraguaná Punto Fijo / Rotary Expomar (Distrito 4380 de Venezuela).
-* **Líder / Contacto Directo:** **Francisco Madrid** (y su esposa, figuras activas en la directiva y comité del club).
-* **Hitos del Club en Octubre / Noviembre:**
-  * **24 de Octubre:** *Día Mundial de la Lucha Contra la Polio* (Jornada anual masiva de vacunación e inmunización en centros comerciales de Paraguaná como **Sambil Paraguaná** y **C.C. Las Virtudes**).
-  * **Noviembre:** *Carrera Caminata 5K End Polio Now* (Evento deportivo de cierre benéfico anual con aliados como Gold's Stars Gym).
-* **Obras Sociales Continuas en Paraguaná:**
-  * Banco de Leche Materna y apoyo materno-infantil en ambulatorios de Falcón.
-  * Dotación de sillas de ruedas, andaderas y bastones a adultos mayores.
-  * Jornadas médicas pediátricas y despistaje en escuelas rurales de Paraguaná.
+### C. Uso del Logotipo
+* La rueda rotaria debe estar siempre acompañada del nombre oficial del club local (`Rotary Club Paraguaná` o `Rotary Expomar`).
 
 ---
 
-## 🛠️ 4. ESTRUCTURA Y ARQUITECTURA DEL SITIO WEB (`rotaryexpomar.org`)
+## 📱 5. ESTRUCTURA Y MÓDULOS DE LA PÁGINA WEB
 
-### Dominio Oficial Sugerido
-* **Dominio:** `rotaryexpomar.org` (o `rotaryparaguana.org`).
-* **Costo de Adquisición:** **~$8.50 USD / año** (Renovación aprox. $11.20 USD).
-* **Hosting / CDN:** Vercel / Cloudflare (Cero costo de alojamiento mensual, velocidad ultra rápida SSL incluida).
+El portal está planteado como una **Web Institucional One-Page de Alta Conversión** adaptada 100% a teléfonos celulares:
 
-### Arquitectura de Secciones (One-Page Modular + Landing de Eventos):
-
-```
-rotaryexpomar.org/
-├── 1. HERO INSTITUCIONAL
-│   ├── Video/Banner de impacto humanitario (médicos, niños, runners, voluntariado)
-│   ├── Slogan oficial: "Dar de Sí antes de Pensar en Sí"
-│   └── Botones CTA: [Hacer una Donación] y [Conocer Nuestros Proyectos]
-│
-├── 2. NUESTRO CLUB & JUNTA DIRECTIVA
-│   ├── Carta del Presidente (Francisco Madrid) y reseña histórica en Paraguaná
-│   ├── Miembros del Club (foto corporativa de los rotarios de Punto Fijo)
-│   └── Conexión distrital con el Distrito 4380 de Venezuela
-│
-├── 3. PROGRAMAS & OBRAS SOCIALES (GALERÍA DE IMPACTO)
-│   ├── Vacunación Infantil (Jornadas Sambil y Las Virtudes)
-│   ├── Banco de Sillas de Ruedas y Apoyo Ortopédico
-│   ├── Salud Materno-Infantil y Lactancia
-│   └── Ayuda humanitaria y donaciones en comunidades vulnerables
-│
-├── 4. CAMPAÑA EMBLEMÁTICA: END POLIO NOW (5K RUNNER)
-│   ├── Módulo interactivo con el contador de la carrera benéfica anual
-│   ├── Explicación del destino de los fondos recaudados
-│   └── Enlace directo a inscripción / dorsal
-│
-├── 5. MÓDULO INTELIGENTE DE RECAUDACIÓN Y DONACIONES
-│   ├── Cuentas Nacionales: Pago Móvil / Bancaribe / Banco del Tesoro / Banesco
-│   ├── Canales Internacionales: Zelle, PayPal, Binance Pay, Transferencias
-│   └── Formulario de confirmación de comprobante directo al WhatsApp de tesorería
-│
-├── 6. DIRECTORIO DE BENEFATORES & EMPRESAS ALIADAS
-│   ├── Vitrina corporativa anual de empresas de Punto Fijo (Sambil, Las Virtudes, etc.)
-│   └── Botón: "Convierta a su empresa en Benefactor Rotario"
-│
-└── 7. CONTACTO & SEDE
-    ├── Horarios y lugar de reuniones semanales
-    ├── Redes sociales oficiales (@rotaryclubparaguanapf)
-    └── Formulario directo para solicitudes de ayuda comunitaria
-```
+1. **Hero Principal de Alto Impacto:**
+   * Imagen/video de impacto humanitario local (médicos, niños atendidos, voluntariado).
+   * Lema rotario: *"Dar de Sí antes de Pensar en Sí"*.
+   * Botón directo: `[Quiero Donar]` y `[Nuestras Obras]`.
+2. **Quiénes Somos & Junta Directiva:**
+   * Reseña del Rotary en Paraguaná y carta del Presidente (Francisco Madrid).
+   * Directorio de socios profesionales y vinculación al Distrito 4380.
+3. **Galería de Programas & Impacto Comunitario:**
+   * Jornadas de Vacunación (Sambil Paraguaná, Las Virtudes).
+   * Banco de Sillas de Ruedas e insumos ortopédicos.
+   * Apoyo al Banco de Leche y consultas pediátricas.
+4. **Campaña Emblemática: End Polio Now:**
+   * Espacio fijo para las actividades anuales de recaudación contra la polio (carreras 5K, caminatas, eventos benéficos).
+5. **Módulo de Recaudación & Donaciones Transparentes:**
+   * **Moneda Nacional:** Pago Móvil, transferencias bancarias locales.
+   * **Donaciones Internacionales:** Zelle, PayPal, transferencias.
+   * Botón inteligente de confirmación directa al WhatsApp de tesorería del club.
+6. **Directorio Corporativo de Benefactores:**
+   * Espacio de prestigio para logotipos de las empresas y comercios de Paraguaná que financian al club.
+7. **Contacto & Sede:**
+   * Días, hora y lugar de reuniones semanales.
+   * Canales de atención y solicitudes de apoyo médico para la comunidad.
 
 ---
 
-## 💰 5. ESQUEMA DE PRECIOS & CONDICIONES COMERCIALES (GROW STUDIO)
+## 🗣️ 6. GUION DE ABORDAJE COMERCIAL (PITCH PARA FRANCISCO MADRID)
 
-### Propuesta Económica:
-* **Desarrollo Integral de la Plataforma:** **$350.00 – $450.00 USD**  
-  *(Pago en 2 partes: 50% anticipo al iniciar, 50% contra entrega y publicación)*.
-* **Dominio Institucional (`.org`):** **$15.00 USD / año** (o gestionado por ellos).
-* **Plan de Mantenimiento Mensual:** **$35.00 USD / mes**  
-  *(Cubre: carga mensual de fotos de cada jornada médica, actualización de noticias, blindaje de seguridad, monitoreo de donaciones y soporte continuo).*
-
----
-
-## 📋 6. ESTRATEGIA COMERCIAL: CÓMO ABORDAR A FRANCISCO MADRID
-
-### Situación 1: Si Kermit NO logra la aprobación de la página de la carrera
-Esperas que transcurra el evento y abordas a Francisco de manera consultiva:
-> *"Hola Francisco, un gusto saludarte. Vi el despliegue de la 5K en Las Virtudes y el gran esfuerzo que hicieron. Estuve notando que un club con tanta trayectoria en Falcón aún no cuenta con un portal web propio y dependen de Google Forms y redes sociales.*  
+> *"Hola Francisco, un gusto saludarte.*  
 >  
-> *En **Grow Studio** desarrollamos plataformas web institucionales. Tenemos preparado el proyecto para que **Rotary Expomar** cuente con su portal oficial en `rotaryexpomar.org`: una web de nivel internacional donde benefactores en el exterior puedan donar por Zelle o tarjeta, las empresas de Paraguaná tengan su vitrina fija y puedan gestionar todas sus carreras y cenas benéficas anuales sin intermediarios. Me gustaría mostrarte una maqueta de 10 minutos sin compromiso."*
-
-### Situación 2: Si Kermit SÍ hace la carrera con nuestra plataforma
-Le dices a Kermit:
-> *"Kermit, Francisco quedó encantado con el sistema de la 5K. Ahora es el momento de venderles la web oficial del club. Tú te encargas de la cobertura anual de fotos/video y nosotros del software. Cobramos $400 USD y nos queda un cliente corporativo fijo para los dos."*
-
----
-
-## 🕵️ 7. CHECKLIST PARA LA RECOPILACIÓN SILENCIOSA DE INFORMACIÓN
-
-Para cuando iniciemos el nuevo proyecto, recolectaremos de sus redes (`@rotaryclubparaguanapf`):
-- [ ] Fotos en alta resolución de las jornadas en Sambil Paraguaná.
-- [ ] Fotos de la entrega de sillas de ruedas e insumos médicos.
-- [ ] Nombres y cargos de la junta directiva actual 2026-2027.
-- [ ] Datos de las cuentas bancarias que usan actualmente para donaciones.
-- [ ] Logos de los patrocinantes que los apoyan habitualmente (clínicas, comercios).
-- [ ] Testimonios y frases institucionales de Francisco Madrid y los líderes del club.
+> *He estado siguiendo de cerca la extraordinaria labor social y los eventos que organizan con Rotary aquí en Paraguaná.*  
+>  
+> *Noté que una institución con tanto prestigio e impacto todavía depende de Instagram y formularios de Google para registrar benefactores y captar apoyo.*  
+>  
+> *En **Grow Studio** desarrollamos plataformas web institucionales y preparamos una propuesta para que **Rotary** tenga su portal web oficial con dominio internacional (`rotaryexpomar.org`):*  
+>  
+> *1. Un canal centralizado para recibir donaciones directas tanto en bolívares como internacionales (Zelle / PayPal) de benefactores que hoy no saben cómo aportar.*  
+> *2. Una vitrina permanente para que las empresas de Punto Fijo que los patrocinan tengan presencia todo el año y no solo en un post efímero.*  
+> *3. Registro profesional de todos sus eventos benéficos y archivo fotográfico de sus jornadas médicas.*  
+>  
+> *Tenemos lista una maqueta de demostración. Me encantaría coordinar unos minutos para mostrártela sin ningún compromiso."*
 
 ---
 
-## 🚀 8. INSTRUCCIONES PARA MUDAR ESTE PROYECTO
-1. Crea tu nueva carpeta de trabajo para este proyecto (ej: `Rotary Expomar Web`).
-2. Copia este archivo `ROTARY_PROYECTO_MASTER.md` a la raíz de la nueva carpeta.
-3. Abre el nuevo workspace en Antigravity y dile al asistente:  
-   *"Lee el archivo ROTARY_PROYECTO_MASTER.md y comencemos la recopilación silenciosa de fotos y la maqueta base del portal institucional"*.
+## 📋 7. RECOLECCIÓN DE DATOS PARA EL PROYECTO
+
+Información a extraer para montar el prototipo funcional:
+- [ ] Fotos oficiales de las jornadas de salud en Paraguaná (Sambil y C.C. Las Virtudes).
+- [ ] Fotos de entrega de donativos, sillas de ruedas y batas médicas.
+- [ ] Nombres de la Junta Directiva actual 2026–2027.
+- [ ] Logos de comercios y empresas aliadas que suelen colaborar.
+- [ ] Datos de cuentas bancarias y canales para el módulo de recaudación.
