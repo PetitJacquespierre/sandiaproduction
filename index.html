@@ -668,6 +668,18 @@
                         destacado_index: true
                     },
                     {
+                        titulo: "SANTA RUN 5K - Copa Ford Pro 2026",
+                        dia: "05",
+                        mes: "DIC",
+                        ubicacion: "Plaza Bolívar, Punto Fijo / 6:30 PM",
+                        imagen: "santarun5kford.jpg",
+                        enlace: "https://docs.google.com/forms/d/e/1FAIpQLScTXhjZmsKoG1eQ1WwPo6PeScNjvVuSToTxigkZNBK7yCqobg/viewform",
+                        textoBoton: "Inscribirme en Google Forms",
+                        estado: "ACTIVO",
+                        categoria: "LOCAL",
+                        destacado_index: true
+                    },
+                    {
                         titulo: "Coffee Run ¡Madre Mía! 3K Vol. 2",
                         dia: "27",
                         mes: "SEP",
@@ -703,6 +715,23 @@
                 }
 
                 let todosLosEventos = (eventosFirebase && eventosFirebase.length > 0) ? eventosFirebase : eventosLocalesFallback;
+
+                // Asegurar que Santa Run 5K Copa Ford Pro esté presente en el carrusel
+                const tieneSanta = todosLosEventos.some(e => (e.titulo || '').toUpperCase().includes('SANTA') || (e.titulo || '').toUpperCase().includes('FORD'));
+                if (!tieneSanta) {
+                    todosLosEventos.push({
+                        titulo: "SANTA RUN 5K - Copa Ford Pro 2026",
+                        dia: "05",
+                        mes: "DIC",
+                        ubicacion: "Plaza Bolívar, Punto Fijo / 6:30 PM",
+                        imagen: "santarun5kford.jpg",
+                        enlace: "https://docs.google.com/forms/d/e/1FAIpQLScTXhjZmsKoG1eQ1WwPo6PeScNjvVuSToTxigkZNBK7yCqobg/viewform",
+                        textoBoton: "Inscribirme en Google Forms",
+                        estado: "ACTIVO",
+                        categoria: "LOCAL",
+                        destacado_index: true
+                    });
+                }
 
                 eventosActivosGlobal = [];
                 let pasadosArray = []; 

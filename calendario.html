@@ -196,6 +196,19 @@
                 activo: "SI"
             },
             {
+                titulo: "SANTA RUN 5K - Copa Ford Pro 2026",
+                dia: "05",
+                mes: "DIC",
+                ubicacion: "Plaza Bolívar, Punto Fijo / 6:30 PM",
+                categoria: "local",
+                etiqueta: "Punto Fijo",
+                imagen: "santarun5kford.jpg",
+                enlace: "https://docs.google.com/forms/d/e/1FAIpQLScTXhjZmsKoG1eQ1WwPo6PeScNjvVuSToTxigkZNBK7yCqobg/viewform",
+                textoBoton: "INSCRIBIRME",
+                estado: "ACTIVO",
+                activo: "SI"
+            },
+            {
                 titulo: "Coffee Run ¡Madre Mía! 3K",
                 dia: "27",
                 mes: "SEP",
@@ -365,6 +378,22 @@
                         etiqueta: "Punto Fijo",
                         imagen: "paraguanahorror.jpeg",
                         enlace: "paraguanahorror.html",
+                        textoBoton: "INSCRIBIRME",
+                        activo: "SI",
+                        estado: "ACTIVO"
+                    });
+                }
+                const tieneSantaRun = eventosData.some(e => (e.titulo || '').toUpperCase().includes('SANTA') || (e.titulo || '').toUpperCase().includes('FORD'));
+                if (!tieneSantaRun) {
+                    eventosData.push({
+                        titulo: "SANTA RUN 5K - Copa Ford Pro 2026",
+                        dia: "05",
+                        mes: "Dic",
+                        ubicacion: "Plaza Bolívar, Punto Fijo / 6:30 PM",
+                        categoria: "Local",
+                        etiqueta: "Punto Fijo",
+                        imagen: "santarun5kford.jpg",
+                        enlace: "https://docs.google.com/forms/d/e/1FAIpQLScTXhjZmsKoG1eQ1WwPo6PeScNjvVuSToTxigkZNBK7yCqobg/viewform",
                         textoBoton: "INSCRIBIRME",
                         activo: "SI",
                         estado: "ACTIVO"
