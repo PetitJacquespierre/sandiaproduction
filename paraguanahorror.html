@@ -745,20 +745,20 @@
                         <div id="vista-grupal" style="display: none;">
                             <div style="background: rgba(0, 255, 102, 0.07); border: 1px solid rgba(0, 255, 102, 0.35); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
                                 <div style="font-family: 'Oswald', sans-serif; color: #00ff66; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">
-                                    🔥 TARIFA ESPECIAL GRUPAL ACTIVADA ($15 USD POR CORREDOR)
+                                    🔥 INSCRIPCIÓN GRUPAL (15$ USD POR CORREDOR)
                                 </div>
-                                <div style="font-size: 0.78rem; color: #d6d6d6; margin-top: 4px; line-height: 1.4;">
-                                    Exclusiva para inscripciones de <strong>3 o más corredores</strong> simultáneamente. Cada integrante quedará registrado en su propia fila con su número de dorsal consecutivo.
+                                <div style="font-size: 0.8rem; color: #e2e2e2; margin-top: 4px; line-height: 1.45;">
+                                    <strong>¿Cómo funciona?</strong> Elige cuántos corredores son (mínimo 3), llena los datos de cada integrante y reporta <strong>un solo pago total</strong> al final. Cada corredor recibirá su propio dorsal individual.
                                 </div>
                                 <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 0.8rem; color: #ffffff; font-weight: 700; margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(0, 255, 102, 0.3);">
                                     <input type="checkbox" id="check-verificacion-grupal" style="width: 18px; height: 18px; accent-color: #00ff66; cursor: pointer; margin-top: 2px; flex-shrink: 0;">
-                                    <span>Confirmo que esta inscripción es GRUPAL (mínimo 3 corredores) y completaré los datos de todos los participantes.</span>
+                                    <span>Confirmo que estamos inscribiendo un grupo de mínimo 3 corredores en un solo pago.</span>
                                 </label>
                             </div>
 
-                            <div class="form-row" style="margin-bottom: 15px;">
+                            <div class="form-row" style="margin-bottom: 16px;">
                                 <div class="form-group" style="margin-bottom: 0;">
-                                    <label>CANTIDAD DE CORREDORES (MÍN. 3)</label>
+                                    <label>1. ¿CUÁNTOS CORREDORES SON?</label>
                                     <select id="select-cantidad-grupo" class="form-control" onchange="actualizarCantidadCorredoresGrupo()">
                                         <option value="3" selected>3 Corredores (45$ Total)</option>
                                         <option value="4">4 Corredores (60$ Total)</option>
@@ -771,38 +771,24 @@
                                     </select>
                                 </div>
                                 <div class="form-group" style="margin-bottom: 0;">
-                                    <label>NOMBRE DEL TEAM / GRUPO</label>
-                                    <input type="text" id="grupo-team-nombre" class="form-control" placeholder="Ej. RunFree / Los Galácticos">
-                                </div>
-                            </div>
-
-                            <!-- SELECTOR DE MODALIDAD DE PAGO DEL GRUPO -->
-                            <div style="background: rgba(255, 119, 0, 0.08); border: 1px solid rgba(255, 119, 0, 0.35); border-radius: 12px; padding: 14px; margin-bottom: 18px;">
-                                <label style="font-size: 0.78rem; font-weight: 800; color: var(--color-horror-orange); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">
-                                    💳 ¿CÓMO REALIZARON EL PAGO DEL GRUPO?
-                                </label>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                                    <button type="button" id="btn-pago-grupo-unico" onclick="cambiarTipoPagoGrupo('pago_unico')" style="background: rgba(255, 119, 0, 0.22); border: 2px solid var(--color-horror-orange); color: #fff; border-radius: 10px; padding: 10px 8px; cursor: pointer; font-size: 0.78rem; font-weight: 700; text-align: center; transition: 0.2s;">
-                                        🧾 Un solo pago grupal<br>
-                                        <span style="font-size: 0.7rem; color: #ffd1a3; font-weight: 500;">(1 misma referencia para todos)</span>
-                                    </button>
-                                    <button type="button" id="btn-pago-grupo-separado" onclick="cambiarTipoPagoGrupo('pagos_individuales')" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.15); color: #bbb; border-radius: 10px; padding: 10px 8px; cursor: pointer; font-size: 0.78rem; font-weight: 700; text-align: center; transition: 0.2s;">
-                                        👥 Pagos por separado<br>
-                                        <span style="font-size: 0.7rem; color: #999; font-weight: 500;">(Cada corredor su referencia)</span>
-                                    </button>
+                                    <label>2. NOMBRE DEL TEAM O GRUPO</label>
+                                    <input type="text" id="grupo-team-nombre" class="form-control" placeholder="Ej. RunFree / Amigos Running">
                                 </div>
                             </div>
 
                             <!-- CONTENEDOR DINÁMICO DE TARJETAS DE CORREDORES -->
                             <div id="contenedor-corredores-grupo"></div>
 
-                            <!-- CAJA DE PAGO UNIFICADO (CUANDO PAGAN TODO EN 1 SOLA REFERENCIA) -->
+                            <!-- CAJA DE PAGO ÚNICO DEL GRUPO -->
                             <div id="caja-pago-grupal-unico" style="background: rgba(255, 26, 26, 0.08); border: 1px solid rgba(255, 26, 26, 0.35); border-radius: 12px; padding: 16px; margin-bottom: 18px;">
-                                <div style="font-family: 'Oswald', sans-serif; font-size: 1rem; color: var(--color-horror-orange); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px;">
-                                    💳 DATOS DEL PAGO TOTAL DEL GRUPO
+                                <div style="font-family: 'Oswald', sans-serif; font-size: 1.05rem; color: var(--color-horror-orange); text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">
+                                    💳 PAGO ÚNICO DE TODO EL GRUPO
+                                </div>
+                                <div style="font-size: 0.78rem; color: #ccc; margin-bottom: 12px;">
+                                    Ingresa los datos del pago total realizado por el grupo completo:
                                 </div>
                                 <div class="form-group">
-                                    <label>MÉTODO DE PAGO GRUPAL</label>
+                                    <label>MÉTODO DE PAGO UTILIZADO</label>
                                     <select id="grupo-metodo-pago-unico" class="form-control">
                                         <option value="" disabled selected>Selecciona el Método de Pago</option>
                                         <option value="Pago Móvil">Pago Móvil</option>
@@ -812,11 +798,11 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group" style="margin-bottom: 0;">
-                                        <label>N° DE REFERENCIA (ÚNICA)</label>
+                                        <label>NÚMERO DE REFERENCIA DEL PAGO</label>
                                         <input type="text" id="grupo-referencia-unica" class="form-control" placeholder="Ej. 12345678">
                                     </div>
                                     <div class="form-group" style="margin-bottom: 0;">
-                                        <label>MONTO TOTAL PAGADO</label>
+                                        <label>MONTO TOTAL PAGADO (BS / $)</label>
                                         <input type="text" id="grupo-monto-total-unico" class="form-control" placeholder="Ej. 45$ / Bs">
                                     </div>
                                 </div>
@@ -1081,42 +1067,6 @@
             actualizarCajaPrecioLateral();
         };
 
-        window.cambiarTipoPagoGrupo = function(tipo) {
-            tipoPagoGrupoActual = tipo;
-            const btnUnico = document.getElementById('btn-pago-grupo-unico');
-            const btnSep = document.getElementById('btn-pago-grupo-separado');
-            const cajaUnica = document.getElementById('caja-pago-grupal-unico');
-
-            if (tipo === 'pago_unico') {
-                if (btnUnico) {
-                    btnUnico.style.background = 'rgba(255, 119, 0, 0.22)';
-                    btnUnico.style.border = '2px solid var(--color-horror-orange)';
-                    btnUnico.style.color = '#fff';
-                }
-                if (btnSep) {
-                    btnSep.style.background = 'rgba(0, 0, 0, 0.4)';
-                    btnSep.style.border = '1px solid rgba(255, 255, 255, 0.15)';
-                    btnSep.style.color = '#bbb';
-                }
-                if (cajaUnica) cajaUnica.style.display = 'block';
-            } else {
-                if (btnSep) {
-                    btnSep.style.background = 'rgba(255, 119, 0, 0.22)';
-                    btnSep.style.border = '2px solid var(--color-horror-orange)';
-                    btnSep.style.color = '#fff';
-                }
-                if (btnUnico) {
-                    btnUnico.style.background = 'rgba(0, 0, 0, 0.4)';
-                    btnUnico.style.border = '1px solid rgba(255, 255, 255, 0.15)';
-                    btnUnico.style.color = '#bbb';
-                }
-                if (cajaUnica) cajaUnica.style.display = 'none';
-            }
-
-            renderizarTarjetasCorredoresGrupo();
-            actualizarCamposPagoGrupalUnico();
-        };
-
         window.actualizarCantidadCorredoresGrupo = function() {
             renderizarTarjetasCorredoresGrupo();
             actualizarCamposPagoGrupalUnico();
@@ -1134,7 +1084,7 @@
             const inputRefUnica = document.getElementById('grupo-referencia-unica');
             const inputMontoUnico = document.getElementById('grupo-monto-total-unico');
 
-            if (modoInscripcionActual === 'grupal' && tipoPagoGrupoActual === 'pago_unico') {
+            if (modoInscripcionActual === 'grupal') {
                 if (selectMetodoUnico) selectMetodoUnico.setAttribute('required', 'required');
                 if (inputRefUnica) inputRefUnica.setAttribute('required', 'required');
                 if (inputMontoUnico) {
@@ -1167,36 +1117,28 @@
             const tasa = obtenerTasaActual();
             const montoIndividualVes = formatVE(tasa * costoGrupalUnitario);
 
-            // Guardar valores previamente escritos para no borrarlos al cambiar cantidad o tipo de pago
+            // Guardar valores previamente escritos para no borrarlos al cambiar cantidad
             const previos = {};
             for (let i = 1; i <= 12; i++) {
                 const c = document.getElementById(`grup-cedula-${i}`);
                 const n = document.getElementById(`grup-nombre-${i}`);
                 const t = document.getElementById(`grup-telefono-${i}`);
                 const e = document.getElementById(`grup-email-${i}`);
-                const m = document.getElementById(`grup-metodo-${i}`);
-                const r = document.getElementById(`grup-ref-${i}`);
-                const p = document.getElementById(`grup-monto-${i}`);
                 if (c || n || t || e) {
                     previos[i] = {
                         cedula: c ? c.value : '',
                         nombre: n ? n.value : '',
                         telefono: t ? t.value : '',
-                        email: e ? e.value : '',
-                        metodo: m ? m.value : '',
-                        ref: r ? r.value : '',
-                        monto: p ? p.value : ''
+                        email: e ? e.value : ''
                     };
                 }
             }
 
             let html = '';
             const reqAttr = modoInscripcionActual === 'grupal' ? 'required' : '';
-            const reqPagoIndAttr = (modoInscripcionActual === 'grupal' && tipoPagoGrupoActual === 'pagos_individuales') ? 'required' : '';
 
             for (let i = 1; i <= cantidad; i++) {
                 const prev = previos[i] || {};
-                const montoDefault = prev.monto || `${montoIndividualVes} Bs / 15$`;
 
                 html += `
                     <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 119, 0, 0.3); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
@@ -1221,61 +1163,21 @@
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group" style="margin-bottom: ${tipoPagoGrupoActual === 'pagos_individuales' ? '12px' : '0'};">
+                            <div class="form-group" style="margin-bottom: 0;">
                                 <label>WHATSAPP (#${i})</label>
                                 <input type="tel" id="grup-telefono-${i}" class="form-control" placeholder="Ej. 04141234567" value="${prev.telefono || ''}" ${reqAttr}>
                             </div>
-                            <div class="form-group" style="margin-bottom: ${tipoPagoGrupoActual === 'pagos_individuales' ? '12px' : '0'};">
+                            <div class="form-group" style="margin-bottom: 0;">
                                 <label>CORREO ELECTRÓNICO (#${i})</label>
                                 <input type="email" id="grup-email-${i}" class="form-control" placeholder="correo@email.com" value="${prev.email || ''}" ${reqAttr}>
                             </div>
                         </div>
-
-                        ${tipoPagoGrupoActual === 'pagos_individuales' ? `
-                        <div style="background: rgba(255, 26, 26, 0.08); border: 1px dashed rgba(255, 26, 26, 0.35); border-radius: 10px; padding: 10px 12px; margin-top: 6px;">
-                            <div style="font-size: 0.75rem; color: #ffb3b3; font-weight: 700; margin-bottom: 8px; text-transform: uppercase;">
-                                💳 PAGO INDIVIDUAL CORREDOR #${i} (15$ USD)
-                            </div>
-                            <div class="form-group" style="margin-bottom: 10px;">
-                                <label>MÉTODO DE PAGO (#${i})</label>
-                                <select id="grup-metodo-${i}" class="form-control" onchange="actualizarMontoIndividualCorredor(${i})" ${reqPagoIndAttr}>
-                                    <option value="" disabled ${!prev.metodo ? 'selected' : ''}>Selecciona Método de Pago</option>
-                                    <option value="Pago Móvil" ${prev.metodo === 'Pago Móvil' ? 'selected' : ''}>Pago Móvil</option>
-                                    <option value="Efectivo Divisas" ${prev.metodo === 'Efectivo Divisas' ? 'selected' : ''}>Efectivo Divisas ($)</option>
-                                    <option value="USDT" ${prev.metodo === 'USDT' ? 'selected' : ''}>USDT (Binance)</option>
-                                </select>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group" style="margin-bottom: 0;">
-                                    <label>N° DE REFERENCIA (#${i})</label>
-                                    <input type="text" id="grup-ref-${i}" class="form-control" placeholder="Ej. 12345678" value="${prev.ref || ''}" ${reqPagoIndAttr}>
-                                </div>
-                                <div class="form-group" style="margin-bottom: 0;">
-                                    <label>MONTO PAGADO (#${i})</label>
-                                    <input type="text" id="grup-monto-${i}" class="form-control" value="${montoDefault}" ${reqPagoIndAttr}>
-                                </div>
-                            </div>
-                        </div>
-                        ` : ''}
                     </div>
                 `;
             }
 
             contenedor.innerHTML = html;
         }
-
-        window.actualizarMontoIndividualCorredor = function(idx) {
-            const sel = document.getElementById(`grup-metodo-${idx}`);
-            const inp = document.getElementById(`grup-monto-${idx}`);
-            if (!sel || !inp) return;
-            const tasa = obtenerTasaActual();
-            const montoVes = formatVE(tasa * costoGrupalUnitario);
-            if (sel.value === 'Efectivo Divisas' || sel.value === 'USDT') {
-                inp.value = '15$';
-            } else {
-                inp.value = `${montoVes} Bs / 15$`;
-            }
-        };
 
         async function calcularMontoBolivares() {
             const loadingBox = document.getElementById('loading-rate');
@@ -1677,7 +1579,7 @@
 
                 const listaCorredores = [];
 
-                // Datos de pago si seleccionaron "Un solo pago grupal"
+                // Datos del pago único del grupo
                 const metodoUnico = document.getElementById('grupo-metodo-pago-unico')?.value || 'Pago Móvil';
                 const refUnica = (document.getElementById('grupo-referencia-unica')?.value || '').trim();
                 const montoTotalUnicoReportado = (document.getElementById('grupo-monto-total-unico')?.value || `${totalVesGrupo} Bs / ${totalUsdGrupo}$`).trim();
@@ -1693,22 +1595,9 @@
                         ? `${nombreTeamBase} [Grupal ${i}/${cantidad}]`
                         : `Inscripción Grupal [${i}/${cantidad}]`;
 
-                    let metodoCorredor = '';
-                    let refCorredor = '';
-                    let montoCorredor = '';
-
-                    if (tipoPagoGrupoActual === 'pago_unico') {
-                        metodoCorredor = `${metodoUnico} (Grupal ${cantidad} pers.)`;
-                        refCorredor = refUnica; // La misma referencia para todos los miembros del grupo
-                        montoCorredor = `15$ (${montoUnitarioVes} Bs) [Total Grupo: ${ montoTotalUnicoReportado }]`;
-                    } else {
-                        const metInd = document.getElementById(`grup-metodo-${i}`)?.value || 'Pago Móvil';
-                        const refInd = (document.getElementById(`grup-ref-${i}`)?.value || '').trim();
-                        const monInd = (document.getElementById(`grup-monto-${i}`)?.value || `${montoUnitarioVes} Bs / 15$`).trim();
-                        metodoCorredor = `${metInd} (Grupal Ind. ${i}/${cantidad})`;
-                        refCorredor = refInd;
-                        montoCorredor = monInd.includes('15$') ? monInd : `15$ (${monInd})`;
-                    }
+                    const metodoCorredor = `${metodoUnico} (Grupal ${cantidad} pers.)`;
+                    const refCorredor = refUnica; // La misma referencia para todos los miembros del grupo
+                    const montoCorredor = `15$ (${montoUnitarioVes} Bs) [Total Grupo: ${montoTotalUnicoReportado}]`;
 
                     listaCorredores.push({
                         cedula: cedulaI,
@@ -1727,7 +1616,7 @@
                     evento: '5K Paraguaná Horror Story',
                     es_grupal: true,
                     cantidad_corredores: cantidad,
-                    tipo_pago_grupo: tipoPagoGrupoActual,
+                    tipo_pago_grupo: 'pago_unico',
                     team_grupo: nombreTeamBase || 'Inscripción Grupal',
                     corredores: listaCorredores
                 };
