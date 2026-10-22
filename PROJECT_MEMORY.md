@@ -42,6 +42,9 @@ Archivo de contexto local y memoria viva para el sitio web oficial y portal de e
 - [x] Notificaciones automáticas por correo de atletas inscritos en Google Sheets.
 - [x] Cronograma Semana Running actualizado con la última rutina semanal.
 - [x] Documentación completa en `AGENTS.md` con los 5 pilares de mantenimiento mensual.
+- [x] Incorporación al calendario y carrusel de Santa Run 5K Copa Ford Pro 2026 (05 DIC).
+- [x] Integración de Google Analytics 4 (`G-VVCH93SB3C`) en todo el ecosistema de páginas oficiales.
+- [ ] **Grow Studio Admin:** Desarrollar tarjeta/módulo de métricas "Top Páginas & Carreras" (ranking estilo Blogger de visitas por URL/carrera) para visualizar la interacción directa sin tener que navegar por la compleja interfaz de GA4.
 - [ ] Cobro del saldo pendiente de desarrollo ($150 USD).
 - [ ] Cobro mensual del plan operativo ($20 USD/mes) al vencer la cortesía del mes 1.
 
@@ -49,3 +52,4 @@ Archivo de contexto local y memoria viva para el sitio web oficial y portal de e
 
 ## 📝 5. BITÁCORA Y DECISIONES TÉCNICAS
 * **2026-09-30:** Incorporación de `AGENTS.md` y actualización de memoria con el alcance completo del servicio de mantenimiento mensual ($20/mes) incluyendo la Auditoría Técnica Preventiva (Anti-spam, Mobile-first y verificación de embudos).
+* **2026-10-22:** Incorporación del evento Santa Run 5K Copa Ford Pro 2026 e instalación en producción de Google Analytics 4 (`G-VVCH93SB3C`) en 6 páginas HTML. Añadida tarea para llevar el visor simplificado estilo Blogger a Grow Studio Admin.
