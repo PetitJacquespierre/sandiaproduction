@@ -104,6 +104,8 @@ function obtenerMaxUsosCupon(tipo, maxUsosField) {
     if (tipo === 'UN_SOLO_USO') return 1;
     if (tipo === 'DOS_USOS') return 2;
     if (tipo === 'TRES_USOS') return 3;
+    if (tipo === 'CUATRO_USOS') return 4;
+    if (tipo === 'CINCO_USOS') return 5;
     if (typeof maxUsosField === 'number' && maxUsosField > 0) return maxUsosField;
     return null; // REUTILIZABLE (ilimitado)
 }
