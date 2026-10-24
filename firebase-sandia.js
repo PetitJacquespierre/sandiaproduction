@@ -100,6 +100,14 @@ export async function getSandiaAliados() {
 }
 
 // 4. Gestión de Cupones de Cortesía y Descuentos (Sorteos y Promociones)
+function obtenerMaxUsosCupon(tipo, maxUsosField) {
+    if (tipo === 'UN_SOLO_USO') return 1;
+    if (tipo === 'DOS_USOS') return 2;
+    if (tipo === 'TRES_USOS') return 3;
+    if (typeof maxUsosField === 'number' && maxUsosField > 0) return maxUsosField;
+    return null; // REUTILIZABLE (ilimitado)
+}
+
 export async function consultarEstadoCupon(codigo) {
     try {
         const idSanitizado = String(codigo).trim().toUpperCase();
@@ -111,12 +119,14 @@ export async function consultarEstadoCupon(codigo) {
         }
 
         const data = snap.data();
-        const esReutilizable = data.tipo !== 'UN_SOLO_USO';
+        const maxUsos = obtenerMaxUsosCupon(data.tipo, data.maxUsos);
+        const esReutilizable = maxUsos === null;
+        const usosActuales = Number(data.usosCount !== undefined ? data.usosCount : (data.estado === 'USADO' ? 1 : 0));
         const precioUSD = (data.precioUSD !== undefined) ? Number(data.precioUSD) : 0;
 
-        // Si es de un solo uso y ya fue usado
-        if (!esReutilizable && (data.estado === 'USADO' || (data.usadoEn && !data.habilitado))) {
-            return { valido: false, razon: 'YA_USADO', mensaje: `Este cupón (${idSanitizado}) ya fue canjeado por otro participante.` };
+        // Si tiene límite de usos (1, 2 o 3) y ya alcanzó su límite o fue quemado
+        if (!esReutilizable && (data.estado === 'USADO' || usosActuales >= maxUsos || (data.usadoEn && !data.habilitado && maxUsos === 1))) {
+            return { valido: false, razon: 'YA_USADO', mensaje: `Este cupón (${idSanitizado}) ya alcanzó su límite de canjes permitidos.` };
         }
 
         // Si está pausado manualmente por el administrador
@@ -128,7 +138,9 @@ export async function consultarEstadoCupon(codigo) {
             valido: true, 
             data,
             precioUSD: precioUSD,
-            esReutilizable: esReutilizable
+            esReutilizable: esReutilizable,
+            maxUsos: maxUsos,
+            usosActuales: usosActuales
         };
     } catch (error) {
         console.error("Error al consultar cupón en Firestore:", error);
@@ -140,33 +152,42 @@ export async function marcarCuponUsado(codigo, atletaData = {}, cuponInfo = {}) 
     try {
         const idSanitizado = String(codigo).trim().toUpperCase();
         const docRef = doc(db, "sandia_cupones_horror", idSanitizado);
-        const esReutilizable = cuponInfo.esReutilizable || (cuponInfo.data && cuponInfo.data.tipo !== 'UN_SOLO_USO');
 
-        if (esReutilizable) {
-            // No se quema: se mantiene habilitado y solo se incrementa el contador de usos
-            await updateDoc(docRef, {
-                usosCount: increment(1),
+        const snap = await getDoc(docRef);
+        const currentData = snap.exists() ? snap.data() : (cuponInfo.data || {});
+        const maxUsos = obtenerMaxUsosCupon(currentData.tipo, currentData.maxUsos);
+        const usosPrevios = Number(currentData.usosCount !== undefined ? currentData.usosCount : (currentData.estado === 'USADO' ? 1 : 0));
+        const nuevosUsos = usosPrevios + 1;
+
+        const infoAtleta = {
+            nombre: atletaData.nombre || '',
+            cedula: atletaData.cedula || '',
+            email: atletaData.email || '',
+            telefono: atletaData.telefono || ''
+        };
+
+        if (maxUsos === null || nuevosUsos < maxUsos) {
+            // Aún le quedan usos disponibles (o es multiuso ilimitado): incrementa contador y sigue activo
+            await setDoc(docRef, {
+                codigo: idSanitizado,
+                estado: 'HABILITADO',
+                habilitado: true,
+                usosCount: nuevosUsos,
                 ultimoUsoEn: new Date().toISOString(),
-                ultimoAtleta: {
-                    nombre: atletaData.nombre || '',
-                    cedula: atletaData.cedula || '',
-                    email: atletaData.email || '',
-                    telefono: atletaData.telefono || ''
-                }
-            });
+                ultimoAtleta: infoAtleta,
+                atleta: infoAtleta
+            }, { merge: true });
         } else {
-            // De un solo uso: se quema y desactiva
+            // Alcanzó el límite exacto (1/1, 2/2 o 3/3): se quema y desactiva automáticamente
             await setDoc(docRef, {
                 codigo: idSanitizado,
                 estado: 'USADO',
                 habilitado: false,
+                usosCount: nuevosUsos,
                 usadoEn: new Date().toISOString(),
-                atleta: {
-                    nombre: atletaData.nombre || '',
-                    cedula: atletaData.cedula || '',
-                    email: atletaData.email || '',
-                    telefono: atletaData.telefono || ''
-                },
+                ultimoUsoEn: new Date().toISOString(),
+                ultimoAtleta: infoAtleta,
+                atleta: infoAtleta,
                 evento: '5K Paraguaná Horror Story'
             }, { merge: true });
         }
