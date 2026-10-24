@@ -744,6 +744,11 @@
                 let pasadosArray = []; 
 
                 todosLosEventos.forEach(evento => {
+                    const titLower = (evento.titulo || '').toLowerCase();
+                    if (titLower.includes('horror')) {
+                        evento.imagen = 'paraguanahorror_agotada.jpg';
+                        evento.textoBoton = 'Agotada 🔒';
+                    }
                     let clickAction = evento.enlace && evento.enlace.startsWith('http') ? `window.open('${evento.enlace}', '_blank')` : (evento.enlace ? `window.location.href='${evento.enlace}'` : `alert('Más información próximamente...')`);
 
                     const esActivo = (evento.estado === "ACTIVO" || evento.activo === "SI");
@@ -845,7 +850,7 @@
                                 <span class="card-date">${evento.dia} ${evento.mes}</span>
                                 <h3>${evento.titulo}</h3>
                                 <p>${evento.ubicacion || ''}</p>
-                                <button class="btn-sandia-general inscribirme-card" onclick="${item.accionClick}">${btnTexto}</button>
+                                <button class="btn-sandia-general inscribirme-card" ${((btnTexto || "").toUpperCase().includes("AGOTAD") || (evento.titulo || "").toLowerCase().includes("horror")) ? "style=`"background: #2b0509; border: 2px solid #ef4444; color: #ff6b6b; font-weight: 800;`"" : ""} onclick="${item.accionClick}">${btnTexto}</button>
                             </div>
                         </div>
                     </div>
