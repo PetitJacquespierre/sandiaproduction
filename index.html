@@ -915,8 +915,11 @@
             });
         }
 
+        let splashDismissed = false;
+        let iniciarTimerCarruselFn = null;
+
         function iniciarRotacionAutomatica(contenedor) {
-            const tiempoRotacion = 3500; 
+            const tiempoRotacion = 5000; // 5 segundos para que cada flyer se aprecie con calma
             let currentIndex = 0;
             
             function hacerScroll() {
@@ -936,7 +939,12 @@
                 carruselInterval = setInterval(hacerScroll, tiempoRotacion);
             }
 
-            reiniciarTimer();
+            iniciarTimerCarruselFn = reiniciarTimer;
+
+            // Iniciar solo si el splash ya se desvaneció y el usuario ya está viendo la web
+            if (splashDismissed) {
+                reiniciarTimer();
+            }
 
             contenedor.addEventListener('mouseenter', () => clearInterval(carruselInterval));
             contenedor.addEventListener('touchstart', () => clearInterval(carruselInterval), { passive: true });
@@ -997,21 +1005,43 @@
             }
         }
 
+        let splashTimer = null;
+        function dismissSplash() {
+            if (splashDismissed) return;
+            splashDismissed = true;
+            if (splashTimer) clearTimeout(splashTimer);
+
+            if (splashScreen) {
+                splashScreen.style.transition = 'opacity 0.4s ease';
+                splashScreen.style.opacity = '0';
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                    if (typeof cancelAnimationFrame === 'function' && typeof animationFrame !== 'undefined') {
+                        cancelAnimationFrame(animationFrame);
+                    }
+                    document.body.style.overflow = 'auto';
+                    if (mainContent) mainContent.style.display = 'flex';
+
+                    // Iniciar el temporizador del carrusel AHORA que el flyer #1 está visible
+                    if (typeof iniciarTimerCarruselFn === 'function') {
+                        iniciarTimerCarruselFn();
+                    }
+                }, 400);
+            }
+        }
+
         window.onload = () => {
             animate();
             emitirRafagaSelectiva(6, 10);
             programarOleadasDispersas();
 
-            // Tiempo óptimo: 3.4 segundos para apreciar la animación y semillas con fade-out fluido
-            setTimeout(() => {
-                splashScreen.style.opacity = '0'; 
-                setTimeout(() => {
-                    splashScreen.style.display = 'none'; 
-                    cancelAnimationFrame(animationFrame);
-                    document.body.style.overflow = 'auto'; 
-                    mainContent.style.display = 'flex'; 
-                }, 800); 
-            }, 3400); 
+            // Splash ágil y dinámico (1.2s máx)
+            splashTimer = setTimeout(dismissSplash, 1200);
+
+            // Permitir saltar el splash al primer clic, toque, tecla o rueda
+            ['click', 'touchstart', 'keydown', 'wheel'].forEach(evt => {
+                window.addEventListener(evt, dismissSplash, { once: true, passive: true });
+            });
 
             cargarCarrerasCarousel();
             cargarAliados();
