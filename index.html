@@ -842,6 +842,11 @@
             listaEventos.forEach(item => {
                 let evento = item.eventoData;
                 let btnTexto = evento.textoBoton || "Inscribirme";
+                let btnStyle = "";
+                const esAgotada = (btnTexto || "").toUpperCase().includes("AGOTAD") || (evento.titulo || "").toLowerCase().includes("horror");
+                if (esAgotada) {
+                    btnStyle = 'style="background: #2b0509; border: 2px solid #ef4444; color: #ff6b6b; font-weight: 800;"';
+                }
 
                 htmlCarrusel += `
                     <div class="event-card current" style="background-image: url('img/${evento.imagen}');">
@@ -850,7 +855,7 @@
                                 <span class="card-date">${evento.dia} ${evento.mes}</span>
                                 <h3>${evento.titulo}</h3>
                                 <p>${evento.ubicacion || ''}</p>
-                                <button class="btn-sandia-general inscribirme-card" ${((btnTexto || "").toUpperCase().includes("AGOTAD") || (evento.titulo || "").toLowerCase().includes("horror")) ? "style=`"background: #2b0509; border: 2px solid #ef4444; color: #ff6b6b; font-weight: 800;`"" : ""} onclick="${item.accionClick}">${btnTexto}</button>
+                                <button class="btn-sandia-general inscribirme-card" ${btnStyle} onclick="${item.accionClick}">${btnTexto}</button>
                             </div>
                         </div>
                     </div>
