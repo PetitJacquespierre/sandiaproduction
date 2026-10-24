@@ -658,26 +658,14 @@
                     La <strong>5K Paraguaná Horror Story</strong> ha culminado con éxito su fase de registro general. Agradecemos a toda la comunidad runner de Punto Fijo y Venezuela por la masiva respuesta.
                 </p>
 
-                <!-- CAJA DE DESBLOQUEO MEDIANTE CÓDIGO O ENLACE VIP -->
-                <div style="background: rgba(255, 119, 0, 0.08); border: 1px solid rgba(255, 119, 0, 0.45); border-radius: 14px; padding: 20px 18px; margin: 0 auto 24px auto; text-align: left; box-shadow: 0 0 25px rgba(255, 119, 0, 0.15);">
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                        <span style="font-size: 1.3rem;">🎟️</span>
-                        <div style="font-family: 'Oswald', sans-serif; font-size: 1.1rem; color: var(--color-horror-orange); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">
-                            ¿Tienes un Cupón o Enlace de Reserva VIP?
-                        </div>
+                <!-- ALERTA SI SE INGRESA POR ENLACE VIP INVÁLIDO O EXPIRADO -->
+                <div id="alerta-link-invalido" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 12px; padding: 14px 16px; margin: 0 auto 20px auto; text-align: center; max-width: 480px; box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);">
+                    <div style="color: #ff6b6b; font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">
+                        ⚠️ ENLACE O CÓDIGO NO DISPONIBLE
                     </div>
-                    <p style="color: #ccc; font-size: 0.83rem; line-height: 1.45; margin: 0 0 14px 0;">
-                        Si la organización te suministró un cupo reservado de última hora, cortesía o sorteo, ingresa tu código para desbloquear tu registro:
-                    </p>
-
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <input type="text" id="input-desbloqueo-vip" class="form-control" placeholder="CÓDIGO VIP / RESERVA" style="flex: 1; min-width: 170px; text-transform: uppercase; font-weight: 800; letter-spacing: 1.5px; text-align: center; border-color: rgba(255, 119, 0, 0.5); margin-bottom: 0;">
-                        <button type="button" id="btn-desbloquear-vip" onclick="desbloquearConCodigoManual()" style="background: linear-gradient(135deg, #ff7700 0%, #cc5500 100%); color: #000; font-family: 'Oswald', sans-serif; font-size: 0.95rem; font-weight: 800; border: none; border-radius: 8px; padding: 12px 20px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.25s ease; box-shadow: 0 4px 15px rgba(255, 119, 0, 0.3);">
-                            DESBLOQUEAR 🔓
-                        </button>
+                    <div id="texto-link-invalido" style="color: #eee; font-size: 0.83rem; line-height: 1.45;">
+                        El enlace o código VIP que intentas usar ya alcanzó su límite de canjes o se encuentra inactivo. Las inscripciones generales continúan cerradas.
                     </div>
-
-                    <div id="error-desbloqueo-vip" style="display: none; margin-top: 10px; padding: 10px 14px; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 8px; color: #ff6b6b; font-size: 0.83rem; font-weight: 600; line-height: 1.4;"></div>
                 </div>
 
                 <!-- DETALLES DEL EVENTO -->
@@ -713,6 +701,11 @@
                     <a href="https://wa.me/584126574354?text=Hola%20Sand%C3%ADa%20Production%2C%20quisiera%20informaci%C3%B3n%20sobre%20la%20entrega%20de%20kits%20del%205K%20Horror%20Story" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #25D366; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-top: 4px;">
                         <span>💬</span> Contactar por WhatsApp Oficial
                     </a>
+                    <div style="margin-top: 14px; text-align: center;">
+                        <a href="javascript:void(0)" onclick="solicitarAccesoVipManual()" style="color: rgba(255, 255, 255, 0.35); font-size: 0.75rem; text-decoration: none; border-bottom: 1px dashed rgba(255, 255, 255, 0.25); transition: color 0.2s;">
+                            ¿Tienes un código de reserva VIP? Ingresar aquí
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -1417,6 +1410,8 @@
         const targetDate = new Date("October 31, 2026 19:00:00").getTime();
 
         function updateCountdown() {
+            const elDays = document.getElementById("cd-days");
+            if (!elDays) return;
             const now = new Date().getTime();
             const difference = targetDate - now;
 
@@ -1426,10 +1421,13 @@
                 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-                document.getElementById("cd-days").innerText = String(days).padStart(2, '0');
-                document.getElementById("cd-hours").innerText = String(hours).padStart(2, '0');
-                document.getElementById("cd-mins").innerText = String(minutes).padStart(2, '0');
-                document.getElementById("cd-secs").innerText = String(seconds).padStart(2, '0');
+                elDays.innerText = String(days).padStart(2, '0');
+                const elHours = document.getElementById("cd-hours");
+                if (elHours) elHours.innerText = String(hours).padStart(2, '0');
+                const elMins = document.getElementById("cd-mins");
+                if (elMins) elMins.innerText = String(minutes).padStart(2, '0');
+                const elSecs = document.getElementById("cd-secs");
+                if (elSecs) elSecs.innerText = String(seconds).padStart(2, '0');
             }
         }
         setInterval(updateCountdown, 1000);
@@ -1437,7 +1435,9 @@
 
         // COPIAR INDIVIDUAL O GLOBAL
         window.copyText = function(id, event) {
-            const text = document.getElementById(id).innerText;
+            const el = document.getElementById(id);
+            if (!el) return;
+            const text = el.innerText;
             navigator.clipboard.writeText(text).then(() => {
                 if (window.showToast) {
                     window.showToast("Copiado al portapapeles: " + text, "#ff1a1a");
@@ -1448,9 +1448,12 @@
         };
 
         window.copyAllPaymentData = function(event) {
-            const banco = document.getElementById('pago-banco').innerText;
-            const cedula = document.getElementById('pago-cedula').innerText;
-            const tlf = document.getElementById('pago-tlf').innerText;
+            const elBanco = document.getElementById('pago-banco');
+            const elCedula = document.getElementById('pago-cedula');
+            const elTlf = document.getElementById('pago-tlf');
+            const banco = elBanco ? elBanco.innerText : 'PROVINCIAL (0108)';
+            const cedula = elCedula ? elCedula.innerText : '18.698.675';
+            const tlf = elTlf ? elTlf.innerText : '0412-6574354';
             
             const fullData = `Banco: ${banco}\nCédula: ${cedula}\nTeléfono: ${tlf}`;
             navigator.clipboard.writeText(fullData).then(() => {
@@ -1468,44 +1471,18 @@
         // Objeto con la información del cupón validado en Firestore
         let cuponActivoData = null;
 
-        window.desbloquearConCodigoManual = async function() {
-            const input = document.getElementById('input-desbloqueo-vip');
-            const btn = document.getElementById('btn-desbloquear-vip');
-            const err = document.getElementById('error-desbloqueo-vip');
-            const codigo = (input ? input.value : '').trim().toUpperCase();
-
-            if (err) err.style.display = 'none';
-
-            if (!codigo) {
-                if (err) {
-                    err.style.display = 'block';
-                    err.innerText = 'Por favor ingresa un código de reserva o cupón VIP.';
-                }
-                if (input) input.focus();
-                return;
-            }
-
-            if (btn) {
-                btn.innerText = 'VERIFICANDO...';
-                btn.disabled = true;
-            }
-
-            try {
-                await window.aplicarCupon(codigo);
-            } finally {
-                if (btn) {
-                    btn.innerText = 'DESBLOQUEAR 🔓';
-                    btn.disabled = false;
-                }
+        window.solicitarAccesoVipManual = function() {
+            const codigo = prompt("Ingresa tu código de reserva o cupón VIP oficial:");
+            if (codigo && codigo.trim()) {
+                window.aplicarCupon(codigo.trim().toUpperCase());
             }
         };
 
         window.aplicarCupon = async function(codigoManual) {
             const inputCupon = document.getElementById('input-cupon');
             const msgCupon = document.getElementById('cupon-mensaje');
-            const inputDesbloqueo = document.getElementById('input-desbloqueo-vip');
-            const btnDesbloqueo = document.getElementById('btn-desbloquear-vip');
-            const errDesbloqueo = document.getElementById('error-desbloqueo-vip');
+            const alertaLink = document.getElementById('alerta-link-invalido');
+            const textoAlerta = document.getElementById('texto-link-invalido');
             const cardAgotado = document.getElementById('card-agotado');
             const cardFormVip = document.getElementById('card-formulario-vip');
             const boxPagoAgotado = document.getElementById('box-pago-agotado');
@@ -1521,13 +1498,9 @@
             const btnAplicar = document.getElementById('btn-aplicar-cupon');
             const montoFinalVes = document.getElementById('monto-final-ves');
 
-            const codigo = (codigoManual || (inputDesbloqueo ? inputDesbloqueo.value : '') || (inputCupon ? inputCupon.value : '')).trim().toUpperCase();
+            const codigo = (codigoManual || (inputCupon ? inputCupon.value : '')).trim().toUpperCase();
 
             if (!codigo) {
-                if (errDesbloqueo) {
-                    errDesbloqueo.style.display = 'block';
-                    errDesbloqueo.innerText = 'Por favor ingresa un código de reserva o cupón VIP.';
-                }
                 if (msgCupon) {
                     msgCupon.style.display = 'block';
                     msgCupon.style.color = '#ff1a1a';
@@ -1537,10 +1510,6 @@
             }
 
             // Indicador de validación
-            if (btnDesbloqueo) {
-                btnDesbloqueo.innerText = 'VERIFICANDO...';
-                btnDesbloqueo.disabled = true;
-            }
             if (btnAplicar) {
                 btnAplicar.innerText = 'Validando...';
                 btnAplicar.disabled = true;
@@ -1550,8 +1519,8 @@
                 msgCupon.style.color = '#ffa500';
                 msgCupon.innerText = '⏳ Verificando disponibilidad del cupón...';
             }
-            if (errDesbloqueo) {
-                errDesbloqueo.style.display = 'none';
+            if (alertaLink) {
+                alertaLink.style.display = 'none';
             }
 
             // Verificar en Firestore si existe, si está habilitado por el admin y si ya fue usado
@@ -1559,43 +1528,35 @@
             try {
                 resultado = await consultarEstadoCupon(codigo);
                 if (!resultado.valido) {
-                    if (btnDesbloqueo) {
-                        btnDesbloqueo.innerText = 'DESBLOQUEAR 🔓';
-                        btnDesbloqueo.disabled = false;
-                    }
                     if (btnAplicar) {
                         btnAplicar.innerText = 'Aplicar';
                         btnAplicar.disabled = false;
-                    }
-                    if (errDesbloqueo) {
-                        errDesbloqueo.style.display = 'block';
-                        errDesbloqueo.innerText = `✖ ${resultado.mensaje || 'Este código o enlace VIP no está disponible o ya fue utilizado.'}`;
                     }
                     if (msgCupon) {
                         msgCupon.style.display = 'block';
                         msgCupon.style.color = '#ff1a1a';
                         msgCupon.innerText = `✖ ${resultado.mensaje || 'Cupón no disponible.'}`;
                     }
+                    if (alertaLink && textoAlerta) {
+                        alertaLink.style.display = 'block';
+                        textoAlerta.innerText = `✖ ${resultado.mensaje || 'Este código o enlace VIP no está disponible o ya fue utilizado.'}`;
+                    }
                     return;
                 }
             } catch (err) {
                 console.warn("Fallo temporal de verificación online del cupón:", err);
-                if (btnDesbloqueo) {
-                    btnDesbloqueo.innerText = 'DESBLOQUEAR 🔓';
-                    btnDesbloqueo.disabled = false;
-                }
                 if (btnAplicar) {
                     btnAplicar.innerText = 'Aplicar';
                     btnAplicar.disabled = false;
-                }
-                if (errDesbloqueo) {
-                    errDesbloqueo.style.display = 'block';
-                    errDesbloqueo.innerText = '✖ No se pudo verificar el cupón en este momento. Intenta de nuevo.';
                 }
                 if (msgCupon) {
                     msgCupon.style.display = 'block';
                     msgCupon.style.color = '#ff1a1a';
                     msgCupon.innerText = '✖ No se pudo verificar el cupón en este momento. Intenta de nuevo.';
+                }
+                if (alertaLink && textoAlerta) {
+                    alertaLink.style.display = 'block';
+                    textoAlerta.innerText = '✖ No se pudo verificar el cupón en este momento. Intenta de nuevo.';
                 }
                 return;
             }
@@ -1608,6 +1569,7 @@
             // ========================================================
             // DESBLOQUEO DEL FORMULARIO Y TRANSICIÓN VISUAL A MODO VIP
             // ========================================================
+            if (alertaLink) alertaLink.style.display = 'none';
             if (cardAgotado) cardAgotado.style.display = 'none';
             if (cardFormVip) cardFormVip.style.display = 'block';
             if (boxPagoAgotado) boxPagoAgotado.style.display = 'none';
@@ -1745,7 +1707,7 @@
             const content = document.getElementById('registration-content');
             const loader = document.getElementById('submit-loader');
             const success = document.getElementById('success-message');
-            const formCard = document.querySelector('.form-card');
+            const formCard = document.getElementById('card-formulario-vip') || document.querySelector('.form-card');
 
             content.style.display = 'none';
             loader.style.display = 'block';
@@ -1924,21 +1886,10 @@
         // Inicialización al cargar la página
         calcularMontoBolivares();
 
-        // DETECCIÓN AUTOMÁTICA DE ENLACE VIP / CORTESÍA / RESERVA
-        const inputDesbloqueoEl = document.getElementById('input-desbloqueo-vip');
-        if (inputDesbloqueoEl) {
-            inputDesbloqueoEl.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    window.desbloquearConCodigoManual();
-                }
-            });
-        }
-
+        // DETECCIÓN AUTOMÁTICA DE ENLACE VIP / CORTESÍA / RESERVA DESDE URL
         const urlParams = new URLSearchParams(window.location.search);
         const cuponUrl = urlParams.get('cupon') || urlParams.get('cortesia') || urlParams.get('vip') || urlParams.get('sorteo') || urlParams.get('reserva');
         if (cuponUrl) {
-            if (inputDesbloqueoEl) inputDesbloqueoEl.value = cuponUrl.trim().toUpperCase();
             window.aplicarCupon(cuponUrl);
         }
     </script>
