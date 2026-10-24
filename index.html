@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <!-- Google tag (gtag.js) -->
@@ -373,9 +373,7 @@
                                 <strong>5K Paraguaná Horror Story 💀</strong>
                                 <span class="crono-local-tag">📍 Sambil Paraguaná, Punto Fijo</span>
                             </div>
-                            <div class="crono-badge-destacada">
-                                ★ EVENTO OFICIAL SANDÍA • ¡INSCRIBIRSE!
-                            </div>
+                            <div class="crono-badge-destacada" style="background: #ef4444; color: #ffffff; border-color: #ef4444;">★ EVENTO OFICIAL SANDÍA • ¡AGOTADO / CULMINADO! 🔒</div>
                         </div>
 
                         <!-- SÁBADO 31 OCT -->
@@ -669,9 +667,9 @@
                         dia: "31",
                         mes: "OCT",
                         ubicacion: "Sambil Paraguaná / 7:00 PM",
-                        imagen: "paraguanahorror.jpeg",
+                        imagen: "paraguanahorror_agotada.jpg",
                         enlace: "paraguanahorror.html",
-                        textoBoton: "Inscribirme Ahora 🎃",
+                        textoBoton: "Agotada 🔒",
                         estado: "ACTIVO",
                         categoria: "SANDIA",
                         destacado_index: true
@@ -838,7 +836,7 @@
             let htmlCarrusel = '';
             listaEventos.forEach(item => {
                 let evento = item.eventoData;
-                let btnTexto = "Inscribirme";
+                let btnTexto = evento.textoBoton || "Inscribirme";
 
                 htmlCarrusel += `
                     <div class="event-card current" style="background-image: url('img/${evento.imagen}');">

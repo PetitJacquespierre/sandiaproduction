@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <!-- Google tag (gtag.js) -->
@@ -528,23 +528,10 @@
                 Vive la experiencia deportiva más esperada del año en Punto Fijo.
             </div>
 
-            <!-- REGRESIVA EN VIVO -->
-            <div class="countdown-container" id="countdown">
-                <div class="countdown-item">
-                    <div class="countdown-num" id="cd-days">00</div>
-                    <div class="countdown-lbl">Días</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-num" id="cd-hours">00</div>
-                    <div class="countdown-lbl">Horas</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-num" id="cd-mins">00</div>
-                    <div class="countdown-lbl">Minutos</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-num" id="cd-secs">00</div>
-                    <div class="countdown-lbl">Segundos</div>
+            <!-- REGRESIVA EN VIVO / AVISO DE CARRERA CULMINADA -->
+            <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 20px auto 10px auto;">
+                <div class="horror-date-badge" style="background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #ffffff; font-size: 1.05rem; padding: 10px 24px; box-shadow: 0 0 25px rgba(239, 68, 68, 0.4); text-transform: uppercase; font-weight: 800; letter-spacing: 1px;">
+                    🏁 CARRERA CULMINADA • ¡CUPOS 100% AGOTADOS! 💀
                 </div>
             </div>
 
@@ -610,267 +597,85 @@
             
             <!-- FLYER & DATOS DE PAGO -->
             <div class="flyer-card">
-                <img src="img/paraguanahorror.jpeg" alt="Flyer 5K Paraguaná Horror Stories" loading="lazy" decoding="async">
+                <img src="img/paraguanahorror_agotada.jpg" alt="Flyer 5K Paraguaná Horror Stories - Carrera Culminada Agotada" loading="lazy" decoding="async">
                 
-                <div class="payment-box">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <div class="payment-header" style="margin-bottom: 0;">📍 DATOS DE PAGO MÓVIL</div>
-                        <button class="btn-copy" onclick="copyAllPaymentData(event)" style="background: var(--color-horror-orange); color: #000; font-weight: 800; padding: 6px 14px; border-radius: 8px;">📋 Copiar Datos de Pago</button>
+                <div class="payment-box" style="text-align: center; padding: 25px 20px;">
+                    <div style="display: inline-block; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ff6b6b; padding: 6px 14px; border-radius: 999px; font-size: 0.85rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;">
+                        🔒 REGISTRO CERRADO
                     </div>
-                    
-                    <!-- MONTO EN BS (INSCRIPCIÓN GENERAL 20$ POR DEFECTO) -->
-                    <div class="amount-ves-box" style="background: rgba(255, 26, 26, 0.08); border: 1px solid rgba(255, 26, 26, 0.3); border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 15px;">
-                        <div id="titulo-modalidad-precio" style="font-size: 0.85rem; color: var(--color-horror-orange); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">INSCRIPCIÓN GENERAL</div>
-                        <div id="loading-rate" style="color:#aaa; font-size:0.9rem;">Consultando Tasa BCV en vivo...</div>
-                        <div id="rate-results" style="display:none;">
-                            <div class="amount-main" id="monto-final-ves" style="font-size:2.2rem; font-weight:800; color:#ffffff; font-family:'Oswald', sans-serif;">0,00<span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span></div>
-                            <div id="detalle-equivalente-usd" style="font-size:0.85rem; color:#ccc; margin-top:4px;">
-                                Equivalente a <strong>20$ USD</strong> (Tasa BCV Oficial: <span id="tasa-usd-bcv">0,00</span> Bs)
-                            </div>
-                        </div>
+                    <div style="font-family: 'Oswald', sans-serif; font-size: 1.35rem; color: #ffffff; letter-spacing: 1px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px;">
+                        ¡CUPOS 100% AGOTADOS!
                     </div>
-                    
-                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 26, 26, 0.2); border-radius: 10px; padding: 12px 15px; font-size: 0.9rem; line-height: 1.6;">
-                        <div><strong>Banco:</strong> <span id="pago-banco">PROVINCIAL (0108)</span></div>
-                        <div><strong>Cédula / RIF:</strong> <span id="pago-cedula">18.698.675</span></div>
-                        <div><strong>Teléfono:</strong> <span id="pago-tlf">0412-6574354</span></div>
+                    <p style="color: #ccc; font-size: 0.88rem; line-height: 1.5; margin: 0 0 16px 0;">
+                        Hemos alcanzado el límite máximo de atletas participantes para la <strong>5K Paraguaná Horror Story</strong>. Las inscripciones se encuentran oficialmente cerradas.
+                    </p>
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px; font-size: 0.82rem; color: #aaa; text-align: left; line-height: 1.4;">
+                        <strong style="color: #fff; display: block; margin-bottom: 4px;">ℹ️ ¿Ya estás inscrito?</strong>
+                        Tu dorsal y kit oficial están 100% asegurados. Mantente atento a nuestras redes oficiales para el cronograma de entrega de kits y recomendaciones de carrera.
                     </div>
                 </div>
             </div>
 
-            <!-- FORMULARIO DE REGISTRO -->
-            <div class="form-card">
-                <div id="registration-content">
-                    <h2 class="form-title">FORMULARIO DE REGISTRO</h2>
-                    <p class="form-subtitle">PASO 2: INGRESA TUS DATOS Y LA REFERENCIA DE TU PAGO</p>
+            <!-- TARJETA DE ESTADO: CARRERA AGOTADA -->
+            <div class="form-card" style="text-align: center; padding: 35px 24px; border-top: 1px solid rgba(255, 255, 255, 0.18);">
+                <div style="width: 76px; height: 76px; margin: 0 auto 16px auto; border-radius: 50%; background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: 0 0 25px rgba(239, 68, 68, 0.35);">
+                    💀
+                </div>
+                <span style="display: inline-block; background: #ef4444; color: #ffffff; padding: 5px 14px; border-radius: 6px; font-size: 0.78rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px;">
+                    INSCRIPCIONES CULMINADAS
+                </span>
+                <h2 style="font-family: 'Oswald', sans-serif; font-size: 2.1rem; color: #ffffff; margin: 0 0 10px 0; letter-spacing: 1px; text-transform: uppercase; line-height: 1.15;">
+                    ¡CUPOS TOTALMENTE AGOTADOS!
+                </h2>
+                <p style="color: #d1c0c2; font-size: 0.95rem; line-height: 1.6; max-width: 480px; margin: 0 auto 22px auto;">
+                    La <strong>5K Paraguaná Horror Story</strong> ha culminado con éxito su fase de registro. Agradecemos a toda la comunidad runner de Punto Fijo y Venezuela por la masiva respuesta y apoyo.
+                </p>
 
-                    <form id="registration-form">
-                        <!-- CAMPO TRAMPA HONEYPOT ANTI-SPAM (INVISIBLE PARA HUMANOS) -->
-                        <div class="form-honeypot" aria-hidden="true" style="display:none !important;">
-                            <label for="gotcha-hp">No llenar este campo</label>
-                            <input type="text" name="_gotcha" id="gotcha-hp" tabindex="-1" autocomplete="off">
+                <!-- DETALLES DEL EVENTO -->
+                <div style="background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 26, 26, 0.3); border-radius: 12px; padding: 16px; margin-bottom: 24px; text-align: left;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 0.85rem;">
+                        <div>
+                            <span style="color: #888; font-size: 0.75rem; display: block; text-transform: uppercase;">Evento</span>
+                            <strong style="color: #fff;">5K Paraguaná Horror</strong>
                         </div>
-
-                        <!-- SELECTOR DE MODALIDAD: INDIVIDUAL ($20) VS GRUPAL 3+ ($15 C/U) -->
-                        <div style="margin-bottom: 20px;">
-                            <label style="font-size: 0.8rem; font-weight: 800; color: var(--color-horror-orange); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 8px;">
-                                SELECCIONA TU MODALIDAD DE INSCRIPCIÓN
-                            </label>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                                <button type="button" id="btn-modo-individual" onclick="cambiarModoInscripcion('individual')" style="background: rgba(255, 26, 26, 0.22); border: 2px solid var(--color-horror-red); color: #ffffff; border-radius: 12px; padding: 12px 10px; cursor: pointer; text-align: center; transition: all 0.25s ease; box-shadow: 0 0 15px rgba(255, 26, 26, 0.25);">
-                                    <div style="font-family: 'Oswald', sans-serif; font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">🏃 INDIVIDUAL</div>
-                                    <div style="font-size: 0.78rem; color: #ffb3b3; font-weight: 700; margin-top: 2px;">1 Corredor • 20$ USD</div>
-                                </button>
-                                <button type="button" id="btn-modo-grupal" onclick="cambiarModoInscripcion('grupal')" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 119, 0, 0.35); color: #cccccc; border-radius: 12px; padding: 12px 10px; cursor: pointer; text-align: center; transition: all 0.25s ease;">
-                                    <div style="font-family: 'Oswald', sans-serif; font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-horror-orange);">👥 PROMO GRUPAL (3+)</div>
-                                    <div style="font-size: 0.78rem; color: #00ff66; font-weight: 800; margin-top: 2px;">3 o más • 15$ USD c/u</div>
-                                </button>
-                            </div>
+                        <div>
+                            <span style="color: #888; font-size: 0.75rem; display: block; text-transform: uppercase;">Disponibilidad</span>
+                            <strong style="color: #ef4444;">100% Sold Out (Agotada)</strong>
                         </div>
-
-                        <!-- ========================================== -->
-                        <!-- VISTA 1: INSCRIPCIÓN INDIVIDUAL ($20 USD)  -->
-                        <!-- ========================================== -->
-                        <div id="vista-individual">
-                            <div class="form-group">
-                                <label>CÉDULA DE IDENTIDAD O PASAPORTE</label>
-                                <input type="text" id="ind-cedula" name="cedula" class="form-control" placeholder="Ej. 18698675" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>NOMBRE Y APELLIDO COMPLETOS</label>
-                                <input type="text" id="ind-nombre" name="nombre" class="form-control" placeholder="Juan Pérez" required>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>NÚMERO DE WHATSAPP</label>
-                                    <input type="tel" id="ind-telefono" name="telefono" class="form-control" placeholder="Ej. 04141234567" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>CORREO ELECTRÓNICO</label>
-                                    <input type="email" id="ind-email" name="email" class="form-control" placeholder="juan@email.com" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>¿PERTENECES A ALGÚN TEAM O CLUB?</label>
-                                <input type="text" id="ind-team" name="team" class="form-control" placeholder="Ej. Runner Club / Ninguno">
-                            </div>
-
-                            <!-- CAJA DE CUPÓN DE DESCUENTO / CORTESÍA -->
-                            <div class="cupon-box" style="background: rgba(255, 119, 0, 0.08); border: 1px dashed rgba(255, 119, 0, 0.4); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
-                                <label for="input-cupon" style="font-size: 0.8rem; font-weight: 700; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; text-transform: uppercase;">
-                                    <span>🎟️</span> ¿Tienes un cupón de cortesía o sorteo?
-                                </label>
-                                <div style="display: flex; gap: 8px;">
-                                    <input type="text" id="input-cupon" name="cupon" class="form-control" placeholder="Ingresa tu código de cortesía" style="text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0;">
-                                    <button type="button" id="btn-aplicar-cupon" onclick="aplicarCupon()" style="background: var(--color-horror-orange); color: #000; font-weight: 800; border: none; border-radius: 8px; padding: 0 16px; cursor: pointer; text-transform: uppercase; font-size: 0.82rem; white-space: nowrap; transition: 0.25s;">
-                                        Aplicar
-                                    </button>
-                                </div>
-                                <div id="cupon-mensaje" style="font-size: 0.8rem; margin-top: 6px; display: none; font-weight: 600;"></div>
-                            </div>
-
-                            <!-- BANNER CUANDO EL CUPÓN ESTÁ APLICADO (CORTESÍA 100%) -->
-                            <div id="cupon-activo-banner" style="display: none; background: rgba(0, 255, 102, 0.1); border: 1px solid #00ff66; border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; text-align: center; box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);">
-                                <div style="color: #00ff66; font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">
-                                    🎉 ¡CUPÓN DE CORTESÍA ACTIVADO (100% BONIFICADO)!
-                                </div>
-                                <div style="color: #ddd; font-size: 0.8rem; line-height: 1.4;">
-                                    Tu inscripción es completamente gratuita cortesía del sorteo oficial. No requieres realizar ningún pago bancario.
-                                </div>
-                            </div>
-
-                            <!-- SECCIÓN CAMPOS DE PAGO INDIVIDUAL (SE OCULTA SI SE APLICA CUPÓN) -->
-                            <div id="seccion-campos-pago">
-                                <div class="form-group">
-                                    <label>MÉTODO DE PAGO UTILIZADO</label>
-                                    <select id="select-metodo-pago" name="metodo_pago" class="form-control" required>
-                                        <option value="" disabled selected>Selecciona tu Método de Pago</option>
-                                        <option value="Pago Móvil">Pago Móvil</option>
-                                        <option value="Efectivo Divisas">Efectivo Divisas ($)</option>
-                                        <option value="USDT">USDT (Binance)</option>
-                                        <option value="CUPÓN DE CORTESÍA" style="display:none;">CUPÓN DE CORTESÍA</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>NÚMERO DE REFERENCIA</label>
-                                        <input type="text" id="input-referencia" name="referencia_ref" class="form-control" placeholder="Ej. 12345678" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>MONTO DEL PAGO (BS / $)</label>
-                                        <input type="text" id="input-monto-pago" name="monto_pago" class="form-control" placeholder="Ej. 17.536,00 Bs / 20$" required>
-                                    </div>
-                                </div>
-                            </div>
+                        <div>
+                            <span style="color: #888; font-size: 0.75rem; display: block; text-transform: uppercase;">Fecha de Carrera</span>
+                            <strong style="color: #fff;">Sábado 31 de Octubre</strong>
                         </div>
-
-                        <!-- ======================================================== -->
-                        <!-- VISTA 2: PROMO GRUPAL (3 O MÁS CORREDORES • $15 USD C/U) -->
-                        <!-- ======================================================== -->
-                        <div id="vista-grupal" style="display: none;">
-                            <div style="background: rgba(0, 255, 102, 0.07); border: 1px solid rgba(0, 255, 102, 0.35); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
-                                <div style="font-family: 'Oswald', sans-serif; color: #00ff66; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">
-                                    🔥 INSCRIPCIÓN GRUPAL (15$ USD POR CORREDOR)
-                                </div>
-                                <div style="font-size: 0.8rem; color: #e2e2e2; margin-top: 4px; line-height: 1.45;">
-                                    <strong>¿Cómo funciona?</strong> Elige cuántos corredores son (mínimo 3), llena los datos de cada integrante y reporta <strong>un solo pago total</strong> al final. Cada corredor recibirá su propio dorsal individual.
-                                </div>
-                                <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 0.8rem; color: #ffffff; font-weight: 700; margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(0, 255, 102, 0.3);">
-                                    <input type="checkbox" id="check-verificacion-grupal" style="width: 18px; height: 18px; accent-color: #00ff66; cursor: pointer; margin-top: 2px; flex-shrink: 0;">
-                                    <span>Confirmo que estamos inscribiendo un grupo de mínimo 3 corredores en un solo pago.</span>
-                                </label>
-                            </div>
-
-                            <div class="form-row" style="margin-bottom: 16px;">
-                                <div class="form-group" style="margin-bottom: 0;">
-                                    <label>1. ¿CUÁNTOS CORREDORES SON?</label>
-                                    <select id="select-cantidad-grupo" class="form-control" onchange="actualizarCantidadCorredoresGrupo()">
-                                        <option value="3" selected>3 Corredores (45$ Total)</option>
-                                        <option value="4">4 Corredores (60$ Total)</option>
-                                        <option value="5">5 Corredores (75$ Total)</option>
-                                        <option value="6">6 Corredores (90$ Total)</option>
-                                        <option value="7">7 Corredores (105$ Total)</option>
-                                        <option value="8">8 Corredores (120$ Total)</option>
-                                        <option value="9">9 Corredores (135$ Total)</option>
-                                        <option value="10">10 Corredores (150$ Total)</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" style="margin-bottom: 0;">
-                                    <label>2. NOMBRE DEL TEAM O GRUPO</label>
-                                    <input type="text" id="grupo-team-nombre" class="form-control" placeholder="Ej. RunFree / Amigos Running">
-                                </div>
-                            </div>
-
-                            <!-- CONTENEDOR DINÁMICO DE TARJETAS DE CORREDORES -->
-                            <div id="contenedor-corredores-grupo"></div>
-
-                            <!-- CAJA DE PAGO ÚNICO DEL GRUPO -->
-                            <div id="caja-pago-grupal-unico" style="background: rgba(255, 26, 26, 0.08); border: 1px solid rgba(255, 26, 26, 0.35); border-radius: 12px; padding: 16px; margin-bottom: 18px;">
-                                <div style="font-family: 'Oswald', sans-serif; font-size: 1.05rem; color: var(--color-horror-orange); text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">
-                                    💳 PAGO ÚNICO DE TODO EL GRUPO
-                                </div>
-                                <div style="font-size: 0.78rem; color: #ccc; margin-bottom: 12px;">
-                                    Ingresa los datos del pago total realizado por el grupo completo:
-                                </div>
-                                <div class="form-group">
-                                    <label>MÉTODO DE PAGO UTILIZADO</label>
-                                    <select id="grupo-metodo-pago-unico" class="form-control">
-                                        <option value="" disabled selected>Selecciona el Método de Pago</option>
-                                        <option value="Pago Móvil">Pago Móvil</option>
-                                        <option value="Efectivo Divisas">Efectivo Divisas ($)</option>
-                                        <option value="USDT">USDT (Binance)</option>
-                                    </select>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group" style="margin-bottom: 0;">
-                                        <label>NÚMERO DE REFERENCIA DEL PAGO</label>
-                                        <input type="text" id="grupo-referencia-unica" class="form-control" placeholder="Ej. 12345678">
-                                    </div>
-                                    <div class="form-group" style="margin-bottom: 0;">
-                                        <label>MONTO TOTAL PAGADO (BS / $)</label>
-                                        <input type="text" id="grupo-monto-total-unico" class="form-control" placeholder="Ej. 45$ / Bs">
-                                    </div>
-                                </div>
-                            </div>
+                        <div>
+                            <span style="color: #888; font-size: 0.75rem; display: block; text-transform: uppercase;">Punto de Encuentro</span>
+                            <strong style="color: #fff;">Sambil Paraguaná (7:00 PM)</strong>
                         </div>
-
-                        <!-- TÉRMINOS, CONDICIONES Y DESCARGO DE RESPONSABILIDAD -->
-                        <div style="background: rgba(0,0,0,0.55); border: 1px solid rgba(255, 26, 26, 0.35); padding: 14px 16px; border-radius: 12px; margin-top: 15px; margin-bottom: 18px; text-align: left;">
-                            <div style="max-height: 140px; overflow-y: auto; font-size: 0.8rem; color: #d6d6d6; line-height: 1.5; padding-right: 8px; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);" id="box-terminos-texto">
-                                <strong style="color: var(--color-horror-orange); font-size: 0.85rem; display: block; margin-bottom: 6px; letter-spacing: 0.5px;">TÉRMINOS, CONDICIONES Y DESCARGO DE RESPONSABILIDAD:</strong>
-                                
-                                <strong style="color: #fff;">1. Aceptación de Riesgos y Responsabilidad Individual:</strong><br>
-                                El participante reconoce y acepta que esta competencia se realiza en horario nocturno, sobre rutas oscuras o con iluminación reducida, y que forma parte de una temática de Halloween. Por lo tanto, implica riesgos inherentes, incluyendo pero sin limitarse a: caídas, tropiezos con desniveles del terreno, obstáculos imprevistos, condiciones climáticas adversas y esfuerzo físico intenso.<br>
-                                La participación en el evento es bajo la estricta y absoluta responsabilidad del corredor. La organización, patrocinadores, proveedores y el staff quedan exentos de cualquier responsabilidad civil o penal por lesiones físicas, accidentes, daños materiales o pérdida de objetos personales ocurridos antes, durante o después del evento.<br><br>
-
-                                <strong style="color: #fff;">2. Elementos Sorpresa de Terror y Dinámica de la Ruta:</strong><br>
-                                El corredor está plenamente informado y consciente de que a lo largo del recorrido se encontrarán elementos sorpresa de miedo, efectos especiales (sonidos fuertes), actores caracterizados y sobresaltos repentinos.<br>
-                                El participante exime a la organización de cualquier incidente derivado de reacciones de sobresalto, pánico, caídas a causa de sustos o condiciones de salud preexistentes (como afecciones cardíacas, claustrofobia o epilepsia fotosensible) agravadas por la dinámica del evento.<br>
-                                Se prohíbe terminantemente a los corredores agredir física o verbalmente a los actores, staff o personal de logística, así como portar objetos punzocortantes, armas de fuego o elementos que puedan poner en riesgo la integridad de otros participantes.<br><br>
-
-                                <strong style="color: #fff;">3. Participación de Menores de Edad:</strong><br>
-                                Todo menor de edad deberá participar obligatoriamente acompañado y bajo la supervisión directa de su padre, madre o representante legal durante todo el recorrido del evento.<br>
-                                El representante legal es el único responsable de evaluar si el menor cuenta con la madurez emocional y la condición física adecuada para enfrentar rutas oscuras, situaciones de suspenso y estímulos de terror. La organización no se hace responsable por crisis de pánico, ansiedad o incidentes derivados de la participación de menores no aptos para esta temática.<br>
-                                Al registrar a un menor, el representante firma electrónicamente este descargo en su nombre, asumiendo total responsabilidad legal.<br><br>
-
-                                <strong style="color: #fff;">4. Estado de Salud y Aptitud Física:</strong><br>
-                                El participante garantiza que se encuentra en óptimas condiciones físicas y médicas para participar en una carrera de resistencia. Declara no padecer ninguna enfermedad crónica, lesión o condición médica que le impida realizar actividad física de intensidad moderada o alta, ni ninguna condición psicológica que se vea gravemente afectada por ambientes oscuros o de sobresalto.<br><br>
-
-                                <strong style="color: #fff;">5. Derechos de Imagen:</strong><br>
-                                El participante autoriza de manera libre, gratuita e irrevocable a la organización para capturar, usar, publicar y difundir su imagen, voz y nombre en fotografías, videos o cualquier otro material mediático y publicitario relacionado con el evento, sin derecho a compensación económica alguna.<br><br>
-
-                                <em style="color: var(--color-horror-red); font-weight: 600;">* Al hacer clic en "Aceptar" / "Registrarse", confirmas que eres mayor de edad (o representante legal del menor inscrito), que asumes todos los riesgos descritos y que liberas de toda responsabilidad a los organizadores del evento.</em>
-                            </div>
-
-                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.85rem; color: #ffffff; font-weight: 600;">
-                                <input type="checkbox" id="check-terminos" required style="width: 18px; height: 18px; accent-color: var(--color-horror-red); cursor: pointer;">
-                                Acepto los Términos, Condiciones y Descargo de Responsabilidad
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn-submit-horror">FINALIZAR E INSCRIBIRME 🎃</button>
-                    </form>
+                    </div>
                 </div>
 
-                <div id="submit-loader">
-                    <div style="color: var(--color-horror-red); font-size:1.3rem; font-weight:bold; font-family:'Oswald', sans-serif;">REGISTRANDO EN LA NOCHE DE HALLOWEEN... 💀</div>
-                    <p style="color:#aaa; margin-top:10px;">Un momento por favor.</p>
+                <!-- BOTONES DE ACCIÓN DIRECTA -->
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <a href="calendario.html" class="btn-submit-horror" style="display: block; text-decoration: none; text-align: center; box-sizing: border-box; background: linear-gradient(135deg, #ff1a1a 0%, #b30000 100%);">
+                        🏃 VER PRÓXIMAS CARRERAS (CALENDARIO RUNNER)
+                    </a>
+                    <a href="index.html" style="display: block; text-decoration: none; text-align: center; padding: 13px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; font-family: 'Oswald', sans-serif; font-size: 0.95rem; font-weight: 700; letter-spacing: 1px; transition: all 0.3s ease;">
+                        🏠 VOLVER AL INICIO DE SANDÍA PRODUCTION
+                    </a>
+                    <a href="https://wa.me/584126574354?text=Hola%20Sand%C3%ADa%20Production%2C%20quisiera%20informaci%C3%B3n%20sobre%20la%20entrega%20de%20kits%20del%205K%20Horror%20Story" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #25D366; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-top: 4px;">
+                        <span>💬</span> Contactar por WhatsApp Oficial
+                    </a>
                 </div>
 
-                <div id="success-message">
-                    <h3 style="color: var(--color-horror-red); font-size: 1.6rem; font-family: 'Oswald', sans-serif;">¡INSCRIPCIÓN REGISTRADA! 🎃💀</h3>
-                    <p style="font-size: 1rem; color: #fff; margin-top: 12px;">Tus datos y número de referencia han sido procesados correctamente.</p>
-                    <p style="color:#aaa; font-size: 0.9rem; margin-top: 8px;">La organización verificará la referencia en el sistema. ¡Nos vemos este 31 de Octubre en Sambil Paraguaná!</p>
-                    
-                    <button onclick="window.location.href='index.html'" style="display: block; width: 100%; margin-top: 20px; background: var(--color-horror-red); border: none; color: white; padding: 12px; font-size: 1rem; font-weight: 700; border-radius: 8px; cursor: pointer; font-family: 'Oswald', sans-serif;">
-                        VOLVER AL INICIO
-                    </button>
-                </div>
-            </div>
+                <!-- Formulario original preservado invisible para estabilidad de scripts -->
+                <form id="registration-form" style="display: none !important;">
+                    <input type="text" name="_gotcha" tabindex="-1">
+                    <input type="text" id="ind-cedula">
+                    <input type="text" id="ind-nombre">
+                    <input type="tel" id="ind-telefono">
+                    <input type="email" id="ind-email">
+                    <input type="checkbox" id="check-terminos">
+                    <button type="submit" class="btn-submit-horror">FINALIZAR</button>
+                </form>            </div>
 
         </div>
     </main>
