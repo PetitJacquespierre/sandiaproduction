@@ -769,15 +769,15 @@
                             <input type="text" id="ind-team" name="team" class="form-control" placeholder="Ej. Runner Club / Ninguno">
                         </div>
 
-                        <!-- CAJA DE CUPÓN DE DESCUENTO / CORTESÍA -->
+                        <!-- CAJA DE CUPÓN DE DESCUENTO / CORTESÍA OBLIGATORIO -->
                         <div class="cupon-box" style="background: rgba(255, 119, 0, 0.08); border: 1px dashed rgba(255, 119, 0, 0.4); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
                             <label for="input-cupon" style="font-size: 0.8rem; font-weight: 700; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; text-transform: uppercase;">
-                                <span>🎟️</span> ¿Tienes un cupón de cortesía o sorteo?
+                                <span>🎟️</span> Cupón o Enlace VIP Oficial (Obligatorio)
                             </label>
                             <div style="display: flex; gap: 8px;">
-                                <input type="text" id="input-cupon" name="cupon" class="form-control" placeholder="Ingresa tu código de cortesía" style="text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0;">
+                                <input type="text" id="input-cupon" name="cupon" class="form-control" placeholder="CÓDIGO VIP OBLIGATORIO" style="text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0;" required>
                                 <button type="button" id="btn-aplicar-cupon" onclick="aplicarCupon()" style="background: var(--color-horror-orange); color: #000; font-weight: 800; border: none; border-radius: 8px; padding: 0 16px; cursor: pointer; text-transform: uppercase; font-size: 0.82rem; white-space: nowrap; transition: 0.25s;">
-                                    Aplicar
+                                    Validar
                                 </button>
                             </div>
                             <div id="cupon-mensaje" style="font-size: 0.8rem; margin-top: 6px; display: none; font-weight: 600;"></div>
