@@ -919,7 +919,7 @@
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyl4z2AEREoDCINfDc-3zLukIEafbXHRO88Lr5tinkRZGUTQsALCrRQJvNMd6hUycPE3A/exec";
         const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbyazhyYfK-vURGv34XF-oTW1_34rTVRs2WM7-aNlswf-mIGhIwgaLgwfGx1xZxfm50/exec";
         const costoDivisa = 20; // 20$ Inscripción Individual
-        let tasaRespaldoLocal = 876.80; // Tasa oficial actualizada BCV
+        let tasaRespaldoLocal = 887.30; // Tasa oficial actualizada BCV
 
         // Estado del cupón actualmente activo en el formulario
         let cuponActivoCodigo = null;
@@ -932,7 +932,8 @@
             let tasa = tasaRespaldoLocal;
             try {
                 const cached = sessionStorage.getItem('tasaBCV');
-                if (cached) {
+                const cachedTime = sessionStorage.getItem('tasaBCVTime');
+                if (cached && cachedTime && (Date.now() - parseInt(cachedTime, 10)) < 30 * 60 * 1000) {
                     const d = JSON.parse(cached);
                     if (d && d.usd && !isNaN(d.usd) && parseFloat(d.usd) > 0) {
                         tasa = parseFloat(d.usd);
@@ -977,10 +978,9 @@
             try {
                 // Siempre consultar en vivo con timeout de 6 segundos para evitar que se quede pegada
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 6000);
+                const timeoutId = setTimeout(() => controller.abort(), 8000);
                 
                 const respuesta = await fetch(urlApiDivisasBCV + "?t=" + Date.now(), {
-                    cache: 'no-store',
                     signal: controller.signal
                 });
                 clearTimeout(timeoutId);
@@ -1014,6 +1014,19 @@
                 const inputMonto = document.getElementById('input-monto-pago');
                 if (inputMonto && !inputMonto.value && !cuponActivoCodigo) {
                     inputMonto.value = `${formatVE(totalVes)} Bs`;
+                }
+
+                if (cuponActivoCodigo && cuponActivoData) {
+                    const precioUSD = cuponActivoData.precioUSD !== undefined ? Number(cuponActivoData.precioUSD) : 0;
+                    if (precioUSD > 0) {
+                        const totalVesAjustado = tasa * precioUSD;
+                        if (inputMonto) inputMonto.value = `${formatVE(totalVesAjustado)} Bs / ${precioUSD}$`;
+                        if (montoVesLabel) montoVesLabel.innerHTML = `${formatVE(totalVesAjustado)} <span class="amount-currency" style="color:#00ff66; font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                        if (resultsBox) {
+                            const desc = resultsBox.querySelector('div:last-child');
+                            if (desc) desc.innerHTML = `Precio Especial con Cupón <strong>${cuponActivoCodigo}</strong>: <strong style="color:#00ff66; font-size:1.1rem;">${precioUSD}$ USD</strong> (Tasa BCV: ${formatVE(tasa)} Bs)`;
+                        }
+                    }
                 }
 
                 const selectMetodo = document.getElementById('select-metodo-pago');
@@ -1275,14 +1288,7 @@
             }
 
             // Obtener tasa BCV actual
-            let tasa = tasaRespaldoLocal;
-            try {
-                const cached = sessionStorage.getItem('tasaBCV');
-                if (cached) {
-                    const d = JSON.parse(cached);
-                    if (d && d.usd) tasa = parseFloat(d.usd);
-                }
-            } catch(e) {}
+            let tasa = obtenerTasaActual();
             const totalVesAjustado = tasa * precioUSD;
 
             // 2. Si el precio es 0$ (CORTESÍA 100% GRATIS)
@@ -1490,14 +1496,14 @@
         });
 
         // Inicialización al cargar la página
-        calcularMontoBolivares();
-
-        // DETECCIÓN AUTOMÁTICA DE ENLACE VIP / CORTESÍA / RESERVA DESDE URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const cuponUrl = urlParams.get('cupon') || urlParams.get('cortesia') || urlParams.get('vip') || urlParams.get('sorteo') || urlParams.get('reserva');
-        if (cuponUrl) {
-            window.aplicarCupon(cuponUrl);
-        }
+        (async function() {
+            await calcularMontoBolivares();
+            const urlParams = new URLSearchParams(window.location.search);
+            const cuponUrl = urlParams.get('cupon') || urlParams.get('cortesia') || urlParams.get('vip') || urlParams.get('sorteo') || urlParams.get('reserva');
+            if (cuponUrl) {
+                await window.aplicarCupon(cuponUrl);
+            }
+        })();
     </script>
 </body>
 </html>
