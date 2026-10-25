@@ -1379,6 +1379,18 @@
         // SUBMIT FORMULARIO UNIFICADO Y COMPATIBLE CON APPS SCRIPT Y FIRESTORE
         document.getElementById('registration-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            // =========================================================================
+            // BLINDAJE DE SEGURIDAD ESTRICTO ANTI-FUGA
+            // Las inscripciones generales están cerradas.
+            // Si no existe un cupón o enlace VIP oficial validado, se bloquea el envío.
+            // =========================================================================
+            if (!cuponActivoCodigo || cuponActivoCodigo.trim() === '') {
+                alert("⚠️ Las inscripciones generales para la 5K Paraguaná Horror Story están 100% AGOTADAS.\n\nSolo se procesan registros que cuenten con un enlace o cupón VIP oficial suministrado por la organización.");
+                window.location.reload();
+                return;
+            }
+
             const form = e.target;
             const content = document.getElementById('registration-content');
             const loader = document.getElementById('submit-loader');
