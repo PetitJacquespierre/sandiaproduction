@@ -74,3 +74,16 @@ Tal como se implementó en el informe `AUD-2026-09`, cada mes se debe auditar:
 1. **Minúsculas estrictas en archivos:** Todo archivo en `/img/` debe guardarse con extensión y nombre en minúsculas (ej. `runfreelogo.png`, jamás `.PNG`) para compatibilidad total con servidores Linux/Vercel.
 2. **Prioridad Sandía en Carruseles:** Los eventos organizados por Sandía Production deben figurar siempre de primer lugar antes que cualquier evento foráneo o aliado.
 3. **Despliegues:** Cada cambio sustancial se commitea a Git en `main` para que Vercel actualice la producción de inmediato.
+
+---
+
+## 🔒 6. PROTOCOLO OBLIGATORIO DE CIERRE DE INSCRIPCIONES (TRIPLE CANDADO ANTI-DEMANDAS)
+> **LECCIÓN CRÍTICA APRENDIDA (Incidente Marianny Cedeño #099):**  
+> Si una carrera se queda sin medallas o kits y un atleta logra pagar porque la web no cerró bien la puerta, la productora y Grow Studio se exponen a demandas legales por sobreventa y cobro indebido.
+
+**Siempre que un evento se declare "AGOTADO / SOLD OUT" o pase a modalidad "SOLO VIP", es OBLIGATORIO:**
+1. **PROHIBIDO CERRAR SOLO CON CSS (`display: none`):** Los celulares mantienen las pestañas abiertas en memoria días enteros con el formulario viejo intacto.
+2. **CANDADO 1 (FRONTEND):** La función `submit` del formulario DEBE verificar en la primera línea si las inscripciones generales están cerradas y abortar (`e.preventDefault(); return;`) de inmediato si no hay un cupón VIP válido y verificado en tiempo real.
+3. **CANDADO 2 (BACKEND APPS SCRIPT / GOOGLE SHEETS):** El script `doPost` que recibe los datos en Google Sheets DEBE rechazar la petición y no insertar fila si el evento está cerrado y la solicitud no incluye un código VIP obligatorio.
+4. **CANDADO 3 (PURGA DE CACHÉ MÓVIL EN PWA):** Incrementar obligatoriamente la versión de `CACHE_NAME` en `sw.js` (ej. de `v3` a `v4`) para forzar a todos los celulares a eliminar la versión en memoria del formulario viejo.
+5. **BLOQUEO DE DATOS BANCARIOS:** En estado agotado, retirar del HTML los datos de Pago Móvil y cuentas para evitar transferencias no autorizadas.

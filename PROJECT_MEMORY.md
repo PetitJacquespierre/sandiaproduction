@@ -53,3 +53,4 @@ Archivo de contexto local y memoria viva para el sitio web oficial y portal de e
 ## 📝 5. BITÁCORA Y DECISIONES TÉCNICAS
 * **2026-09-30:** Incorporación de `AGENTS.md` y actualización de memoria con el alcance completo del servicio de mantenimiento mensual ($20/mes) incluyendo la Auditoría Técnica Preventiva (Anti-spam, Mobile-first y verificación de embudos).
 * **2026-10-22:** Incorporación del evento Santa Run 5K Copa Ford Pro 2026 e instalación en producción de Google Analytics 4 (`G-VVCH93SB3C`) en 6 páginas HTML. Añadida tarea para llevar el visor simplificado estilo Blogger a Grow Studio Admin.
+* **2026-10-25:** Incidente de registro Marianny Cedeño (#099) por pestaña móvil en caché tras el cierre. Se institucionalizó a nivel de Grow Studio Global Engine el **Protocolo de Cierre Sold Out con Triple Candado Anti-Demandas** (Bloqueo en submit JS + Validación estricta en Apps Script/Sheets + Purga de caché en sw.js v4).
