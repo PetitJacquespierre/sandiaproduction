@@ -29,11 +29,12 @@ function doPost(e) {
     var eventoName = p.evento || "5K Paraguaná Horror Story";
 
     // =========================================================================
-    // CANDADO DE SEGURIDAD ESTRICTO (BACKEND GOOGLE APPS SCRIPT):
-    // 5K Paraguaná Horror Story tiene inscripciones generales 100% cerradas.
-    // ES OBLIGATORIO recibir un cupón o enlace VIP válido para poder registrar en la hoja.
+    // INTERRUPTOR DE CIERRE AUTOMÁTICO (BACKEND GOOGLE APPS SCRIPT):
+    // - false => Inscripciones Abiertas (50 Cupos Más: Individual $20 y Grupal 3+ $15 c/u)
+    // - true  => Inscripciones Cerradas (Exige cupón VIP obligatoriamente)
     // =========================================================================
-    if (nombrePestana === "5K Paraguaná Horror Story") {
+    var INSCRIPCIONES_HORROR_CERRADAS = false;
+    if (INSCRIPCIONES_HORROR_CERRADAS && nombrePestana === "5K Paraguaná Horror Story") {
       var cuponValido = p.cupon || p.codigo_cupon || "";
       if (!cuponValido || cuponValido.trim() === "") {
         Logger.log("⛔ Registro rechazado: Intento de inscripción sin cupón VIP en Paraguaná Horror.");

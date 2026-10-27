@@ -528,10 +528,10 @@
                 Vive la experiencia deportiva más esperada del año en Punto Fijo.
             </div>
 
-            <!-- REGRESIVA EN VIVO / AVISO DE CARRERA CULMINADA -->
+            <!-- REGRESIVA EN VIVO / AVISO DE ESTADO DE INSCRIPCIONES -->
             <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 20px auto 10px auto;">
-                <div class="horror-date-badge" style="background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #ffffff; font-size: 1.05rem; padding: 10px 24px; box-shadow: 0 0 25px rgba(239, 68, 68, 0.4); text-transform: uppercase; font-weight: 800; letter-spacing: 1px;">
-                    🏁 CARRERA CULMINADA • ¡CUPOS 100% AGOTADOS! 💀
+                <div id="hero-status-badge" class="horror-date-badge" style="background: rgba(0, 255, 102, 0.16); border: 2px solid #00ff66; color: #ffffff; font-size: 1.05rem; padding: 10px 24px; box-shadow: 0 0 25px rgba(0, 255, 102, 0.35); text-transform: uppercase; font-weight: 800; letter-spacing: 1px;">
+                    🔥 ¡PORQUE UDS LO PIDIERON: ABRIMOS 50 CUPOS MÁS! 🎃
                 </div>
             </div>
 
@@ -597,10 +597,10 @@
             
             <!-- FLYER & DATOS DE PAGO -->
             <div class="flyer-card">
-                <img id="flyer-img" src="img/paraguanahorror_agotada.jpg" alt="Flyer 5K Paraguaná Horror Stories" loading="lazy" decoding="async">
+                <img id="flyer-img" src="img/paraguanahorror_50cupos.jpg" alt="Flyer 5K Paraguaná Horror Stories - 50 Cupos Más" loading="lazy" decoding="async">
                 
-                <!-- CAJA 1: PAGO / ESTADO AGOTADO (VISIBLE POR DEFECTO) -->
-                <div id="box-pago-agotado" class="payment-box" style="text-align: center; padding: 25px 20px;">
+                <!-- CAJA 1: PAGO / ESTADO AGOTADO (OCULTA MIENTRAS HAY CUPOS ABIERTOS) -->
+                <div id="box-pago-agotado" class="payment-box" style="display: none; text-align: center; padding: 25px 20px;">
                     <div style="display: inline-block; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ff6b6b; padding: 6px 14px; border-radius: 999px; font-size: 0.85rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;">
                         🔒 REGISTRO GENERAL CERRADO
                     </div>
@@ -616,16 +616,16 @@
                     </div>
                 </div>
 
-                <!-- CAJA 2: DATOS DE PAGO Y TASA BCV (DESBLOQUEADO POR CUPÓN VIP) -->
-                <div id="box-pago-vip" class="payment-box" style="display: none;">
+                <!-- CAJA 2: DATOS DE PAGO Y TASA BCV -->
+                <div id="box-pago-vip" class="payment-box" style="display: block;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                         <div class="payment-header" style="margin-bottom: 0;">📍 DATOS DE PAGO MÓVIL</div>
                         <button class="btn-copy" onclick="copyAllPaymentData(event)" style="background: var(--color-horror-orange); color: #000; font-weight: 800; padding: 6px 14px; border-radius: 8px;">📋 Copiar Datos de Pago</button>
                     </div>
                     
-                    <!-- MONTO EN BS (INSCRIPCIÓN GENERAL 20$ POR DEFECTO O PRECIO VIP) -->
+                    <!-- MONTO EN BS (INSCRIPCIÓN GENERAL 20$ POR DEFECTO O PROMO GRUPAL 15$) -->
                     <div class="amount-ves-box" style="background: rgba(255, 26, 26, 0.08); border: 1px solid rgba(255, 26, 26, 0.3); border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 15px;">
-                        <div id="titulo-modalidad-precio" style="font-size: 0.85rem; color: var(--color-horror-orange); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">INSCRIPCIÓN VIP</div>
+                        <div id="titulo-modalidad-precio" style="font-size: 0.85rem; color: var(--color-horror-orange); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">INSCRIPCIÓN GENERAL</div>
                         <div id="loading-rate" style="color:#aaa; font-size:0.9rem;">Consultando Tasa BCV en vivo...</div>
                         <div id="rate-results" style="display:none;">
                             <div class="amount-main" id="monto-final-ves" style="font-size:2.2rem; font-weight:800; color:#ffffff; font-family:'Oswald', sans-serif;">0,00<span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span></div>
@@ -643,8 +643,8 @@
                 </div>
             </div>
 
-            <!-- TARJETA 1: ESTADO CARRERA AGOTADA + CAJA DE DESBLOQUEO VIP (VISIBLE POR DEFECTO) -->
-            <div id="card-agotado" class="form-card" style="text-align: center; padding: 35px 24px; border-top: 1px solid rgba(255, 255, 255, 0.18);">
+            <!-- TARJETA 1: ESTADO CARRERA AGOTADA + CAJA DE DESBLOQUEO VIP (SE ACTIVA AUTOMÁTICAMENTE AL CERRAR INSCRIPCIONES) -->
+            <div id="card-agotado" class="form-card" style="display: none; text-align: center; padding: 35px 24px; border-top: 1px solid rgba(255, 255, 255, 0.18);">
                 <div style="width: 76px; height: 76px; margin: 0 auto 16px auto; border-radius: 50%; background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: 0 0 25px rgba(239, 68, 68, 0.35);">
                     💀
                 </div>
@@ -709,24 +709,24 @@
                 </div>
             </div>
 
-            <!-- TARJETA 2: FORMULARIO DE REGISTRO VIP (INICIALMENTE DISPLAY: NONE, DESBLOQUEADO CON CUPÓN VÁLIDO) -->
-            <div id="card-formulario-vip" class="form-card" style="display: none;">
-                <!-- BANNER DE ACCESO VIP EXCLUSIVO -->
+            <!-- TARJETA 2: FORMULARIO DE REGISTRO OFICIAL (50 CUPOS EXTRA HABILITADOS) -->
+            <div id="card-formulario-vip" class="form-card" style="display: block;">
+                <!-- BANNER DE APERTURA EXTRA / ACCESO VIP -->
                 <div id="banner-vip-header" style="background: linear-gradient(135deg, rgba(255, 119, 0, 0.18) 0%, rgba(0, 255, 102, 0.15) 100%); border: 1px solid #00ff66; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; box-shadow: 0 0 20px rgba(0, 255, 102, 0.2);">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="font-size: 1.5rem;">🎟️</span>
+                            <span id="icono-banner-header" style="font-size: 1.5rem;">🔥</span>
                             <div>
-                                <div style="font-family: 'Oswald', sans-serif; font-size: 1.15rem; color: #00ff66; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">
-                                    ACCESO PRIVADO VIP DESBLOQUEADO
+                                <div id="titulo-banner-header" style="font-family: 'Oswald', sans-serif; font-size: 1.15rem; color: #00ff66; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">
+                                    ¡ABRIMOS 50 CUPOS MÁS! • INSCRIPCIONES ABIERTAS
                                 </div>
                                 <div id="subtitulo-vip-autorizado" style="color: #ddd; font-size: 0.82rem;">
-                                    Cupón oficial verificado en sistema. Completa tus datos para emitir tu inscripción.
+                                    Modalidad Individual ($20 USD) y Promo Grupal 3+ corredores ($15 USD c/u) disponibles.
                                 </div>
                             </div>
                         </div>
                         <span id="badge-vip-codigo" style="background: #00ff66; color: #000; font-family: 'Oswald', sans-serif; font-size: 0.85rem; font-weight: 800; padding: 5px 12px; border-radius: 6px; letter-spacing: 1px;">
-                            VIP
+                            50 CUPOS EXTRA
                         </span>
                     </div>
                 </div>
@@ -742,80 +742,175 @@
                             <input type="text" name="_gotcha" id="gotcha-hp" tabindex="-1" autocomplete="off">
                         </div>
 
-                        <!-- DATOS DEL PARTICIPANTE -->
-                        <div class="form-group">
-                            <label>CÉDULA DE IDENTIDAD O PASAPORTE</label>
-                            <input type="text" id="ind-cedula" name="cedula" class="form-control" placeholder="Ej. 18698675" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>NOMBRE Y APELLIDO COMPLETOS</label>
-                            <input type="text" id="ind-nombre" name="nombre" class="form-control" placeholder="Juan Pérez" required>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>NÚMERO DE WHATSAPP</label>
-                                <input type="tel" id="ind-telefono" name="telefono" class="form-control" placeholder="Ej. 04141234567" required>
-                            </div>
-                            <div class="form-group">
-                                <label>CORREO ELECTRÓNICO</label>
-                                <input type="email" id="ind-email" name="email" class="form-control" placeholder="juan@email.com" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>¿PERTENECES A ALGÚN TEAM O CLUB?</label>
-                            <input type="text" id="ind-team" name="team" class="form-control" placeholder="Ej. Runner Club / Ninguno">
-                        </div>
-
-                        <!-- CAJA DE CUPÓN DE DESCUENTO / CORTESÍA OBLIGATORIO -->
-                        <div class="cupon-box" style="background: rgba(255, 119, 0, 0.08); border: 1px dashed rgba(255, 119, 0, 0.4); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
-                            <label for="input-cupon" style="font-size: 0.8rem; font-weight: 700; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; text-transform: uppercase;">
-                                <span>🎟️</span> Cupón o Enlace VIP Oficial (Obligatorio)
+                        <!-- SELECTOR DE MODALIDAD: INDIVIDUAL ($20) VS GRUPAL 3+ ($15 C/U) -->
+                        <div id="selector-modalidad-container" style="margin-bottom: 20px;">
+                            <label style="font-size: 0.8rem; font-weight: 800; color: var(--color-horror-orange); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 8px;">
+                                SELECCIONA TU MODALIDAD DE INSCRIPCIÓN
                             </label>
-                            <div style="display: flex; gap: 8px;">
-                                <input type="text" id="input-cupon" name="cupon" class="form-control" placeholder="CÓDIGO VIP OBLIGATORIO" style="text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0;" required>
-                                <button type="button" id="btn-aplicar-cupon" onclick="aplicarCupon()" style="background: var(--color-horror-orange); color: #000; font-weight: 800; border: none; border-radius: 8px; padding: 0 16px; cursor: pointer; text-transform: uppercase; font-size: 0.82rem; white-space: nowrap; transition: 0.25s;">
-                                    Validar
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <button type="button" id="btn-modo-individual" onclick="cambiarModoInscripcion('individual')" style="background: rgba(255, 26, 26, 0.22); border: 2px solid var(--color-horror-red); color: #ffffff; border-radius: 12px; padding: 12px 10px; cursor: pointer; text-align: center; transition: all 0.25s ease; box-shadow: 0 0 15px rgba(255, 26, 26, 0.25);">
+                                    <div style="font-family: 'Oswald', sans-serif; font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">🏃 INDIVIDUAL</div>
+                                    <div style="font-size: 0.78rem; color: #ffb3b3; font-weight: 700; margin-top: 2px;">1 Corredor • 20$ USD</div>
+                                </button>
+                                <button type="button" id="btn-modo-grupal" onclick="cambiarModoInscripcion('grupal')" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 119, 0, 0.35); color: #cccccc; border-radius: 12px; padding: 12px 10px; cursor: pointer; text-align: center; transition: all 0.25s ease;">
+                                    <div style="font-family: 'Oswald', sans-serif; font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-horror-orange);">👥 PROMO GRUPAL (3+)</div>
+                                    <div style="font-size: 0.78rem; color: #00ff66; font-weight: 800; margin-top: 2px;">3 o más • 15$ USD c/u</div>
                                 </button>
                             </div>
-                            <div id="cupon-mensaje" style="font-size: 0.8rem; margin-top: 6px; display: none; font-weight: 600;"></div>
                         </div>
 
-                        <!-- BANNER CUANDO EL CUPÓN ESTÁ APLICADO (CORTESÍA 100%) -->
-                        <div id="cupon-activo-banner" style="display: none; background: rgba(0, 255, 102, 0.1); border: 1px solid #00ff66; border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; text-align: center; box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);">
-                            <div style="color: #00ff66; font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">
-                                🎉 ¡CUPÓN DE CORTESÍA ACTIVADO (100% BONIFICADO)!
-                            </div>
-                            <div style="color: #ddd; font-size: 0.8rem; line-height: 1.4;">
-                                Tu inscripción es completamente gratuita cortesía del sorteo oficial. No requieres realizar ningún pago bancario.
-                            </div>
-                        </div>
-
-                        <!-- SECCIÓN CAMPOS DE PAGO (SE OCULTA SI SE APLICA CUPÓN 100% BONIFICADO) -->
-                        <div id="seccion-campos-pago">
+                        <!-- ========================================== -->
+                        <!-- VISTA 1: INSCRIPCIÓN INDIVIDUAL ($20 USD)  -->
+                        <!-- ========================================== -->
+                        <div id="vista-individual">
                             <div class="form-group">
-                                <label>MÉTODO DE PAGO UTILIZADO</label>
-                                <select id="select-metodo-pago" name="metodo_pago" class="form-control" required>
-                                    <option value="" disabled selected>Selecciona tu Método de Pago</option>
-                                    <option value="Pago Móvil">Pago Móvil</option>
-                                    <option value="Efectivo Divisas">Efectivo Divisas ($)</option>
-                                    <option value="USDT">USDT (Binance)</option>
-                                    <option value="CUPÓN DE CORTESÍA" style="display:none;">CUPÓN DE CORTESÍA</option>
-                                </select>
+                                <label>CÉDULA DE IDENTIDAD O PASAPORTE</label>
+                                <input type="text" id="ind-cedula" name="cedula" class="form-control" placeholder="Ej. 18698675" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>NOMBRE Y APELLIDO COMPLETOS</label>
+                                <input type="text" id="ind-nombre" name="nombre" class="form-control" placeholder="Juan Pérez" required>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label>NÚMERO DE REFERENCIA</label>
-                                    <input type="text" id="input-referencia" name="referencia_ref" class="form-control" placeholder="Ej. 12345678" required>
+                                    <label>NÚMERO DE WHATSAPP</label>
+                                    <input type="tel" id="ind-telefono" name="telefono" class="form-control" placeholder="Ej. 04141234567" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>MONTO DEL PAGO (BS / $)</label>
-                                    <input type="text" id="input-monto-pago" name="monto_pago" class="form-control" placeholder="Ej. 17.536,00 Bs / 20$" required>
+                                    <label>CORREO ELECTRÓNICO</label>
+                                    <input type="email" id="ind-email" name="email" class="form-control" placeholder="juan@email.com" required>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label>¿PERTENECES A ALGÚN TEAM O CLUB?</label>
+                                <input type="text" id="ind-team" name="team" class="form-control" placeholder="Ej. Runner Club / Ninguno">
+                            </div>
+
+                            <!-- CAJA DE CUPÓN DE DESCUENTO / CORTESÍA -->
+                            <div class="cupon-box" style="background: rgba(255, 119, 0, 0.08); border: 1px dashed rgba(255, 119, 0, 0.4); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
+                                <label id="label-input-cupon" for="input-cupon" style="font-size: 0.8rem; font-weight: 700; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; text-transform: uppercase;">
+                                    <span>🎟️</span> ¿Tienes un cupón de cortesía o descuento? (Opcional)
+                                </label>
+                                <div style="display: flex; gap: 8px;">
+                                    <input type="text" id="input-cupon" name="cupon" class="form-control" placeholder="Ingresa tu código de cortesía" style="text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0;">
+                                    <button type="button" id="btn-aplicar-cupon" onclick="aplicarCupon()" style="background: var(--color-horror-orange); color: #000; font-weight: 800; border: none; border-radius: 8px; padding: 0 16px; cursor: pointer; text-transform: uppercase; font-size: 0.82rem; white-space: nowrap; transition: 0.25s;">
+                                        Aplicar
+                                    </button>
+                                </div>
+                                <div id="cupon-mensaje" style="font-size: 0.8rem; margin-top: 6px; display: none; font-weight: 600;"></div>
+                            </div>
+
+                            <!-- BANNER CUANDO EL CUPÓN ESTÁ APLICADO (CORTESÍA 100%) -->
+                            <div id="cupon-activo-banner" style="display: none; background: rgba(0, 255, 102, 0.1); border: 1px solid #00ff66; border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; text-align: center; box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);">
+                                <div style="color: #00ff66; font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">
+                                    🎉 ¡CUPÓN DE CORTESÍA ACTIVADO (100% BONIFICADO)!
+                                </div>
+                                <div style="color: #ddd; font-size: 0.8rem; line-height: 1.4;">
+                                    Tu inscripción es completamente gratuita cortesía del sorteo oficial. No requieres realizar ningún pago bancario.
+                                </div>
+                            </div>
+
+                            <!-- SECCIÓN CAMPOS DE PAGO INDIVIDUAL (SE OCULTA SI SE APLICA CUPÓN) -->
+                            <div id="seccion-campos-pago">
+                                <div class="form-group">
+                                    <label>MÉTODO DE PAGO UTILIZADO</label>
+                                    <select id="select-metodo-pago" name="metodo_pago" class="form-control" required>
+                                        <option value="" disabled selected>Selecciona tu Método de Pago</option>
+                                        <option value="Pago Móvil">Pago Móvil</option>
+                                        <option value="Efectivo Divisas">Efectivo Divisas ($)</option>
+                                        <option value="USDT">USDT (Binance)</option>
+                                        <option value="CUPÓN DE CORTESÍA" style="display:none;">CUPÓN DE CORTESÍA</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>NÚMERO DE REFERENCIA</label>
+                                        <input type="text" id="input-referencia" name="referencia_ref" class="form-control" placeholder="Ej. 12345678" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>MONTO DEL PAGO (BS / $)</label>
+                                        <input type="text" id="input-monto-pago" name="monto_pago" class="form-control" placeholder="Ej. 17.746,00 Bs / 20$" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ======================================================== -->
+                        <!-- VISTA 2: PROMO GRUPAL (3 O MÁS CORREDORES • $15 USD C/U) -->
+                        <!-- ======================================================== -->
+                        <div id="vista-grupal" style="display: none;">
+                            <div style="background: rgba(0, 255, 102, 0.07); border: 1px solid rgba(0, 255, 102, 0.3); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
+                                <div style="font-size: 0.9rem; font-weight: 800; color: #00ff66; margin-bottom: 4px;">
+                                    👥 PROMO GRUPAL: 15$ USD POR CORREDOR
+                                </div>
+                                <div style="font-size: 0.8rem; color: #ddd; line-height: 1.4;">
+                                    Inscribe a tu team o grupo de amigos (mínimo 3 personas) y disfruten de la tarifa especial de 15$ por persona con un <strong>único pago consolidado</strong>.
+                                </div>
+                            </div>
+
+                            <div class="form-row" style="margin-bottom: 16px;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label>CANTIDAD DE CORREDORES</label>
+                                    <select id="select-cantidad-grupo" class="form-control" onchange="actualizarCantidadCorredoresGrupo()">
+                                        <option value="3" selected>3 Corredores (45$ USD Total)</option>
+                                        <option value="4">4 Corredores (60$ USD Total)</option>
+                                        <option value="5">5 Corredores (75$ USD Total)</option>
+                                        <option value="6">6 Corredores (90$ USD Total)</option>
+                                        <option value="7">7 Corredores (105$ USD Total)</option>
+                                        <option value="8">8 Corredores (120$ USD Total)</option>
+                                        <option value="9">9 Corredores (135$ USD Total)</option>
+                                        <option value="10">10 Corredores (150$ USD Total)</option>
+                                        <option value="11">11 Corredores (165$ USD Total)</option>
+                                        <option value="12">12 Corredores (180$ USD Total)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label>NOMBRE DEL TEAM / GRUPO</label>
+                                    <input type="text" id="grupo-team-nombre" class="form-control" placeholder="Ej. Los Fantasmas Runners">
+                                </div>
+                            </div>
+
+                            <!-- CONTENEDOR DINÁMICO DE CORREDORES DEL GRUPO -->
+                            <div id="contenedor-corredores-grupo"></div>
+
+                            <!-- PAGO ÚNICO GRUPAL (UN SOLO PAGO CONSOLIDADO) -->
+                            <div id="seccion-campos-pago-grupal-unico" style="background: rgba(0, 255, 102, 0.05); border: 1px solid rgba(0, 255, 102, 0.25); border-radius: 12px; padding: 16px; margin-top: 15px; margin-bottom: 15px;">
+                                <div style="font-family: 'Oswald', sans-serif; font-size: 1.05rem; color: #00ff66; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px;">
+                                    💳 PAGO CONSOLIDADO DEL GRUPO (1 SOLO PAGO)
+                                </div>
+                                <p style="font-size: 0.8rem; color: #bbb; margin-top: 0; margin-bottom: 12px; line-height: 1.4;">
+                                    Un solo integrante realiza el pago total de los corredores inscritos y adjunta los datos a continuación:
+                                </p>
+
+                                <div class="form-group">
+                                    <label>MÉTODO DE PAGO UTILIZADO</label>
+                                    <select id="grupo-metodo-pago-unico" class="form-control">
+                                        <option value="Pago Móvil" selected>Pago Móvil</option>
+                                        <option value="Efectivo Divisas">Efectivo Divisas ($)</option>
+                                        <option value="USDT">USDT (Binance)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label>NÚMERO DE REFERENCIA ÚNICA</label>
+                                        <input type="text" id="grupo-referencia-unica" class="form-control" placeholder="Ej. 98765432">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label>MONTO TOTAL REPORTADO (BS / $)</label>
+                                        <input type="text" id="grupo-monto-total-unico" class="form-control" placeholder="Monto total del grupo">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.82rem; color: #ddd; margin-top: 10px; margin-bottom: 16px;">
+                                <input type="checkbox" id="check-verificacion-grupal" style="width: 17px; height: 17px; accent-color: #00ff66; cursor: pointer;">
+                                Confirmo que todos los corredores ingresados participarán en la carrera y que el pago cubre el monto total del grupo.
+                            </label>
                         </div>
 
                         <!-- TÉRMINOS Y CONDICIONES (COMÚN PARA AMBAS MODALIDADES) -->
@@ -914,15 +1009,26 @@
 
     <script src="main.js"></script>
     <script type="module">
-        import { consultarEstadoCupon, marcarCuponUsado } from "./firebase-sandia.js";
+        import { consultarEstadoCupon, marcarCuponUsado, verificarEstadoInscripcionesHorror } from "./firebase-sandia.js";
+
+        // =========================================================================
+        // 🔑 INTERRUPTOR MAESTRO DE APERTURA / CIERRE AUTOMÁTICO (TRIPLE CANDADO)
+        // - true  => Inscripciones Abiertas (50 Cupos Extra: Individual $20 y Grupal 3+ $15 c/u)
+        // - false => Inscripciones Cerradas / Agotadas (Bloqueo Total salvo Cupón VIP válido)
+        // =========================================================================
+        let INSCRIPCIONES_ABIERTAS = true;
 
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyl4z2AEREoDCINfDc-3zLukIEafbXHRO88Lr5tinkRZGUTQsALCrRQJvNMd6hUycPE3A/exec";
         const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbyazhyYfK-vURGv34XF-oTW1_34rTVRs2WM7-aNlswf-mIGhIwgaLgwfGx1xZxfm50/exec";
         const costoDivisa = 20; // 20$ Inscripción Individual
+        const costoGrupalUnitario = 15; // 15$ c/u Promo Grupal (3 o más corredores)
         let tasaRespaldoLocal = 887.30; // Tasa oficial actualizada BCV
 
         // Estado del cupón actualmente activo en el formulario
         let cuponActivoCodigo = null;
+
+        // Estado de modalidad de inscripción ('individual' | 'grupal')
+        let modoInscripcionActual = 'individual';
 
         function formatVE(num) {
             return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
@@ -943,6 +1049,77 @@
             return tasa;
         }
 
+        // Configura toda la interfaz según si las inscripciones están abiertas o cerradas
+        window.aplicarEstadoAperturaEvento = function(abiertas) {
+            INSCRIPCIONES_ABIERTAS = !!abiertas;
+            const heroBadge = document.getElementById('hero-status-badge');
+            const flyerImg = document.getElementById('flyer-img');
+            const boxPagoAgotado = document.getElementById('box-pago-agotado');
+            const boxPagoVip = document.getElementById('box-pago-vip');
+            const cardAgotado = document.getElementById('card-agotado');
+            const cardFormVip = document.getElementById('card-formulario-vip');
+            const selectorModalidad = document.getElementById('selector-modalidad-container');
+            const inputCupon = document.getElementById('input-cupon');
+            const labelCupon = document.getElementById('label-input-cupon');
+            const iconoBanner = document.getElementById('icono-banner-header');
+            const tituloBanner = document.getElementById('titulo-banner-header');
+            const subtituloBanner = document.getElementById('subtitulo-vip-autorizado');
+            const badgeCodigo = document.getElementById('badge-vip-codigo');
+
+            if (INSCRIPCIONES_ABIERTAS) {
+                if (heroBadge) {
+                    heroBadge.style.background = 'rgba(0, 255, 102, 0.16)';
+                    heroBadge.style.borderColor = '#00ff66';
+                    heroBadge.style.boxShadow = '0 0 25px rgba(0, 255, 102, 0.35)';
+                    heroBadge.innerHTML = '🔥 ¡PORQUE UDS LO PIDIERON: ABRIMOS 50 CUPOS MÁS! 🎃';
+                }
+                if (flyerImg) flyerImg.src = 'img/paraguanahorror_50cupos.jpg';
+                if (boxPagoAgotado) boxPagoAgotado.style.display = 'none';
+                if (boxPagoVip) boxPagoVip.style.display = 'block';
+                if (cardAgotado) cardAgotado.style.display = 'none';
+                if (cardFormVip) cardFormVip.style.display = 'block';
+                if (selectorModalidad) selectorModalidad.style.display = 'block';
+                if (inputCupon && !cuponActivoCodigo) {
+                    inputCupon.removeAttribute('required');
+                    inputCupon.placeholder = 'Ingresa tu código de cortesía';
+                }
+                if (labelCupon && !cuponActivoCodigo) {
+                    labelCupon.innerHTML = '<span>🎟️</span> ¿Tienes un cupón de cortesía o descuento? (Opcional)';
+                }
+                if (!cuponActivoCodigo) {
+                    if (iconoBanner) iconoBanner.innerText = '🔥';
+                    if (tituloBanner) tituloBanner.innerText = '¡ABRIMOS 50 CUPOS MÁS! • INSCRIPCIONES ABIERTAS';
+                    if (subtituloBanner) subtituloBanner.innerText = 'Modalidad Individual ($20 USD) y Promo Grupal 3+ corredores ($15 USD c/u) disponibles.';
+                    if (badgeCodigo) badgeCodigo.innerText = '50 CUPOS EXTRA';
+                }
+            } else {
+                // MODO CERRADO / AGOTADO (TRIPLE CANDADO ACTIVO)
+                if (heroBadge) {
+                    heroBadge.style.background = 'rgba(239, 68, 68, 0.2)';
+                    heroBadge.style.borderColor = '#ef4444';
+                    heroBadge.style.boxShadow = '0 0 25px rgba(239, 68, 68, 0.4)';
+                    heroBadge.innerHTML = '🏁 CARRERA CULMINADA • ¡CUPOS 100% AGOTADOS! 💀';
+                }
+                if (!cuponActivoCodigo) {
+                    if (flyerImg) flyerImg.src = 'img/paraguanahorror_agotada.jpg';
+                    if (boxPagoAgotado) boxPagoAgotado.style.display = 'block';
+                    if (boxPagoVip) boxPagoVip.style.display = 'none';
+                    if (cardAgotado) cardAgotado.style.display = 'block';
+                    if (cardFormVip) cardFormVip.style.display = 'none';
+                    if (selectorModalidad) selectorModalidad.style.display = 'none';
+                    window.cambiarModoInscripcion('individual');
+                    if (inputCupon) {
+                        inputCupon.setAttribute('required', 'required');
+                        inputCupon.placeholder = 'CÓDIGO VIP OBLIGATORIO';
+                    }
+                    if (labelCupon) {
+                        labelCupon.innerHTML = '<span>🎟️</span> Cupón o Enlace VIP Oficial (Obligatorio)';
+                    }
+                }
+            }
+            actualizarCajaPrecioLateral();
+        };
+
         function actualizarCajaPrecioLateral() {
             const tasa = obtenerTasaActual();
             const tituloPrecio = document.getElementById('titulo-modalidad-precio');
@@ -952,19 +1129,231 @@
 
             if (tasaBcvLabel) tasaBcvLabel.innerText = formatVE(tasa);
 
-            if (tituloPrecio) {
-                tituloPrecio.innerHTML = cuponActivoCodigo ? `INSCRIPCIÓN VIP` : `INSCRIPCIÓN GENERAL`;
-                tituloPrecio.style.color = 'var(--color-horror-orange)';
-            }
-            if (!cuponActivoCodigo) {
-                const totalVes = tasa * costoDivisa;
+            if (modoInscripcionActual === 'grupal') {
+                const selectCant = document.getElementById('select-cantidad-grupo');
+                const cant = selectCant ? parseInt(selectCant.value, 10) || 3 : 3;
+                const totalUsdGrupo = cant * costoGrupalUnitario;
+                const unitarioVes = tasa * costoGrupalUnitario;
+                const totalVesGrupo = tasa * totalUsdGrupo;
+
+                if (tituloPrecio) {
+                    tituloPrecio.innerHTML = `👥 PROMO GRUPAL (${cant} CORREDORES • 15$ C/U)`;
+                    tituloPrecio.style.color = '#00ff66';
+                }
                 if (montoVesLabel) {
-                    montoVesLabel.innerHTML = `${formatVE(totalVes)} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                    montoVesLabel.innerHTML = `${formatVE(unitarioVes)} <span class="amount-currency" style="color:#00ff66; font-size:1.1rem; margin-left:4px;">Bs c/u</span>`;
                 }
                 if (detalleUsd) {
-                    detalleUsd.innerHTML = `Equivalente a <strong>20$ USD</strong> (Tasa BCV Oficial: <span id="tasa-usd-bcv">${formatVE(tasa)}</span> Bs)`;
+                    detalleUsd.innerHTML = `
+                        <strong>15$ USD por corredor</strong> (Tasa BCV: <span id="tasa-usd-bcv">${formatVE(tasa)}</span> Bs)<br>
+                        <span style="color:#00ff66; font-weight:700;">Total Grupo (${cant} pers.): ${totalUsdGrupo}$ USD / ${formatVE(totalVesGrupo)} Bs</span>
+                    `;
+                }
+            } else {
+                if (tituloPrecio) {
+                    tituloPrecio.innerHTML = cuponActivoCodigo ? `INSCRIPCIÓN VIP` : `INSCRIPCIÓN INDIVIDUAL (20$ USD)`;
+                    tituloPrecio.style.color = 'var(--color-horror-orange)';
+                }
+                if (!cuponActivoCodigo) {
+                    const totalVes = tasa * costoDivisa;
+                    if (montoVesLabel) {
+                        montoVesLabel.innerHTML = `${formatVE(totalVes)} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
+                    }
+                    if (detalleUsd) {
+                        detalleUsd.innerHTML = `Equivalente a <strong>20$ USD</strong> (Tasa BCV Oficial: <span id="tasa-usd-bcv">${formatVE(tasa)}</span> Bs)`;
+                    }
                 }
             }
+        }
+
+        // ========================================================
+        // LÓGICA DE INSCRIPCIÓN GRUPAL DINÁMICA (3+ CORREDORES)
+        // ========================================================
+        window.cambiarModoInscripcion = function(modo) {
+            modoInscripcionActual = modo;
+            const btnInd = document.getElementById('btn-modo-individual');
+            const btnGrup = document.getElementById('btn-modo-grupal');
+            const vistaInd = document.getElementById('vista-individual');
+            const vistaGrup = document.getElementById('vista-grupal');
+
+            const indInputsRequeridos = ['ind-cedula', 'ind-nombre', 'ind-telefono', 'ind-email'];
+            const selectMetodoInd = document.getElementById('select-metodo-pago');
+            const inputRefInd = document.getElementById('input-referencia');
+            const inputMontoInd = document.getElementById('input-monto-pago');
+
+            if (modo === 'grupal') {
+                if (btnGrup) {
+                    btnGrup.style.background = 'rgba(0, 255, 102, 0.16)';
+                    btnGrup.style.border = '2px solid #00ff66';
+                    btnGrup.style.color = '#ffffff';
+                    btnGrup.style.boxShadow = '0 0 15px rgba(0, 255, 102, 0.25)';
+                }
+                if (btnInd) {
+                    btnInd.style.background = 'rgba(255, 255, 255, 0.03)';
+                    btnInd.style.border = '1px solid rgba(255, 26, 26, 0.35)';
+                    btnInd.style.color = '#cccccc';
+                    btnInd.style.boxShadow = 'none';
+                }
+
+                if (vistaInd) vistaInd.style.display = 'none';
+                if (vistaGrup) vistaGrup.style.display = 'block';
+
+                indInputsRequeridos.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.removeAttribute('required');
+                });
+                if (selectMetodoInd) selectMetodoInd.removeAttribute('required');
+                if (inputRefInd) inputRefInd.removeAttribute('required');
+                if (inputMontoInd) inputMontoInd.removeAttribute('required');
+
+                const checkVerifGrupo = document.getElementById('check-verificacion-grupal');
+                if (checkVerifGrupo) checkVerifGrupo.setAttribute('required', 'required');
+
+                renderizarTarjetasCorredoresGrupo();
+                actualizarCamposPagoGrupalUnico();
+            } else {
+                if (btnInd) {
+                    btnInd.style.background = 'rgba(255, 26, 26, 0.22)';
+                    btnInd.style.border = '2px solid var(--color-horror-red)';
+                    btnInd.style.color = '#ffffff';
+                    btnInd.style.boxShadow = '0 0 15px rgba(255, 26, 26, 0.25)';
+                }
+                if (btnGrup) {
+                    btnGrup.style.background = 'rgba(255, 255, 255, 0.03)';
+                    btnGrup.style.border = '1px solid rgba(255, 119, 0, 0.35)';
+                    btnGrup.style.color = '#cccccc';
+                    btnGrup.style.boxShadow = 'none';
+                }
+
+                if (vistaInd) vistaInd.style.display = 'block';
+                if (vistaGrup) vistaGrup.style.display = 'none';
+
+                indInputsRequeridos.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.setAttribute('required', 'required');
+                });
+                const precioCupon = (cuponActivoData && cuponActivoData.precioUSD !== undefined) ? Number(cuponActivoData.precioUSD) : null;
+                if (!cuponActivoCodigo || (precioCupon !== null && precioCupon > 0)) {
+                    if (selectMetodoInd) selectMetodoInd.setAttribute('required', 'required');
+                    if (inputRefInd) inputRefInd.setAttribute('required', 'required');
+                    if (inputMontoInd) inputMontoInd.setAttribute('required', 'required');
+                }
+
+                const grupInputs = vistaGrup ? vistaGrup.querySelectorAll('input, select') : [];
+                grupInputs.forEach(el => el.removeAttribute('required'));
+            }
+
+            actualizarCajaPrecioLateral();
+        };
+
+        window.actualizarCantidadCorredoresGrupo = function() {
+            renderizarTarjetasCorredoresGrupo();
+            actualizarCamposPagoGrupalUnico();
+            actualizarCajaPrecioLateral();
+        };
+
+        function actualizarCamposPagoGrupalUnico() {
+            const selectCant = document.getElementById('select-cantidad-grupo');
+            const cant = selectCant ? parseInt(selectCant.value, 10) || 3 : 3;
+            const tasa = obtenerTasaActual();
+            const totalUsd = cant * costoGrupalUnitario;
+            const totalVes = tasa * totalUsd;
+
+            const selectMetodoUnico = document.getElementById('grupo-metodo-pago-unico');
+            const inputRefUnica = document.getElementById('grupo-referencia-unica');
+            const inputMontoUnico = document.getElementById('grupo-monto-total-unico');
+
+            if (modoInscripcionActual === 'grupal') {
+                if (selectMetodoUnico) selectMetodoUnico.setAttribute('required', 'required');
+                if (inputRefUnica) inputRefUnica.setAttribute('required', 'required');
+                if (inputMontoUnico) {
+                    inputMontoUnico.setAttribute('required', 'required');
+                    if (selectMetodoUnico && (selectMetodoUnico.value === 'Efectivo Divisas' || selectMetodoUnico.value === 'USDT')) {
+                        inputMontoUnico.value = `${totalUsd}$ (${cant} x 15$)`;
+                    } else {
+                        inputMontoUnico.value = `${formatVE(totalVes)} Bs / ${totalUsd}$`;
+                    }
+                }
+            } else {
+                if (selectMetodoUnico) selectMetodoUnico.removeAttribute('required');
+                if (inputRefUnica) inputRefUnica.removeAttribute('required');
+                if (inputMontoUnico) inputMontoUnico.removeAttribute('required');
+            }
+        }
+
+        const elMetodoUnico = document.getElementById('grupo-metodo-pago-unico');
+        if (elMetodoUnico) {
+            elMetodoUnico.addEventListener('change', actualizarCamposPagoGrupalUnico);
+        }
+
+        function renderizarTarjetasCorredoresGrupo() {
+            const contenedor = document.getElementById('contenedor-corredores-grupo');
+            const selectCant = document.getElementById('select-cantidad-grupo');
+            if (!contenedor || !selectCant) return;
+
+            const cantidad = parseInt(selectCant.value, 10) || 3;
+            const tasa = obtenerTasaActual();
+            const montoIndividualVes = formatVE(tasa * costoGrupalUnitario);
+
+            const previos = {};
+            for (let i = 1; i <= 12; i++) {
+                const c = document.getElementById(`grup-cedula-${i}`);
+                const n = document.getElementById(`grup-nombre-${i}`);
+                const t = document.getElementById(`grup-telefono-${i}`);
+                const e = document.getElementById(`grup-email-${i}`);
+                if (c || n || t || e) {
+                    previos[i] = {
+                        cedula: c ? c.value : '',
+                        nombre: n ? n.value : '',
+                        telefono: t ? t.value : '',
+                        email: e ? e.value : ''
+                    };
+                }
+            }
+
+            let html = '';
+            const reqAttr = modoInscripcionActual === 'grupal' ? 'required' : '';
+
+            for (let i = 1; i <= cantidad; i++) {
+                const prev = previos[i] || {};
+
+                html += `
+                    <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 119, 0, 0.3); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+                            <span style="font-family: 'Oswald', sans-serif; font-size: 0.95rem; color: var(--color-horror-orange); font-weight: 700; letter-spacing: 0.5px;">
+                                🏃 CORREDOR #${i} DE ${cantidad}
+                            </span>
+                            <span style="font-size: 0.75rem; background: rgba(0, 255, 102, 0.12); color: #00ff66; border: 1px solid rgba(0, 255, 102, 0.3); padding: 2px 8px; border-radius: 999px; font-weight: 700;">
+                                15$ USD (${montoIndividualVes} Bs)
+                            </span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>CÉDULA (CORREDOR #${i})</label>
+                                <input type="text" id="grup-cedula-${i}" class="form-control" placeholder="Ej. 18698675" value="${prev.cedula || ''}" ${reqAttr}>
+                            </div>
+                            <div class="form-group">
+                                <label>NOMBRE Y APELLIDO (#${i})</label>
+                                <input type="text" id="grup-nombre-${i}" class="form-control" placeholder="Nombre y Apellido" value="${prev.nombre || ''}" ${reqAttr}>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>WHATSAPP (#${i})</label>
+                                <input type="tel" id="grup-telefono-${i}" class="form-control" placeholder="Ej. 04141234567" value="${prev.telefono || ''}" ${reqAttr}>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>CORREO ELECTRÓNICO (#${i})</label>
+                                <input type="email" id="grup-email-${i}" class="form-control" placeholder="correo@email.com" value="${prev.email || ''}" ${reqAttr}>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            contenedor.innerHTML = html;
         }
 
         async function calcularMontoBolivares() {
@@ -1007,13 +1396,17 @@
                 let totalVes = tasa * costoDivisa;
 
                 if (tasaBcvLabel) tasaBcvLabel.innerText = formatVE(tasa);
-                if (montoVesLabel && !cuponActivoCodigo) {
+                if (montoVesLabel && !cuponActivoCodigo && modoInscripcionActual === 'individual') {
                     montoVesLabel.innerHTML = `${formatVE(totalVes)} <span class="amount-currency" style="color:var(--color-horror-red); font-size:1.2rem; margin-left:5px;">Bs</span>`;
                 }
                 
                 const inputMonto = document.getElementById('input-monto-pago');
-                if (inputMonto && !inputMonto.value && !cuponActivoCodigo) {
+                if (inputMonto && !cuponActivoCodigo) {
                     inputMonto.value = `${formatVE(totalVes)} Bs`;
+                }
+                if (modoInscripcionActual === 'grupal') {
+                    actualizarCajaPrecioLateral();
+                    actualizarCamposPagoGrupalUnico();
                 }
 
                 if (cuponActivoCodigo && cuponActivoData) {
@@ -1263,8 +1656,14 @@
             if (cardFormVip) cardFormVip.style.display = 'block';
             if (boxPagoAgotado) boxPagoAgotado.style.display = 'none';
             if (boxPagoVip) boxPagoVip.style.display = 'block';
-            if (flyerImg) flyerImg.src = 'img/paraguanahorror.jpeg';
+            if (flyerImg) flyerImg.src = 'img/paraguanahorror_50cupos.jpg';
 
+            // Si aplica un cupón VIP, cambiar automáticamente a modalidad individual
+            window.cambiarModoInscripcion('individual');
+            const tituloBanner = document.getElementById('titulo-banner-header');
+            const iconoBanner = document.getElementById('icono-banner-header');
+            if (iconoBanner) iconoBanner.innerText = '🎟️';
+            if (tituloBanner) tituloBanner.innerText = 'ACCESO PRIVADO VIP DESBLOQUEADO';
             if (badgeVipCodigo) badgeVipCodigo.innerText = `CÓDIGO: ${codigo}`;
             if (subtituloVip) {
                 const maxU = resultado.maxUsos || 1;
@@ -1387,13 +1786,13 @@
             e.preventDefault();
 
             // =========================================================================
-            // BLINDAJE DE SEGURIDAD ESTRICTO ANTI-FUGA
-            // Las inscripciones generales están cerradas.
-            // Si no existe un cupón o enlace VIP oficial validado, se bloquea el envío.
+            // CANDADO 1 (TRIPLE CANDADO AUTOMÁTICO):
+            // Cuando INSCRIPCIONES_ABIERTAS === false, bloquea cualquier intento
+            // de registro que no tenga un cupón o enlace VIP activo.
             // =========================================================================
-            if (!cuponActivoCodigo || cuponActivoCodigo.trim() === '') {
+            if (!INSCRIPCIONES_ABIERTAS && (!cuponActivoCodigo || cuponActivoCodigo.trim() === '')) {
                 alert("⚠️ Las inscripciones generales para la 5K Paraguaná Horror Story están 100% AGOTADAS.\n\nSolo se procesan registros que cuenten con un enlace o cupón VIP oficial suministrado por la organización.");
-                window.location.reload();
+                window.aplicarEstadoAperturaEvento(false);
                 return;
             }
 
@@ -1428,7 +1827,88 @@
             delete datosAEnviar['_gotcha'];
 
             // =========================================================================
-            // PROCESAMIENTO DE INSCRIPCIÓN (INDIVIDUAL / ACCESO VIP CON CUPÓN)
+            // FLUJO A: INSCRIPCIÓN GRUPAL (3 O MÁS CORREDORES • $15 USD CADA UNO)
+            // =========================================================================
+            if (modoInscripcionActual === 'grupal') {
+                const selectCant = document.getElementById('select-cantidad-grupo');
+                const cantidad = selectCant ? parseInt(selectCant.value, 10) || 3 : 3;
+                const nombreTeamBase = (document.getElementById('grupo-team-nombre')?.value || '').trim();
+                const tasa = obtenerTasaActual();
+                const montoUnitarioVes = formatVE(tasa * costoGrupalUnitario);
+                const totalUsdGrupo = cantidad * costoGrupalUnitario;
+                const totalVesGrupo = formatVE(tasa * totalUsdGrupo);
+
+                const listaCorredores = [];
+
+                // Datos del pago único del grupo
+                const metodoUnico = document.getElementById('grupo-metodo-pago-unico')?.value || 'Pago Móvil';
+                const refUnica = (document.getElementById('grupo-referencia-unica')?.value || '').trim();
+                const montoTotalUnicoReportado = (document.getElementById('grupo-monto-total-unico')?.value || `${totalVesGrupo} Bs / ${totalUsdGrupo}$`).trim();
+
+                for (let i = 1; i <= cantidad; i++) {
+                    const cedulaI = (document.getElementById(`grup-cedula-${i}`)?.value || '').trim();
+                    const nombreI = (document.getElementById(`grup-nombre-${i}`)?.value || '').trim();
+                    const telefonoI = (document.getElementById(`grup-telefono-${i}`)?.value || '').trim();
+                    const emailI = (document.getElementById(`grup-email-${i}`)?.value || '').trim();
+
+                    const etiquetaTeamGrupo = nombreTeamBase
+                        ? `${nombreTeamBase} [Grupal ${i}/${cantidad}]`
+                        : `Inscripción Grupal [${i}/${cantidad}]`;
+
+                    const metodoCorredor = `${metodoUnico} (Grupal ${cantidad} pers.)`;
+                    const refCorredor = refUnica;
+                    const montoCorredor = `15$ (${montoUnitarioVes} Bs) [Total Grupo: ${montoTotalUnicoReportado}]`;
+
+                    listaCorredores.push({
+                        cedula: cedulaI,
+                        nombre: nombreI,
+                        telefono: telefonoI,
+                        email: emailI,
+                        team: etiquetaTeamGrupo,
+                        metodo_pago: metodoCorredor,
+                        referencia_ref: refCorredor,
+                        monto_pago: montoCorredor,
+                        monto_exacto: montoCorredor
+                    });
+                }
+
+                const payloadGrupal = {
+                    evento: '5K Paraguaná Horror Story',
+                    es_grupal: true,
+                    cantidad_corredores: cantidad,
+                    tipo_pago_grupo: 'pago_unico',
+                    team_grupo: nombreTeamBase || 'Inscripción Grupal',
+                    corredores: listaCorredores
+                };
+
+                fetch(urlScriptGoogle, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payloadGrupal)
+                })
+                .then(() => {
+                    loader.style.display = 'none';
+                    success.style.display = 'block';
+                    form.reset();
+                    window.cambiarModoInscripcion('individual');
+                    setTimeout(() => {
+                        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                })
+                .catch(error => {
+                    console.error('Error enviando datos grupales:', error);
+                    loader.style.display = 'none';
+                    content.style.display = 'block';
+                    alert('Ocurrió un error al procesar la inscripción grupal. Por favor intenta nuevamente.');
+                });
+
+                return;
+            }
+
+            // =========================================================================
+            // FLUJO B: INSCRIPCIÓN INDIVIDUAL ($20 USD O CON CUPÓN)
             // =========================================================================
             // Si hay cupón activo, verificar nuevamente antes de quemar y marcarlo en Firestore
             if (cuponActivoCodigo) {
@@ -1497,7 +1977,14 @@
 
         // Inicialización al cargar la página
         (async function() {
+            window.aplicarEstadoAperturaEvento(INSCRIPCIONES_ABIERTAS);
             await calcularMontoBolivares();
+            try {
+                const estadoRemoto = await verificarEstadoInscripcionesHorror(INSCRIPCIONES_ABIERTAS);
+                if (estadoRemoto !== INSCRIPCIONES_ABIERTAS) {
+                    window.aplicarEstadoAperturaEvento(estadoRemoto);
+                }
+            } catch (e) {}
             const urlParams = new URLSearchParams(window.location.search);
             const cuponUrl = urlParams.get('cupon') || urlParams.get('cortesia') || urlParams.get('vip') || urlParams.get('sorteo') || urlParams.get('reserva');
             if (cuponUrl) {

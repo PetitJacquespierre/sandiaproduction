@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <!-- Google tag (gtag.js) -->
@@ -667,9 +667,9 @@
                         dia: "31",
                         mes: "OCT",
                         ubicacion: "Sambil Paraguaná / 7:00 PM",
-                        imagen: "paraguanahorror_agotada.jpg",
+                        imagen: "paraguanahorror_50cupos.jpg",
                         enlace: "paraguanahorror.html",
-                        textoBoton: "Agotada 🔒",
+                        textoBoton: "¡50 Cupos Más! 🔥",
                         estado: "ACTIVO",
                         categoria: "SANDIA",
                         destacado_index: true
@@ -746,8 +746,10 @@
                 todosLosEventos.forEach(evento => {
                     const titLower = (evento.titulo || '').toLowerCase();
                     if (titLower.includes('horror')) {
-                        evento.imagen = 'paraguanahorror_agotada.jpg';
-                        evento.textoBoton = 'Agotada 🔒';
+                        evento.imagen = 'paraguanahorror_50cupos.jpg';
+                        evento.textoBoton = '¡50 Cupos Más! 🔥';
+                        evento.estado = 'ACTIVO';
+                        evento.activo = 'SI';
                     }
                     let clickAction = evento.enlace && evento.enlace.startsWith('http') ? `window.open('${evento.enlace}', '_blank')` : (evento.enlace ? `window.location.href='${evento.enlace}'` : `alert('Más información próximamente...')`);
 
@@ -843,7 +845,7 @@
                 let evento = item.eventoData;
                 let btnTexto = evento.textoBoton || "Inscribirme";
                 let btnStyle = "";
-                const esAgotada = (btnTexto || "").toUpperCase().includes("AGOTAD") || (evento.titulo || "").toLowerCase().includes("horror");
+                const esAgotada = (btnTexto || "").toUpperCase().includes("AGOTAD");
                 if (esAgotada) {
                     btnStyle = 'style="background: #2b0509; border: 2px solid #ef4444; color: #ff6b6b; font-weight: 800;"';
                 }
