@@ -1,3 +1,8 @@
+// =============================================================================
+// SANDÍA PRODUCTION - GOOGLE APPS SCRIPT OFICIAL (SISTEMA UNIFICADO DE INSCRIPCIONES)
+// Manejo automático de pestañas: "5K Paraguaná Horror Story", "Rotary 2da", "Coffee Run Terraza 2026"
+// =============================================================================
+
 // 👉 EJECUTA ESTA FUNCIÓN UNA VEZ PARA VERIFICAR QUE TU CUENTA PUEDE ENVIAR CORREOS
 function autorizarPermisos() {
   var correo = Session.getActiveUser().getEmail();
@@ -10,23 +15,72 @@ function doPost(e) {
   var correoDestino = "sandiaproductionss@gmail.com, growstudio.w@gmail.com"; 
   
   try {
-    var p = e.parameter;
+    var p = e.parameter || {};
     if (e.postData && e.postData.contents && e.postData.contents.indexOf("{") === 0) {
-      p = JSON.parse(e.postData.contents);
+      try {
+        p = JSON.parse(e.postData.contents);
+      } catch (errJson) {
+        Logger.log("Error parseando JSON: " + errJson);
+      }
     }
     
-    // --- SELECCIÓN DE PESTAÑA SEGÚN EL EVENTO ---
-    var nombrePestana = "Rotary 2da";
-    if (p.evento === "5K Paraguaná Horror Story") {
-      nombrePestana = "5K Paraguaná Horror Story";
-    } else if (p.evento === "Coffee Run Terraza 2026") {
-      nombrePestana = "Coffee Run Terraza 2026";
-    } else if (p.evento === "2da Carrera Caminata 5K End Polio Now" || p.evento === "Rotary 2da") {
+    // =========================================================================
+    // SELECCIÓN INTELIGENTE DE PESTAÑA (ANTI-FALLOS DE ENCODING Y RUTA EXACTA)
+    // =========================================================================
+    var evRaw = (p.evento || p.evento_id || p.pestana || "").toString().toLowerCase();
+
+    var nombrePestana = "5K Paraguaná Horror Story"; // Pestaña predeterminada
+    var eventoName = "5K Paraguaná Horror Story";
+
+    if (evRaw.indexOf("rotary") !== -1 || evRaw.indexOf("polio") !== -1) {
       nombrePestana = "Rotary 2da";
+      eventoName = "2da Carrera Caminata 5K End Polio Now";
+    } else if (evRaw.indexOf("coffee") !== -1 || evRaw.indexOf("terraza") !== -1) {
+      nombrePestana = "Coffee Run Terraza 2026";
+      eventoName = "Coffee Run Terraza 2026";
+    } else {
+      // Todo lo correspondiente a 5K Paraguaná Horror Story (incluso con fallos de tildes o ? del navegador)
+      nombrePestana = "5K Paraguaná Horror Story";
+      eventoName = "5K Paraguaná Horror Story";
     }
     
-    var sheet = ss.getSheetByName(nombrePestana) || ss.getSheets()[0];
-    var eventoName = p.evento || "5K Paraguaná Horror Story";
+    // Búsqueda robusta de la pestaña en la hoja de cálculo
+    var sheet = ss.getSheetByName(nombrePestana);
+    if (!sheet) {
+      // Si el nombre exacto con tilde no coincide directamente, buscar entre las pestañas existentes
+      var allSheets = ss.getSheets();
+      for (var s = 0; s < allSheets.length; s++) {
+        var sName = allSheets[s].getName().toLowerCase();
+        if (nombrePestana === "5K Paraguaná Horror Story" && (sName.indexOf("horror") !== -1 || sName.indexOf("paraguan") !== -1)) {
+          sheet = allSheets[s];
+          nombrePestana = allSheets[s].getName();
+          break;
+        } else if (nombrePestana === "Rotary 2da" && sName.indexOf("rotary") !== -1) {
+          sheet = allSheets[s];
+          nombrePestana = allSheets[s].getName();
+          break;
+        }
+      }
+    }
+    sheet = sheet || ss.getSheets()[0];
+
+    // =========================================================================
+    // INTERRUPTOR DE CIERRE AUTOMÁTICO (BACKEND GOOGLE APPS SCRIPT):
+    // - false => Inscripciones Abiertas (50 Cupos Más: Individual $20 y Grupal 3+ $15 c/u)
+    // - true  => Inscripciones Cerradas (Exige cupón VIP obligatoriamente)
+    // =========================================================================
+    var INSCRIPCIONES_HORROR_CERRADAS = false;
+    if (INSCRIPCIONES_HORROR_CERRADAS && nombrePestana === "5K Paraguaná Horror Story") {
+      var cuponValido = p.cupon || p.codigo_cupon || "";
+      if (!cuponValido || cuponValido.trim() === "") {
+        Logger.log("⛔ Registro rechazado: Intento de inscripción sin cupón VIP en Paraguaná Horror.");
+        return ContentService.createTextOutput(JSON.stringify({
+          "result": "error",
+          "error": "CUPON_OBLIGATORIO",
+          "message": "Las inscripciones generales para la 5K Paraguaná Horror Story están 100% agotadas. Se requiere obligatoriamente un código o enlace VIP válido."
+        })).setMimeType(ContentService.MimeType.JSON);
+      }
+    }
 
     // =========================================================================
     // CASO A: INSCRIPCIÓN GRUPAL (3 O MÁS CORREDORES • $15 USD C/U)
@@ -54,7 +108,7 @@ function doPost(e) {
             c.email || "",                          // Columna F: Correo Electrónico
             c.fecha_nacimiento || "",               // Columna G: Fecha de Nacimiento
             c.genero || "",                         // Columna H: Género
-            c.team || "Inscripción Grupal",         // Columna I: Team / Club
+            c.team || "Inscripción Grupal",         // Columna I: Grupo
             c.metodo_pago || "",                    // Columna J: Forma de Pago
             c.referencia_ref || "",                 // Columna K: Referencia
             c.monto_exacto || c.monto_pago || ""    // Columna L: Monto
@@ -143,7 +197,10 @@ function doPost(e) {
         p.monto_exacto || p.monto_pago || ""    // Columna L: Monto
       ];
     } else {
-      // Estructura original para Paraguaná Horror y Coffee Run
+      // Estructura exacta para 5K Paraguaná Horror Story y Coffee Run
+      // Col A: Fecha Registro | Col B: Dorsal | Col C: Cédula | Col D: Nombre y Apellido |
+      // Col E: WhatsApp | Col F: Email | Col G: Team / Club | Col H: Método de Pago |
+      // Col I: Referencia | Col J: Monto Pago
       registro = [
         new Date(),                             // Columna A: Fecha Registro
         "'" + dorsalFormateado,                 // Columna B: Dorsal
