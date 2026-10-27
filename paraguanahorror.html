@@ -1851,13 +1851,11 @@
                     const telefonoI = (document.getElementById(`grup-telefono-${i}`)?.value || '').trim();
                     const emailI = (document.getElementById(`grup-email-${i}`)?.value || '').trim();
 
-                    const etiquetaTeamGrupo = nombreTeamBase
-                        ? `${nombreTeamBase} [Grupal ${i}/${cantidad}]`
-                        : `Inscripción Grupal [${i}/${cantidad}]`;
+                    const etiquetaTeamGrupo = nombreTeamBase || 'Inscripción Grupal';
 
                     const metodoCorredor = `${metodoUnico} (Grupal ${cantidad} pers.)`;
                     const refCorredor = refUnica;
-                    const montoCorredor = `15$ (${montoUnitarioVes} Bs) [Total Grupo: ${montoTotalUnicoReportado}]`;
+                    const montoCorredor = `15$ (${montoUnitarioVes} Bs)`;
 
                     listaCorredores.push({
                         cedula: cedulaI,
