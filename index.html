@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <!-- Google tag (gtag.js) -->
@@ -667,9 +667,9 @@
                         dia: "31",
                         mes: "OCT",
                         ubicacion: "Sambil Paraguaná / 7:00 PM",
-                        imagen: "paraguanahorror_50cupos.jpg",
+                        imagen: "paraguanahorror_30cupos.jpg",
                         enlace: "paraguanahorror.html",
-                        textoBoton: "¡50 Cupos Más! 🔥",
+                        textoBoton: "¡Solo 30 Cupos! 🔥",
                         estado: "ACTIVO",
                         categoria: "SANDIA",
                         destacado_index: true
@@ -746,8 +746,8 @@
                 todosLosEventos.forEach(evento => {
                     const titLower = (evento.titulo || '').toLowerCase();
                     if (titLower.includes('horror')) {
-                        evento.imagen = 'paraguanahorror_50cupos.jpg';
-                        evento.textoBoton = '¡50 Cupos Más! 🔥';
+                        evento.imagen = 'paraguanahorror_30cupos.jpg';
+                        evento.textoBoton = '¡Solo 30 Cupos! 🔥';
                         evento.estado = 'ACTIVO';
                         evento.activo = 'SI';
                     }

@@ -531,7 +531,7 @@
             <!-- REGRESIVA EN VIVO / AVISO DE ESTADO DE INSCRIPCIONES -->
             <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 20px auto 10px auto;">
                 <div id="hero-status-badge" class="horror-date-badge" style="background: rgba(0, 255, 102, 0.16); border: 2px solid #00ff66; color: #ffffff; font-size: 1.05rem; padding: 10px 24px; box-shadow: 0 0 25px rgba(0, 255, 102, 0.35); text-transform: uppercase; font-weight: 800; letter-spacing: 1px;">
-                    🔥 ¡PORQUE UDS LO PIDIERON: ABRIMOS 50 CUPOS MÁS! 🎃
+                    🔥 ¡PORQUE UDS LO PIDIERON: SOLO 30 CUPOS DISPONIBLES! 🎃
                 </div>
             </div>
 
@@ -597,7 +597,7 @@
             
             <!-- FLYER & DATOS DE PAGO -->
             <div class="flyer-card">
-                <img id="flyer-img" src="img/paraguanahorror_50cupos.jpg" alt="Flyer 5K Paraguaná Horror Stories - 50 Cupos Más" loading="lazy" decoding="async">
+                <img id="flyer-img" src="img/paraguanahorror_30cupos.jpg" alt="Flyer 5K Paraguaná Horror Stories - Solo 30 Cupos Disponibles" loading="lazy" decoding="async">
                 
                 <!-- CAJA 1: PAGO / ESTADO AGOTADO (OCULTA MIENTRAS HAY CUPOS ABIERTOS) -->
                 <div id="box-pago-agotado" class="payment-box" style="display: none; text-align: center; padding: 25px 20px;">
@@ -709,7 +709,7 @@
                 </div>
             </div>
 
-            <!-- TARJETA 2: FORMULARIO DE REGISTRO OFICIAL (50 CUPOS EXTRA HABILITADOS) -->
+            <!-- TARJETA 2: FORMULARIO DE REGISTRO OFICIAL (30 CUPOS DISPONIBLES HABILITADOS) -->
             <div id="card-formulario-vip" class="form-card" style="display: block;">
                 <!-- BANNER DE APERTURA EXTRA / ACCESO VIP -->
                 <div id="banner-vip-header" style="background: linear-gradient(135deg, rgba(255, 119, 0, 0.18) 0%, rgba(0, 255, 102, 0.15) 100%); border: 1px solid #00ff66; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; box-shadow: 0 0 20px rgba(0, 255, 102, 0.2);">
@@ -718,7 +718,7 @@
                             <span id="icono-banner-header" style="font-size: 1.5rem;">🔥</span>
                             <div>
                                 <div id="titulo-banner-header" style="font-family: 'Oswald', sans-serif; font-size: 1.15rem; color: #00ff66; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">
-                                    ¡ABRIMOS 50 CUPOS MÁS! • INSCRIPCIONES ABIERTAS
+                                    ¡SOLO 30 CUPOS DISPONIBLES! • INSCRIPCIONES ABIERTAS
                                 </div>
                                 <div id="subtitulo-vip-autorizado" style="color: #ddd; font-size: 0.82rem;">
                                     Modalidad Individual ($20 USD) y Promo Grupal 3+ corredores ($15 USD c/u) disponibles.
@@ -726,7 +726,7 @@
                             </div>
                         </div>
                         <span id="badge-vip-codigo" style="background: #00ff66; color: #000; font-family: 'Oswald', sans-serif; font-size: 0.85rem; font-weight: 800; padding: 5px 12px; border-radius: 6px; letter-spacing: 1px;">
-                            50 CUPOS EXTRA
+                            30 CUPOS DISPONIBLES
                         </span>
                     </div>
                 </div>
@@ -1071,9 +1071,9 @@
                     heroBadge.style.background = 'rgba(0, 255, 102, 0.16)';
                     heroBadge.style.borderColor = '#00ff66';
                     heroBadge.style.boxShadow = '0 0 25px rgba(0, 255, 102, 0.35)';
-                    heroBadge.innerHTML = '🔥 ¡PORQUE UDS LO PIDIERON: ABRIMOS 50 CUPOS MÁS! 🎃';
+                    heroBadge.innerHTML = '🔥 ¡PORQUE UDS LO PIDIERON: SOLO 30 CUPOS DISPONIBLES! 🎃';
                 }
-                if (flyerImg) flyerImg.src = 'img/paraguanahorror_50cupos.jpg';
+                if (flyerImg) flyerImg.src = 'img/paraguanahorror_30cupos.jpg';
                 if (boxPagoAgotado) boxPagoAgotado.style.display = 'none';
                 if (boxPagoVip) boxPagoVip.style.display = 'block';
                 if (cardAgotado) cardAgotado.style.display = 'none';
@@ -1088,9 +1088,9 @@
                 }
                 if (!cuponActivoCodigo) {
                     if (iconoBanner) iconoBanner.innerText = '🔥';
-                    if (tituloBanner) tituloBanner.innerText = '¡ABRIMOS 50 CUPOS MÁS! • INSCRIPCIONES ABIERTAS';
+                    if (tituloBanner) tituloBanner.innerText = '¡SOLO 30 CUPOS DISPONIBLES! • INSCRIPCIONES ABIERTAS';
                     if (subtituloBanner) subtituloBanner.innerText = 'Modalidad Individual ($20 USD) y Promo Grupal 3+ corredores ($15 USD c/u) disponibles.';
-                    if (badgeCodigo) badgeCodigo.innerText = '50 CUPOS EXTRA';
+                    if (badgeCodigo) badgeCodigo.innerText = '30 CUPOS DISPONIBLES';
                 }
             } else {
                 // MODO CERRADO / AGOTADO (TRIPLE CANDADO ACTIVO)
@@ -1656,7 +1656,7 @@
             if (cardFormVip) cardFormVip.style.display = 'block';
             if (boxPagoAgotado) boxPagoAgotado.style.display = 'none';
             if (boxPagoVip) boxPagoVip.style.display = 'block';
-            if (flyerImg) flyerImg.src = 'img/paraguanahorror_50cupos.jpg';
+            if (flyerImg) flyerImg.src = 'img/paraguanahorror_30cupos.jpg';
 
             // Si aplica un cupón VIP, cambiar automáticamente a modalidad individual
             window.cambiarModoInscripcion('individual');

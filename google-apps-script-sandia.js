@@ -66,7 +66,7 @@ function doPost(e) {
 
     // =========================================================================
     // INTERRUPTOR DE CIERRE AUTOMÁTICO (BACKEND GOOGLE APPS SCRIPT):
-    // - false => Inscripciones Abiertas (50 Cupos Más: Individual $20 y Grupal 3+ $15 c/u)
+    // - false => Inscripciones Abiertas (Solo 30 Cupos Disponibles: Individual $20 y Grupal 3+ $15 c/u)
     // - true  => Inscripciones Cerradas (Exige cupón VIP obligatoriamente)
     // =========================================================================
     var INSCRIPCIONES_HORROR_CERRADAS = false;
