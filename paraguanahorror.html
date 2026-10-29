@@ -529,6 +529,26 @@
             </div>
 
             
+                        <!-- REGRESIVA EN VIVO -->
+            <div class="countdown-container" id="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-num" id="cd-days">00</div>
+                    <div class="countdown-lbl">Días</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-num" id="cd-hours">00</div>
+                    <div class="countdown-lbl">Horas</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-num" id="cd-mins">00</div>
+                    <div class="countdown-lbl">Minutos</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-num" id="cd-secs">00</div>
+                    <div class="countdown-lbl">Segundos</div>
+                </div>
+            </div>
+
             <div class="horror-date-badge">
                 🗓️ SÁBADO 31 OCTUBRE | ⏱️ 7:00 PM | 📍 SAMBIL PARAGUANÁ
             </div>
@@ -1483,7 +1503,7 @@
         animateFog();
 
         // CONTADOR HALLOWEEN
-        const targetDate = new Date("October 31, 2026 19:00:00").getTime();
+        const targetDate = new Date(2026, 9, 31, 19, 0, 0).getTime();
 
         function updateCountdown() {
             const elDays = document.getElementById("cd-days");
