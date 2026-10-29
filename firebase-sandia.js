@@ -123,6 +123,11 @@ function obtenerMaxUsosCupon(tipo, maxUsosField) {
     if (tipo === 'TRES_USOS') return 3;
     if (tipo === 'CUATRO_USOS') return 4;
     if (tipo === 'CINCO_USOS') return 5;
+    if (tipo === 'SEIS_USOS') return 6;
+    if (tipo === 'SIETE_USOS') return 7;
+    if (tipo === 'OCHO_USOS') return 8;
+    if (tipo === 'NUEVE_USOS') return 9;
+    if (tipo === 'DIEZ_USOS') return 10;
     if (typeof maxUsosField === 'number' && maxUsosField > 0) return maxUsosField;
     return null; // REUTILIZABLE (ilimitado)
 }
