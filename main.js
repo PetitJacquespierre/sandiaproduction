@@ -231,3 +231,23 @@ window.toggleRutina = function() {
         }
     }
 }
+
+
+// --- MODAL FLYER SEMANA RUNNING ---
+window.abrirModalFlyerRunfree = function() {
+    const modal = document.getElementById('modal-semana-running');
+    if (modal) modal.style.display = 'flex';
+};
+
+window.cerrarModalFlyerRunfree = function(e) {
+    if (e && e.target && e.target !== e.currentTarget && !e.target.classList.contains('btn-close-modal')) return;
+    const modal = document.getElementById('modal-semana-running');
+    if (modal) modal.style.display = 'none';
+};
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('modal-semana-running');
+        if (modal && modal.style.display === 'flex') modal.style.display = 'none';
+    }
+});
