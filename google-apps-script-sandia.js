@@ -200,18 +200,14 @@ function doPost(e) {
         p.monto_exacto || p.monto_pago || ""    // Columna L: Monto
       ];
     } else if (nombrePestana === "Cumple Carol 3K") {
-      // Estructura para Brilla en la Ruta - Cumpleaños Carol 3K
-      // Col A: Fecha Registro | Col B: Pase/Dorsal | Col C: Nombre | Col D: Apellido |
-      // Col E: WhatsApp | Col F: Team / Club | Col G: Asistencia Confirmada | Col H: Mensaje para Carol
+      // Estructura EXACTA de la pestaña "Cumple Carol 3K" en Google Sheets de Sandía Production:
+      // Columna A: Nombre y Apellido
+      // Columna B: Teléfono
+      // Columna C: Team
       registro = [
-        new Date(),                                   // Columna A: Fecha Registro
-        "'" + dorsalFormateado,                       // Columna B: Pase ID (#001...)
-        p.nombre || "",                               // Columna C: Nombre
-        p.apellido || "",                             // Columna D: Apellido
-        p.telefono || "",                             // Columna E: WhatsApp
-        p.team || "Independiente / Amigo de Carol",   // Columna F: Team / Club
-        p.confirmacion || "SÍ - CONFIRMADO 100%",     // Columna G: Confirmación Asistencia
-        p.mensaje || ""                               // Columna H: Mensaje para Carol
+        p.nombre || p.nombre_completo || "",         // Columna A: Nombre y Apellido
+        p.telefono || "",                            // Columna B: Teléfono
+        p.team || "Independiente / Amigo de Carol"   // Columna C: Team
       ];
     } else {
       // Estructura exacta para 5K Paraguaná Horror Story y Coffee Run

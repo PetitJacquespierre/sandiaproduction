@@ -744,7 +744,7 @@
     <section class="carol-form-container" id="confirmacion-asistencia">
         <div class="carol-form-card">
             <h2 class="form-heading-title">CONFIRMA TU <span>ASISTENCIA</span></h2>
-            <p class="form-heading-sub">Lista oficial de invitados para la logística de hidratación y celebración</p>
+            <p class="form-heading-sub">Llena tus datos para asegurar tu puesto en la lista oficial de la fiesta</p>
 
             <form id="form-carol" novalidate>
                 <!-- HONEYPOT ANTI-SPAM (INVISIBLE) -->
@@ -753,41 +753,24 @@
                     <input type="text" name="_gotcha" id="gotcha-carol" tabindex="-1" autocomplete="off">
                 </div>
 
-                <div class="form-row-2col">
-                    <div class="form-group-carol">
-                        <label for="input-nombre">Nombre <span class="req">*</span></label>
-                        <input type="text" id="input-nombre" name="nombre" class="form-input-carol" placeholder="Tu nombre" required autocomplete="given-name">
-                    </div>
-                    <div class="form-group-carol">
-                        <label for="input-apellido">Apellido <span class="req">*</span></label>
-                        <input type="text" id="input-apellido" name="apellido" class="form-input-carol" placeholder="Tu apellido" required autocomplete="family-name">
-                    </div>
+                <div class="form-group-carol">
+                    <label for="input-nombre">Nombre y Apellido <span class="req">*</span></label>
+                    <input type="text" id="input-nombre" name="nombre" class="form-input-carol" placeholder="Ingresa tu nombre y apellido" required autocomplete="name">
                 </div>
 
                 <div class="form-row-2col">
                     <div class="form-group-carol">
-                        <label for="input-telefono">Teléfono (WhatsApp) <span class="req">*</span></label>
+                        <label for="input-telefono">Teléfono <span class="req">*</span></label>
                         <input type="tel" id="input-telefono" name="telefono" class="form-input-carol" placeholder="Ej. 04121234567" required autocomplete="tel">
                     </div>
                     <div class="form-group-carol">
-                        <label for="input-team">Team al cual perteneces <span class="req">*</span></label>
+                        <label for="input-team">Team <span class="req">*</span></label>
                         <input type="text" id="input-team" name="team" class="form-input-carol" placeholder="Ej. RunFree / Libre / Amigo" required>
                     </div>
                 </div>
 
-                <!-- CHECKBOX OBLIGATORIO DE ASISTENCIA -->
-                <label class="confirm-checkbox-wrapper" id="box-confirm-check">
-                    <input type="checkbox" id="check-asistencia" name="confirmacion" required>
-                    <div class="confirm-checkbox-text">
-                        <strong>Confirmo al 100% mi asistencia presencial</strong> al cumpleaños y carrera de Carol el jueves 19 de noviembre a las 6:00 p.m. en F5 Centro Deportivo.
-                        <div style="font-size: 0.78rem; color: #fbcfe8; margin-top: 3px;">
-                            ⚠️ Entiendo que este registro se usa para calcular con exactitud la comida, bebidas e hidratación.
-                        </div>
-                    </div>
-                </label>
-
-                <button type="submit" class="btn-carol-submit" id="btn-submit-carol">
-                    <span id="btn-submit-text">🌟 CONFIRMAR MI ASISTENCIA AHORA</span>
+                <button type="submit" class="btn-carol-submit" id="btn-submit-carol" style="margin-top: 10px;">
+                    <span id="btn-submit-text">🌟 CONFIRMAR ASISTENCIA</span>
                 </button>
             </form>
         </div>
@@ -866,21 +849,7 @@
         updateCountdown();
 
         // =========================================================================
-        // 2. CHECKBOX DE CONFIRMACIÓN
-        // =========================================================================
-        const checkAsistencia = document.getElementById("check-asistencia");
-        const boxConfirmCheck = document.getElementById("box-confirm-check");
-
-        checkAsistencia.addEventListener("change", function() {
-            if (this.checked) {
-                boxConfirmCheck.classList.add("is-checked");
-            } else {
-                boxConfirmCheck.classList.remove("is-checked");
-            }
-        });
-
-        // =========================================================================
-        // 3. ENVÍO DIRECTO A LA BASE DE DATOS DE SANDÍA PRODUCTION (GOOGLE SHEETS)
+        // 2. ENVÍO DIRECTO A LA BASE DE DATOS DE SANDÍA PRODUCTION (GOOGLE SHEETS)
         // =========================================================================
         const formCarol = document.getElementById("form-carol");
         const btnSubmitCarol = document.getElementById("btn-submit-carol");
@@ -896,35 +865,23 @@
             if (document.getElementById("gotcha-carol").value) return;
 
             const nombre = document.getElementById("input-nombre").value.trim();
-            const apellido = document.getElementById("input-apellido").value.trim();
             const telefono = document.getElementById("input-telefono").value.trim();
             const team = document.getElementById("input-team").value.trim();
-            const confirmado = checkAsistencia.checked;
 
-            if (!nombre || !apellido || !telefono || !team) {
-                alert("Por favor completa todos los campos del formulario.");
-                return;
-            }
-
-            if (!confirmado) {
-                boxConfirmCheck.style.borderColor = "var(--carol-pink)";
-                alert("⚠️ Es obligatorio marcar la casilla de confirmación de asistencia.");
+            if (!nombre || !telefono || !team) {
+                alert("Por favor completa los 3 campos: Nombre y Apellido, Teléfono y Team.");
                 return;
             }
 
             btnSubmitCarol.disabled = true;
-            btnSubmitText.innerText = "GUARDANDO EN BASE DE DATOS...";
+            btnSubmitText.innerText = "CONFIRMANDO ASISTENCIA...";
 
-            // Payload oficial que cae en la base de datos de Sandía Production
+            // Payload exacto que se inserta en las Columnas A, B y C de la pestaña 'Cumple Carol 3K'
             const payload = {
                 evento: "Cumpleaños Carol 3K",
-                nombre: `${nombre} ${apellido}`,
+                nombre: nombre,
                 telefono: telefono,
-                team: team,
-                metodo_pago: "INVITADO DE HONOR (GRATUITO)",
-                referencia_ref: "CONFIRMADO ASISTENCIA",
-                monto_pago: "0.00$",
-                confirmacion: "SÍ - CONFIRMADO 100%"
+                team: team
             };
 
             try {
@@ -939,14 +896,13 @@
             }
 
             // Mostrar modal de confirmación
-            document.getElementById("modal-registered-name").innerText = `${nombre} ${apellido}`;
+            document.getElementById("modal-registered-name").innerText = nombre;
             document.getElementById("modal-confirmado").classList.add("active");
 
             // Resetear
             formCarol.reset();
-            boxConfirmCheck.classList.remove("is-checked");
             btnSubmitCarol.disabled = false;
-            btnSubmitText.innerText = "🌟 CONFIRMAR MI ASISTENCIA AHORA";
+            btnSubmitText.innerText = "🌟 CONFIRMAR ASISTENCIA";
         });
 
         function cerrarModalConfirmacion() {
