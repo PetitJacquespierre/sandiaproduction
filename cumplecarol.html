@@ -55,8 +55,122 @@
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            background: radial-gradient(circle at 50% 0%, #170d2c 0%, #06070e 50%, #030407 100%);
+            background: radial-gradient(circle at 50% 0%, #150a24 0%, #06070e 45%, #020306 100%);
             min-height: 100vh;
+            position: relative;
+        }
+
+        /* ==========================================================================
+           OPCIÓN 4: BOKEH NIGHT GLOW (ATMÓSFERA DE FIESTA Y LUCES NOCTURNAS DESENFOCADAS)
+           ========================================================================== */
+        .bokeh-ambient-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bokeh-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.52;
+            mix-blend-mode: screen;
+            will-change: transform, opacity;
+            animation: floatBokeh 14s ease-in-out infinite alternate;
+        }
+
+        /* ORBES GRANDES DE DISCOTECA / FESTIVAL NOCTURNO */
+        .orb-pink-1 {
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, #ff007f 0%, rgba(255, 0, 127, 0) 70%);
+            top: -60px;
+            right: -80px;
+            animation-duration: 12s;
+        }
+
+        .orb-yellow-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #d4ff00 0%, rgba(212, 255, 0, 0) 70%);
+            top: 32%;
+            left: -140px;
+            opacity: 0.38;
+            animation-duration: 16s;
+            animation-delay: -3s;
+        }
+
+        .orb-cyan-1 {
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, #00e5ff 0%, rgba(0, 229, 255, 0) 70%);
+            bottom: 12%;
+            right: -100px;
+            opacity: 0.35;
+            animation-duration: 18s;
+            animation-delay: -6s;
+        }
+
+        .orb-pink-2 {
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, #ff007f 0%, rgba(255, 0, 127, 0) 70%);
+            bottom: -50px;
+            left: 20%;
+            opacity: 0.42;
+            animation-duration: 15s;
+            animation-delay: -9s;
+        }
+
+        .orb-purple-1 {
+            width: 460px;
+            height: 460px;
+            background: radial-gradient(circle, #8a2be2 0%, rgba(138, 43, 226, 0) 70%);
+            top: 15%;
+            left: 35%;
+            opacity: 0.28;
+            animation-duration: 20s;
+        }
+
+        /* PUNTOS BOKEH DESENFOCADOS DEFINIDOS (LENTE F/1.4 DE CÁMARA) */
+        .bokeh-particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.7;
+            filter: blur(14px);
+            mix-blend-mode: screen;
+            animation: pulseParticle 6s ease-in-out infinite alternate;
+        }
+
+        .bp-1 { width: 95px; height: 95px; background: #ff007f; top: 22%; right: 18%; animation-delay: 0s; }
+        .bp-2 { width: 80px; height: 80px; background: #d4ff00; top: 58%; left: 10%; animation-delay: 1.5s; }
+        .bp-3 { width: 85px; height: 85px; background: #00e5ff; top: 78%; right: 22%; animation-delay: 3s; }
+        .bp-4 { width: 70px; height: 70px; background: #ff007f; top: 42%; right: 6%; animation-delay: 2.2s; }
+        .bp-5 { width: 110px; height: 110px; background: #d4ff00; top: 10%; left: 20%; opacity: 0.45; animation-delay: 4.5s; }
+
+        @keyframes floatBokeh {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            50% { transform: translate3d(35px, 25px, 0) scale(1.1); }
+            100% { transform: translate3d(-25px, 35px, 0) scale(0.95); }
+        }
+
+        @keyframes pulseParticle {
+            0% { transform: scale(0.85); opacity: 0.45; }
+            100% { transform: scale(1.2); opacity: 0.85; }
+        }
+
+        /* ELEVACIÓN DE CAPAS PARA CONTENIDO NÍTIDO */
+        .carol-hero-section,
+        .carol-letter-container,
+        .carol-form-container,
+        .carol-flyer-section {
+            position: relative;
+            z-index: 2;
         }
 
         /* HERO HEADER CON BANNER VIDEO 16:9 (ESTILO PARAGUANÁ HORROR) */
@@ -596,6 +710,20 @@
     </style>
 </head>
 <body>
+
+    <!-- FONDO BOKEH NIGHT GLOW (LUCES DESENFOCADAS DE FIESTA NOCTURNA) -->
+    <div class="bokeh-ambient-container" aria-hidden="true">
+        <div class="bokeh-orb orb-pink-1"></div>
+        <div class="bokeh-orb orb-yellow-1"></div>
+        <div class="bokeh-orb orb-cyan-1"></div>
+        <div class="bokeh-orb orb-pink-2"></div>
+        <div class="bokeh-orb orb-purple-1"></div>
+        <div class="bokeh-particle bp-1"></div>
+        <div class="bokeh-particle bp-2"></div>
+        <div class="bokeh-particle bp-3"></div>
+        <div class="bokeh-particle bp-4"></div>
+        <div class="bokeh-particle bp-5"></div>
+    </div>
 
     <!-- NAVBAR OFICIAL DE SANDÍA PRODUCTION -->
     <nav class="navbar-sandia">
