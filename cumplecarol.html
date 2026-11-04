@@ -61,107 +61,75 @@
         }
 
         /* ==========================================================================
-           OPCIÓN 4: BOKEH NIGHT GLOW (ATMÓSFERA DE FIESTA Y LUCES NOCTURNAS DESENFOCADAS)
+           OPCIÓN 1: GLOW TRAILS (ESTELAS NEÓN DE LA RUTA / RUNNER LIGHT WAVES)
+           Líneas de luz fluidas en amarillo flúor y rosa eléctrico estilo flyer
            ========================================================================== */
-        .bokeh-ambient-container {
+        .glow-trails-container {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             pointer-events: none;
             overflow: hidden;
             z-index: 0;
         }
 
-        .bokeh-orb {
+        .glow-trails-svg {
             position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.52;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.85;
             mix-blend-mode: screen;
-            will-change: transform, opacity;
-            animation: floatBokeh 14s ease-in-out infinite alternate;
         }
 
-        /* ORBES GRANDES DE DISCOTECA / FESTIVAL NOCTURNO */
-        .orb-pink-1 {
-            width: 480px;
-            height: 480px;
-            background: radial-gradient(circle, #ff007f 0%, rgba(255, 0, 127, 0) 70%);
-            top: -60px;
-            right: -80px;
-            animation-duration: 12s;
+        .trail-wave {
+            stroke-dasharray: 600 250;
+            animation: dashFlow 18s linear infinite;
         }
 
-        .orb-yellow-1 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, #d4ff00 0%, rgba(212, 255, 0, 0) 70%);
-            top: 32%;
-            left: -140px;
-            opacity: 0.38;
-            animation-duration: 16s;
-            animation-delay: -3s;
+        .wave-pink-1, .wave-pink-2, .wave-pink-3 {
+            animation-duration: 22s;
+            animation-direction: reverse;
         }
 
-        .orb-cyan-1 {
-            width: 420px;
-            height: 420px;
-            background: radial-gradient(circle, #00e5ff 0%, rgba(0, 229, 255, 0) 70%);
-            bottom: 12%;
-            right: -100px;
-            opacity: 0.35;
-            animation-duration: 18s;
-            animation-delay: -6s;
+        .wave-yellow-1, .wave-yellow-2, .wave-yellow-3 {
+            animation-duration: 17s;
         }
 
-        .orb-pink-2 {
-            width: 380px;
-            height: 380px;
-            background: radial-gradient(circle, #ff007f 0%, rgba(255, 0, 127, 0) 70%);
-            bottom: -50px;
-            left: 20%;
-            opacity: 0.42;
-            animation-duration: 15s;
-            animation-delay: -9s;
+        @keyframes dashFlow {
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 1700; }
         }
 
-        .orb-purple-1 {
-            width: 460px;
-            height: 460px;
-            background: radial-gradient(circle, #8a2be2 0%, rgba(138, 43, 226, 0) 70%);
+        /* RESPLANDOR AMBIENTAL DETRÁS DE LAS ESTELAS */
+        .trail-ambient-pink {
+            position: absolute;
             top: 15%;
-            left: 35%;
-            opacity: 0.28;
-            animation-duration: 20s;
+            right: -120px;
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(255, 0, 127, 0.18) 0%, transparent 70%);
+            filter: blur(80px);
+            animation: pulseAmbient 7s ease-in-out infinite alternate;
         }
 
-        /* PUNTOS BOKEH DESENFOCADOS DEFINIDOS (LENTE F/1.4 DE CÁMARA) */
-        .bokeh-particle {
+        .trail-ambient-yellow {
             position: absolute;
-            border-radius: 50%;
-            opacity: 0.7;
-            filter: blur(14px);
-            mix-blend-mode: screen;
-            animation: pulseParticle 6s ease-in-out infinite alternate;
+            top: 55%;
+            left: -120px;
+            width: 540px;
+            height: 540px;
+            background: radial-gradient(circle, rgba(212, 255, 0, 0.14) 0%, transparent 70%);
+            filter: blur(80px);
+            animation: pulseAmbient 8s ease-in-out infinite alternate-reverse;
         }
 
-        .bp-1 { width: 95px; height: 95px; background: #ff007f; top: 22%; right: 18%; animation-delay: 0s; }
-        .bp-2 { width: 80px; height: 80px; background: #d4ff00; top: 58%; left: 10%; animation-delay: 1.5s; }
-        .bp-3 { width: 85px; height: 85px; background: #00e5ff; top: 78%; right: 22%; animation-delay: 3s; }
-        .bp-4 { width: 70px; height: 70px; background: #ff007f; top: 42%; right: 6%; animation-delay: 2.2s; }
-        .bp-5 { width: 110px; height: 110px; background: #d4ff00; top: 10%; left: 20%; opacity: 0.45; animation-delay: 4.5s; }
-
-        @keyframes floatBokeh {
-            0% { transform: translate3d(0, 0, 0) scale(1); }
-            50% { transform: translate3d(35px, 25px, 0) scale(1.1); }
-            100% { transform: translate3d(-25px, 35px, 0) scale(0.95); }
-        }
-
-        @keyframes pulseParticle {
-            0% { transform: scale(0.85); opacity: 0.45; }
-            100% { transform: scale(1.2); opacity: 0.85; }
+        @keyframes pulseAmbient {
+            0% { transform: scale(0.9) translate(0, 0); opacity: 0.6; }
+            100% { transform: scale(1.15) translate(20px, 20px); opacity: 0.95; }
         }
 
         /* ELEVACIÓN DE CAPAS PARA CONTENIDO NÍTIDO */
@@ -711,18 +679,55 @@
 </head>
 <body>
 
-    <!-- FONDO BOKEH NIGHT GLOW (LUCES DESENFOCADAS DE FIESTA NOCTURNA) -->
-    <div class="bokeh-ambient-container" aria-hidden="true">
-        <div class="bokeh-orb orb-pink-1"></div>
-        <div class="bokeh-orb orb-yellow-1"></div>
-        <div class="bokeh-orb orb-cyan-1"></div>
-        <div class="bokeh-orb orb-pink-2"></div>
-        <div class="bokeh-orb orb-purple-1"></div>
-        <div class="bokeh-particle bp-1"></div>
-        <div class="bokeh-particle bp-2"></div>
-        <div class="bokeh-particle bp-3"></div>
-        <div class="bokeh-particle bp-4"></div>
-        <div class="bokeh-particle bp-5"></div>
+    <!-- FONDO OPCIÓN 1: GLOW TRAILS (ESTELAS NEÓN DE LA RUTA RUNNER) -->
+    <div class="glow-trails-container" aria-hidden="true">
+        <svg class="glow-trails-svg" viewBox="0 0 1440 1200" fill="none" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="grad-yellow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#d4ff00" stop-opacity="0" />
+                    <stop offset="25%" stop-color="#d4ff00" stop-opacity="0.85" />
+                    <stop offset="75%" stop-color="#eaff33" stop-opacity="0.95" />
+                    <stop offset="100%" stop-color="#d4ff00" stop-opacity="0" />
+                </linearGradient>
+                <linearGradient id="grad-pink" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff007f" stop-opacity="0" />
+                    <stop offset="25%" stop-color="#ff007f" stop-opacity="0.9" />
+                    <stop offset="75%" stop-color="#ff2a85" stop-opacity="0.95" />
+                    <stop offset="100%" stop-color="#ff007f" stop-opacity="0" />
+                </linearGradient>
+                <filter id="neon-glow-yellow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="7" result="blur" />
+                    <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+                <filter id="neon-glow-pink" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="7" result="blur" />
+                    <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <!-- ESTELAS SUPERIORES -->
+            <path class="trail-wave wave-yellow-1" d="M -100 180 C 300 280, 800 80, 1600 260" stroke="url(#grad-yellow)" stroke-width="4.5" stroke-linecap="round" filter="url(#neon-glow-yellow)" />
+            <path class="trail-wave wave-pink-1" d="M -100 230 C 350 320, 850 120, 1600 310" stroke="url(#grad-pink)" stroke-width="5" stroke-linecap="round" filter="url(#neon-glow-pink)" />
+
+            <!-- ESTELAS CENTRALES -->
+            <path class="trail-wave wave-yellow-2" d="M -150 620 C 400 480, 950 780, 1600 590" stroke="url(#grad-yellow)" stroke-width="4" stroke-linecap="round" filter="url(#neon-glow-yellow)" />
+            <path class="trail-wave wave-pink-2" d="M -150 670 C 450 530, 1000 830, 1600 640" stroke="url(#grad-pink)" stroke-width="5" stroke-linecap="round" filter="url(#neon-glow-pink)" />
+
+            <!-- ESTELAS INFERIORES -->
+            <path class="trail-wave wave-yellow-3" d="M -100 980 C 500 1120, 1000 890, 1600 1060" stroke="url(#grad-yellow)" stroke-width="3.5" stroke-linecap="round" filter="url(#neon-glow-yellow)" />
+            <path class="trail-wave wave-pink-3" d="M -100 1020 C 520 1160, 1030 930, 1600 1100" stroke="url(#grad-pink)" stroke-width="4.5" stroke-linecap="round" filter="url(#neon-glow-pink)" />
+        </svg>
+
+        <div class="trail-ambient-pink"></div>
+        <div class="trail-ambient-yellow"></div>
     </div>
 
     <!-- NAVBAR OFICIAL DE SANDÍA PRODUCTION -->
