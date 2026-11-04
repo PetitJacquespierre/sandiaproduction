@@ -1434,12 +1434,21 @@
             </div>
 
             <div class="ticket-actions">
-                <a href="#" target="_blank" class="btn-whatsapp-carol" id="btn-whatsapp-share">
-                    <span>📲</span> Notificar a Carol por WhatsApp
-                </a>
-                <button type="button" class="btn-close-ticket" onclick="closeTicketModal()">
-                    Cerrar ventana
+                <!-- NOTA DE CONFIRMACIÓN VIP & COMPROBANTE -->
+                <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 12px; line-height: 1.45;">
+                    📸 <strong>¡Toma una captura a este pase!</strong> Es tu comprobante de asistencia confirmada. ¡Nos vemos en F5 con todo el outfit neón! 🌟
+                </p>
+
+                <!-- BOTÓN PRINCIPAL DE CIERRE Y CONFIRMACIÓN -->
+                <button type="button" class="btn-submit-vip" style="margin-top: 0; padding: 13px 20px; font-size: 0.95rem;" onclick="closeTicketModal()">
+                    <span>✨</span> ENTENDIDO / GUARDAR MI PASE
                 </button>
+
+                <!-- BOTÓN DE WHATSAPP EN PAUSA (RESERVADO PARA FASE 2)
+                <a href="#" target="_blank" class="btn-whatsapp-carol" id="btn-whatsapp-share" style="display: none;">
+                    <span>📲</span> Notificar por WhatsApp
+                </a>
+                -->
             </div>
 
         </div>
@@ -1631,17 +1640,18 @@
             document.getElementById("modal-guest-name").innerText = `${nombre} ${apellido}`;
             document.getElementById("modal-guest-team").innerText = `TEAM: ${team.toUpperCase()}`;
 
-            // Mensaje pre-redactado para enviar por WhatsApp a Carol o compartir
-            const textWhatsApp = encodeURIComponent(
-                `¡Hola Carol! 🥳✨ Acabo de confirmar mi asistencia en la web a tu party-run *Brilla en la Ruta 3K* el 19 de Noviembre en F5 Centro Deportivo 🏃‍♀️💨.\n\n` +
-                `🎫 Mi Pase: ${dorsalCode}\n` +
-                `👤 Nombre: ${nombre} ${apellido}\n` +
-                `👟 Team: ${team}\n\n` +
-                `¡Ya tengo mi outfit neón listo para correr y celebrar contigo! 🎂💖🌟`
-            );
-
+            // Preparación opcional de mensaje WhatsApp (En Pausa temporal)
             const btnWhatsApp = document.getElementById("btn-whatsapp-share");
-            btnWhatsApp.href = `https://api.whatsapp.com/send?text=${textWhatsApp}`;
+            if (btnWhatsApp) {
+                const textWhatsApp = encodeURIComponent(
+                    `¡Hola Carol! 🥳✨ Acabo de confirmar mi asistencia en la web a tu party-run *Brilla en la Ruta 3K* el 19 de Noviembre en F5 Centro Deportivo 🏃‍♀️💨.\n\n` +
+                    `🎫 Mi Pase: ${dorsalCode}\n` +
+                    `👤 Nombre: ${nombre} ${apellido}\n` +
+                    `👟 Team: ${team}\n\n` +
+                    `¡Ya tengo mi outfit neón listo para correr y celebrar contigo! 🎂💖🌟`
+                );
+                btnWhatsApp.href = `https://api.whatsapp.com/send?text=${textWhatsApp}`;
+            }
 
             modal.classList.add("active");
         }
