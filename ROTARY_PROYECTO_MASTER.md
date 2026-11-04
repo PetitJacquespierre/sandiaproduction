@@ -132,3 +132,28 @@ Información a extraer para montar el prototipo funcional:
 - [ ] Nombres de la Junta Directiva actual 2026–2027.
 - [ ] Logos de comercios y empresas aliadas que suelen colaborar.
 - [ ] Datos de cuentas bancarias y canales para el módulo de recaudación.
+
+---
+
+## ⚡ 8. ARQUITECTURA VISUAL DE ALTO IMPACTO (TENDENCIA 2026: PRISTINE LIGHT MODE & KINETIC PAPER GRID)
+
+> **Inspiración de Arte:** Estándar internacional Rotary Brand Center (Chicago / Rotary Australia) + Estándar de estudio ($5,000+ USD).  
+> **Filosofía Visual:** **Pureza Institucional, Transparencia y Elegancia Silenciosa (Quiet Luxury en Blanco Alabastro).** Cero fondo negro o aspecto de videojuego; un diseño luminoso, médico y empresarial donde la fotografía humanitaria y las obras sociales cobran vida.
+
+### 🧩 Especificaciones de Implementación para el Agente (`index.html` & `style.css`):
+1. **Lienzo Base & Paleta Oficial de Rotary International:**
+   * **Fondo Principal:** Blanco puro (`#FFFFFF`) y Papel Alabastro cálido (`#F8FAFC`).
+   * **Rotary Royal Blue (`#17458F`):** Para títulos imponentes, cabeceras institucionales y barras de navegación.
+   * **Azure Blue (`#0067C8`):** Para enlaces, estados hover y botones secundarios.
+   * **Rotary Gold (`#F7A81B`):** Para badges de honor, bordes sutiles y llamados a la acción dorados.
+   * **End Polio Cardinal (`#E02927`):** Exclusivo para la sección de la carrera 5K y lucha contra la polio.
+2. **Malla Arquitectónica Reactiva (Interactive Kinetic Paper Grid):**
+   * Cuadrícula arquitectónica tenue en gris perla (`rgba(0, 0, 0, 0.04)` / líneas de `1px`), simulando papel milimetrado de ingeniería o planos humanitarios.
+   * Al mover el cursor o interactuar en el móvil, los cuadros reaccionan con un sutil halo de luz celeste (`rgba(0, 103, 200, 0.06)`) o destello dorado suave, sintiéndose viva pero ejecutiva.
+3. **Bento Grid Asimétrico en Modo Claro:**
+   * Tarjetas blancas elevadas (`#FFFFFF`) con bordes ultra-delgados (`border: 1px solid rgba(23, 69, 143, 0.08)`) y sombras multicapa suaves de seda (`box-shadow: 0 10px 30px -10px rgba(23, 69, 143, 0.07)`).
+   * **Borde superior iluminado (Luz Cenital):** `border-top: 2px solid rgba(247, 168, 27, 0.45)` (destello sutil en Oro Rotary).
+   * **Métricas en Monospace (`Geist Mono` o `JetBrains Mono`):** `[+68 AÑOS DE SERVICIO]`, `[+15,000 HORAS BENEFICIADAS]`, `[DISTRITO 4380 // FALCÓN]`.
+4. **Firma Obligatoria del Protocolo:**
+   * Toda intervención debe mantener la compatibilidad con el **`Protocolo KDOG_K`** de Grow Studio.
+
