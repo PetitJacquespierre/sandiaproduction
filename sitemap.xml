@@ -42,6 +42,18 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- EVENTO BRILLA EN LA RUTA - CUMPLEAÑOS DE CAROL 3K -->
+  <url>
+    <loc>https://www.sandiaproduction.com/cumplecarol.html</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.sandiaproduction.com/img/carol3k_banner.jpg</image:loc>
+      <image:title>Brilla en la Ruta - Cumpleaños de Carol 3K Party Run</image:title>
+    </image:image>
+  </url>
+
   <!-- EVENTO 2DA CARRERA 5K END POLIO NOW (ROTARY & GOLD'S STARS) -->
   <url>
     <loc>https://www.sandiaproduction.com/rotary5k2edicion.html</loc>

@@ -38,6 +38,9 @@ function doPost(e) {
     } else if (evRaw.indexOf("coffee") !== -1 || evRaw.indexOf("terraza") !== -1) {
       nombrePestana = "Coffee Run Terraza 2026";
       eventoName = "Coffee Run Terraza 2026";
+    } else if (evRaw.indexOf("carol") !== -1 || evRaw.indexOf("brilla") !== -1 || evRaw.indexOf("cumple") !== -1) {
+      nombrePestana = "Cumple Carol 3K";
+      eventoName = "Brilla en la Ruta - Cumpleaños Carol 3K";
     } else {
       // Todo lo correspondiente a 5K Paraguaná Horror Story (incluso con fallos de tildes o ? del navegador)
       nombrePestana = "5K Paraguaná Horror Story";
@@ -195,6 +198,20 @@ function doPost(e) {
         p.metodo_pago || "",                    // Columna J: Forma de Pago
         p.referencia_ref || "",                 // Columna K: Referencia / Titular
         p.monto_exacto || p.monto_pago || ""    // Columna L: Monto
+      ];
+    } else if (nombrePestana === "Cumple Carol 3K") {
+      // Estructura para Brilla en la Ruta - Cumpleaños Carol 3K
+      // Col A: Fecha Registro | Col B: Pase/Dorsal | Col C: Nombre | Col D: Apellido |
+      // Col E: WhatsApp | Col F: Team / Club | Col G: Asistencia Confirmada | Col H: Mensaje para Carol
+      registro = [
+        new Date(),                                   // Columna A: Fecha Registro
+        "'" + dorsalFormateado,                       // Columna B: Pase ID (#001...)
+        p.nombre || "",                               // Columna C: Nombre
+        p.apellido || "",                             // Columna D: Apellido
+        p.telefono || "",                             // Columna E: WhatsApp
+        p.team || "Independiente / Amigo de Carol",   // Columna F: Team / Club
+        p.confirmacion || "SÍ - CONFIRMADO 100%",     // Columna G: Confirmación Asistencia
+        p.mensaje || ""                               // Columna H: Mensaje para Carol
       ];
     } else {
       // Estructura exacta para 5K Paraguaná Horror Story y Coffee Run
