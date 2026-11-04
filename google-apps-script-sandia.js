@@ -1,15 +1,90 @@
 // =============================================================================
-// SANDÍA PRODUCTION - GOOGLE APPS SCRIPT OFICIAL (SISTEMA UNIFICADO DE INSCRIPCIONES)
-// Manejo automático de pestañas: "5K Paraguaná Horror Story", "Rotary 2da", "Coffee Run Terraza 2026"
+// SANDÍA PRODUCTION - GOOGLE APPS SCRIPT OFICIAL (SISTEMA UNIFICADO DE EVENTOS)
+// Pestañas activas: "Cumple Carol 3K", "5K Paraguaná Horror Story", "Rotary 2da", "Coffee Run Terraza 2026"
 // =============================================================================
 
-// 👉 EJECUTA ESTA FUNCIÓN UNA VEZ PARA VERIFICAR QUE TU CUENTA PUEDE ENVIAR CORREOS
+// 👉 EJECUTA ESTA FUNCIÓN UNA VEZ PARA VERIFICAR PERMISOS DE CORREO
 function autorizarPermisos() {
   var correo = Session.getActiveUser().getEmail();
-  MailApp.sendEmail(correo, "✅ Permiso de Correo Activado", "Los permisos de correo para Sandía Productions han sido autorizados con éxito.");
+  MailApp.sendEmail(correo, "✅ Permiso de Correo Activado", "Los permisos de correo para Sandía Production han sido autorizados con éxito.");
   Logger.log("Correo de prueba enviado a: " + correo);
 }
 
+// =============================================================================
+// 🚀 FUNCIÓN DE MIGRACIÓN: MUEVE LOS REGISTROS DE CAROL DESDE HORROR A CUMPLE CAROL 3K
+// Ejecuta esta función en Apps Script para pasar las personas inscritas automáticamente
+// =============================================================================
+function migrarInscripcionesCarol() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheetHorror = ss.getSheetByName("5K Paraguaná Horror Story");
+  var sheetCarol = ss.getSheetByName("Cumple Carol 3K");
+
+  if (!sheetHorror) {
+    Logger.log("❌ No se encontró la pestaña '5K Paraguaná Horror Story'");
+    return;
+  }
+  if (!sheetCarol) {
+    sheetCarol = ss.insertSheet("Cumple Carol 3K");
+    sheetCarol.appendRow(["Nombre y Apellido", "Teléfono", "Team"]);
+  }
+
+  var lastRow = sheetHorror.getLastRow();
+  if (lastRow < 2) {
+    Logger.log("ℹ️ No hay filas de datos en Horror.");
+    return;
+  }
+
+  // Leer todos los datos de Paraguaná Horror
+  var datos = sheetHorror.getRange(2, 1, lastRow - 1, 10).getValues();
+  var filasAMigrar = [];
+  var indicesParaBorrar = [];
+
+  // En Horror: Col A (0): Fecha | Col B (1): Dorsal | Col C (2): Cédula | Col D (3): Nombre y Apellido
+  // Col E (4): WhatsApp/Teléfono | Col F (5): Email | Col G (6): Team
+  for (var i = 0; i < datos.length; i++) {
+    var filaNum = i + 2; // Número de fila real en la hoja
+    var cedula = (datos[i][2] || "").toString().trim();
+    var nombre = (datos[i][3] || "").toString().trim();
+    var telefono = (datos[i][4] || "").toString().trim();
+    var team = (datos[i][6] || "").toString().trim();
+    var metodo = (datos[i][7] || "").toString().trim();
+    var ref = (datos[i][8] || "").toString().trim();
+
+    // Identificar si la fila pertenece al cumpleaños de Carol:
+    // (Por ejemplo: no tiene cédula, o el método/referencia dice CONFIRMADO, o está en las filas recientes)
+    var esCarol = (cedula === "" && nombre !== "") || 
+                  (metodo.indexOf("INVITADO") !== -1) || 
+                  (ref.indexOf("CONFIRMADO") !== -1) ||
+                  (filaNum >= 128);
+
+    if (esCarol && nombre !== "") {
+      filasAMigrar.push([nombre, telefono, team || "Independiente / Amigo de Carol"]);
+      indicesParaBorrar.push(filaNum);
+    }
+  }
+
+  if (filasAMigrar.length === 0) {
+    Logger.log("ℹ️ No se detectaron registros de Carol pendientes por migrar.");
+    return;
+  }
+
+  // Insertar las filas en la pestaña 'Cumple Carol 3K' (Columnas: Nombre y Apellido, Teléfono, Team)
+  for (var j = 0; j < filasAMigrar.length; j++) {
+    sheetCarol.appendRow(filasAMigrar[j]);
+    Logger.log("✅ Migrado a Carol 3K: " + filasAMigrar[j][0] + " | " + filasAMigrar[j][1] + " | " + filasAMigrar[j][2]);
+  }
+
+  // Borrar de Horror desde abajo hacia arriba para no alterar los índices
+  for (var k = indicesParaBorrar.length - 1; k >= 0; k--) {
+    sheetHorror.deleteRow(indicesParaBorrar[k]);
+  }
+
+  Logger.log("🎉 Migración completada: Se movieron " + filasAMigrar.length + " personas a 'Cumple Carol 3K'.");
+}
+
+// =============================================================================
+// RECEPTOR PRINCIPAL DE FORMULARIOS WEB (doPost)
+// =============================================================================
 function doPost(e) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var correoDestino = "sandiaproductionss@gmail.com, growstudio.w@gmail.com"; 
@@ -32,17 +107,17 @@ function doPost(e) {
     var nombrePestana = "5K Paraguaná Horror Story"; // Pestaña predeterminada
     var eventoName = "5K Paraguaná Horror Story";
 
-    if (evRaw.indexOf("rotary") !== -1 || evRaw.indexOf("polio") !== -1) {
+    // 1. CUMPLEAÑOS DE CAROL (PRIORIDAD ALTA PARA EVITAR COLISIONES)
+    if (evRaw.indexOf("carol") !== -1 || evRaw.indexOf("cumple") !== -1 || evRaw.indexOf("brilla") !== -1) {
+      nombrePestana = "Cumple Carol 3K";
+      eventoName = "Brilla en la Ruta - Cumpleaños Carol 3K";
+    } else if (evRaw.indexOf("rotary") !== -1 || evRaw.indexOf("polio") !== -1) {
       nombrePestana = "Rotary 2da";
       eventoName = "2da Carrera Caminata 5K End Polio Now";
     } else if (evRaw.indexOf("coffee") !== -1 || evRaw.indexOf("terraza") !== -1) {
       nombrePestana = "Coffee Run Terraza 2026";
       eventoName = "Coffee Run Terraza 2026";
-    } else if (evRaw.indexOf("carol") !== -1 || evRaw.indexOf("brilla") !== -1 || evRaw.indexOf("cumple") !== -1) {
-      nombrePestana = "Cumple Carol 3K";
-      eventoName = "Brilla en la Ruta - Cumpleaños Carol 3K";
     } else {
-      // Todo lo correspondiente a 5K Paraguaná Horror Story (incluso con fallos de tildes o ? del navegador)
       nombrePestana = "5K Paraguaná Horror Story";
       eventoName = "5K Paraguaná Horror Story";
     }
@@ -50,11 +125,14 @@ function doPost(e) {
     // Búsqueda robusta de la pestaña en la hoja de cálculo
     var sheet = ss.getSheetByName(nombrePestana);
     if (!sheet) {
-      // Si el nombre exacto con tilde no coincide directamente, buscar entre las pestañas existentes
       var allSheets = ss.getSheets();
       for (var s = 0; s < allSheets.length; s++) {
         var sName = allSheets[s].getName().toLowerCase();
-        if (nombrePestana === "5K Paraguaná Horror Story" && (sName.indexOf("horror") !== -1 || sName.indexOf("paraguan") !== -1)) {
+        if (nombrePestana === "Cumple Carol 3K" && (sName.indexOf("carol") !== -1 || sName.indexOf("cumple") !== -1)) {
+          sheet = allSheets[s];
+          nombrePestana = allSheets[s].getName();
+          break;
+        } else if (nombrePestana === "5K Paraguaná Horror Story" && (sName.indexOf("horror") !== -1 || sName.indexOf("paraguan") !== -1)) {
           sheet = allSheets[s];
           nombrePestana = allSheets[s].getName();
           break;
@@ -65,174 +143,90 @@ function doPost(e) {
         }
       }
     }
+
+    // Si aún no existe la pestaña de Carol, se crea con sus 3 columnas exactas
+    if (!sheet && nombrePestana === "Cumple Carol 3K") {
+      sheet = ss.insertSheet("Cumple Carol 3K");
+      sheet.appendRow(["Nombre y Apellido", "Teléfono", "Team"]);
+    }
+    
     sheet = sheet || ss.getSheets()[0];
 
     // =========================================================================
-    // INTERRUPTOR DE CIERRE AUTOMÁTICO (BACKEND GOOGLE APPS SCRIPT):
-    // - false => Inscripciones Abiertas (Solo 30 Cupos Disponibles: Individual $20 y Grupal 3+ $15 c/u)
-    // - true  => Inscripciones Cerradas (Exige cupón VIP obligatoriamente)
+    // CASO 1: CUMPLEAÑOS DE CAROL (ESTRUCTURA EXACTA DE 3 COLUMNAS: A, B, C)
     // =========================================================================
-    var INSCRIPCIONES_HORROR_CERRADAS = false;
-    if (INSCRIPCIONES_HORROR_CERRADAS && nombrePestana === "5K Paraguaná Horror Story") {
-      var cuponValido = p.cupon || p.codigo_cupon || "";
-      if (!cuponValido || cuponValido.trim() === "") {
-        Logger.log("⛔ Registro rechazado: Intento de inscripción sin cupón VIP en Paraguaná Horror.");
-        return ContentService.createTextOutput(JSON.stringify({
-          "result": "error",
-          "error": "CUPON_OBLIGATORIO",
-          "message": "Las inscripciones generales para la 5K Paraguaná Horror Story están 100% agotadas. Se requiere obligatoriamente un código o enlace VIP válido."
-        })).setMimeType(ContentService.MimeType.JSON);
-      }
-    }
+    if (nombrePestana === "Cumple Carol 3K") {
+      var nombreFinal = p.nombre || p.nombre_completo || "";
+      var telefonoFinal = p.telefono || "";
+      var teamFinal = p.team || "Independiente / Amigo de Carol";
 
-    // =========================================================================
-    // CASO A: INSCRIPCIÓN GRUPAL (3 O MÁS CORREDORES • $15 USD C/U)
-    // Registra a cada corredor en su propia fila individual con su propio dorsal
-    // =========================================================================
-    if (p.es_grupal === true && p.corredores && p.corredores.length > 0) {
-      var filaBase = sheet.getLastRow(); // Si hay cabecera en fila 1, el primer inscrito en fila 2 es #001
-      var dorsalesAsignados = [];
-      var resumenCorredoresHtml = "";
+      // Insertar en Col A: Nombre y Apellido | Col B: Teléfono | Col C: Team
+      sheet.appendRow([nombreFinal, telefonoFinal, teamFinal]);
 
-      for (var i = 0; i < p.corredores.length; i++) {
-        var c = p.corredores[i];
-        var numDorsal = filaBase + i;
-        var dorsalStr = String(numDorsal).padStart(3, '0');
-        dorsalesAsignados.push("#" + dorsalStr);
-
-        var filaCorredor;
-        if (nombrePestana === "Rotary 2da") {
-          filaCorredor = [
-            "'" + dorsalStr,                        // Columna A: DORSAL
-            new Date(),                             // Columna B: Fecha y Hora
-            c.cedula || "",                         // Columna C: Cédula
-            c.nombre || "",                         // Columna D: Nombre y Apellido
-            c.telefono || "",                       // Columna E: WhatsApp
-            c.email || "",                          // Columna F: Correo Electrónico
-            c.fecha_nacimiento || "",               // Columna G: Fecha de Nacimiento
-            c.genero || "",                         // Columna H: Género
-            c.team || "Inscripción Grupal",         // Columna I: Grupo
-            c.metodo_pago || "",                    // Columna J: Forma de Pago
-            c.referencia_ref || "",                 // Columna K: Referencia
-            c.monto_exacto || c.monto_pago || ""    // Columna L: Monto
-          ];
-        } else {
-          // Estructura exacta para 5K Paraguaná Horror Story y Coffee Run:
-          // Col A: Fecha Registro | Col B: Dorsal | Col C: Cédula | Col D: Nombre y Apellido |
-          // Col E: WhatsApp | Col F: Email | Col G: Team / Club | Col H: Método de Pago |
-          // Col I: Referencia | Col J: Monto Pago
-          filaCorredor = [
-            new Date(),                             // Columna A: Fecha Registro
-            "'" + dorsalStr,                        // Columna B: Dorsal Individual
-            c.cedula || "",                         // Columna C: Cédula
-            c.nombre || "",                         // Columna D: Nombre y Apellido
-            c.telefono || "",                       // Columna E: WhatsApp
-            c.email || "",                          // Columna F: Email
-            c.team || "Inscripción Grupal",         // Columna G: Team / Club (Identificador Grupal)
-            c.metodo_pago || "",                    // Columna H: Método de Pago
-            c.referencia_ref || "",                 // Columna I: Referencia (Compartida o Individual)
-            c.monto_exacto || c.monto_pago || ""    // Columna J: Monto Pago (15$ deducido)
-          ];
-        }
-
-        sheet.appendRow(filaCorredor);
-
-        resumenCorredoresHtml += 
-          "<div style='background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:12px; margin-bottom:10px;'>" +
-            "<div style='color:#d91e2b; font-weight:bold; font-size:15px;'>🏃 Corredor #" + (i + 1) + " — Dorsal Asignado: #" + dorsalStr + "</div>" +
-            "<b>Nombre:</b> " + (c.nombre || "") + " | <b>Cédula:</b> " + (c.cedula || "") + "<br>" +
-            "<b>WhatsApp:</b> " + (c.telefono || "") + " | <b>Email:</b> " + (c.email || "") + "<br>" +
-            "<b>Team / Club:</b> " + (c.team || "") + "<br>" +
-            "<b>Método:</b> " + (c.metodo_pago || "") + " | <b>Ref:</b> " + (c.referencia_ref || "") + "<br>" +
-            "<b>Monto:</b> " + (c.monto_exacto || c.monto_pago || "") +
-          "</div>";
-      }
-
-      // Enviar correo consolidado de la inscripción grupal
       try {
         MailApp.sendEmail({
           to: correoDestino,
-          subject: "🍉 NUEVA INSCRIPCIÓN GRUPAL (" + p.corredores.length + " Corredores): " + eventoName + " - " + (p.team_grupo || "Grupo"),
-          htmlBody: "<div style='font-family: Arial, sans-serif; max-width: 640px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;'>" +
-                    "<h2 style='color: #d91e2b; margin-top: 0;'>🔥 ¡Nueva Inscripción Grupal Recibida! (" + p.corredores.length + " Integrantes)</h2>" +
-                    "<p style='font-size: 16px; color: #1e293b; font-weight: bold;'>Evento: " + eventoName + "</p>" +
-                    "<p style='font-size: 15px; color: #0f172a;'><b>Team / Grupo:</b> " + (p.team_grupo || "Inscripción Grupal") + "<br>" +
-                    "<b>Dorsales Asignados:</b> " + dorsalesAsignados.join(", ") + "</p>" +
-                    "<hr style='border: none; border-top: 1px solid #e2e8f0; margin: 15px 0;'>" +
-                    "<h3 style='color: #1e293b;'>👥 Detalle Individual de Corredores Registrados</h3>" +
-                    resumenCorredoresHtml +
-                    "<p style='color: #64748b; font-size: 12px; margin-top: 20px;'>Cada corredor ya fue insertado en su propia fila dentro de la pestaña <b>" + nombrePestana + "</b> en Google Sheets.</p>" +
+          subject: "🎂 NUEVA ASISTENCIA CONFIRMADA: Cumpleaños Carol 3K - " + nombreFinal,
+          htmlBody: "<div style='font-family: Arial, sans-serif; max-width: 550px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;'>" +
+                    "<h2 style='color: #ff007f; margin-top: 0;'>🎂 ¡Nueva Asistencia Confirmada!</h2>" +
+                    "<p style='font-size: 16px; color: #1e293b; font-weight: bold;'>Evento: Brilla en la Ruta — Carol 3K</p>" +
+                    "<p><b>Nombre y Apellido:</b> " + nombreFinal + "<br>" +
+                    "<b>Teléfono (WhatsApp):</b> " + telefonoFinal + "<br>" +
+                    "<b>Team:</b> " + teamFinal + "</p>" +
+                    "<p style='color: #64748b; font-size: 12px; margin-top: 15px;'>Registrado automáticamente en la pestaña <b>Cumple Carol 3K</b>.</p>" +
                     "</div>"
         });
-      } catch (errEmailGrupal) {
-        Logger.log("Error enviando correo grupal: " + errEmailGrupal);
+      } catch (errMailCarol) {
+        Logger.log("Error enviando correo Carol: " + errMailCarol);
       }
 
       return ContentService.createTextOutput(JSON.stringify({
         "result": "success",
-        "es_grupal": true,
-        "dorsales": dorsalesAsignados
+        "evento": "Cumple Carol 3K",
+        "nombre": nombreFinal
       })).setMimeType(ContentService.MimeType.JSON);
     }
 
     // =========================================================================
-    // CASO B: INSCRIPCIÓN INDIVIDUAL (1 CORREDOR)
+    // CASO 2: EVENTOS DEPORTIVOS DE SANDÍA (PARAGUANÁ HORROR, ROTARY, COFFEE)
     // =========================================================================
     var totalFilas = sheet.getLastRow();
-    var numeroDorsal = totalFilas; // El primer inscrito en fila 2 es el #001
+    var numeroDorsal = totalFilas;
     var dorsalFormateado = String(numeroDorsal).padStart(3, '0');
     
     var registro;
     if (nombrePestana === "Rotary 2da") {
-      // DORSAL EN COLUMNA A Y FECHA EN COLUMNA B
       registro = [
-        "'" + dorsalFormateado,                 // Columna A: DORSAL
-        new Date(),                             // Columna B: Fecha y Hora
-        p.cedula || "",                         // Columna C: Cédula
-        p.nombre || "",                         // Columna D: Nombre y Apellido
-        p.telefono || "",                       // Columna E: WhatsApp
-        p.email || "",                          // Columna F: Correo Electrónico
-        p.fecha_nacimiento || "",               // Columna G: Fecha de Nacimiento
-        p.genero || "",                         // Columna H: Género
-        p.team || "Independiente",              // Columna I: Grupo
-        p.metodo_pago || "",                    // Columna J: Forma de Pago
-        p.referencia_ref || "",                 // Columna K: Referencia / Titular
-        p.monto_exacto || p.monto_pago || ""    // Columna L: Monto
-      ];
-    } else if (nombrePestana === "Cumple Carol 3K") {
-      // Estructura EXACTA de la pestaña "Cumple Carol 3K" en Google Sheets de Sandía Production:
-      // Columna A: Nombre y Apellido
-      // Columna B: Teléfono
-      // Columna C: Team
-      registro = [
-        p.nombre || p.nombre_completo || "",         // Columna A: Nombre y Apellido
-        p.telefono || "",                            // Columna B: Teléfono
-        p.team || "Independiente / Amigo de Carol"   // Columna C: Team
+        "'" + dorsalFormateado,                 // Col A: DORSAL
+        new Date(),                             // Col B: Fecha y Hora
+        p.cedula || "",                         // Col C: Cédula
+        p.nombre || "",                         // Col D: Nombre y Apellido
+        p.telefono || "",                       // Col E: WhatsApp
+        p.email || "",                          // Col F: Correo Electrónico
+        p.fecha_nacimiento || "",               // Col G: Fecha Nacimiento
+        p.genero || "",                         // Col H: Género
+        p.team || "Independiente",              // Col I: Grupo
+        p.metodo_pago || "",                    // Col J: Forma de Pago
+        p.referencia_ref || "",                 // Col K: Referencia
+        p.monto_exacto || p.monto_pago || ""    // Col L: Monto
       ];
     } else {
-      // Estructura exacta para 5K Paraguaná Horror Story y Coffee Run
-      // Col A: Fecha Registro | Col B: Dorsal | Col C: Cédula | Col D: Nombre y Apellido |
-      // Col E: WhatsApp | Col F: Email | Col G: Team / Club | Col H: Método de Pago |
-      // Col I: Referencia | Col J: Monto Pago
       registro = [
-        new Date(),                             // Columna A: Fecha Registro
-        "'" + dorsalFormateado,                 // Columna B: Dorsal
-        p.cedula || "",                         // Columna C: Cédula
-        p.nombre || "",                         // Columna D: Nombre y Apellido
-        p.telefono || "",                       // Columna E: WhatsApp
-        p.email || "",                          // Columna F: Email
-        p.team || "",                           // Columna G: Team / Club
-        p.metodo_pago || "",                    // Columna H: Método de Pago
-        p.referencia_ref || "",                 // Columna I: Referencia
-        p.monto_exacto || p.monto_pago || ""    // Columna J: Monto Pago
+        new Date(),                             // Col A: Fecha Registro
+        "'" + dorsalFormateado,                 // Col B: Dorsal
+        p.cedula || "",                         // Col C: Cédula
+        p.nombre || "",                         // Col D: Nombre y Apellido
+        p.telefono || "",                       // Col E: WhatsApp
+        p.email || "",                          // Col F: Email
+        p.team || "",                           // Col G: Team / Club
+        p.metodo_pago || "",                    // Col H: Método de Pago
+        p.referencia_ref || "",                 // Col I: Referencia
+        p.monto_exacto || p.monto_pago || ""    // Col J: Monto Pago
       ];
     }
     
     sheet.appendRow(registro);
     
-    // ==========================================
-    // NOTIFICACIÓN POR CORREO INDIVIDUAL
-    // ==========================================
     try {
       MailApp.sendEmail({
         to: correoDestino,
@@ -243,17 +237,8 @@ function doPost(e) {
                   "<p style='font-size: 20px; color: #d91e2b; font-weight: bold;'>Dorsal Asignado: #" + dorsalFormateado + "</p>" +
                   "<p><b>Atleta:</b> " + (p.nombre || "") + "<br>" +
                   "<b>Cédula:</b> " + (p.cedula || "") + "<br>" +
-                  (p.fecha_nacimiento ? "<b>F. Nacimiento:</b> " + p.fecha_nacimiento + "<br>" : "") +
-                  (p.genero ? "<b>Género:</b> " + p.genero + "<br>" : "") +
-                  "<b>Team / Club:</b> " + (p.team || "Independiente") + "<br>" +
-                  "<b>WhatsApp:</b> " + (p.telefono || "") + "<br>" +
-                  "<b>Email:</b> " + (p.email || "") + "</p>" +
-                  "<hr style='border: none; border-top: 1px solid #e2e8f0; margin: 15px 0;'>" +
-                  "<h3 style='color: #1e293b;'>💳 Datos de Pago</h3>" +
-                  "<p><b>Forma de Pago:</b> " + (p.metodo_pago || "") + "<br>" +
-                  "<b>Monto Reportado:</b> " + (p.monto_exacto || p.monto_pago || "") + "<br>" +
-                  "<b>N° Referencia / Titular:</b> " + (p.referencia_ref || "") + "</p>" +
-                  "<p style='color: #64748b; font-size: 12px; margin-top: 20px;'>Verifica tu pestaña <b>" + nombrePestana + "</b> en Google Sheets para confirmar al participante.</p>" +
+                  "<b>Team:</b> " + (p.team || "Independiente") + "<br>" +
+                  "<b>WhatsApp:</b> " + (p.telefono || "") + "</p>" +
                   "</div>"
       });
     } catch (errEmail) { 
