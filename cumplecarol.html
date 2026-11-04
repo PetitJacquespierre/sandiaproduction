@@ -211,31 +211,166 @@
             position: relative;
         }
 
-        .hero-banner-frame {
-            position: relative;
-            max-width: 820px;
-            margin: 0 auto 30px;
-            border-radius: 20px;
+        /* HERO MEDIA SHOWCASE (VIDEO HERO + FLYER OFICIAL 9:16) */
+        .hero-media-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 960px;
+            margin: 0 auto 35px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .hero-media-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .hero-media-card {
+            background: rgba(10, 13, 24, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 22px;
             overflow: hidden;
             border-top: 1px solid rgba(255, 255, 255, 0.28);
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 0, 127, 0.25);
-            background: #090c18;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 35px rgba(255, 0, 127, 0.2);
+            position: relative;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
         }
 
-        .hero-banner-frame:hover {
+        .hero-media-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 45px rgba(212, 255, 0, 0.3);
+            box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), 0 0 45px rgba(212, 255, 0, 0.25);
         }
 
-        .hero-banner-frame img {
+        .media-header-badge {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: rgba(6, 8, 16, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .media-header-badge.badge-video {
+            color: var(--neon-yellow);
+        }
+
+        .media-header-badge.badge-flyer {
+            color: var(--neon-pink);
+        }
+
+        .video-wrapper-hero {
+            position: relative;
+            width: 100%;
+            background: #000000;
+            aspect-ratio: 9 / 16;
+            max-height: 640px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .video-wrapper-hero video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .btn-sound-toggle {
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            background: rgba(6, 7, 14, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 7px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .btn-sound-toggle:hover {
+            background: rgba(255, 0, 127, 0.3);
+            border-color: var(--neon-pink);
+            transform: scale(1.05);
+        }
+
+        /* FLYER OFICIAL COMPLETO 9:16 */
+        .flyer-wrapper-916 {
+            position: relative;
+            width: 100%;
+            background: #06070e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .flyer-wrapper-916 img {
             width: 100%;
             height: auto;
             display: block;
-            object-fit: cover;
+            object-fit: contain;
+            aspect-ratio: 9 / 16;
+        }
+
+        .flyer-action-bar {
+            display: flex;
+            gap: 10px;
+            padding: 14px 16px;
+            width: 100%;
+            background: rgba(8, 10, 20, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-flyer-action {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.25s;
+        }
+
+        .btn-flyer-action:hover {
+            background: rgba(255, 0, 127, 0.15);
+            border-color: var(--neon-pink);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .btn-flyer-action.btn-download:hover {
+            background: rgba(212, 255, 0, 0.15);
+            border-color: var(--neon-yellow);
         }
 
         .hero-eyebrow {
@@ -1144,12 +1279,48 @@
                 <span class="hero-badge-3k">3K</span>
             </div>
 
-            <!-- FLYER HERO FRAME -->
-            <div class="hero-banner-frame">
-                <picture>
-                    <source media="(min-width: 641px)" srcset="img/carol3k_banner.jpg">
-                    <img src="img/carol3k_flyer.jpg" alt="Flyer Oficial Brilla en la Ruta — Carol 3K" loading="eager">
-                </picture>
+            <!-- HERO MEDIA SHOWCASE: VIDEO HERO + FLYER OFICIAL 9:16 -->
+            <div class="hero-media-grid">
+                
+                <!-- VIDEO HERO CAROL 3K -->
+                <div class="hero-media-card">
+                    <div class="media-header-badge badge-video">
+                        <span style="display:inline-flex; align-items:center; gap:6px;">
+                            <span class="pulse-dot"></span> VIDEO PROMO OFICIAL
+                        </span>
+                        <span style="font-size:0.7rem; color:var(--text-muted);">HD // AFTER RUN</span>
+                    </div>
+                    <div class="video-wrapper-hero">
+                        <video id="hero-carol-video" autoplay loop muted playsinline poster="img/carol3k_banner.jpg">
+                            <source src="img/cumplecarol3khero.mp4" type="video/mp4">
+                            Tu navegador no soporta el video.
+                        </video>
+                        <button type="button" class="btn-sound-toggle" onclick="toggleHeroSound()" id="btn-hero-sound">
+                            <span id="sound-icon">🔇</span>
+                            <span id="sound-text">Activar Sonido</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FLYER OFICIAL COMPLETO (FORMATO 9:16) -->
+                <div class="hero-media-card">
+                    <div class="media-header-badge badge-flyer">
+                        <span>🌟 FLYER COMPLETO (9:16)</span>
+                        <span style="font-size:0.7rem; color:var(--text-muted);">DETALLES OFICIALES</span>
+                    </div>
+                    <div class="flyer-wrapper-916">
+                        <img src="img/carol3k_flyer.jpg" alt="Flyer Oficial Completo 9:16 - Cumpleaños de Carol 3K" loading="eager" id="flyer-full-916-img">
+                        <div class="flyer-action-bar">
+                            <a href="img/carol3k_flyer.jpg" target="_blank" rel="noopener" class="btn-flyer-action">
+                                <span>🔍</span> Ver Completo
+                            </a>
+                            <a href="img/carol3k_flyer.jpg" download="Flyer_Carol_3K_Brilla_En_La_Ruta.jpg" class="btn-flyer-action btn-download">
+                                <span>📥</span> Descargar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <p class="hero-copy">
@@ -1460,6 +1631,7 @@
         <p style="margin-top: 6px;">
             Desarrollado con pasión por <a href="https://growstudioweb.vercel.app/" target="_blank" rel="noopener">Grow Studio Agency</a>.
             <button class="easter-egg-btn" id="easter-egg-trigger" title="Grow Studio Secret">⚡</button>
+            <button class="easter-egg-btn" onclick="exportarInvitadosCSV()" title="Descargar Lista de Asistencia (Excel/CSV)" style="color:#64748b; font-size:0.75rem; margin-left:8px;">[📋 Exportar CSV]</button>
         </p>
     </footer>
 
@@ -1501,7 +1673,27 @@
         updateCountdown();
 
         // =========================================================================
-        // 2. SELECCIÓN RÁPIDA DE TEAM (CHIPS)
+        // 2. CONTROL DE AUDIO VIDEO HERO
+        // =========================================================================
+        function toggleHeroSound() {
+            const video = document.getElementById("hero-carol-video");
+            const soundIcon = document.getElementById("sound-icon");
+            const soundText = document.getElementById("sound-text");
+            if (!video) return;
+
+            if (video.muted) {
+                video.muted = false;
+                if (soundIcon) soundIcon.innerText = "🔊";
+                if (soundText) soundText.innerText = "Silenciar";
+            } else {
+                video.muted = true;
+                if (soundIcon) soundIcon.innerText = "🔇";
+                if (soundText) soundText.innerText = "Activar Sonido";
+            }
+        }
+
+        // =========================================================================
+        // 3. SELECCIÓN RÁPIDA DE TEAM (CHIPS)
         // =========================================================================
         function selectTeam(teamName) {
             const input = document.getElementById("input-team");
@@ -1605,6 +1797,15 @@
                 dorsal: dorsalCode,
                 fecha_registro: new Date().toISOString()
             };
+
+            // Respaldo local de seguridad anti-fallas (Zero Pérdida de Datos)
+            try {
+                const listaLocal = JSON.parse(localStorage.getItem("invitados_carol_3k") || "[]");
+                listaLocal.push(payload);
+                localStorage.setItem("invitados_carol_3k", JSON.stringify(listaLocal));
+            } catch(eBackup) {
+                console.warn("Error en localStorage:", eBackup);
+            }
 
             try {
                 // Envío asíncrono a Google Sheets (con modo no-cors de compatibilidad)
@@ -1719,6 +1920,31 @@
 
         if (brandLogo) brandLogo.addEventListener("click", handleEasterEgg);
         if (easterTrigger) easterTrigger.addEventListener("click", handleEasterEgg);
+        // =========================================================================
+        // 9. EXPORTADOR DE RESPALDO CSV / EXCEL
+        // =========================================================================
+        function exportarInvitadosCSV() {
+            const data = JSON.parse(localStorage.getItem("invitados_carol_3k") || "[]");
+            if (data.length === 0) {
+                showToast("ℹ️ Aún no hay registros en este navegador. Llena el formulario una vez para probar.");
+                return;
+            }
+            let csv = "\uFEFFFecha,Pase ID,Nombre,Apellido,Telefono,Team,Confirmacion,Mensaje\n";
+            data.forEach(item => {
+                csv += `"${item.fecha_registro}","${item.dorsal}","${item.nombre}","${item.apellido}","${item.telefono}","${item.team}","${item.confirmacion}","${(item.mensaje || "").replace(/"/g, '""')}"\n`;
+            });
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `Invitados_Cumple_Carol_3K_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("📥 ¡Lista de invitados descargada en CSV!");
+        }
+        window.descargarInvitados = exportarInvitadosCSV;
     </script>
 </body>
 </html>
