@@ -122,6 +122,16 @@ function doPost(e) {
     // Col A: # | Col B: Nombre y Apellido | Col C: Teléfono | Col D: Team
     // =========================================================================
     if (nombrePestana === "Cumple Carol 3K") {
+      // 🔒 CANDADO 2 (BACKEND APPS SCRIPT): CIERRE OFICIAL DE ASISTENCIA
+      var INSCRIPCIONES_CAROL_CERRADAS = true;
+      if (INSCRIPCIONES_CAROL_CERRADAS) {
+        Logger.log("⛔ Registro rechazado: Las confirmaciones para Cumple Carol 3K están cerradas oficialmente.");
+        return ContentService.createTextOutput(JSON.stringify({
+          "status": "closed",
+          "message": "Las confirmaciones para el Cumpleaños de Carol 3K han cerrado oficialmente. Cupos al 100%."
+        })).setMimeType(ContentService.MimeType.JSON);
+      }
+
       var nombreFinal = p.nombre || p.nombre_completo || "";
       var telefonoFinal = p.telefono || "";
       var teamFinal = p.team || "Independiente / Amigo de Carol";

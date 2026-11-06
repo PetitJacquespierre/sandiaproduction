@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <!-- Google tag (gtag.js) -->
@@ -847,6 +847,11 @@
             <span class="carol-badge-3k">3K</span>
         </div>
 
+        <!-- BADGE OFICIAL DE CIERRE -->
+        <div style="margin-top: 14px; text-align: center;">
+            <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(239, 68, 68, 0.16); border: 1px solid #ef4444; color: #ff6b6b; padding: 6px 18px; border-radius: 30px; font-size: 0.82rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);">&#128274; LISTA OFICIAL CERRADA &bull; CUPOS AL 100%</span>
+        </div>
+
         <!-- CUENTA REGRESIVA EN VIVO -->
         <div class="countdown-container-carol" id="countdown-box">
             <div class="countdown-box-item">
@@ -907,15 +912,12 @@
                 </div>
             </div>
 
-            <div class="alert-warning-logistic">
+            <div class="alert-warning-logistic" style="background: rgba(239, 68, 68, 0.08); border-left-color: #ef4444;">
                 <p style="margin-bottom: 8px;">
-                    <strong>📝 Para que todo salga perfecto y no nos falte (ni nos sobre) nada en la organización:</strong>
+                    <strong style="color: #ff6b6b;">🔒 ESTADO DE LA CONVOCATORIA:</strong>
                 </p>
-                <p style="margin-bottom: 8px;">
-                    Necesitamos que por favor te registres en la web aquí abajo 👇
-                </p>
-                <p>
-                    <strong>⚠️ Ojo al dato:</strong> Es de suma importancia que sepas que <strong>llenar este formulario equivale a confirmar tu asistencia</strong>, ya que en base a esto haremos toda la logística del cumpleaños. Por favor, si no vas a poder asistir, te pedimos que no llenes el formulario. Así nos ayudas muchísimo a calcular todo con precisión. ❌🏃‍♂️💨
+                <p style="text-align: justify; text-justify: inter-word; hyphens: auto; margin: 0;">
+                    <strong>¡Cupos completos al 100%!</strong> Agradecemos inmensamente el cariño y la respuesta masiva de toda la comunidad runner y amigos. La lista oficial de confirmaciones ha sido cerrada para garantizar la logística y refrigerios de los atletas registrados. ¡Nos vemos este 19 de noviembre para brillar en la ruta! 🌟👟
                 </p>
             </div>
 
@@ -930,54 +932,36 @@
 
     <!-- FORMULARIO OFICIAL DE CONFIRMACIÓN DE ASISTENCIA -->
     <section class="carol-form-container" id="confirmacion-asistencia">
-        <div class="carol-form-card">
-            <h2 class="form-heading-title">CONFIRMA TU <span>ASISTENCIA</span></h2>
-            <p class="form-heading-sub">Llena tus datos para asegurar tu puesto en la lista oficial de la fiesta</p>
+        <div class="carol-form-card" style="text-align: center; border: 1px solid rgba(212, 255, 0, 0.35); box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 0 35px rgba(212, 255, 0, 0.04);">
+            <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(239, 68, 68, 0.16); border: 1px solid #ef4444; color: #ff6b6b; padding: 6px 18px; border-radius: 30px; font-size: 0.82rem; font-weight: 800; letter-spacing: 1.5px; margin-bottom: 18px; text-transform: uppercase;">
+                🔒 LISTA OFICIAL CERRADA • CUPOS AL 100%
+            </div>
+            
+            <h2 class="form-heading-title" style="margin-bottom: 14px;">¡GRACIAS POR EL <span>APOYO!</span></h2>
+            
+            <p style="text-align: justify; text-justify: inter-word; hyphens: auto; color: #cbd5e1; font-size: 0.98rem; line-height: 1.7; max-width: 620px; margin: 0 auto 22px;">
+                Hemos alcanzado el límite máximo de asistentes confirmados para garantizar una logística impecable, hidratación y la mejor experiencia en la ruta. <strong>El registro para el Cumpleaños de Carol 3K ha culminado oficialmente.</strong>
+            </p>
 
-            <form id="form-carol" novalidate>
-                <!-- HONEYPOT ANTI-SPAM (INVISIBLE) -->
-                <div style="display:none !important;" aria-hidden="true">
-                    <label for="gotcha-carol">No llenar</label>
-                    <input type="text" name="_gotcha" id="gotcha-carol" tabindex="-1" autocomplete="off">
-                </div>
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 20px 22px; max-width: 580px; margin: 0 auto 25px; text-align: left;">
+                <h4 style="color: var(--carol-yellow); font-size: 0.95rem; margin: 0 0 10px; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+                    📍 Recordatorio para los corredores confirmados:
+                </h4>
+                <ul style="margin: 0; padding-left: 20px; color: #94a3b8; font-size: 0.88rem; line-height: 1.7;">
+                    <li><strong style="color: #fff;">Lugar de encuentro y hora:</strong> F5 Centro Deportivo a las 6:00 PM (19 de noviembre de 2026).</li>
+                    <li><strong style="color: #fff;">Código de vestimenta:</strong> Ropa deportiva neón / colores vivos para brillar en la ruta ⚡.</li>
+                    <li><strong style="color: #fff;">Puntualidad:</strong> Te esperamos con la mejor energía para celebrar juntos.</li>
+                </ul>
+            </div>
 
-                <div class="form-group-carol">
-                    <label for="input-nombre">Nombre y Apellido <span class="req">*</span></label>
-                    <input type="text" id="input-nombre" name="nombre" class="form-input-carol" placeholder="Ingresa tu nombre y apellido" required autocomplete="name">
-                </div>
-
-                <div class="form-row-2col">
-                    <div class="form-group-carol">
-                        <label for="input-telefono">Teléfono <span class="req">*</span></label>
-                        <input type="tel" id="input-telefono" name="telefono" class="form-input-carol" placeholder="Ej. 04121234567" required autocomplete="tel">
-                    </div>
-                    <div class="form-group-carol">
-                        <label for="input-team">Team <span class="req">*</span></label>
-                        <input type="text" id="input-team" name="team" class="form-input-carol" placeholder="Selecciona tu team o escribe aquí" required>
-                        <div class="team-chips-wrapper">
-                            <span class="team-chips-label">Selección rápida:</span>
-                            <div class="team-chips-grid">
-                                <button type="button" class="btn-team-chip" onclick="elegirTeam('Team FS')">Team FS</button>
-                                <button type="button" class="btn-team-chip" onclick="elegirTeam('RunFree')">RunFree</button>
-                                <button type="button" class="btn-team-chip" onclick="elegirTeam('FalconFit')">FalconFit</button>
-                                <button type="button" class="btn-team-chip" onclick="elegirTeam('Armyfit')">Armyfit</button>
-                                <button type="button" class="btn-team-chip" onclick="elegirTeam('Runner PF')">Runner PF</button>
-                                <button type="button" class="btn-team-chip" onclick="elegirTeam('Amigos de Carol')">Amigos de Carol</button>
-                                <button type="button" class="btn-team-chip" onclick="elegirTeam('Independiente')">Independiente</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-carol-submit" id="btn-submit-carol" style="margin-top: 10px;">
-                    <span id="btn-submit-text">🌟 CONFIRMAR ASISTENCIA</span>
-                </button>
-            </form>
+            <a href="#cartel-oficial" class="btn-carol-submit" style="display: inline-block; text-decoration: none; width: auto; padding: 14px 32px; font-size: 0.9rem; font-weight: 800;">
+                👇 VER CARTEL OFICIAL Y DETALLES DE LA RUTA
+            </a>
         </div>
     </section>
 
     <!-- CARTEL OFICIAL COMPLETO 9:16 (FLYER) -->
-    <section class="carol-flyer-section">
+    <section class="carol-flyer-section" id="cartel-oficial">
         <div class="flyer-full-card">
             <span class="flyer-tag-ribbon">📄 CARTEL OFICIAL DE LA RUTA (FORMATO 9:16)</span>
             <img src="img/carol3k_flyer.jpg" alt="Cartel Oficial Brilla en la Ruta - Cumpleaños de Carol 3K" loading="lazy" style="margin-bottom: 0;">
@@ -1080,52 +1064,21 @@
         // Endpoint Oficial Unificado de Sandía Production (Google Apps Script)
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyl4z2AEREoDCINfDc-3zLukIEafbXHRO88Lr5tinkRZGUTQsALCrRQJvNMd6hUycPE3A/exec";
 
-        formCarol.addEventListener("submit", async function(e) {
-            e.preventDefault();
+                // =========================================================================
+                // =========================================================================
+        // 🔒 CANDADO 1 (FRONTEND): BLOQUEO TOTAL DE REGISTRO EN CASO DE PESTAÑA EN MEMORIA
+        // =========================================================================
+        const INSCRIPCIONES_CAROL_CERRADAS = true;
 
-            // Honeypot anti-spam
-            if (document.getElementById("gotcha-carol").value) return;
-
-            const nombre = document.getElementById("input-nombre").value.trim();
-            const telefono = document.getElementById("input-telefono").value.trim();
-            const team = document.getElementById("input-team").value.trim();
-
-            if (!nombre || !telefono || !team) {
-                alert("Por favor completa los 3 campos: Nombre y Apellido, Teléfono y Team.");
-                return;
-            }
-
-            btnSubmitCarol.disabled = true;
-            btnSubmitText.innerText = "CONFIRMANDO ASISTENCIA...";
-
-            // Payload exacto que se inserta en las Columnas A, B y C de la pestaña 'Cumple Carol 3K'
-            const payload = {
-                evento: "Cumpleaños Carol 3K",
-                nombre: nombre,
-                telefono: telefono,
-                team: team
-            };
-
-            try {
-                await fetch(urlScriptGoogle, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-            } catch (err) {
-                console.warn("Respuesta recibida:", err);
-            }
-
-            // Mostrar modal de confirmación
-            document.getElementById("modal-registered-name").innerText = nombre;
-            document.getElementById("modal-confirmado").classList.add("active");
-
-            // Resetear
-            formCarol.reset();
-            btnSubmitCarol.disabled = false;
-            btnSubmitText.innerText = "🌟 CONFIRMAR ASISTENCIA";
-        });
+        if (formCarol) {
+            formCarol.addEventListener("submit", async function(e) {
+                e.preventDefault();
+                if (INSCRIPCIONES_CAROL_CERRADAS) {
+                    alert("🔒 Las confirmaciones para el Cumpleaños de Carol 3K han cerrado oficialmente. ¡Cupos completados al 100%!");
+                    return false;
+                }
+            });
+        }
 
         function cerrarModalConfirmacion() {
             document.getElementById("modal-confirmado").classList.remove("active");
