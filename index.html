@@ -278,8 +278,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ENLACE DE ACCESIBILIDAD PARA LECTORES DE PANTALLA Y NAVEGACIÓN POR TECLADO -->
-    <a href="#main" class="sr-only focus:not-sr-only">Saltar al contenido</a>
+
+
 
     <!-- PANTALLA DE CARGA -->
     <div id="splash-screen">
@@ -293,12 +293,14 @@
             <div class="particula p3"></div>
             <div class="particula p4"></div>
             <div class="particula p5"></div>
-            <img src="img/Isotipo.png" alt="Sandía Production Isotipo" id="sandia-logo" width="1024" height="1024">
+            <img src="img/Isotipo.png" alt="Sandía Production Isotipo" id="sandia-logo">
         </div>
     </div>
 
     <!-- CONTENIDO PRINCIPAL -->
     <div id="main-content">
+        <!-- ENLACE DE ACCESIBILIDAD PARA LECTORES DE PANTALLA -->
+        <a href="#main" class="sr-only focus:not-sr-only">Saltar al contenido</a>
         
         <!-- NAVBAR -->
         <nav class="navbar-sandia">
@@ -1197,19 +1199,22 @@
             }
         }
 
-        window.onload = () => {
+        // Anti-bloqueo: permitir saltar el splash al primer clic, toque, tecla o rueda de inmediato
+        ['click', 'touchstart', 'keydown', 'wheel'].forEach(evt => {
+            window.addEventListener(evt, dismissSplash, { once: true, passive: true });
+        });
+
+        // Iniciar animación y contador de liberación del splash de inmediato (máx 1.2s)
+        try {
             animate();
             emitirRafagaSelectiva(6, 10);
             programarOleadasDispersas();
+        } catch (e) {
+            console.warn("Fallo animación splash:", e);
+        }
+        splashTimer = setTimeout(dismissSplash, 1200);
 
-            // Splash ágil y dinámico (1.2s máx)
-            splashTimer = setTimeout(dismissSplash, 1200);
-
-            // Permitir saltar el splash al primer clic, toque, tecla o rueda
-            ['click', 'touchstart', 'keydown', 'wheel'].forEach(evt => {
-                window.addEventListener(evt, dismissSplash, { once: true, passive: true });
-            });
-
+        window.onload = () => {
             cargarCarrerasCarousel();
             cargarAliados();
         };
