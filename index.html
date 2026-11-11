@@ -393,35 +393,12 @@
 
         <!-- CABECERA PRINCIPAL CON VIDEO HERO Y POSTER DE RESPALDO -->
         <header class="index-hero-container" id="main">
-            <video autoplay loop muted playsinline preload="metadata" poster="img/hero_poster.jpeg" class="index-hero-video" width="1920" height="1080">
+            <video autoplay loop muted playsinline preload="none" poster="img/hero_poster.jpeg" class="index-hero-video" width="1920" height="1080">
                 <source src="img/hero_calendario.mp4" type="video/mp4">
             </video>
             <div class="index-hero-overlay"></div>
 
             <div class="index-hero-content">
-                <!-- BREADCRUMBS SEMÁNTICOS VISIBLES (MIGAS DE PAN) -->
-                <nav aria-label="Migas de pan" class="hero-breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
-                    <ol class="breadcrumbs-list">
-                        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                            <a itemprop="item" href="https://www.sandiaproduction.com/">
-                                <span itemprop="name">Inicio</span>
-                            </a>
-                            <meta itemprop="position" content="1" />
-                        </li>
-                        <li class="breadcrumbs-sep" aria-hidden="true">/</li>
-                        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                            <a itemprop="item" href="https://www.sandiaproduction.com/calendario.html">
-                                <span itemprop="name">Calendario Runner</span>
-                            </a>
-                            <meta itemprop="position" content="2" />
-                        </li>
-                        <li class="breadcrumbs-sep" aria-hidden="true">/</li>
-                        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
-                            <span itemprop="name" class="breadcrumbs-active">Eventos Deportivos</span>
-                            <meta itemprop="position" content="3" />
-                        </li>
-                    </ol>
-                </nav>
                 <h1 class="index-hero-title">VIVE LA PASIÓN <span>RUNNING</span></h1>
                 <p class="index-hero-desc">Tu próximo reto comienza aquí</p>
             </div>
@@ -888,141 +865,78 @@
         let carruselInterval; 
         let eventosActivosGlobal = [];
 
-        async function cargarCarrerasCarousel() {
-            const carouselContainer = document.getElementById('carousel-carreras');
+        function procesarYRenderizarEventos(todosLosEventos) {
             const pasadosContainer = document.getElementById('contenedor-pasados');
-            
-            try {
-                // Eventos locales destacados de respaldo
-                const eventosLocalesFallback = [
-                    {
-                        titulo: "5K Paraguaná Horror Story",
-                        dia: "31",
-                        mes: "OCT",
-                        ubicacion: "Sambil Paraguaná / 7:00 PM",
-                        imagen: "paraguanahorror_ultimoscupos.jpg",
-                        enlace: "paraguanahorror.html",
-                        textoBoton: "¡Últimos Cupos! 🔥",
-                        estado: "ACTIVO",
-                        categoria: "SANDIA",
-                        destacado_index: true
-                    },
-                    {
-                        titulo: "SANTA RUN 5K - Copa Ford Pro 2026",
-                        dia: "05",
-                        mes: "DIC",
-                        ubicacion: "Plaza Bolívar, Punto Fijo / 6:30 PM",
-                        imagen: "santarun5kford.jpg",
-                        enlace: "https://docs.google.com/forms/d/e/1FAIpQLScTXhjZmsKoG1eQ1WwPo6PeScNjvVuSToTxigkZNBK7yCqobg/viewform",
-                        textoBoton: "Inscribirme en Google Forms",
-                        estado: "ACTIVO",
-                        categoria: "LOCAL",
-                        destacado_index: true
-                    },
-                    {
-                        titulo: "Coffee Run ¡Madre Mía! 3K Vol. 2",
-                        dia: "27",
-                        mes: "SEP",
-                        ubicacion: "Av. Francisco de Miranda / Madre Mía",
-                        imagen: "madremia.jpg",
-                        enlace: "https://forms.gle/CqN4gF54xLK3vo6T6",
-                        textoBoton: "Inscribirme en Google Forms",
-                        estado: "ACTIVO",
-                        categoria: "REGIONAL",
-                        destacado_index: true
-                    },
-                    {
-                        titulo: "Coffee Run 3K Vol. 1",
-                        dia: "10",
-                        mes: "AGO",
-                        ubicacion: "Terraza Tinaja",
-                        imagen: "coffee_run.png",
-                        enlace: "",
-                        textoBoton: "Galería de Fotos",
-                        estado: "COMPLETADO",
-                        categoria: "SANDIA",
-                        destacado_index: false
-                    }
-                ];
+            if (!todosLosEventos || todosLosEventos.length === 0) return;
 
-                let eventosFirebase = [];
-                try {
-                    if (window.getSandiaEventos) {
-                        eventosFirebase = await window.getSandiaEventos();
-                    }
-                } catch(e) {
-                    console.warn("Fallo lectura Firebase, usando lista local:", e);
+            // Asegurar que Santa Run 5K Copa Ford Pro esté presente en el carrusel
+            const tieneSanta = todosLosEventos.some(e => (e.titulo || '').toUpperCase().includes('SANTA') || (e.titulo || '').toUpperCase().includes('FORD'));
+            if (!tieneSanta) {
+                todosLosEventos.push({
+                    titulo: "SANTA RUN 5K - Copa Ford Pro 2026",
+                    dia: "05",
+                    mes: "DIC",
+                    ubicacion: "Plaza Bolívar, Punto Fijo / 6:30 PM",
+                    imagen: "santarun5kford.jpg",
+                    enlace: "https://docs.google.com/forms/d/e/1FAIpQLScTXhjZmsKoG1eQ1WwPo6PeScNjvVuSToTxigkZNBK7yCqobg/viewform",
+                    textoBoton: "Inscribirme en Google Forms",
+                    estado: "ACTIVO",
+                    categoria: "LOCAL",
+                    destacado_index: true
+                });
+            }
+
+            eventosActivosGlobal = [];
+            let pasadosArray = []; 
+
+            todosLosEventos.forEach(evento => {
+                const titLower = (evento.titulo || '').toLowerCase();
+                if (titLower.includes('horror')) {
+                    evento.imagen = 'paraguanahorror_ultimoscupos.jpg';
+                    evento.textoBoton = '¡Últimos Cupos! 🔥';
+                    evento.estado = 'ACTIVO';
+                    evento.activo = 'SI';
                 }
+                let clickAction = evento.enlace && evento.enlace.startsWith('http') ? `window.open('${evento.enlace}', '_blank')` : (evento.enlace ? `window.location.href='${evento.enlace}'` : `alert('Más información próximamente...')`);
 
-                let todosLosEventos = (eventosFirebase && eventosFirebase.length > 0) ? eventosFirebase : eventosLocalesFallback;
+                const esActivo = (evento.estado === "ACTIVO" || evento.activo === "SI");
+                const esCompletado = (evento.estado === "COMPLETADO" || evento.activo === "NO");
 
-                // Asegurar que Santa Run 5K Copa Ford Pro esté presente en el carrusel
-                const tieneSanta = todosLosEventos.some(e => (e.titulo || '').toUpperCase().includes('SANTA') || (e.titulo || '').toUpperCase().includes('FORD'));
-                if (!tieneSanta) {
-                    todosLosEventos.push({
-                        titulo: "SANTA RUN 5K - Copa Ford Pro 2026",
-                        dia: "05",
-                        mes: "DIC",
-                        ubicacion: "Plaza Bolívar, Punto Fijo / 6:30 PM",
-                        imagen: "santarun5kford.jpg",
-                        enlace: "https://docs.google.com/forms/d/e/1FAIpQLScTXhjZmsKoG1eQ1WwPo6PeScNjvVuSToTxigkZNBK7yCqobg/viewform",
-                        textoBoton: "Inscribirme en Google Forms",
-                        estado: "ACTIVO",
-                        categoria: "LOCAL",
-                        destacado_index: true
+                if (esActivo && (evento.destacado_index !== false)) {
+                    eventosActivosGlobal.push({
+                        eventoData: evento,
+                        accionClick: clickAction
+                    });
+                } 
+                else if (esCompletado) {
+                    pasadosArray.push({
+                        eventoData: evento,
+                        accionClick: clickAction
                     });
                 }
+            });
 
-                eventosActivosGlobal = [];
-                let pasadosArray = []; 
+            // PRIORIDAD ABSOLUTA: Eventos oficiales de Sandía Production siempre de primerito
+            eventosActivosGlobal.sort((a, b) => {
+                const catA = (a.eventoData.categoria || '').toUpperCase();
+                const catB = (b.eventoData.categoria || '').toUpperCase();
+                const titA = (a.eventoData.titulo || '').toLowerCase();
+                const titB = (b.eventoData.titulo || '').toLowerCase();
+                
+                const esSandiaA = catA.includes('SANDIA') || titA.includes('horror') || titA.includes('coffee run') || titA.includes('sandía');
+                const esSandiaB = catB.includes('SANDIA') || titB.includes('horror') || titB.includes('coffee run') || titB.includes('sandía');
 
-                todosLosEventos.forEach(evento => {
-                    const titLower = (evento.titulo || '').toLowerCase();
-                    if (titLower.includes('horror')) {
-                        evento.imagen = 'paraguanahorror_ultimoscupos.jpg';
-                        evento.textoBoton = '¡Últimos Cupos! 🔥';
-                        evento.estado = 'ACTIVO';
-                        evento.activo = 'SI';
-                    }
-                    let clickAction = evento.enlace && evento.enlace.startsWith('http') ? `window.open('${evento.enlace}', '_blank')` : (evento.enlace ? `window.location.href='${evento.enlace}'` : `alert('Más información próximamente...')`);
+                if (esSandiaA && !esSandiaB) return -1;
+                if (!esSandiaA && esSandiaB) return 1;
+                
+                const ordA = a.eventoData.orden !== undefined ? a.eventoData.orden : 999;
+                const ordB = b.eventoData.orden !== undefined ? b.eventoData.orden : 999;
+                return ordA - ordB;
+            });
 
-                    const esActivo = (evento.estado === "ACTIVO" || evento.activo === "SI");
-                    const esCompletado = (evento.estado === "COMPLETADO" || evento.activo === "NO");
+            renderizarCarrerasActivas(eventosActivosGlobal);
 
-                    if (esActivo && (evento.destacado_index !== false)) {
-                        eventosActivosGlobal.push({
-                            eventoData: evento,
-                            accionClick: clickAction
-                        });
-                    } 
-                    else if (esCompletado) {
-                        pasadosArray.push({
-                            eventoData: evento,
-                            accionClick: clickAction
-                        });
-                    }
-                });
-
-                // PRIORIDAD ABSOLUTA: Eventos oficiales de Sandía Production siempre de primerito
-                eventosActivosGlobal.sort((a, b) => {
-                    const catA = (a.eventoData.categoria || '').toUpperCase();
-                    const catB = (b.eventoData.categoria || '').toUpperCase();
-                    const titA = (a.eventoData.titulo || '').toLowerCase();
-                    const titB = (b.eventoData.titulo || '').toLowerCase();
-                    
-                    const esSandiaA = catA.includes('SANDIA') || titA.includes('horror') || titA.includes('coffee run') || titA.includes('sandía');
-                    const esSandiaB = catB.includes('SANDIA') || titB.includes('horror') || titB.includes('coffee run') || titB.includes('sandía');
-
-                    if (esSandiaA && !esSandiaB) return -1;
-                    if (!esSandiaA && esSandiaB) return 1;
-                    
-                    const ordA = a.eventoData.orden !== undefined ? a.eventoData.orden : 999;
-                    const ordB = b.eventoData.orden !== undefined ? b.eventoData.orden : 999;
-                    return ordA - ordB;
-                });
-
-                renderizarCarrerasActivas(eventosActivosGlobal);
-
+            if (pasadosContainer) {
                 if (pasadosArray.length > 0) {
                     let htmlPasados = '';
                     let ultimosPasados = pasadosArray.slice(0, 10);
@@ -1055,11 +969,76 @@
                 } else {
                     pasadosContainer.innerHTML = '<p style="color:#aaa; text-align:center; width:100%;">Aún no hay carreras registradas en el historial.</p>';
                 }
+            }
+        }
 
-            } catch (error) {
-                console.error("Error al cargar eventos:", error);
-                carouselContainer.innerHTML = '<p style="color:red; text-align:center; width:100%;">Error al conectar con el servidor.</p>';
-                pasadosContainer.innerHTML = '<p style="color:red; text-align:center; width:100%;">Error al conectar con el servidor.</p>';
+        async function cargarCarrerasCarousel() {
+            // Eventos locales destacados de respaldo (inmediatos sin esperas)
+            const eventosLocalesFallback = [
+                {
+                    titulo: "5K Paraguaná Horror Story",
+                    dia: "31",
+                    mes: "OCT",
+                    ubicacion: "Sambil Paraguaná / 7:00 PM",
+                    imagen: "paraguanahorror_ultimoscupos.jpg",
+                    enlace: "paraguanahorror.html",
+                    textoBoton: "¡Últimos Cupos! 🔥",
+                    estado: "ACTIVO",
+                    categoria: "SANDIA",
+                    destacado_index: true
+                },
+                {
+                    titulo: "SANTA RUN 5K - Copa Ford Pro 2026",
+                    dia: "05",
+                    mes: "DIC",
+                    ubicacion: "Plaza Bolívar, Punto Fijo / 6:30 PM",
+                    imagen: "santarun5kford.jpg",
+                    enlace: "https://docs.google.com/forms/d/e/1FAIpQLScTXhjZmsKoG1eQ1WwPo6PeScNjvVuSToTxigkZNBK7yCqobg/viewform",
+                    textoBoton: "Inscribirme en Google Forms",
+                    estado: "ACTIVO",
+                    categoria: "LOCAL",
+                    destacado_index: true
+                },
+                {
+                    titulo: "Coffee Run ¡Madre Mía! 3K Vol. 2",
+                    dia: "27",
+                    mes: "SEP",
+                    ubicacion: "Av. Francisco de Miranda / Madre Mía",
+                    imagen: "madremia.jpg",
+                    enlace: "https://forms.gle/CqN4gF54xLK3vo6T6",
+                    textoBoton: "Inscribirme en Google Forms",
+                    estado: "ACTIVO",
+                    categoria: "REGIONAL",
+                    destacado_index: true
+                },
+                {
+                    titulo: "Coffee Run 3K Vol. 1",
+                    dia: "10",
+                    mes: "AGO",
+                    ubicacion: "Terraza Tinaja",
+                    imagen: "coffee_run.png",
+                    enlace: "",
+                    textoBoton: "Galería de Fotos",
+                    estado: "COMPLETADO",
+                    categoria: "SANDIA",
+                    destacado_index: false
+                }
+            ];
+
+            // 1. RENDERIZADO INMEDIATO (0ms: sin reloj de arena "Actualizando Retos...")
+            procesarYRenderizarEventos([...eventosLocalesFallback]);
+
+            // 2. Consulta asíncrona a Firebase con límite de 2.5s (sin bloquear UI)
+            try {
+                if (window.getSandiaEventos) {
+                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2500));
+                    const eventosFirebase = await Promise.race([window.getSandiaEventos(), timeoutPromise]);
+                    if (eventosFirebase && eventosFirebase.length > 0) {
+                        procesarYRenderizarEventos(eventosFirebase);
+                    }
+                }
+            } catch(e) {
+                console.warn("Firebase demorado o desconectado, conservando datos locales:", e);
             }
         }
 
@@ -1211,11 +1190,13 @@
         async function cargarAliados() {
             const track = document.getElementById('track-aliados');
             const seccionAliados = document.getElementById('aliados');
+            if (!track || !seccionAliados) return;
             
             try {
                 let aliados = [];
                 if (window.getSandiaAliados) {
-                    aliados = await window.getSandiaAliados();
+                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2500));
+                    aliados = await Promise.race([window.getSandiaAliados(), timeoutPromise]);
                 }
 
                 if (aliados && aliados.length > 0) {
@@ -1238,8 +1219,8 @@
                     seccionAliados.style.display = 'none';
                 }
             } catch (error) {
-                console.error("Error al cargar aliados:", error);
-                track.innerHTML = '<p style="color:#aaa; text-align:center;">No se pudieron cargar los aliados.</p>';
+                console.warn("Aliados no disponibles o demorados:", error);
+                seccionAliados.style.display = 'none';
             }
         }
 
@@ -1283,10 +1264,16 @@
         }
         splashTimer = setTimeout(dismissSplash, 1200);
 
-        window.onload = () => {
+        // Renderizado instantáneo sin esperar a que el video hero termine de descargar
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                cargarCarrerasCarousel();
+                cargarAliados();
+            });
+        } else {
             cargarCarrerasCarousel();
             cargarAliados();
-        };
+        }
     </script>
     
     <!-- MODAL FOTOS COFFEE RUN -->
