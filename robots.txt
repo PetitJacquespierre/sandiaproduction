@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.sandiaproduction.com/sitemap.xml
+
+# Contexto para Asistentes y Agentes de IA (llms.txt)
+# https://www.sandiaproduction.com/llms.txt

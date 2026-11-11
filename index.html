@@ -330,7 +330,7 @@
             <div class="particula p3"></div>
             <div class="particula p4"></div>
             <div class="particula p5"></div>
-            <img src="img/Isotipo.png" alt="Sandía Production Isotipo" id="sandia-logo">
+            <img src="img/Isotipo.png" alt="Sandía Production Isotipo" id="sandia-logo" width="99" height="99">
         </div>
     </div>
 
@@ -390,6 +390,29 @@
             <div class="index-hero-overlay"></div>
 
             <div class="index-hero-content">
+                <!-- BREADCRUMBS SEMÁNTICOS VISIBLES (MIGAS DE PAN) -->
+                <nav aria-label="Migas de pan" class="hero-breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+                    <ol class="breadcrumbs-list">
+                        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                            <a itemprop="item" href="https://www.sandiaproduction.com/">
+                                <span itemprop="name">Inicio</span>
+                            </a>
+                            <meta itemprop="position" content="1" />
+                        </li>
+                        <li class="breadcrumbs-sep" aria-hidden="true">/</li>
+                        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                            <a itemprop="item" href="https://www.sandiaproduction.com/calendario.html">
+                                <span itemprop="name">Calendario Runner</span>
+                            </a>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                        <li class="breadcrumbs-sep" aria-hidden="true">/</li>
+                        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+                            <span itemprop="name" class="breadcrumbs-active">Eventos Deportivos</span>
+                            <meta itemprop="position" content="3" />
+                        </li>
+                    </ol>
+                </nav>
                 <h1 class="index-hero-title">VIVE LA PASIÓN <span>RUNNING</span></h1>
                 <p class="index-hero-desc">Tu próximo reto comienza aquí</p>
             </div>
