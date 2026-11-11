@@ -101,7 +101,43 @@ body {
    ========================================================================== */
 .footer-sandia { background-color: #03060d; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 50px 20px 20px; margin-top: auto; width: 100%; }
 .footer-content { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; padding-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-.footer-col h4 { color: var(--color-primario); text-transform: uppercase; font-size: 0.95em; margin-bottom: 15px; letter-spacing: 1px; }
+/* Accesibilidad: Screen Readers & Skip Link */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+.sr-only:focus,
+.focus\:not-sr-only:focus,
+.not-sr-only:focus {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 100000;
+    width: auto;
+    height: auto;
+    padding: 12px 20px;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background: #e62035;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    outline: 3px solid #ffffff;
+    text-decoration: none;
+}
+
+.footer-col h3, .footer-col h4 { color: var(--color-primario); text-transform: uppercase; font-size: 0.95em; margin-bottom: 15px; letter-spacing: 1px; }
 .footer-col p, .footer-col li { color: var(--color-gris-oscuro); font-size: 0.9em; line-height: 1.6; }
 .footer-col ul { list-style: none; }
 .footer-col ul li a { color: #aaa; text-decoration: none; transition: color 0.2s; }

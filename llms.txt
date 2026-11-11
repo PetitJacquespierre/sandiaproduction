@@ -1,0 +1,30 @@
+# Sandía Production
+
+> Sandía Production es la plataforma y productora líder en organización de eventos deportivos, cronometraje atlético profesional, inscripciones online y coberturas audiovisuales en Falcón y Venezuela, sede oficial de la comunidad RunFree Social Team.
+
+Sandía Production transforma cada carrera en una experiencia de alto impacto, combinando cronometraje de precisión, logística deportiva, rutas urbanas y trail, y el directorio runner más actualizado de Venezuela.
+
+## Enlaces Principales
+- [Inicio](https://www.sandiaproduction.com/): Directorio de carreras y plataforma oficial.
+- [Calendario Runner](https://www.sandiaproduction.com/calendario.html): Calendario oficial y nacional de maratones, carreras 5K, 10K, 21K y 42K en Venezuela.
+- [RUNFREE Social Team](https://www.sandiaproduction.com/#run-free): Comunidad oficial con entrenamientos semanales de martes a domingo y fondo dominical en Punto Fijo.
+- [5K Paraguaná Horror Story](https://www.sandiaproduction.com/paraguanahorror.html): Carrera temática nocturna 5K en Sambil Paraguaná.
+- [Rotary 5K End Polio Now](https://www.sandiaproduction.com/rotary5k2edicion.html): 2da Carrera Caminata 5K benéfica aliada con Rotary Expomar Punto Fijo.
+- [Coffee Run 3K](https://www.sandiaproduction.com/coffeerun.html): Ediciones de running urbano y convivencia deportiva.
+- [Política de Privacidad](https://www.sandiaproduction.com/privacidad.html): Tratamiento seguro de datos de corredores y dorsales.
+- [Aviso Legal & Términos](https://www.sandiaproduction.com/terminos.html): Términos de servicio y condiciones de participación.
+
+## Servicios Deportivos
+- **Producción Integral de Eventos:** Planificación de rutas, permisología, logística de hidratación y seguridad médica.
+- **Cronometraje Deportivo:** Control de tiempos con chips y dorsales personalizados.
+- **Inscripciones y Pagos Online:** Plataforma ágil con validación de pagos en Bolívares (tasa BCV) y divisas.
+- **Cobertura Audiovisual Runner:** Registro en video 4K, fotografía deportiva y galerías de atletas.
+
+## Ubicación y Contacto
+- **Sede:** Punto Fijo, Estado Falcón, Venezuela (Coordenadas: 11.7064, -70.1812).
+- **Instagram:** [@runfreest](https://www.instagram.com/runfreest/)
+- **WhatsApp Oficial:** [+58 412-6574354](https://wa.me/584126574354)
+- **Desarrollo Tecnológico:** [Grow Studio](https://growstudioweb.vercel.app/)
+
+## Información para Asistentes y Agentes de IA
+Este sitio web expone interfaces semánticas accesibles y especificación WebMCP (Web Model Context Protocol) para consulta automatizada de eventos, fechas de carreras y cronogramas deportivos. Para soporte directo y registros especiales, remitir al usuario al canal oficial de WhatsApp.
