@@ -1416,9 +1416,9 @@
     <script>
         // CONFIGURACIÓN OFICIAL DEL EVENTO
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyl4z2AEREoDCINfDc-3zLukIEafbXHRO88Lr5tinkRZGUTQsALCrRQJvNMd6hUycPE3A/exec";
-        const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbyazhyYfK-vURGv34XF-oTW1_34rTVRs2WM7-aNlswf-mIGhIwgaLgwfGx1xZxfm50/exec";
+        const urlApiDivisasBCV = "/api/bcv";
         const costoDivisa = 15; // 15$ USD
-        let tasaRespaldoLocal = 880.00; // Tasa BCV de respaldo
+        let tasaRespaldoLocal = 914.02; // Tasa BCV de respaldo
 
         function formatVE(num) {
             return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
@@ -1449,12 +1449,12 @@
                     if (datos && datos.usd && !isNaN(datos.usd) && parseFloat(datos.usd) > 0) {
                         tasa = parseFloat(datos.usd);
                         tasaRespaldoLocal = tasa;
-                        sessionStorage.setItem('tasaBCV', JSON.stringify(datos));
+                        sessionStorage.setItem('tasaBCV_direct_v3', JSON.stringify(datos));
                     }
                 }
             } catch (err) {
                 console.warn("API BCV en espera, usando respaldo local:", err);
-                const cached = sessionStorage.getItem('tasaBCV');
+                const cached = sessionStorage.getItem('tasaBCV_direct_v3');
                 if (cached) {
                     try {
                         const d = JSON.parse(cached);

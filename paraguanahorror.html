@@ -1039,10 +1039,10 @@
         let INSCRIPCIONES_ABIERTAS = true;
 
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyl4z2AEREoDCINfDc-3zLukIEafbXHRO88Lr5tinkRZGUTQsALCrRQJvNMd6hUycPE3A/exec";
-        const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbyazhyYfK-vURGv34XF-oTW1_34rTVRs2WM7-aNlswf-mIGhIwgaLgwfGx1xZxfm50/exec";
+        const urlApiDivisasBCV = "/api/bcv";
         const costoDivisa = 20; // 20$ Inscripción Individual
         const costoGrupalUnitario = 15; // 15$ c/u Promo Grupal (3 o más corredores)
-        let tasaRespaldoLocal = 887.30; // Tasa oficial actualizada BCV
+        let tasaRespaldoLocal = 914.02; // Tasa oficial actualizada BCV
 
         // Estado del cupón actualmente activo en el formulario
         let cuponActivoCodigo = null;
@@ -1057,8 +1057,8 @@
         function obtenerTasaActual() {
             let tasa = tasaRespaldoLocal;
             try {
-                const cached = sessionStorage.getItem('tasaBCV');
-                const cachedTime = sessionStorage.getItem('tasaBCVTime');
+                const cached = sessionStorage.getItem('tasaBCV_direct_v3');
+                const cachedTime = sessionStorage.getItem('tasaBCVTime_direct_v3');
                 if (cached && cachedTime && (Date.now() - parseInt(cachedTime, 10)) < 30 * 60 * 1000) {
                     const d = JSON.parse(cached);
                     if (d && d.usd && !isNaN(d.usd) && parseFloat(d.usd) > 0) {
@@ -1399,13 +1399,13 @@
                     if (datos && datos.usd && !isNaN(datos.usd) && parseFloat(datos.usd) > 0) {
                         tasa = parseFloat(datos.usd);
                         tasaRespaldoLocal = tasa;
-                        sessionStorage.setItem('tasaBCV', JSON.stringify(datos));
-                        sessionStorage.setItem('tasaBCVTime', Date.now().toString());
+                        sessionStorage.setItem('tasaBCV_direct_v3', JSON.stringify(datos));
+                        sessionStorage.setItem('tasaBCVTime_direct_v3', Date.now().toString());
                     }
                 }
             } catch (err) {
                 console.warn("API tardó o falló, usando última tasa oficial disponible:", err);
-                const cached = sessionStorage.getItem('tasaBCV');
+                const cached = sessionStorage.getItem('tasaBCV_direct_v3');
                 if (cached) {
                     try {
                         const datosCached = JSON.parse(cached);
