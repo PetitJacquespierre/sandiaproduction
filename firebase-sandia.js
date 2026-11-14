@@ -68,20 +68,8 @@ export async function verificarEstadoSitioWeb() {
 }
 
 // 1.5 Obtener Estado de Apertura de 5K Paraguaná Horror Story (Control Automático Abierto / Cerrado)
-export async function verificarEstadoInscripcionesHorror(defaultAbiertas = true) {
-    try {
-        const docSnap = await getDoc(doc(db, "sandia_config", "general"));
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            if (typeof data.inscripcionesHorrorAbiertas === 'boolean') {
-                return data.inscripcionesHorrorAbiertas;
-            }
-        }
-        return defaultAbiertas;
-    } catch (e) {
-        console.warn("Error consultando estado de inscripciones Horror, usando valor local:", e);
-        return defaultAbiertas;
-    }
+export async function verificarEstadoInscripcionesHorror(defaultAbiertas = false) {
+    return false; // Evento culminado permanentemente
 }
 
 // 2. Obtener Eventos Deportivos desde Firebase (Ordenados en memoria)

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <!-- Google tag (gtag.js) -->
@@ -534,24 +534,15 @@
                 Vive la experiencia deportiva más esperada del año en Punto Fijo.
             </div>
 
+            <div class="horror-status-badge" id="hero-status-badge" style="display: inline-block; background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; box-shadow: 0 0 25px rgba(239, 68, 68, 0.4); color: #ffffff; padding: 8px 22px; border-radius: 999px; font-weight: 800; font-size: 0.95rem; letter-spacing: 1px; text-transform: uppercase; margin: 15px auto;">
+                🏁 CARRERA CULMINADA • ¡EVENTO FINALIZADO! 💀
+            </div>
+
             
                         <!-- REGRESIVA EN VIVO -->
             <div class="countdown-container" id="countdown">
-                <div class="countdown-item">
-                    <div class="countdown-num" id="cd-days">00</div>
-                    <div class="countdown-lbl">Días</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-num" id="cd-hours">00</div>
-                    <div class="countdown-lbl">Horas</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-num" id="cd-mins">00</div>
-                    <div class="countdown-lbl">Minutos</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-num" id="cd-secs">00</div>
-                    <div class="countdown-lbl">Segundos</div>
+                <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 12px; padding: 14px 24px; color: #fff; font-family: ''Oswald'', sans-serif; font-size: 1.15rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; box-shadow: 0 0 25px rgba(239, 68, 68, 0.35); text-align: center; margin: 0 auto;">
+                    🏁 CARRERA CULMINADA CON ÉXITO • ¡EVENTO FINALIZADO! 💀
                 </div>
             </div>
 
@@ -617,10 +608,10 @@
             
             <!-- FLYER & DATOS DE PAGO -->
             <div class="flyer-card">
-                <img id="flyer-img" src="img/paraguanahorror_ultimoscupos.jpg" alt="Flyer 5K Paraguaná Horror Stories - Últimos Cupos Disponibles" loading="lazy" decoding="async">
+                <img id="flyer-img" src="img/paraguanahorror_agotada.jpg" alt="Flyer 5K Paraguaná Horror Stories - Últimos Cupos Disponibles" loading="lazy" decoding="async">
                 
                 <!-- CAJA 1: PAGO / ESTADO AGOTADO (OCULTA MIENTRAS HAY CUPOS ABIERTOS) -->
-                <div id="box-pago-agotado" class="payment-box" style="display: none; text-align: center; padding: 25px 20px;">
+                <div id="box-pago-agotado" class="payment-box" style="display: block; text-align: center; padding: 25px 20px;">
                     <div style="display: inline-block; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ff6b6b; padding: 6px 14px; border-radius: 999px; font-size: 0.85rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;">
                         🔒 REGISTRO GENERAL CERRADO
                     </div>
@@ -637,7 +628,7 @@
                 </div>
 
                 <!-- CAJA 2: DATOS DE PAGO Y TASA BCV -->
-                <div id="box-pago-vip" class="payment-box" style="display: block;">
+                <div id="box-pago-vip" class="payment-box" style="display: none !important;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                         <div class="payment-header" style="margin-bottom: 0;">📍 DATOS DE PAGO MÓVIL</div>
                         <button class="btn-copy" onclick="copyAllPaymentData(event)" style="background: var(--color-horror-orange); color: #000; font-weight: 800; padding: 6px 14px; border-radius: 8px;">📋 Copiar Datos de Pago</button>
@@ -664,7 +655,7 @@
             </div>
 
             <!-- TARJETA 1: ESTADO CARRERA AGOTADA + CAJA DE DESBLOQUEO VIP (SE ACTIVA AUTOMÁTICAMENTE AL CERRAR INSCRIPCIONES) -->
-            <div id="card-agotado" class="form-card" style="display: none; text-align: center; padding: 35px 24px; border-top: 1px solid rgba(255, 255, 255, 0.18);">
+            <div id="card-agotado" class="form-card" style="display: block; text-align: center; padding: 35px 24px; border-top: 1px solid rgba(255, 255, 255, 0.18);">
                 <div style="width: 76px; height: 76px; margin: 0 auto 16px auto; border-radius: 50%; background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: 0 0 25px rgba(239, 68, 68, 0.35);">
                     💀
                 </div>
@@ -721,16 +712,12 @@
                     <a href="https://wa.me/584126574354?text=Hola%20Sand%C3%ADa%20Production%2C%20quisiera%20informaci%C3%B3n%20sobre%20la%20entrega%20de%20kits%20del%205K%20Horror%20Story" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #25D366; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-top: 4px;">
                         <span>💬</span> Contactar por WhatsApp Oficial
                     </a>
-                    <div style="margin-top: 14px; text-align: center;">
-                        <a href="javascript:void(0)" onclick="solicitarAccesoVipManual()" style="color: rgba(255, 255, 255, 0.35); font-size: 0.75rem; text-decoration: none; border-bottom: 1px dashed rgba(255, 255, 255, 0.25); transition: color 0.2s;">
-                            ¿Tienes un código de reserva VIP? Ingresar aquí
-                        </a>
-                    </div>
+                    
                 </div>
             </div>
 
             <!-- TARJETA 2: FORMULARIO DE REGISTRO OFICIAL (ÚLTIMOS CUPOS HABILITADOS) -->
-            <div id="card-formulario-vip" class="form-card" style="display: block;">
+            <div id="card-formulario-vip" class="form-card" style="display: none !important;">
                 <!-- BANNER DE APERTURA EXTRA / ACCESO VIP -->
                 <div id="banner-vip-header" style="background: linear-gradient(135deg, rgba(255, 119, 0, 0.18) 0%, rgba(0, 255, 102, 0.15) 100%); border: 1px solid #00ff66; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; box-shadow: 0 0 20px rgba(0, 255, 102, 0.2);">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
@@ -1036,7 +1023,7 @@
         // - true  => Inscripciones Abiertas (50 Cupos Extra: Individual $20 y Grupal 3+ $15 c/u)
         // - false => Inscripciones Cerradas / Agotadas (Bloqueo Total salvo Cupón VIP válido)
         // =========================================================================
-        let INSCRIPCIONES_ABIERTAS = true;
+        let INSCRIPCIONES_ABIERTAS = false; const EVENTO_FINALIZADO = true;
 
         const urlScriptGoogle = "https://script.google.com/macros/s/AKfycbyl4z2AEREoDCINfDc-3zLukIEafbXHRO88Lr5tinkRZGUTQsALCrRQJvNMd6hUycPE3A/exec";
         const urlApiDivisasBCV = "/api/bcv";
@@ -1071,7 +1058,7 @@
 
         // Configura toda la interfaz según si las inscripciones están abiertas o cerradas
         window.aplicarEstadoAperturaEvento = function(abiertas) {
-            INSCRIPCIONES_ABIERTAS = !!abiertas;
+            INSCRIPCIONES_ABIERTAS = false;
             const heroBadge = document.getElementById('hero-status-badge');
             const flyerImg = document.getElementById('flyer-img');
             const boxPagoAgotado = document.getElementById('box-pago-agotado');
@@ -1079,64 +1066,19 @@
             const cardAgotado = document.getElementById('card-agotado');
             const cardFormVip = document.getElementById('card-formulario-vip');
             const selectorModalidad = document.getElementById('selector-modalidad-container');
-            const inputCupon = document.getElementById('input-cupon');
-            const labelCupon = document.getElementById('label-input-cupon');
-            const iconoBanner = document.getElementById('icono-banner-header');
-            const tituloBanner = document.getElementById('titulo-banner-header');
-            const subtituloBanner = document.getElementById('subtitulo-vip-autorizado');
-            const badgeCodigo = document.getElementById('badge-vip-codigo');
 
-            if (INSCRIPCIONES_ABIERTAS) {
-                if (heroBadge) {
-                    heroBadge.style.background = 'rgba(0, 255, 102, 0.16)';
-                    heroBadge.style.borderColor = '#00ff66';
-                    heroBadge.style.boxShadow = '0 0 25px rgba(0, 255, 102, 0.35)';
-                    heroBadge.innerHTML = '🔥 ¡ÚLTIMOS CUPOS! 🔥';
-                }
-                if (flyerImg) flyerImg.src = 'img/paraguanahorror_ultimoscupos.jpg';
-                if (boxPagoAgotado) boxPagoAgotado.style.display = 'none';
-                if (boxPagoVip) boxPagoVip.style.display = 'block';
-                if (cardAgotado) cardAgotado.style.display = 'none';
-                if (cardFormVip) cardFormVip.style.display = 'block';
-                if (selectorModalidad) selectorModalidad.style.display = 'block';
-                if (inputCupon && !cuponActivoCodigo) {
-                    inputCupon.removeAttribute('required');
-                    inputCupon.placeholder = 'Ingresa tu código de cortesía';
-                }
-                if (labelCupon && !cuponActivoCodigo) {
-                    labelCupon.innerHTML = '<span>🎟️</span> ¿Tienes un cupón de cortesía o descuento? (Opcional)';
-                }
-                if (!cuponActivoCodigo) {
-                    if (iconoBanner) iconoBanner.innerText = '🔥';
-                    if (tituloBanner) tituloBanner.innerText = '¡ÚLTIMOS CUPOS! • INSCRIPCIONES ABIERTAS';
-                    if (subtituloBanner) subtituloBanner.innerText = 'Modalidad Individual ($20 USD) y Promo Grupal 3+ corredores ($15 USD c/u) disponibles.';
-                    if (badgeCodigo) badgeCodigo.innerText = 'ÚLTIMOS CUPOS';
-                }
-            } else {
-                // MODO CERRADO / AGOTADO (TRIPLE CANDADO ACTIVO)
-                if (heroBadge) {
-                    heroBadge.style.background = 'rgba(239, 68, 68, 0.2)';
-                    heroBadge.style.borderColor = '#ef4444';
-                    heroBadge.style.boxShadow = '0 0 25px rgba(239, 68, 68, 0.4)';
-                    heroBadge.innerHTML = '🏁 CARRERA CULMINADA • ¡CUPOS 100% AGOTADOS! 💀';
-                }
-                if (!cuponActivoCodigo) {
-                    if (flyerImg) flyerImg.src = 'img/paraguanahorror_agotada.jpg';
-                    if (boxPagoAgotado) boxPagoAgotado.style.display = 'block';
-                    if (boxPagoVip) boxPagoVip.style.display = 'none';
-                    if (cardAgotado) cardAgotado.style.display = 'block';
-                    if (cardFormVip) cardFormVip.style.display = 'none';
-                    if (selectorModalidad) selectorModalidad.style.display = 'none';
-                    window.cambiarModoInscripcion('individual');
-                    if (inputCupon) {
-                        inputCupon.setAttribute('required', 'required');
-                        inputCupon.placeholder = 'CÓDIGO VIP OBLIGATORIO';
-                    }
-                    if (labelCupon) {
-                        labelCupon.innerHTML = '<span>🎟️</span> Cupón o Enlace VIP Oficial (Obligatorio)';
-                    }
-                }
+            if (heroBadge) {
+                heroBadge.style.background = 'rgba(239, 68, 68, 0.2)';
+                heroBadge.style.borderColor = '#ef4444';
+                heroBadge.style.boxShadow = '0 0 25px rgba(239, 68, 68, 0.4)';
+                heroBadge.innerHTML = '🏁 CARRERA CULMINADA • ¡EVENTO FINALIZADO! 💀';
             }
+            if (flyerImg) flyerImg.src = 'img/paraguanahorror_agotada.jpg';
+            if (boxPagoAgotado) boxPagoAgotado.style.display = 'block';
+            if (boxPagoVip) boxPagoVip.style.display = 'none';
+            if (cardAgotado) cardAgotado.style.display = 'block';
+            if (cardFormVip) cardFormVip.style.display = 'none';
+            if (selectorModalidad) selectorModalidad.style.display = 'none';
             actualizarCajaPrecioLateral();
         };
 
@@ -1573,7 +1515,7 @@
         // Objeto con la información del cupón validado en Firestore
         let cuponActivoData = null;
 
-        window.solicitarAccesoVipManual = function() {
+        window.solicitarAccesoVipManual = function() { alert('⛔ EVENTO FINALIZADO: La 5K Paraguaná Horror Story culminó con éxito. No hay inscripciones activas.'); return; 
             const codigo = prompt("Ingresa tu código de reserva o cupón VIP oficial:");
             if (codigo && codigo.trim()) {
                 window.aplicarCupon(codigo.trim().toUpperCase());
@@ -1804,6 +1746,9 @@
         // SUBMIT FORMULARIO UNIFICADO Y COMPATIBLE CON APPS SCRIPT Y FIRESTORE
         document.getElementById('registration-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            alert("⛔ EVENTO FINALIZADO: La 5K Paraguaná Horror Story culminó con total éxito el 31 de Octubre. Las inscripciones se encuentran 100% cerradas.");
+            window.aplicarEstadoAperturaEvento(false);
+            return false;
 
             // =========================================================================
             // CANDADO 1 (TRIPLE CANDADO AUTOMÁTICO):

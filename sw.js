@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sandia-cache-v19';
+const CACHE_NAME = 'sandia-cache-v20';
 const urlsToCache = [
   './',
   './index.html',
