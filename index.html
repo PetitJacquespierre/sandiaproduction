@@ -871,7 +871,7 @@
             const pasadosContainer = document.getElementById('contenedor-pasados');
             if (!todosLosEventos || todosLosEventos.length === 0) return;
 
-            // Asegurar que Santa Run 5K Copa Ford Pro esté presente en el carrusel
+            // Asegurar que Santa Run 5K Copa Ford Pro esté presente en el carrusel activo
             const tieneSanta = todosLosEventos.some(e => (e.titulo || '').toUpperCase().includes('SANTA') || (e.titulo || '').toUpperCase().includes('FORD'));
             if (!tieneSanta) {
                 todosLosEventos.push({
@@ -883,6 +883,7 @@
                     enlace: "https://docs.google.com/forms/d/e/1FAIpQLScTXhjZmsKoG1eQ1WwPo6PeScNjvVuSToTxigkZNBK7yCqobg/viewform",
                     textoBoton: "Inscribirme en Google Forms",
                     estado: "ACTIVO",
+                    activo: "SI",
                     categoria: "LOCAL",
                     destacado_index: true
                 });
@@ -892,14 +893,17 @@
             let pasadosArray = []; 
 
             todosLosEventos.forEach(evento => {
-                const titLower = (evento.titulo || '').toLowerCase();
-                if (titLower.includes('horror')) {
+                const titUpper = (evento.titulo || '').toUpperCase();
+                const catUpper = (evento.categoria || '').toUpperCase();
+
+                if (titUpper.includes('HORROR')) {
                     evento.imagen = 'paraguanahorror_agotada.jpg';
                     evento.textoBoton = 'CULMINADA 🏁';
                     evento.estado = 'COMPLETADO';
                     evento.activo = 'NO';
                     evento.destacado_index = false;
                 }
+
                 let clickAction = evento.enlace && evento.enlace.startsWith('http') ? `window.open('${evento.enlace}', '_blank')` : (evento.enlace ? `window.location.href='${evento.enlace}'` : `alert('Más información próximamente...')`);
 
                 const esActivo = (evento.estado === "ACTIVO" || evento.activo === "SI");
@@ -912,14 +916,27 @@
                     });
                 } 
                 else if (esCompletado) {
-                    pasadosArray.push({
-                        eventoData: evento,
-                        accionClick: clickAction
-                    });
+                    // EXCLUSIVO INDEX (EVENTOS PASADOS): ÚNICAMENTE eventos oficiales de Sandía Production / RunFree
+                    const esDeSandia = catUpper.includes('SANDIA') ||
+                                       titUpper.includes('HORROR') ||
+                                       titUpper.includes('COFFEE') ||
+                                       titUpper.includes('MADRE MÍA') ||
+                                       titUpper.includes('MADRE MIA') ||
+                                       titUpper.includes('MATEA') ||
+                                       titUpper.includes('RUNFREE') ||
+                                       titUpper.includes('SANDÍA') ||
+                                       titUpper.includes('TINAJA');
+
+                    if (esDeSandia) {
+                        pasadosArray.push({
+                            eventoData: evento,
+                            accionClick: clickAction
+                        });
+                    }
                 }
             });
 
-            // PRIORIDAD ABSOLUTA: Eventos oficiales de Sandía Production siempre de primerito
+            // PRIORIDAD ABSOLUTA EN ACTIVAS: Sandía Production siempre primero
             eventosActivosGlobal.sort((a, b) => {
                 const catA = (a.eventoData.categoria || '').toUpperCase();
                 const catB = (b.eventoData.categoria || '').toUpperCase();
@@ -939,20 +956,42 @@
 
             renderizarCarrerasActivas(eventosActivosGlobal);
 
+            // RENDERIZAR EVENTOS PASADOS EXCLUSIVOS DE SANDÍA PRODUCTION (DESDE EL MÁS RECIENTE PARAGUANÁ HORROR HASTA EL PRIMERO)
             if (pasadosContainer) {
                 if (pasadosArray.length > 0) {
-                    let htmlPasados = '';
-                    let ultimosPasados = pasadosArray.slice(0, 10);
-                    
-                    ultimosPasados.forEach(item => {
-                        let ev = item.eventoData;
-                        let btnGaleriaHtml = '';
-                        if (ev.titulo.toLowerCase().includes('coffee run')) {
-                            btnGaleriaHtml = `<button class="btn-past-results" onclick="abrirModalCoffeeRun()">Fotos Oficiales</button>`;
-                        } else if (ev.enlace && ev.enlace.trim() !== '' && ev.enlace !== '#') {
-                            btnGaleriaHtml = `<button class="btn-past-results" onclick="${item.accionClick}">Ver Resultados</button>`;
+                    const mesesPeso = {
+                        'ENE': 1, 'FEB': 2, 'MAR': 3, 'ABR': 4, 'MAY': 5, 'JUN': 6,
+                        'JUL': 7, 'AGO': 8, 'AGOS': 8, 'SEP': 9, 'SEPT': 9, 'OCT': 10, 'NOV': 11, 'DIC': 12
+                    };
+
+                    function getPesoFecha(ev) {
+                        const mStr = (ev.mes || '').toUpperCase().trim();
+                        let mNum = 8;
+                        for (let k in mesesPeso) {
+                            if (mStr.startsWith(k)) { mNum = mesesPeso[k]; break; }
                         }
-                        
+                        const dNum = parseInt(ev.dia, 10) || 1;
+                        return mNum * 100 + dNum;
+                    }
+
+                    // Orden cronológico inverso: desde el más reciente (Paraguaná Horror 31 OCT) hasta el primero (Tinaja 10 AGO)
+                    pasadosArray.sort((a, b) => getPesoFecha(b.eventoData) - getPesoFecha(a.eventoData));
+
+                    let htmlPasados = '';
+                    pasadosArray.forEach(item => {
+                        let ev = item.eventoData;
+                        let clickGaleria = '';
+
+                        if (ev.enlace && ev.enlace.startsWith('http') && (ev.enlace.includes('fotoshare') || ev.enlace.includes('photos') || ev.enlace.includes('drive'))) {
+                            clickGaleria = `window.open('${ev.enlace}', '_blank')`;
+                        } else if (ev.titulo.toLowerCase().includes('coffee run') && typeof abrirModalCoffeeRun === 'function') {
+                            clickGaleria = `abrirModalCoffeeRun()`;
+                        } else {
+                            clickGaleria = `alert('📸 Fotos oficiales de ${ev.titulo.replace(/'/g, "")} próximamente disponibles.')`;
+                        }
+
+                        let btnGaleriaHtml = `<button class="btn-past-results" onclick="${clickGaleria}">Fotos Oficiales</button>`;
+
                         htmlPasados += `
                             <div class="past-event-item">
                                 <img src="img/${ev.imagen}" alt="${ev.titulo}" class="past-logo" width="300" height="170" loading="lazy" decoding="async" onerror="this.src='img/Isotipo.png'">
@@ -960,7 +999,7 @@
                                     <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; margin-bottom:4px;">
                                         <h3 style="margin:0;">${ev.titulo}</h3>
                                     </div>
-                                    <span style="background: rgba(230, 126, 34, 0.2); color: #e67e22; border: 1px solid rgba(230, 126, 34, 0.4); font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom:6px;">COMPLETADO</span>
+                                    <span style="background: rgba(230, 32, 53, 0.2); color: #ff334b; border: 1px solid rgba(230, 32, 53, 0.4); font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom:6px;">🍉 SANDÍA PRODUCTION</span>
                                     <p>${ev.ubicacion || ''} • ${ev.mes || ''}</p>
                                 </div>
                                 ${btnGaleriaHtml}
@@ -979,19 +1018,6 @@
             // Eventos locales destacados de respaldo (inmediatos sin esperas)
             const eventosLocalesFallback = [
                 {
-                    titulo: "5K Paraguaná Horror Story",
-                    dia: "31",
-                    mes: "OCT",
-                    ubicacion: "Sambil Paraguaná / 7:00 PM",
-                    imagen: "paraguanahorror_agotada.jpg",
-                    enlace: "paraguanahorror.html",
-                    textoBoton: "CULMINADA 🏁",
-                    estado: "COMPLETADO",
-                    activo: "NO",
-                    categoria: "SANDIA",
-                    destacado_index: false
-                },
-                {
                     titulo: "SANTA RUN 5K - Copa Ford Pro 2026",
                     dia: "05",
                     mes: "DIC",
@@ -1000,30 +1026,72 @@
                     enlace: "https://docs.google.com/forms/d/e/1FAIpQLScTXhjZmsKoG1eQ1WwPo6PeScNjvVuSToTxigkZNBK7yCqobg/viewform",
                     textoBoton: "Inscribirme en Google Forms",
                     estado: "ACTIVO",
+                    activo: "SI",
                     categoria: "LOCAL",
                     destacado_index: true
                 },
                 {
-                    titulo: "Coffee Run ¡Madre Mía! 3K Vol. 2",
+                    titulo: "Chivacoa 10K 2026",
+                    dia: "29",
+                    mes: "NOV",
+                    ubicacion: "Chivacoa, Yaracuy",
+                    imagen: "Chinita10K2026.png",
+                    enlace: "https://papaya25.info/modp25.php?idc=16956",
+                    textoBoton: "INSCRIBIRME",
+                    estado: "ACTIVO",
+                    activo: "SI",
+                    categoria: "NACIONAL",
+                    destacado_index: true
+                },
+                {
+                    titulo: "5K Paraguaná Horror Story",
+                    dia: "31",
+                    mes: "OCT",
+                    ubicacion: "Sambil Paraguaná / 7:00 PM",
+                    imagen: "paraguanahorror_agotada.jpg",
+                    enlace: "paraguanahorror.html",
+                    textoBoton: "Fotos Oficiales",
+                    estado: "COMPLETADO",
+                    activo: "NO",
+                    categoria: "SANDIA",
+                    destacado_index: false
+                },
+                {
+                    titulo: "Coffee Run ¡Madre Mía! 3K",
                     dia: "27",
                     mes: "SEP",
                     ubicacion: "Av. Francisco de Miranda / Madre Mía",
                     imagen: "madremia.jpg",
                     enlace: "https://forms.gle/CqN4gF54xLK3vo6T6",
-                    textoBoton: "Inscribirme en Google Forms",
-                    estado: "ACTIVO",
-                    categoria: "REGIONAL",
-                    destacado_index: true
+                    textoBoton: "Fotos Oficiales",
+                    estado: "COMPLETADO",
+                    activo: "NO",
+                    categoria: "SANDIA",
+                    destacado_index: false
+                },
+                {
+                    titulo: "Matea Arepa Run 5K",
+                    dia: "04",
+                    mes: "SEP",
+                    ubicacion: "Punto Fijo, Falcón",
+                    imagen: "matea_run.png",
+                    enlace: "",
+                    textoBoton: "Fotos Oficiales",
+                    estado: "COMPLETADO",
+                    activo: "NO",
+                    categoria: "SANDIA",
+                    destacado_index: false
                 },
                 {
                     titulo: "Coffee Run 3K Vol. 1",
                     dia: "10",
                     mes: "AGO",
-                    ubicacion: "Terraza Tinaja",
+                    ubicacion: "Terraza Tinaja, Punto Fijo",
                     imagen: "coffee_run.png",
-                    enlace: "",
-                    textoBoton: "Galería de Fotos",
+                    enlace: "https://fotoshare.co/e/mLqiMWncPCFtJhfZkTRIY?fbclid=PAZn",
+                    textoBoton: "Fotos Oficiales",
                     estado: "COMPLETADO",
+                    activo: "NO",
                     categoria: "SANDIA",
                     destacado_index: false
                 }
