@@ -894,10 +894,11 @@
             todosLosEventos.forEach(evento => {
                 const titLower = (evento.titulo || '').toLowerCase();
                 if (titLower.includes('horror')) {
-                    evento.imagen = 'paraguanahorror_ultimoscupos.jpg';
-                    evento.textoBoton = '¡Últimos Cupos! 🔥';
-                    evento.estado = 'ACTIVO';
-                    evento.activo = 'SI';
+                    evento.imagen = 'paraguanahorror_agotada.jpg';
+                    evento.textoBoton = 'CULMINADA 🏁';
+                    evento.estado = 'COMPLETADO';
+                    evento.activo = 'NO';
+                    evento.destacado_index = false;
                 }
                 let clickAction = evento.enlace && evento.enlace.startsWith('http') ? `window.open('${evento.enlace}', '_blank')` : (evento.enlace ? `window.location.href='${evento.enlace}'` : `alert('Más información próximamente...')`);
 
@@ -982,12 +983,13 @@
                     dia: "31",
                     mes: "OCT",
                     ubicacion: "Sambil Paraguaná / 7:00 PM",
-                    imagen: "paraguanahorror_ultimoscupos.jpg",
+                    imagen: "paraguanahorror_agotada.jpg",
                     enlace: "paraguanahorror.html",
-                    textoBoton: "¡Últimos Cupos! 🔥",
-                    estado: "ACTIVO",
+                    textoBoton: "CULMINADA 🏁",
+                    estado: "COMPLETADO",
+                    activo: "NO",
                     categoria: "SANDIA",
-                    destacado_index: true
+                    destacado_index: false
                 },
                 {
                     titulo: "SANTA RUN 5K - Copa Ford Pro 2026",

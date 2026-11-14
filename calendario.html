@@ -198,19 +198,6 @@
 
         const EVENTOS_FALLBACK_LOCAL = [
             {
-                titulo: "5K Paraguaná Horror Story",
-                dia: "31",
-                mes: "OCT",
-                ubicacion: "Sambil Paraguaná / 7:00 PM",
-                categoria: "local",
-                etiqueta: "Punto Fijo",
-                imagen: "paraguanahorror_ultimoscupos.jpg",
-                enlace: "paraguanahorror.html",
-                textoBoton: "INSCRIBIRME",
-                estado: "ACTIVO",
-                activo: "SI"
-            },
-            {
                 titulo: "SANTA RUN 5K - Copa Ford Pro 2026",
                 dia: "05",
                 mes: "DIC",
@@ -224,6 +211,32 @@
                 activo: "SI"
             },
             {
+                titulo: "Chivacoa 10K 2026",
+                dia: "29",
+                mes: "NOV",
+                ubicacion: "Chivacoa, Yaracuy",
+                categoria: "nacional",
+                etiqueta: "Yaracuy",
+                imagen: "Chinita10K2026.png",
+                enlace: "https://papaya25.info/modp25.php?idc=16956",
+                textoBoton: "INSCRIBIRME",
+                estado: "ACTIVO",
+                activo: "SI"
+            },
+            {
+                titulo: "5K Paraguaná Horror Story",
+                dia: "31",
+                mes: "OCT",
+                ubicacion: "Sambil Paraguaná / 7:00 PM",
+                categoria: "sandia",
+                etiqueta: "Punto Fijo",
+                imagen: "paraguanahorror_agotada.jpg",
+                enlace: "paraguanahorror.html",
+                textoBoton: "COMPLETADO",
+                estado: "COMPLETADO",
+                activo: "NO"
+            },
+            {
                 titulo: "Coffee Run ¡Madre Mía! 3K",
                 dia: "27",
                 mes: "SEP",
@@ -232,9 +245,9 @@
                 etiqueta: "Punto Fijo",
                 imagen: "madremia.jpg",
                 enlace: "https://forms.gle/CqN4gF54xLK3vo6T6",
-                textoBoton: "INSCRIBIRME",
-                estado: "ACTIVO",
-                activo: "SI"
+                textoBoton: "COMPLETADO",
+                estado: "COMPLETADO",
+                activo: "NO"
             },
             {
                 titulo: "10k Paraguana 2026",
@@ -245,9 +258,9 @@
                 etiqueta: "Punto Fijo",
                 imagen: "10kparaguana2026.png",
                 enlace: "https://papaya25.info/modp25.php?idc=16947",
-                textoBoton: "Inscribirse",
-                estado: "ACTIVO",
-                activo: "SI"
+                textoBoton: "COMPLETADO",
+                estado: "COMPLETADO",
+                activo: "NO"
             },
             {
                 titulo: "Trail Botánico 10K",
@@ -258,9 +271,9 @@
                 etiqueta: "Nacional",
                 imagen: "trailbotanico2026.png",
                 enlace: "https://papaya25.info/modp25.php?idc=16892",
-                textoBoton: "Inscribirse",
-                estado: "ACTIVO",
-                activo: "SI"
+                textoBoton: "COMPLETADO",
+                estado: "COMPLETADO",
+                activo: "NO"
             },
             {
                 titulo: "Run and Music Fest 10K",
@@ -271,9 +284,9 @@
                 etiqueta: "Nacional",
                 imagen: "runmusicfest.png",
                 enlace: "https://papaya25.info/modp25.php?idc=16923",
-                textoBoton: "Inscribirse",
-                estado: "ACTIVO",
-                activo: "SI"
+                textoBoton: "COMPLETADO",
+                estado: "COMPLETADO",
+                activo: "NO"
             },
             {
                 titulo: "Chirimena Extrema 15K",
@@ -284,9 +297,9 @@
                 etiqueta: "Nacional",
                 imagen: "chirimenaextrema15ksep27.png",
                 enlace: "",
-                textoBoton: "",
-                estado: "ACTIVO",
-                activo: "SI"
+                textoBoton: "COMPLETADO",
+                estado: "COMPLETADO",
+                activo: "NO"
             },
             {
                 titulo: "Bicolor 10K",
@@ -297,9 +310,9 @@
                 etiqueta: "Nacional",
                 imagen: "bicolor10k2026.png",
                 enlace: "https://papaya25.info/modp25.php?idc=16901",
-                textoBoton: "Inscribirse",
-                estado: "ACTIVO",
-                activo: "SI"
+                textoBoton: "COMPLETADO",
+                estado: "COMPLETADO",
+                activo: "NO"
             },
             {
                 titulo: "Copaiba 10K 2026",
@@ -310,22 +323,9 @@
                 etiqueta: "Nacional",
                 imagen: "Copaiba10K2026.png",
                 enlace: "https://papaya25.info/modp25.php?idc=16911",
-                textoBoton: "Inscribirse",
-                estado: "ACTIVO",
-                activo: "SI"
-            },
-            {
-                titulo: "CHINITA 10K 2026",
-                dia: "29",
-                mes: "NOV",
-                ubicacion: "Maracaibo, Zulia",
-                categoria: "nacional",
-                etiqueta: "Nacional",
-                imagen: "Chinita10K2026.png",
-                enlace: "https://papaya25.info/modp25.php?idc=16956",
-                textoBoton: "Inscribirse",
-                estado: "ACTIVO",
-                activo: "SI"
+                textoBoton: "COMPLETADO",
+                estado: "COMPLETADO",
+                activo: "NO"
             }
         ];
 
@@ -365,39 +365,7 @@
                     eventosData = EVENTOS_FALLBACK_LOCAL;
                 }
 
-                // Asegurar que Coffee Run Madre Mía y 5K Paraguaná Horror estén siempre incluidos
-                const tieneMadreMia = eventosData.some(e => (e.titulo || '').toUpperCase().includes('MADRE'));
-                if (!tieneMadreMia) {
-                    eventosData.push({
-                        titulo: "Coffee Run ¡Madre Mía! 3K",
-                        dia: 27,
-                        mes: "Sep",
-                        ubicacion: "Av. Francisco de Miranda / Madre Mía",
-                        categoria: "Local",
-                        etiqueta: "Punto Fijo",
-                        imagen: "madremia.jpg",
-                        enlace: "https://forms.gle/CqN4gF54xLK3vo6T6",
-                        textoBoton: "INSCRIBIRME",
-                        activo: "SI",
-                        estado: "ACTIVO"
-                    });
-                }
-                const tieneHorror = eventosData.some(e => (e.titulo || '').toUpperCase().includes('HORROR'));
-                if (!tieneHorror) {
-                    eventosData.push({
-                        titulo: "5K Paraguaná Horror Story",
-                        dia: 31,
-                        mes: "Oct",
-                        ubicacion: "Sambil Paraguaná / 7:00 PM",
-                        categoria: "Local",
-                        etiqueta: "Punto Fijo",
-                        imagen: "paraguanahorror_ultimoscupos.jpg",
-                        enlace: "paraguanahorror.html",
-                        textoBoton: "INSCRIBIRME",
-                        activo: "SI",
-                        estado: "ACTIVO"
-                    });
-                }
+                // Asegurar que las 2 carreras activas oficiales estén presentes
                 const tieneSantaRun = eventosData.some(e => (e.titulo || '').toUpperCase().includes('SANTA') || (e.titulo || '').toUpperCase().includes('FORD'));
                 if (!tieneSantaRun) {
                     eventosData.push({
@@ -415,46 +383,73 @@
                     });
                 }
 
+                const tieneChivacoa = eventosData.some(e => {
+                    const t = (e.titulo || '').toUpperCase();
+                    return t.includes('CHIVACOA') || t.includes('CHINITA');
+                });
+                if (!tieneChivacoa) {
+                    eventosData.push({
+                        titulo: "Chivacoa 10K 2026",
+                        dia: "29",
+                        mes: "Nov",
+                        ubicacion: "Chivacoa, Yaracuy",
+                        categoria: "Nacional",
+                        etiqueta: "Yaracuy",
+                        imagen: "Chinita10K2026.png",
+                        enlace: "https://papaya25.info/modp25.php?idc=16956",
+                        textoBoton: "INSCRIBIRME",
+                        activo: "SI",
+                        estado: "ACTIVO"
+                    });
+                }
+
                 // Separar en Activos (Próximos) y Completados (Pasados)
+                // REGLA MAESTRA: Solo 'Santa Run 5K' y 'Chivacoa 10K 2026' están activas (en rojo).
+                // Todas las demás carreras pasan a 'Eventos Realizados' (completadas, transparentes).
                 const eventosActivos = [];
                 const eventosCompletados = [];
 
                 eventosData.forEach(ev => {
-                    if ((ev.titulo || '').toUpperCase().includes('HORROR')) {
-                        ev.imagen = 'paraguanahorror_ultimoscupos.jpg';
-                        ev.textoBoton = '¡ÚLTIMOS CUPOS! 🔥';
+                    const titUpper = (ev.titulo || '').toUpperCase();
+                    const esSanta = titUpper.includes('SANTA') || titUpper.includes('FORD');
+                    const esChivacoa = titUpper.includes('CHIVACOA') || titUpper.includes('CHINITA');
+
+                    if (esSanta || esChivacoa) {
+                        if (esChivacoa) {
+                            ev.titulo = "Chivacoa 10K 2026";
+                            ev.etiqueta = "Yaracuy";
+                            ev.ubicacion = "Chivacoa, Yaracuy";
+                        }
                         ev.estado = 'ACTIVO';
                         ev.activo = 'SI';
-                    }
-                    const est = (ev.estado || '').toUpperCase();
-                    const act = (ev.activo || '').toUpperCase();
-                    const weight = getEventDateWeight(ev);
-                    
-                    const isPassedOrCompleted = est === 'COMPLETADO' || act === 'NO' || weight < 900;
-
-                    if (isPassedOrCompleted) {
-                        eventosCompletados.push(ev);
-                    } else {
+                        ev.textoBoton = 'INSCRIBIRME';
                         eventosActivos.push(ev);
+                    } else {
+                        if (titUpper.includes('HORROR')) {
+                            ev.imagen = 'paraguanahorror_agotada.jpg';
+                            ev.textoBoton = 'CULMINADA 🏁';
+                        }
+                        ev.estado = 'COMPLETADO';
+                        ev.activo = 'NO';
+                        eventosCompletados.push(ev);
                     }
                 });
 
-                // Ordenar activos cronológicamente (más próximo primero: 20 Sep -> 27 Sep -> 10 Oct -> 25 Oct -> 31 Oct -> 29 Nov)
+                // Ordenar activas cronológicamente
                 eventosActivos.sort((a, b) => getEventDateWeight(a) - getEventDateWeight(b));
 
-                // Ordenar completados (los más recientes primero)
+                // Ordenar completados (más recientes primero)
                 eventosCompletados.sort((a, b) => getEventDateWeight(b) - getEventDateWeight(a));
 
                 renderizarDirectorio(eventosActivos, eventosCompletados);
             } catch (error) {
                 console.error("Error al cargar eventos:", error);
-                renderizarDirectorio(EVENTOS_FALLBACK_LOCAL, []);
+                renderizarDirectorio(EVENTOS_FALLBACK_LOCAL.filter(e => e.estado === 'ACTIVO'), EVENTOS_FALLBACK_LOCAL.filter(e => e.estado === 'COMPLETADO'));
             }
         }
 
         function generarCardHTML(evento, esCompletado = false) {
             const tituloUpper = (evento.titulo || '').toUpperCase();
-            const imagenUpper = (evento.imagen || '').toUpperCase();
             const categoriaOriginal = (evento.categoria || '').toLowerCase();
 
             let cat = categoriaOriginal || 'local';
@@ -467,38 +462,26 @@
             let textoBtn = evento.textoBoton || '';
             let enlaceUrl = evento.enlace || '';
 
-            if (!esCompletado) {
-                if (tituloUpper.includes('MADRE MÍA') || tituloUpper.includes('MADRE MIA') || imagenUpper.includes('MADREMIA')) {
-                    textoBtn = 'INSCRIBIRME';
-                    enlaceUrl = enlaceUrl || 'https://forms.gle/CqN4gF54xLK3vo6T6';
-                    cat = 'local';
-                }
-
-                if (tituloUpper.includes('HORROR') || imagenUpper.includes('HORROR')) {
-                    textoBtn = 'INSCRIBIRME';
-                    enlaceUrl = enlaceUrl || 'paraguanahorror.html';
-                    cat = 'local';
-                }
-            }
-
             let claseEtiqueta = 'etiqueta-local'; 
             if(cat === 'virtual') claseEtiqueta = 'etiqueta-virtual';
             if(cat === 'nacional') claseEtiqueta = 'etiqueta-nacional';
 
             let htmlBoton = '';
 
-            if (textoBtn && enlaceUrl) {
+            if (!esCompletado) {
+                // SOLO LAS ACTIVAS (SANTA RUN Y CHIVACOA 10K) -> BOTÓN ROJO DE SANDÍA
                 const isExternal = enlaceUrl.startsWith('http://') || enlaceUrl.startsWith('https://');
-                const targetAttr = isExternal ? 'target="_blank"' : '';
-                if ((cat === 'local' || isSandia || !evento.categoria) && (enlaceUrl.includes('html') || enlaceUrl.includes('forms') || enlaceUrl.includes('google'))) {
-                    htmlBoton = `<a href="${enlaceUrl}" ${targetAttr} class="btn-sandia-general" style="width: 100%; text-align: center;">${textoBtn}</a>`;
+                const targetAttr = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+                htmlBoton = `<a href="${enlaceUrl || '#'}" ${targetAttr} class="btn-sandia-general" style="width: 100%; text-align: center; font-weight: 800; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(230, 32, 53, 0.4);">${textoBtn || 'INSCRIBIRME'}</a>`;
+            } else {
+                // TODAS LAS DEMÁS DESACTIVADAS: TRANSPARENTES (btn-outline)
+                if (textoBtn && (textoBtn.toLowerCase().includes('galería') || textoBtn.toLowerCase().includes('fotos')) && enlaceUrl) {
+                    const isExternal = enlaceUrl.startsWith('http://') || enlaceUrl.startsWith('https://');
+                    const targetAttr = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+                    htmlBoton = `<a href="${enlaceUrl}" ${targetAttr} class="btn-outline" style="width: 100%; text-align: center; border-color: rgba(255,255,255,0.25);">${textoBtn}</a>`;
                 } else {
-                    htmlBoton = `<a href="${enlaceUrl}" ${targetAttr} class="btn-outline" style="width: 100%; text-align: center;">${textoBtn}</a>`;
+                    htmlBoton = `<span class="btn-outline" style="opacity: 0.5; cursor: default; width: 100%; text-align: center; border-color: rgba(255,255,255,0.12); color: #888;">COMPLETADO</span>`;
                 }
-            } else if (textoBtn) {
-                htmlBoton = `<span class="btn-outline" style="opacity: 0.6; cursor: default; width: 100%; text-align: center;">${textoBtn}</span>`;
-            } else if (esCompletado) {
-                htmlBoton = `<span class="btn-outline" style="opacity: 0.5; cursor: default; width: 100%; text-align: center; border-color: rgba(255,255,255,0.1);">CARRERA FINALIZADA</span>`;
             }
 
             return `
@@ -512,7 +495,7 @@
                     </div>
                     <div class="info-box">
                         <div class="etiquetas-container">
-                            ${esCompletado ? '<span class="etiqueta" style="background: rgba(255,255,255,0.06); color: #888; border: 1px solid rgba(255,255,255,0.12);">🏁 FINALIZADO</span>' : ''}
+                            ${esCompletado ? '<span class="etiqueta" style="background: rgba(255,255,255,0.06); color: #888; border: 1px solid rgba(255,255,255,0.12);">🏁 FINALIZADO</span>' : '<span class="etiqueta" style="background: rgba(230, 32, 53, 0.2); color: #ff334b; border: 1px solid rgba(230, 32, 53, 0.4);">🔥 ACTIVO</span>'}
                             ${isSandia ? '<span class="etiqueta" style="background: rgba(230, 32, 53, 0.2); color: #ff334b; border: 1px solid rgba(230, 32, 53, 0.4);">🍉 SANDÍA</span>' : ''}
                             <span class="etiqueta ${claseEtiqueta}">${evento.etiqueta || (cat.toUpperCase())}</span>
                         </div>
